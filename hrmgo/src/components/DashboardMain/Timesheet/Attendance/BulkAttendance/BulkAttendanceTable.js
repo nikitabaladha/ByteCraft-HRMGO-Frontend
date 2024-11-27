@@ -1,14 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import postAPI from "../../../../../api/postAPI.js";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const BulkAttendanceTable = ({ filteredEmployees, date }) => {
-  const [isChecked, setIsChecked] = useState(false);
+  const [attendanceStatus, setAttendanceStatus] = useState({});
+
+  // Handle toggling attendance for an individual employee
+  const handleToggleAttendance = (employeeId, checked) => {
+    setAttendanceStatus((prevState) => ({
+      ...prevState,
+      [employeeId]: checked,
+    }));
+  };
 
   const handleToggleAllAttendance = (event) => {
-    setIsChecked(event.target.checked);
+    const checked = event.target.checked;
+    const newAttendanceStatus = filteredEmployees.reduce((acc, employee) => {
+      acc[employee.id] = checked;
+      return acc;
+    }, {});
+    setAttendanceStatus(newAttendanceStatus);
   };
 
   const handleSubmit = async (event) => {
@@ -29,7 +42,7 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
       return {
         employeeId: employee._id,
         date,
-        status: isChecked ? "Present" : "Absent",
+        status: attendanceStatus[employee.id] ? "Present" : "Absent",
         clockIn: formattedClockIn.toISOString(),
         clockOut: formattedClockOut.toISOString(),
       };
@@ -50,6 +63,14 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
       console.error("Error saving attendance data:", error);
     }
   };
+
+  useEffect(() => {
+    const initialStatus = filteredEmployees.reduce((acc, employee) => {
+      acc[employee.id] = employee.attendance ? true : false;
+      return acc;
+    }, {});
+    setAttendanceStatus(initialStatus);
+  }, [filteredEmployees]);
 
   return (
     <div className="col-xl-12">
@@ -72,7 +93,9 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                             type="checkbox"
                             name="present_all"
                             id="present_all"
-                            checked={isChecked}
+                            checked={filteredEmployees.every(
+                              (employee) => attendanceStatus[employee.id]
+                            )}
                             onChange={handleToggleAllAttendance}
                           />
                           <label
@@ -112,7 +135,13 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                                   type="checkbox"
                                   name={`present-${employee.id}`}
                                   id={`present${employee.id}`}
-                                  checked={isChecked}
+                                  checked={attendanceStatus[employee.id]}
+                                  onChange={(e) =>
+                                    handleToggleAttendance(
+                                      employee.id,
+                                      e.target.checked
+                                    )
+                                  }
                                 />
                                 <label
                                   className="custom-control-label"
@@ -133,21 +162,13 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                                     type="time"
                                     className="form-control"
                                     name={`in-${employee.id}`}
-                                    value={
+                                    value={new Date(
                                       employee.attendance.clockIn
-                                        ? new Date(
-                                            new Date(
-                                              employee.attendance.clockIn
-                                            ).toLocaleString("en-US", {
-                                              timeZone: "UTC",
-                                            })
-                                          ).toLocaleTimeString("en-GB", {
-                                            hour: "2-digit",
-                                            minute: "2-digit",
-                                            hour12: false,
-                                          })
-                                        : "09:00"
-                                    }
+                                    ).toLocaleTimeString("en-GB", {
+                                      hour: "2-digit",
+                                      minute: "2-digit",
+                                      hour12: false,
+                                    })}
                                   />
                                 </div>
                                 <label
@@ -161,21 +182,13 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                                     type="time"
                                     className="form-control"
                                     name={`out-${employee.id}`}
-                                    value={
+                                    value={new Date(
                                       employee.attendance.clockOut
-                                        ? new Date(
-                                            new Date(
-                                              employee.attendance.clockOut
-                                            ).toLocaleString("en-US", {
-                                              timeZone: "UTC",
-                                            })
-                                          ).toLocaleTimeString("en-GB", {
-                                            hour: "2-digit",
-                                            minute: "2-digit",
-                                            hour12: false,
-                                          })
-                                        : "18:00"
-                                    }
+                                    ).toLocaleTimeString("en-GB", {
+                                      hour: "2-digit",
+                                      minute: "2-digit",
+                                      hour12: false,
+                                    })}
                                   />
                                 </div>
                               </div>
@@ -183,7 +196,7 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
                           ) : (
                             <div
                               className={`col-md-8 present_check_in ${
-                                isChecked ? "" : "d-none"
+                                attendanceStatus[employee.id] ? "" : "d-none"
                               }`}
                             >
                               <div className="row">

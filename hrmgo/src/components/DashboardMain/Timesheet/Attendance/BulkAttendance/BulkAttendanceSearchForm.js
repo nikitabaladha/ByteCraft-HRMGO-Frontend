@@ -10,7 +10,28 @@ const BulkAttendanceSearchForm = ({ onDataFetched }) => {
   const [selectedBranch, setSelectedBranch] = useState("");
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
+  // const [selectedDate, setSelectedDate] = useState("");
+
+  const [selectedDate, setSelectedDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+
+  useEffect(() => {
+    const fetchBranchData = async () => {
+      try {
+        const response = await getAPI(`/branch-get-all`, {}, true);
+        if (!response.hasError && Array.isArray(response.data.data)) {
+          setBranches(response.data.data);
+          console.log("Branches fetched :", response.data.data);
+        } else {
+          console.error("Invalid response format or error in response");
+        }
+      } catch (err) {
+        console.error("Error fetching branch data:", err);
+      }
+    };
+    fetchBranchData();
+  }, []);
 
   const handleBranchChange = (e) => {
     const branchId = e.target.value;
@@ -40,23 +61,6 @@ const BulkAttendanceSearchForm = ({ onDataFetched }) => {
       setDepartments([]);
     }
   };
-
-  useEffect(() => {
-    const fetchBranchData = async () => {
-      try {
-        const response = await getAPI(`/branch-get-all`, {}, true);
-        if (!response.hasError && Array.isArray(response.data.data)) {
-          setBranches(response.data.data);
-          console.log("Branches fetched :", response.data.data);
-        } else {
-          console.error("Invalid response format or error in response");
-        }
-      } catch (err) {
-        console.error("Error fetching branch data:", err);
-      }
-    };
-    fetchBranchData();
-  }, []);
 
   const handleSearch = async (e) => {
     e.preventDefault();
