@@ -1,10 +1,21 @@
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbFileExport } from "react-icons/tb";
 import { CiCalendarDate } from "react-icons/ci";
 import { FiPlus } from "react-icons/fi";
+import CreateModal from "./CreateModal";
 
 const ManageLeaveHeader = () => {
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsCreateModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsCreateModalOpen(false);
+  };
   return (
     <>
       <div className="page-header">
@@ -40,8 +51,7 @@ const ManageLeaveHeader = () => {
                   <CiCalendarDate />
                 </Link>
                 <Link
-                  to="/"
-                  data-url="/leave/create"
+                  onClick={openModal}
                   data-ajax-popup="true"
                   data-title="Create New Leave"
                   data-size="lg"
@@ -57,6 +67,8 @@ const ManageLeaveHeader = () => {
           </div>
         </div>
       </div>
+
+      {isCreateModalOpen && <CreateModal onClose={closeModal} />}
     </>
   );
 };
