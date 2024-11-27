@@ -39,7 +39,6 @@ const MarkedAttendanceTable = ({ attendanceData }) => {
                       <span>
                         <div className="action-btn bg-info ms-2">
                           <Link
-                            to={`/attendanceemployee/${attendance.id}/edit`}
                             className="mx-3 btn btn-sm align-items-center"
                             data-size="lg"
                             data-url={`/attendanceemployee/${attendance.id}/edit`}
@@ -53,24 +52,8 @@ const MarkedAttendanceTable = ({ attendanceData }) => {
                           </Link>
                         </div>
                         <div className="action-btn bg-danger ms-2">
-                          <form
-                            method="POST"
-                            action={`/attendanceemployee/${attendance.id}`}
-                            acceptCharset="UTF-8"
-                            id={`delete-form-${attendance.id}`}
-                          >
-                            <input
-                              name="_method"
-                              type="hidden"
-                              defaultValue="DELETE"
-                            />
-                            <input
-                              name="_token"
-                              type="hidden"
-                              defaultValue="bnCk9ugiLLqBFsuzhI86sHyjDoyXy7lytE427cyy"
-                            />
+                          <form method="POST" acceptCharset="UTF-8">
                             <Link
-                              to="/"
                               className="mx-3 btn btn-sm align-items-center bs-pass-para"
                               data-bs-toggle="tooltip"
                               title=""

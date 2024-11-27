@@ -1,5 +1,3 @@
-//components/DashboardMain/Report/Employee/EmployeeHeader.js
-
 import React from "react";
 import { Link } from "react-router-dom";
 

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import getAPI from "../../../../../api/getAPI.js";
 import { Link } from "react-router-dom";
-import { TbTrashOff } from "react-icons/tb";
+import { toast } from "react-toastify";
+
+import { TbRefresh } from "react-icons/tb";
 import { IoMdSearch } from "react-icons/io";
 import { FaRegFile } from "react-icons/fa";
 
@@ -11,8 +13,21 @@ const MarkedAttendanceSearchForm = ({ onDataFetched }) => {
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [searchType, setSearchType] = useState("monthly");
-  const [selectedMonth, setSelectedMonth] = useState("2024-11");
+  const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const month = currentDate.getMonth() + 1;
+    const monthFormatted = `${currentDate.getFullYear()}-${month
+      .toString()
+      .padStart(2, "0")}`;
+    setSelectedMonth(monthFormatted);
+
+    const day = currentDate.getDate();
+    const formattedDate = currentDate.toISOString().split("T")[0];
+    setSelectedDate(formattedDate);
+  }, []);
 
   const handleBranchChange = (e) => {
     const branchId = e.target.value;
@@ -63,6 +78,11 @@ const MarkedAttendanceSearchForm = ({ onDataFetched }) => {
     e.preventDefault();
     try {
       const date = searchType === "daily" ? selectedDate : selectedMonth;
+
+      if (!date) {
+        toast.error("Date must be selected to view marked attendance");
+        return;
+      }
 
       const response = await getAPI(
         `/marked-attendance-get-all?branch=${selectedBranch}&department=${selectedDepartment}&date=${date}&type=${searchType}`,
@@ -214,7 +234,7 @@ const MarkedAttendanceSearchForm = ({ onDataFetched }) => {
                         title="Reset"
                       >
                         <span className="btn-inner--icon">
-                          <TbTrashOff className="text-white-off" />
+                          <TbRefresh className="text-white-off" />
                         </span>
                       </Link>
                       <Link

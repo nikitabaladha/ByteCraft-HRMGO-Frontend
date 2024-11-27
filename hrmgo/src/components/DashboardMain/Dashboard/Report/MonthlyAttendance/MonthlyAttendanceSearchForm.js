@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import getAPI from "../../../../../api/getAPI.js";
 import { Link } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
-import { MdOutlineDeleteForever } from "react-icons/md";
-import Select from "react-select"; // Assuming you are using react-select for multi-select
+import { TbRefresh } from "react-icons/tb";
+import Select from "react-select";
 
 const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
   const [branches, setBranches] = useState([]);
@@ -31,11 +31,10 @@ const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
     fetchBranchData();
   }, []);
 
-  // Fetch departments when branch is selected
   const handleBranchChange = (e) => {
     const branchId = e.target.value;
     setSelectedBranch(branchId);
-    setSelectedDepartment(""); // Reset selected department when branch changes
+    setSelectedDepartment("");
 
     if (branchId) {
       const fetchDepartmentByBranchId = async () => {
@@ -61,7 +60,6 @@ const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
     }
   };
 
-  // Fetch employees when both branch and department are selected
   useEffect(() => {
     const fetchEmployees = async () => {
       if (selectedBranch && selectedDepartment) {
@@ -85,27 +83,23 @@ const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
     fetchEmployees();
   }, [selectedBranch, selectedDepartment]);
 
-  // Prepare employee options for the react-select dropdown
   const handleSearch = async (e) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault();
     try {
-      // Construct query parameters
       const queryParams = new URLSearchParams({
-        branch: selectedBranch || "", // Include branch if selected
-        department: selectedDepartment || "", // Include department if selected
-        month: selectedMonthYear || "", // Include month and year both if selected
+        branch: selectedBranch || "",
+        department: selectedDepartment || "",
+        month: selectedMonthYear || "",
       });
 
-      // Handle multiple employees by checking if selectedEmployees is an array
       if (Array.isArray(selectedEmployees) && selectedEmployees.length > 0) {
         selectedEmployees.forEach((employeeId) => {
-          queryParams.append("employee", employeeId); // Add each employee ID to the query
+          queryParams.append("employee", employeeId);
         });
       } else if (selectedEmployees) {
-        queryParams.append("employee", selectedEmployees); // If a single employee is selected, add it
+        queryParams.append("employee", selectedEmployees);
       }
 
-      // Call the API
       const response = await getAPI(
         `/marked-attendance-get-all-by-query?${queryParams.toString()}`,
         {},
@@ -113,12 +107,10 @@ const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
         true
       );
 
-      // Check if the response is valid and has attendance data
       if (!response.hasError && response.data && response.data.data) {
         const employeesData = response.data.data; // Array of employee data
         console.log("employeesData from form", employeesData);
 
-        // Pass the extracted data to the callback
         onDataFetched(employeesData, selectedMonthYear);
       } else {
         console.error("Error fetching attendance data:", response);
@@ -250,7 +242,7 @@ const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
                         title="Reset"
                       >
                         <span className="btn-inner--icon">
-                          <MdOutlineDeleteForever />
+                          <TbRefresh />
                         </span>
                       </Link>
                     </div>

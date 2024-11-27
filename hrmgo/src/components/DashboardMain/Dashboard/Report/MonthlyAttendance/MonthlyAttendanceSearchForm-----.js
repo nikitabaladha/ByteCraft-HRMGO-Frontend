@@ -3,6 +3,7 @@ import getAPI from "../../../../../api/getAPI.js";
 import { Link } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
 import { MdOutlineDeleteForever } from "react-icons/md";
+import { TbRefresh } from "react-icons/tb";
 import Select from "react-select";
 
 const MonthlyAttendanceSearchForm = ({ onDataFetched, selectedMonthYear }) => {
@@ -185,7 +186,7 @@ const MonthlyAttendanceSearchForm = ({ onDataFetched, selectedMonthYear }) => {
                         title="Reset"
                       >
                         <span className="btn-inner--icon">
-                          <MdOutlineDeleteForever />
+                          <TbRefresh />
                         </span>
                       </Link>
                     </div>
