@@ -8,9 +8,10 @@ const IncomeVsExpenseChart = ({ data }) => {
     expenseData: [],
   });
 
-  // Update chart data whenever 'data' changes
   useEffect(() => {
     if (data && data.length) {
+      console.log("Fetched Data:", data);
+
       const categories = data.map((item) => {
         const date = new Date(item.categories);
         return date.toLocaleString("default", {
@@ -30,9 +31,7 @@ const IncomeVsExpenseChart = ({ data }) => {
     chart: {
       type: "bar",
       height: 250,
-      toolbar: {
-        show: false,
-      },
+      toolbar: { show: false },
     },
     plotOptions: {
       bar: {
@@ -41,9 +40,7 @@ const IncomeVsExpenseChart = ({ data }) => {
         columnWidth: "30%",
       },
     },
-    dataLabels: {
-      enabled: false,
-    },
+    dataLabels: { enabled: false },
     xaxis: {
       categories: chartData.categories,
     },
@@ -59,18 +56,10 @@ const IncomeVsExpenseChart = ({ data }) => {
         radius: 2,
         offsetX: -2,
       },
-      itemMargin: {
-        horizontal: 5,
-        vertical: 10,
-      },
+      itemMargin: { horizontal: 5, vertical: 10 },
     },
-    tooltip: {
-      shared: true,
-      intersect: false,
-    },
-    fill: {
-      opacity: 1,
-    },
+    tooltip: { shared: true, intersect: false },
+    fill: { opacity: 1 },
     colors: ["#3EC9D6", "#FF3A6E"],
     grid: {
       borderColor: "#e0e0e0",
@@ -78,12 +67,14 @@ const IncomeVsExpenseChart = ({ data }) => {
     },
     yaxis: {
       min: 0,
-      max: Math.max(...chartData.incomeData, ...chartData.expenseData) + 20,
+      max:
+        Math.max(
+          ...(chartData.incomeData.length ? chartData.incomeData : [0]),
+          ...(chartData.expenseData.length ? chartData.expenseData : [0])
+        ) + 20, // Dynamic max value
       tickAmount: 4,
       labels: {
-        formatter: function (val) {
-          return val.toFixed(0);
-        },
+        formatter: (val) => val.toFixed(0),
       },
     },
   };

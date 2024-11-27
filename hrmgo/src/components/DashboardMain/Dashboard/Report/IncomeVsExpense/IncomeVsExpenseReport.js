@@ -5,9 +5,8 @@ import { LuWallet } from "react-icons/lu";
 import { TbReportMoney } from "react-icons/tb";
 
 const IncomeVsExpenseReport = ({ data, startMonth, endMonth }) => {
-  // Format the month and year if monthYear is provided
   const formatMonthYear = (monthYear) => {
-    if (!monthYear) return ""; // Return empty string if no monthYear is provided
+    if (!monthYear) return "";
     const [year, month] = monthYear.split("-");
     const date = new Date(year, month - 1);
     const options = { year: "numeric", month: "long" };

@@ -1,17 +1,23 @@
-//components/DashboardMain/Report/IncomeVsExpense/IncomeVsExpenseHeader.js
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { TbRefresh } from "react-icons/tb";
 import { IoIosSearch } from "react-icons/io";
-import { MdOutlineDeleteForever } from "react-icons/md";
 
 const IncomeVsExpenseSearchForm = ({ onSearch }) => {
   const [startMonth, setStartMonth] = useState("");
   const [endMonth, setEndMonth] = useState("");
 
-  // Handle form submission and call the onSearch function passed from the parent
+  useEffect(() => {
+    const today = new Date();
+
+    const formattedMonth = today.toISOString().slice(0, 7);
+
+    setStartMonth(formattedMonth);
+    setEndMonth(formattedMonth);
+  }, []);
+
   const handleSearch = () => {
     if (!startMonth || !endMonth) {
       toast.error("Please select both start and end months.");
@@ -22,7 +28,7 @@ const IncomeVsExpenseSearchForm = ({ onSearch }) => {
   };
   return (
     <>
-      <ToastContainer position="top-center" autoClose={3000} />
+      <ToastContainer autoClose={3000} />
       <div className="col-sm-12">
         <div className="mt-2" id="multiCollapseExample1">
           <div className="card">
@@ -53,7 +59,7 @@ const IncomeVsExpenseSearchForm = ({ onSearch }) => {
                             placeholder="Select start month"
                             name="start_month"
                             type="month"
-                            // defaultValue=""
+                            value={startMonth}
                             id="start_month"
                             onChange={(e) => setStartMonth(e.target.value)}
                           />
@@ -70,7 +76,7 @@ const IncomeVsExpenseSearchForm = ({ onSearch }) => {
                             placeholder="Select end month"
                             name="end_month"
                             type="month"
-                            // defaultValue=""
+                            value={endMonth}
                             id="end_month"
                             onChange={(e) => setEndMonth(e.target.value)}
                           />
@@ -101,7 +107,7 @@ const IncomeVsExpenseSearchForm = ({ onSearch }) => {
                           data-bs-original-title="Reset"
                         >
                           <span className="btn-inner--icon">
-                            <MdOutlineDeleteForever />
+                            <TbRefresh />
                           </span>
                         </button>
                       </div>

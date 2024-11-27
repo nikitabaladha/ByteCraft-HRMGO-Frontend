@@ -1,6 +1,4 @@
-//components/DashboardMain/Report/IncomeVsExpense/IncomeVsExpense.js
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import getAPI from "../../../../../api/getAPI.js";
 
 import IncomeVsExpenseHeader from "./IncomVsExpenseHeader";
@@ -9,47 +7,63 @@ import IncomeVsExpenseReport from "./IncomeVsExpenseReport";
 import IncomeVsExpenseChart from "./IncomeVsExpenseChart";
 
 const IncomeVsExpense = () => {
-  // State to hold the data fetched from the API
   const [data, setData] = useState([]);
-
   const [startMonth, setStartMonth] = useState(null);
   const [endMonth, setEndMonth] = useState(null);
 
-  const handleSearch = async (startMonth, endMonth) => {
-    if (!startMonth || !endMonth) {
-      alert("Please select both start and end months.");
-      return;
-    }
-
-    setStartMonth(startMonth);
-    setEndMonth(endMonth);
-
+  const fetchData = async (startMonth, endMonth) => {
     try {
+      const params = {};
+      if (startMonth && endMonth) {
+        params.start_month = startMonth;
+        params.end_month = endMonth;
+      }
+
       const response = await getAPI(
         "/income-expense-chart-get-all",
-        {
-          params: { start_month: startMonth, end_month: endMonth },
-        },
+        { params },
         true,
         true
       );
 
-      setData(response.data.data);
+      const responseData = response.data.data;
+      setData(responseData);
+      if (responseData.length) {
+        const firstMonth = responseData[0].categories;
+        const lastMonth = responseData[responseData.length - 1].categories;
+
+        setStartMonth(firstMonth);
+        setEndMonth(lastMonth);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleSearch = (startMonth, endMonth) => {
+    if (!startMonth || !endMonth) {
+      alert("Please select both start and end months.");
+      return;
+    }
+    setStartMonth(startMonth);
+    setEndMonth(endMonth);
+    fetchData(startMonth, endMonth);
+  };
+
   return (
     <>
-      {/* first row */}
+      {/* First row */}
       <IncomeVsExpenseHeader />
 
       {/* Second row */}
       <div className="row">
-        {" "}
         <IncomeVsExpenseSearchForm onSearch={handleSearch} />
-        {/* Third row  */}
+
+        {/* Third row */}
         <div id="printableArea">
           <IncomeVsExpenseReport
             data={data}
