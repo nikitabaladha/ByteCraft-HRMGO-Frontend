@@ -10,7 +10,6 @@ const BulkAttendanceSearchForm = ({ onDataFetched }) => {
   const [selectedBranch, setSelectedBranch] = useState("");
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
-  // const [selectedDate, setSelectedDate] = useState("");
 
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]

@@ -4,7 +4,12 @@ import postAPI from "../../../../../api/postAPI.js";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const BulkAttendanceTable = ({ filteredEmployees, date }) => {
+const BulkAttendanceTable = ({
+  filteredEmployees,
+  date,
+  selectedBranch,
+  selectedDepartment,
+}) => {
   const [attendanceStatus, setAttendanceStatus] = useState({});
 
   // Handle toggling attendance for an individual employee
@@ -26,6 +31,19 @@ const BulkAttendanceTable = ({ filteredEmployees, date }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // if (!date) {
+    //   toast.error("Date must be selected!");
+    //   return;
+    // }
+    // if (!selectedBranch) {
+    //   toast.error("Branch must be selected!");
+    //   return;
+    // }
+    // if (!selectedDepartment) {
+    //   toast.error("Department must be selected!");
+    //   return;
+    // }
 
     const attendanceData = filteredEmployees.map((employee) => {
       const clockIn = event.target[`in-${employee.id}`]?.value || "09:00";

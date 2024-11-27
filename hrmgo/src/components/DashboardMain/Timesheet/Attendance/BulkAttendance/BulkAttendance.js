@@ -25,11 +25,18 @@ const BulkAttendance = () => {
       <BulkAttendanceHeader />
       <div className="row">
         <BulkAttendanceSearchForm onDataFetched={handleDataFetched} />
-        <BulkAttendanceTable
+        {/* <BulkAttendanceTable
           filteredEmployees={filteredEmployees}
           date={date}
           branchId={branchId}
           departmentId={departmentId}
+        /> */}
+
+        <BulkAttendanceTable
+          filteredEmployees={filteredEmployees}
+          date={date}
+          selectedBranch={branchId}
+          selectedDepartment={departmentId}
         />
       </div>
     </>
