@@ -15,6 +15,7 @@ import MarkedAttendance from "./components/DashboardMain/Timesheet/Attendance/Ma
 import BulkAttendance from "./components/DashboardMain/Timesheet/Attendance/BulkAttendance/BulkAttendance.js";
 import Indicator from "./components/DashboardMain/Performance/Indicator/Indicator.js";
 import Appraisal from "./components/DashboardMain/Performance/Appraisal/Appraisal.js";
+import Award from "./components/DashboardMain/HrAdminSetup/Award/Award.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -58,6 +59,7 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
             />
             <Route path="performance/indicator" element={<Indicator />} />
             <Route path="performance/appraisal" element={<Appraisal />} />
+            <Route path="hr-admin-setup/award" element={<Award />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
