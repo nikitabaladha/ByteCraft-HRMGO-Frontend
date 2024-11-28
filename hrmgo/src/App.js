@@ -18,6 +18,7 @@ import "./css/custom.css";
 import Swal from "sweetalert2";
 
 import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 import AppRoutes from "./routes";
 
@@ -37,6 +38,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <AppRoutes isAuthenticated={isAuthenticated} handleLogin={handleLogin} />
+      <ToastContainer />
     </BrowserRouter>
   );
 };
