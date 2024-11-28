@@ -45,7 +45,7 @@ const TimeSheetCreateModal = ({ closeModal }) => {
           remark: formData.remark,
           hours: formData.hours,
         },
-        false
+        true
       );
 
       if (!response.hasError) {

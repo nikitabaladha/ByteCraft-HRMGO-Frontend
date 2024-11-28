@@ -1,6 +1,19 @@
 import React from "react";
+import { useState } from "react";
+import { FaPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import CreateAwardModal from "./CreateAwardModal";
 
 const AwardHeader = () => {
+  const [isCreateAwardModalOpen, setIsCreateAwardModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsCreateAwardModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsCreateAwardModalOpen(false);
+  };
   return (
     <>
       <div className="page-header">
@@ -12,16 +25,14 @@ const AwardHeader = () => {
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <a href="https://demo.workdo.io/hrmgo/dashboard">Home</a>
+                  <Link to="/hrmgo/dashboard">Home</Link>
                 </li>
                 <li className="breadcrumb-item">Award</li>
               </ul>
             </div>
             <div className="col">
               <div className="float-end ">
-                <a
-                  href="#"
-                  data-url="https://demo.workdo.io/hrmgo/award/create"
+                <Link
                   data-ajax-popup="true"
                   data-title="Create New Award"
                   data-size="lg"
@@ -29,14 +40,17 @@ const AwardHeader = () => {
                   title=""
                   className="btn btn-sm btn-primary"
                   data-bs-original-title="Create"
+                  onClick={openModal}
                 >
-                  <i className="ti ti-plus" />
-                </a>
+                  <FaPlus />
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {isCreateAwardModalOpen && <CreateAwardModal onClose={closeModal} />}
     </>
   );
 };
