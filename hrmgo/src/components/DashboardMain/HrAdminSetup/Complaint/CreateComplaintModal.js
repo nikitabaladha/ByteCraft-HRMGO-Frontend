@@ -5,13 +5,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DatePicker from "react-datepicker";
 
-const CreateResignationModal = ({ onClose }) => {
+const CreateComplaintModal = ({ onClose }) => {
   const [employees, setEmployees] = useState([]);
   const [formData, setFormData] = useState({
-    employeeId: "",
-    resignationDate: new Date(),
-    lastWorkingDay: new Date(),
-    reason: "",
+    complaintFromId: "",
+    complaintAgainstId: "",
+    title: "",
+    complaintDate: new Date(),
+    description: "",
   });
 
   useEffect(() => {
@@ -35,46 +36,40 @@ const CreateResignationModal = ({ onClose }) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleDateChange = (date, name) => {
-    setFormData((prevData) => ({ ...prevData, [name]: date }));
+  const handleDateChange = (date) => {
+    setFormData((prevData) => ({ ...prevData, ComplaintDate: date }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Frontend validation for resignationDate and lastWorkingDay
-    if (formData.resignationDate >= formData.lastWorkingDay) {
-      toast.error("Resignation date must be before the last working day.");
-      return;
-    }
-
     try {
       const response = await postAPI(
-        "/resignation",
+        "/complaint",
         {
-          employeeId: formData.employeeId,
-          resignationDate: formData.resignationDate
-            ? formData.resignationDate.toISOString()
+          complaintFromId: formData.complaintFromId,
+          complaintAgainstId: formData.complaintAgainstId,
+          title: formData.title,
+          complaintDate: formData.complaintDate
+            ? formData.complaintDate.toISOString()
             : null,
-          lastWorkingDay: formData.lastWorkingDay
-            ? formData.lastWorkingDay.toISOString()
-            : null,
-          reason: formData.reason,
+          description: formData.description,
         },
         true
       );
 
       if (!response.hasError) {
-        toast.success("Resignation created successfully!");
+        toast.success("Complaint created successfully!");
         setFormData({
-          employeeId: "",
-          resignationDate: new Date(),
-          lastWorkingDay: new Date(),
-          reason: "",
+          complaintFromId: "",
+          complaintAgainstId: "",
+          title: "",
+          complaintDate: new Date(),
+          description: "",
         });
         onClose();
       } else {
-        toast.error(response.message || "Failed to create resignation.");
+        toast.error(response.message || "Failed to create Complaint.");
       }
     } catch (error) {
       toast.error("An unexpected error occurred. Please try again.");
@@ -84,6 +79,7 @@ const CreateResignationModal = ({ onClose }) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       const modalDialog = document.querySelector(".modal-dialog");
+
       if (modalDialog && !modalDialog.contains(event.target)) {
         onClose();
       }
@@ -115,7 +111,7 @@ const CreateResignationModal = ({ onClose }) => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Create New Resignation
+                Create New Complaint
               </h5>
               <button
                 type="button"
@@ -125,7 +121,7 @@ const CreateResignationModal = ({ onClose }) => {
                 onClick={onClose}
               />
             </div>
-            <div className="body">
+            <div className="body ">
               <form
                 method="POST"
                 acceptCharset="UTF-8"
@@ -136,17 +132,42 @@ const CreateResignationModal = ({ onClose }) => {
                 <input name="_token" type="hidden" />
                 <div className="modal-body">
                   <div className="row">
-                    <div className="form-group col-md-12 col-lg-12">
-                      <label htmlFor="employee_id" className="col-form-label">
-                        Employee
+                    <div className="form-group col-md-6 col-lg-6 ">
+                      <label
+                        htmlFor="complaintFrom_id"
+                        className="col-form-label"
+                      >
+                        Complaint From
                       </label>
                       <span className="text-danger">*</span>
                       <select
                         className="form-control"
-                        name="employeeId"
-                        value={formData.employeeId}
+                        name="complaintFromId"
+                        value={formData.complaintFromId}
                         onChange={handleChange}
-                        disabled={employees.length === 0}
+                      >
+                        <option value="">Select Employee</option>
+                        {employees.map((emp) => (
+                          <option key={emp._id} value={emp._id}>
+                            {emp.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="form-group col-md-6 col-lg-6 ">
+                      <label
+                        htmlFor="complaintAgainst_id"
+                        className="col-form-label"
+                      >
+                        Complaint To
+                      </label>
+                      <span className="text-danger">*</span>
+                      <select
+                        className="form-control"
+                        name="complaintAgainstId"
+                        value={formData.complaintAgainstId}
+                        onChange={handleChange}
                       >
                         <option value="">Select Employee</option>
                         {employees.map((emp) => (
@@ -159,51 +180,40 @@ const CreateResignationModal = ({ onClose }) => {
 
                     <div className="form-group col-md-6 col-lg-6">
                       <label
-                        htmlFor="resignationDate"
+                        htmlFor="complaint_title"
                         className="col-form-label"
                       >
-                        Resignation Date
+                        Title
                       </label>
                       <span className="text-danger">*</span>
-                      <div>
-                        <DatePicker
-                          selected={formData.resignationDate}
-                          onChange={(date) =>
-                            handleDateChange(date, "resignationDate")
-                          }
-                          dateFormat="yyyy-MM-dd"
-                          className="form-control d_week current_date datepicker-input"
-                          autoComplete="off"
-                          required="required"
-                          name="resignationDate"
-                          id="resignationDate"
-                          style={{
-                            width: "100%",
-                          }}
-                        />
-                      </div>
+                      <input
+                        className="form-control"
+                        placeholder="Enter Complaint Title"
+                        required="required"
+                        name="title"
+                        type="text"
+                        id="complaint_title"
+                        value={formData.title}
+                        onChange={handleChange}
+                      />
                     </div>
 
                     <div className="form-group col-md-6 col-lg-6">
-                      <label
-                        htmlFor="lastWorkingDay"
-                        className="col-form-label"
-                      >
-                        Last Working Day
+                      <label htmlFor="date" className="col-form-label">
+                        Complaint Date
                       </label>
                       <span className="text-danger">*</span>
                       <div>
                         <DatePicker
-                          selected={formData.lastWorkingDay}
-                          onChange={(date) =>
-                            handleDateChange(date, "lastWorkingDay")
-                          }
+                          selected={formData.complaintDate}
+                          onChange={handleDateChange}
                           dateFormat="yyyy-MM-dd"
                           className="form-control d_week current_date datepicker-input"
                           autoComplete="off"
                           required="required"
-                          name="lastWorkingDay"
-                          id="lastWorkingDay"
+                          name="complaintDate"
+                          type="text"
+                          id="complaintDate"
                           style={{
                             width: "100%",
                           }}
@@ -212,19 +222,19 @@ const CreateResignationModal = ({ onClose }) => {
                     </div>
 
                     <div className="form-group col-md-12">
-                      <label htmlFor="reason" className="col-form-label">
-                        Reason
+                      <label htmlFor="description" className="col-form-label ">
+                        Description
                       </label>
                       <span className="text-danger">*</span>
                       <textarea
                         className="form-control"
-                        placeholder="Enter Reason"
+                        placeholder="Enter Description"
                         rows={3}
                         required="required"
-                        name="reason"
+                        name="description"
                         cols={50}
-                        id="reason"
-                        value={formData.reason}
+                        id="description"
+                        value={formData.description}
                         onChange={handleChange}
                       />
                     </div>
@@ -233,7 +243,7 @@ const CreateResignationModal = ({ onClose }) => {
                 <div className="modal-footer">
                   <input
                     type="button"
-                    value="Cancel"
+                    defaultValue="Cancel"
                     className="btn btn-secondary"
                     data-bs-dismiss="modal"
                     onClick={onClose}
@@ -255,4 +265,4 @@ const CreateResignationModal = ({ onClose }) => {
   );
 };
 
-export default CreateResignationModal;
+export default CreateComplaintModal;

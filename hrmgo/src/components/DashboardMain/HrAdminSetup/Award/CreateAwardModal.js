@@ -231,11 +231,13 @@ const CreateAwardModal = ({ onClose }) => {
                     data-bs-dismiss="modal"
                     onClick={onClose}
                   />
-                  <input
+                  <button
                     type="submit"
                     defaultValue="Create"
                     className="btn btn-primary"
-                  />
+                  >
+                    Create
+                  </button>
                 </div>
               </form>
             </div>

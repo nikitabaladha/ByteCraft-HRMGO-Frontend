@@ -19,6 +19,7 @@ import Appraisal from "./components/DashboardMain/Performance/Appraisal/Appraisa
 import Award from "./components/DashboardMain/HrAdminSetup/Award/Award.js";
 import Resignation from "./components/DashboardMain/HrAdminSetup/Resignation/Resignation.js";
 import Promotion from "./components/DashboardMain/HrAdminSetup/Promotion/Promotion.js";
+import Complaint from "./components/DashboardMain/HrAdminSetup/Complaint/Complaint.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -68,6 +69,7 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
               element={<Resignation />}
             />
             <Route path="hr-admin-setup/promotion" element={<Promotion />} />
+            <Route path="hr-admin-setup/complaint" element={<Complaint />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
