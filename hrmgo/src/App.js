@@ -6,6 +6,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import "cookieconsent/build/cookieconsent.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "choices.js/public/assets/styles/choices.css";
+
+import "choices.js/public/assets/styles/choices.min.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
 import "bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js";
