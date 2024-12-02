@@ -5,6 +5,8 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import getAPI from "../../../../api/getAPI";
 import UpdateTerminationModal from "./UpdateTerminationModal";
 import ConfirmationDialog from "./ConfirmationDialog";
+import { FaComment } from "react-icons/fa";
+import TerminationDescriptionModal from "./TerminationDescriptionModal";
 
 const TerminationTable = () => {
   const [terminations, setTerminations] = useState([]);
@@ -12,7 +14,7 @@ const TerminationTable = () => {
 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-
+  const [isDescriptionModalOpen, setIsDescriptionModalOpen] = useState(false);
   useEffect(() => {
     const fetchTerminationData = async () => {
       try {
@@ -52,9 +54,13 @@ const TerminationTable = () => {
     setIsUpdateModalOpen(true);
   };
 
+  const handleDescription = (termination) => {
+    setSelectedTermination(termination);
+    setIsDescriptionModalOpen(true);
+  };
+
   const openDeleteDialog = (termination) => {
     console.log("open Delete Dialog pass", termination);
-    // here date is successfully pass then why it is not passing to conformation dialog
     setSelectedTermination(termination);
     setIsDeleteDialogOpen(true);
   };
@@ -89,7 +95,26 @@ const TerminationTable = () => {
                         <td>{termination.terminationType}</td>
                         <td>{formatDate(termination.noticeDate)}</td>
                         <td>{formatDate(termination.terminationDate)}</td>
-                        <td>{termination.description}</td>
+
+                        <div className="dt-buttons">
+                          <div className="action-btn bg-warning">
+                            <Link
+                              className="mx-3 btn btn-sm  align-items-center"
+                              data-ajax-popup="true"
+                              data-bs-toggle="tooltip"
+                              title=""
+                              data-title="Desciption"
+                              data-bs-original-title="Desciption"
+                              aria-label="Desciption"
+                              onClick={() => handleDescription(termination)}
+                            >
+                              <span className="text-white">
+                                <FaComment className="icon_desc fa fa-comment" />
+                              </span>
+                            </Link>
+                          </div>
+                        </div>
+
                         <td className="Action">
                           <div className="dt-buttons">
                             <span>
@@ -161,6 +186,13 @@ const TerminationTable = () => {
         <ConfirmationDialog
           termination={selectedTermination}
           onCancel={handleDeleteCancel}
+        />
+      )}
+
+      {isDescriptionModalOpen && (
+        <TerminationDescriptionModal
+          termination={selectedTermination}
+          onClose={() => setIsDescriptionModalOpen(false)}
         />
       )}
     </>
