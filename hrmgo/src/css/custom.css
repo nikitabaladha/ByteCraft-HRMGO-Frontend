@@ -827,3 +827,36 @@ a > i.ti-plus {
   border-color: transparent !important;
   color: inherit !important;
 }
+
+/* React Date Picker custom css */
+
+.custom-datepicker {
+  width: 190% !important;
+}
+
+/* For medium screens (tablets, small laptops) */
+@media (max-width: 1024px) {
+  .custom-datepicker {
+    width: 150% !important;
+  }
+}
+
+/* For small screens (mobile devices) */
+@media (max-width: 768px) {
+  .custom-datepicker {
+    width: 100% !important;
+  }
+}
+
+/* For very small screens (extra small devices) */
+@media (max-width: 480px) {
+  .custom-datepicker {
+    width: 165% !important;
+  }
+}
+/* For extra small screens (extra small devices) */
+@media (max-width: 360px) {
+  .custom-datepicker {
+    width: 155% !important;
+  }
+}

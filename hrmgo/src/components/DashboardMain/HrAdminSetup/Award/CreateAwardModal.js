@@ -176,15 +176,12 @@ const CreateAwardModal = ({ onClose }) => {
                           selected={formData.date}
                           onChange={handleDateChange}
                           dateFormat="yyyy-MM-dd"
-                          className="form-control d_week current_date datepicker-input"
+                          className="form-control d_week current_date datepicker-input custom-datepicker"
                           autoComplete="off"
                           required="required"
                           name="date"
                           type="text"
                           id="date"
-                          style={{
-                            width: "100%",
-                          }}
                         />
                       </div>
                     </div>

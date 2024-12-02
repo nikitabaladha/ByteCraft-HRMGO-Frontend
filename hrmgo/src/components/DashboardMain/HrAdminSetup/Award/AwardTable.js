@@ -93,30 +93,33 @@ const AwardTable = () => {
               <div className="table-responsive">
                 <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                   <div className="dataTable-top">
-                    <div className="dataTable-dropdown">
-                      <label>
-                        <select
-                          className="dataTable-selector"
-                          value={entriesPerPage}
-                          onChange={handleEntriesChange}
-                        >
-                          {[5, 10, 15, 20, 25, totalEntries].map((option) => (
-                            <option key={option} value={option}>
-                              {option}
-                            </option>
-                          ))}
-                        </select>{" "}
-                        entries per page
-                      </label>
-                    </div>
-                    <div className="dataTable-search">
-                      <input
-                        className="dataTable-input"
-                        placeholder="Search..."
-                        type="text"
-                        value={searchTerm}
-                        onChange={handleSearchChange}
-                      />
+                    <div className="row">
+                      {" "}
+                      <div className="dataTable-dropdown col-md-8">
+                        <label>
+                          <select
+                            className="dataTable-selector"
+                            value={entriesPerPage}
+                            onChange={handleEntriesChange}
+                          >
+                            {[5, 10, 15, 20, 25, totalEntries].map((option) => (
+                              <option key={option} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </select>{" "}
+                          entries per page
+                        </label>
+                      </div>
+                      <div className="dataTable-search col-md-4">
+                        <input
+                          className="dataTable-input"
+                          placeholder="Search..."
+                          type="text"
+                          value={searchTerm}
+                          onChange={handleSearchChange}
+                        />
+                      </div>
                     </div>
                   </div>
 
