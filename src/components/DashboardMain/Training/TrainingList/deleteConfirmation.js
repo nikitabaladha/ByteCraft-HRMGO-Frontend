@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import deleteAPI from "../../../../api/deleteAPI";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,15 +27,7 @@ function ConfirmationDialog({training, onCancel}) {
           console.error("Error while updating leave status:", error);
           toast.error("An error occurred while updating the status.");
         }
-        //   if (response.hasError) {
-            
-        //     // setTrainings(trainings.filter((training) => training._id !== training._id));
-        //     toast.success("Training deleted successfully");
-        //   }
-        // } catch (error) {
-        //   console.error("Error deleting training:", error);
-        //   toast.error("Failed to delete training");
-        // }
+        
       };
 
 
