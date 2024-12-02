@@ -17,6 +17,7 @@ import Indicator from "./components/DashboardMain/Performance/Indicator/Indicato
 import Appraisal from "./components/DashboardMain/Performance/Appraisal/Appraisal.js";
 import TrainingList from "./components/DashboardMain/Training/TrainingList/TrainingList.js";
 import Trainer from "./components/DashboardMain/Training/Trainer/Trainer.js";
+import TrainingListView from "./components/DashboardMain/Training/TrainingList/TrainingListView.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -61,6 +62,7 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
             <Route path="performance/indicator" element={<Indicator />} />
             <Route path="performance/appraisal" element={<Appraisal />} />
             <Route path="/dashboard/training" element={<TrainingList />}></Route>
+            <Route path="/dashboard/trainingList-View/:id" element={<TrainingListView />}></Route>
             <Route path="/dashboard/training/trainer" element={<Trainer />}></Route>
           </Route>
 

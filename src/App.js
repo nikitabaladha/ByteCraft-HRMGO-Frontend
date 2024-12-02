@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
@@ -38,6 +39,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <AppRoutes isAuthenticated={isAuthenticated} handleLogin={handleLogin} />
+      <ToastContainer />
     </BrowserRouter>
   );
 };
