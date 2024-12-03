@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import HolidayHeader from "./HolidayHeader";
 import HolidayTable from "./HolidayTable";
 import HolidaySearchForm from "./HolidaySearchForm";
+import HolidayCalendarView from "./HolidayCalendarView/HolidayCalendarView";
 import getAPI from "../../../../api/getAPI";
 
 const Holiday = () => {
+  const location = useLocation();
   const [holidays, setHolidays] = useState([]);
   const [selectedHoliday, setSelectedHoliday] = useState(null);
 
@@ -29,20 +32,29 @@ const Holiday = () => {
     fetchHolidayData();
   }, []);
 
-  // Handle search data update
   const handleSearchResults = (searchedHolidays) => {
     setHolidays(searchedHolidays);
   };
 
+  // Check
+  const isCalendarRoute =
+    location.pathname === "/dashboard/hr-admin-setup/holiday/calendar";
+
   return (
     <>
-      <HolidayHeader />
-      <HolidaySearchForm onSearchResults={handleSearchResults} />
-      <HolidayTable
-        holidays={holidays} // Pass the fetched holidays to the table
-        selectedHoliday={selectedHoliday}
-        setSelectedHoliday={setSelectedHoliday} // Pass the function to update selected holiday
-      />
+      {isCalendarRoute ? (
+        <HolidayCalendarView />
+      ) : (
+        <>
+          <HolidayHeader />
+          <HolidaySearchForm onSearchResults={handleSearchResults} />
+          <HolidayTable
+            holidays={holidays}
+            selectedHoliday={selectedHoliday}
+            setSelectedHoliday={setSelectedHoliday}
+          />
+        </>
+      )}
     </>
   );
 };

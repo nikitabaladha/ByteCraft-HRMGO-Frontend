@@ -3,16 +3,21 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import DashboardMain from "./components/DashboardMain/DashboardMain";
+
 import Overview from "./components/DashboardMain/Dashboard/Overview/Overview";
 import IncomeVsExpense from "./components/DashboardMain/Dashboard/Report/IncomeVsExpense/IncomeVsExpense.js";
+
 import MonthlyAttendance from "./components/DashboardMain/Dashboard/Report/MonthlyAttendance/MonthlyAttendance.js";
 import Leave from "./components/DashboardMain/Dashboard/Report/Leave/Leave";
 import AccountStatement from "./components/DashboardMain/Dashboard/Report/AccountStatement/AccountStatement.js";
+
 import Employee from "./components/DashboardMain/Employee/Employee.js";
+
 import ManageLeave from "./components/DashboardMain/Timesheet/ManageLeave/ManageLeave.js";
 import TimeSheet from "./components/DashboardMain/Timesheet/TimeSheet/TimeSheet.js";
 import MarkedAttendance from "./components/DashboardMain/Timesheet/Attendance/MarkedAttendance/MarkedAttendance.js";
 import BulkAttendance from "./components/DashboardMain/Timesheet/Attendance/BulkAttendance/BulkAttendance.js";
+
 import Indicator from "./components/DashboardMain/Performance/Indicator/Indicator.js";
 import Appraisal from "./components/DashboardMain/Performance/Appraisal/Appraisal.js";
 
@@ -24,6 +29,7 @@ import Warning from "./components/DashboardMain/HrAdminSetup/Warning/Warning.js"
 import Termination from "./components/DashboardMain/HrAdminSetup/Termination/Termination.js";
 import Announcement from "./components/DashboardMain/HrAdminSetup/Announcement/Announcement.js";
 import Holiday from "./components/DashboardMain/HrAdminSetup/Holiday/Holiday.js";
+import HolidayCalendarView from "./components/DashboardMain/HrAdminSetup/Holiday/HolidayCalendarView/HolidayCalendarView.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -65,8 +71,10 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
               path="time-sheet/attendance/bulk-attendance"
               element={<BulkAttendance />}
             />
+
             <Route path="performance/indicator" element={<Indicator />} />
             <Route path="performance/appraisal" element={<Appraisal />} />
+
             <Route path="hr-admin-setup/award" element={<Award />} />
             <Route
               path="hr-admin-setup/resignation"
@@ -83,7 +91,10 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
               path="hr-admin-setup/announcement"
               element={<Announcement />}
             />
-            <Route path="hr-admin-setup/holiday" element={<Holiday />} />
+
+            <Route path="hr-admin-setup/holiday" element={<Holiday />}>
+              <Route path="calendar" element={<HolidayCalendarView />} />
+            </Route>
           </Route>
 
           <Route path="*" element={<Navigate to="/dashboard" replace />} />

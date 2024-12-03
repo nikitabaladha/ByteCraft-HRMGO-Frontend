@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CreateHolidayModal from "./CreateHolidayModal";
 
 import { FaPlus } from "react-icons/fa";
@@ -12,6 +12,8 @@ const HolidayHeader = () => {
   const [isCreateHolidayModalOpen, setIsCreateHolidayModalOpen] =
     useState(false);
 
+  const navigate = useNavigate();
+
   const openModal = () => {
     setIsCreateHolidayModalOpen(true);
   };
@@ -19,6 +21,12 @@ const HolidayHeader = () => {
   const closeModal = () => {
     setIsCreateHolidayModalOpen(false);
   };
+
+  const navigateToCalendar = (event) => {
+    event.preventDefault();
+    navigate("/dashboard/hr-admin-setup/holiday/calendar");
+  };
+
   return (
     <>
       <div className="page-header">
@@ -59,6 +67,7 @@ const HolidayHeader = () => {
                   className="btn btn-sm btn-primary"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Calendar View"
+                  onClick={navigateToCalendar}
                 >
                   <CiCalendarDate />
                 </Link>
@@ -79,7 +88,7 @@ const HolidayHeader = () => {
           </div>
         </div>
       </div>
-      {/* added extra div for some space */}
+
       <div className="mb-4"></div>
 
       {isCreateHolidayModalOpen && <CreateHolidayModal onClose={closeModal} />}
