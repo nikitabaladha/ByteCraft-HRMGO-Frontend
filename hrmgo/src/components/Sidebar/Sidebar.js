@@ -274,21 +274,21 @@ const menuConfig = [
         label: "Award",
         link: "/dashboard/hr-admin-setup/award",
       },
-      {
-        id: "transfer",
-        label: "Transfer",
-        link: "/dashboard/hr-admin-setup/transfer",
-      },
+      // {
+      //   id: "transfer",
+      //   label: "Transfer",
+      //   link: "/dashboard/hr-admin-setup/transfer",
+      // },
       {
         id: "resignation",
         label: "Resignation",
         link: "/dashboard/hr-admin-setup/resignation",
       },
-      {
-        id: "trip",
-        label: "Trip",
-        link: "/dashboard/hr-admin-setup/trip",
-      },
+      // {
+      //   id: "trip",
+      //   label: "Trip",
+      //   link: "/dashboard/hr-admin-setup/trip",
+      // },
       {
         id: "promotion",
         label: "Promotion",

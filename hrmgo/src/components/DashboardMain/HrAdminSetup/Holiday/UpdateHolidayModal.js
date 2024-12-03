@@ -124,13 +124,13 @@ const UpdateHolidayModal = ({ holiday, onClose }) => {
                         Occasion
                       </label>
                       <span className="text-danger">*</span>
-                      <textarea
+                      <input
                         className="form-control"
-                        placeholder="Enter Description"
-                        rows={3}
                         required="required"
+                        placeholder="Enter Occasion"
                         name="occasion"
-                        cols={50}
+                        type="text"
+                        defaultValue=""
                         id="occasion"
                         value={occasion}
                         onChange={(e) => setOccasion(e.target.value)}
