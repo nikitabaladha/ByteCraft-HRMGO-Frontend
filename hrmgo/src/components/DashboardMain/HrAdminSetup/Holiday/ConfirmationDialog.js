@@ -3,22 +3,22 @@ import deleteAPI from "../../../../api/deleteAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function ConfirmationDialog({ onCancel, award }) {
+function ConfirmationDialog({ onCancel, holiday }) {
   const handleDelete = async () => {
     try {
-      const response = await deleteAPI(`/award/${award.id}`, {}, true);
+      const response = await deleteAPI(`/holiday/${holiday.id}`, {}, true);
 
       if (!response.hasError) {
         onCancel();
 
-        toast.success("Award successfully deleted!");
+        toast.success("Holiday successfully deleted!");
       } else {
-        console.error("Error deleting award:", response.message);
-        toast.error(`Failed to delete award: ${response.message}`);
+        console.error("Error deleting holiday:", response.message);
+        toast.error(`Failed to delete holiday: ${response.message}`);
       }
     } catch (error) {
-      console.error("Error while deleting award:", error);
-      toast.error("An error occurred while deleting award.");
+      console.error("Error while deleting holiday:", error);
+      toast.error("An error occurred while deleting holiday.");
     }
   };
   useEffect(() => {

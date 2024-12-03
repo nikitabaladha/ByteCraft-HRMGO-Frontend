@@ -22,6 +22,8 @@ import Promotion from "./components/DashboardMain/HrAdminSetup/Promotion/Promoti
 import Complaint from "./components/DashboardMain/HrAdminSetup/Complaint/Complaint.js";
 import Warning from "./components/DashboardMain/HrAdminSetup/Warning/Warning.js";
 import Termination from "./components/DashboardMain/HrAdminSetup/Termination/Termination.js";
+import Announcement from "./components/DashboardMain/HrAdminSetup/Announcement/Announcement.js";
+import Holiday from "./components/DashboardMain/HrAdminSetup/Holiday/Holiday.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -77,6 +79,11 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
               path="hr-admin-setup/termination"
               element={<Termination />}
             />
+            <Route
+              path="hr-admin-setup/announcement"
+              element={<Announcement />}
+            />
+            <Route path="hr-admin-setup/holiday" element={<Holiday />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/dashboard" replace />} />

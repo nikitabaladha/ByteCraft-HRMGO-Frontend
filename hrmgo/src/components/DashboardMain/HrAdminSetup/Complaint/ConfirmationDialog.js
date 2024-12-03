@@ -17,8 +17,8 @@ function ConfirmationDialog({ onCancel, complaint }) {
         toast.error(`Failed to delete Complaint: ${response.message}`);
       }
     } catch (error) {
-      console.error("Error while updating leave status:", error);
-      toast.error("An error occurred while updating the status.");
+      console.error("Error while deleting complaint:", error);
+      toast.error("An error occurred while deleting complaint.");
     }
   };
   useEffect(() => {

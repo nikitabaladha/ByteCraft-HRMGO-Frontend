@@ -133,7 +133,7 @@ const IndicatorCreateModal = ({ closeModal }) => {
       branchId: selectedBranch,
       departmentId: selectedDepartment,
       designationId: selectedDesignation,
-      addedById: "6729e81981218962cde61afc",
+      addedById: "67334037a50a86ca6906b46a",
       competencies: groupedCompetencies,
     };
 

@@ -15,7 +15,7 @@ const Announcement = () => {
   useEffect(() => {
     const fetchAnnouncement = async () => {
       try {
-        const response = await getAPI(`/announcement-get-all`, {}, true);
+        const response = await getAPI(`/announcement`, {}, true);
         if (
           !response.hasError &&
           response.data &&

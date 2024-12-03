@@ -318,7 +318,7 @@ const menuConfig = [
       {
         id: "holidays",
         label: "Holidays",
-        link: "/dashboard/hr-admin-setup/holidays",
+        link: "/dashboard/hr-admin-setup/holiday",
       },
     ],
   },
