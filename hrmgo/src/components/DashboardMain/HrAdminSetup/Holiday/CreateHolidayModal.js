@@ -11,6 +11,13 @@ const CreateHolidayModal = ({ onClose }) => {
     endDate: new Date(),
   });
 
+  const formatDateToISO = (date) => {
+    const utcDate = new Date(
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+    );
+    return utcDate.toISOString();
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -23,14 +30,15 @@ const CreateHolidayModal = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const formattedStartDate = formatDateToISO(formData.startDate);
+      const formattedEndDate = formatDateToISO(formData.endDate);
+
       const response = await postAPI(
         "/holiday",
         {
           occasion: formData.occasion,
-          startDate: formData.startDate
-            ? formData.startDate.toISOString()
-            : null,
-          endDate: formData.endDate ? formData.endDate.toISOString() : null,
+          startDate: formattedStartDate,
+          endDate: formattedEndDate,
         },
         true
       );
