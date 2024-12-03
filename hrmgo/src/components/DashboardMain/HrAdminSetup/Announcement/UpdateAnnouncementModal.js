@@ -122,7 +122,8 @@ const UpdateAnnouncementModal = ({ announcement, onClose }) => {
         formData,
         true
       );
-      if (!response.hasError) {
+
+      if (!response.data.hasError) {
         toast.success("Announcement updated successfully!");
         onClose();
       } else {
@@ -133,179 +134,209 @@ const UpdateAnnouncementModal = ({ announcement, onClose }) => {
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const modalDialog = document.querySelector(".modal-dialog");
+
+      if (modalDialog && !modalDialog.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   return (
-    <div
-      className="modal fade show"
-      id="commonModal"
-      tabIndex={-1}
-      style={{ display: "block", backgroundColor: " rgba(0, 0, 0, 0.5)" }}
-      aria-modal="true"
-      role="dialog"
-    >
-      <div className="modal-dialog modal-lg" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Update Announcement</h5>
-            <button
-              type="button"
-              className="btn-close"
-              aria-label="Close"
-              onClick={onClose}
-            />
-          </div>
-          <div className="body">
-            <form method="POST" onSubmit={handleUpdate}>
-              <div className="modal-body">
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label htmlFor="title" className="col-form-label">
-                        Announcement Title
-                      </label>
-                      <span className="text-danger">*</span>
-                      <input
-                        className="form-control"
-                        placeholder="Enter Announcement Title"
-                        required
-                        name="title"
-                        type="text"
-                        id="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                      />
+    <>
+      {" "}
+      <div
+        className="modal fade show"
+        id="commonModal"
+        tabIndex={-1}
+        style={{ display: "block", backgroundColor: " rgba(0, 0, 0, 0.5)" }}
+        aria-modal="true"
+        role="dialog"
+      >
+        <div className="modal-dialog modal-lg" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Update Announcement</h5>
+              <button
+                type="button"
+                className="btn-close"
+                aria-label="Close"
+                onClick={onClose}
+              />
+            </div>
+            <div className="body">
+              <form method="POST" onSubmit={handleUpdate}>
+                <div className="modal-body">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label htmlFor="title" className="col-form-label">
+                          Announcement Title
+                        </label>
+                        <span className="text-danger">*</span>
+                        <input
+                          className="form-control"
+                          placeholder="Enter Announcement Title"
+                          required
+                          name="title"
+                          type="text"
+                          id="title"
+                          value={formData.title}
+                          onChange={handleChange}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label htmlFor="branch_id" className="col-form-label">
-                        Branch
-                      </label>
-                      <span className="text-danger">*</span>
-                      <select
-                        className="form-control"
-                        id="branch_id"
-                        name="branch"
-                        value={formData.branchId}
-                        onChange={handleBranchChange}
-                        required
-                      >
-                        <option value="">Select Branch</option>
-                        {branches.map((branch) => (
-                          <option key={branch._id} value={branch._id}>
-                            {branch.branchName}
-                          </option>
-                        ))}
-                      </select>
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label htmlFor="branch_id" className="col-form-label">
+                          Branch
+                        </label>
+                        <span className="text-danger">*</span>
+                        <select
+                          className="form-control"
+                          id="branch_id"
+                          name="branch"
+                          value={formData.branchId}
+                          onChange={handleBranchChange}
+                          required
+                        >
+                          <option value="">Select Branch</option>
+                          {branches.map((branch) => (
+                            <option key={branch._id} value={branch._id}>
+                              {branch.branchName}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label htmlFor="department_id" className="col-form-label">
-                        Department
-                      </label>
-                      <span className="text-danger">*</span>
-                      <select
-                        className="form-control"
-                        id="department_id"
-                        name="department"
-                        value={formData.departmentId}
-                        onChange={handleDepartmentChange}
-                        required
-                      >
-                        <option value="">Select Department</option>
-                        {departments.map((department) => (
-                          <option key={department._id} value={department._id}>
-                            {department.departmentName}
-                          </option>
-                        ))}
-                      </select>
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label
+                          htmlFor="department_id"
+                          className="col-form-label"
+                        >
+                          Department
+                        </label>
+                        <span className="text-danger">*</span>
+                        <select
+                          className="form-control"
+                          id="department_id"
+                          name="department"
+                          value={formData.departmentId}
+                          onChange={handleDepartmentChange}
+                          required
+                        >
+                          <option value="">Select Department</option>
+                          {departments.map((department) => (
+                            <option key={department._id} value={department._id}>
+                              {department.departmentName}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label htmlFor="employee_id" className="col-form-label">
-                        Employee
-                      </label>
-                      <Select
-                        isMulti
-                        name="employees"
-                        options={employees}
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                        onChange={handleEmployeeChange}
-                        value={employees.filter((emp) =>
-                          formData.employeeId.includes(emp.value)
-                        )}
-                      />
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label htmlFor="employee_id" className="col-form-label">
+                          Employee
+                        </label>
+                        <Select
+                          isMulti
+                          name="employees"
+                          options={employees}
+                          className="basic-multi-select"
+                          classNamePrefix="select"
+                          onChange={handleEmployeeChange}
+                          value={employees.filter((emp) =>
+                            formData.employeeId.includes(emp.value)
+                          )}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label htmlFor="start_date" className="col-form-label">
-                        Start Date
-                      </label>
-                      <span className="text-danger">*</span>
-                      <DatePicker
-                        selected={formData.startDate}
-                        onChange={(date) => handleDateChange(date, "startDate")}
-                        className="form-control"
-                        dateFormat="yyyy/MM/dd"
-                        required
-                      />
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label htmlFor="start_date" className="col-form-label">
+                          Start Date
+                        </label>
+                        <span className="text-danger">*</span>
+                        <div>
+                          <DatePicker
+                            selected={formData.startDate}
+                            onChange={(date) =>
+                              handleDateChange(date, "startDate")
+                            }
+                            className="form-control"
+                            dateFormat="yyyy/MM/dd"
+                            required
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label htmlFor="end_date" className="col-form-label">
-                        End Date
-                      </label>
-                      <span className="text-danger">*</span>
-                      <DatePicker
-                        selected={formData.endDate}
-                        onChange={(date) => handleDateChange(date, "endDate")}
-                        className="form-control"
-                        dateFormat="yyyy/MM/dd"
-                        required
-                      />
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label htmlFor="end_date" className="col-form-label">
+                          End Date
+                        </label>
+                        <span className="text-danger">*</span>
+                        <div>
+                          <DatePicker
+                            selected={formData.endDate}
+                            onChange={(date) =>
+                              handleDateChange(date, "endDate")
+                            }
+                            className="form-control"
+                            dateFormat="yyyy/MM/dd"
+                            required
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-md-12">
-                    <div className="form-group">
-                      <label htmlFor="description" className="col-form-label">
-                        Announcement Description
-                      </label>
-                      <span className="text-danger">*</span>
-                      <textarea
-                        className="form-control"
-                        rows="3"
-                        name="description"
-                        required
-                        placeholder="Enter Announcement Description"
-                        id="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                      ></textarea>
+                    <div className="col-md-12">
+                      <div className="form-group">
+                        <label htmlFor="description" className="col-form-label">
+                          Announcement Description
+                        </label>
+                        <span className="text-danger">*</span>
+                        <textarea
+                          className="form-control"
+                          rows="3"
+                          name="description"
+                          required
+                          placeholder="Enter Announcement Description"
+                          id="description"
+                          value={formData.description}
+                          onChange={handleChange}
+                        ></textarea>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={onClose}
-                >
-                  Close
-                </button>
-                <button type="submit" className="btn btn-primary">
-                  Update Announcement
-                </button>
-              </div>
-            </form>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={onClose}
+                  >
+                    Close
+                  </button>
+                  <button type="submit" className="btn btn-primary">
+                    Update
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
