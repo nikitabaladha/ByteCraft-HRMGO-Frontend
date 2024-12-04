@@ -41,7 +41,6 @@ const Holiday = () => {
     location.pathname === "/dashboard/hr-admin-setup/holiday/calendar";
 
   return (
-    // i want to pass holiday data to the Holiday calendar view from that i want to pass it to Hiliday list so how to do it please tell me
     <>
       {isCalendarRoute ? (
         <HolidayCalendarView
