@@ -1,45 +1,13 @@
-// import React, { useState, useEffect } from "react";
-// import HolidayCalendarHeader from "./HolidayCalendarHeader";
-// import HolidayCalendarSearchForm from "./HolidayCalendarSearchForm";
-
-// import HolidayCalendar from "./HolidayCalendar";
-// import HolidayList from "./HolidayList";
-
-// const HolidayCalendarView = ({
-//   holidays,
-//   selectedHoliday,
-//   setSelectedHoliday,
-// }) => {
-//   return (
-//     <>
-//       <HolidayCalendarHeader />
-//       <HolidayCalendarSearchForm />
-//       <div className="row">
-//         <HolidayCalendar
-//           holidays={holidays}
-//           selectedHoliday={selectedHoliday}
-//           setSelectedHoliday={setSelectedHoliday}
-//         />
-//         <HolidayList holidays={holidays} />
-//       </div>
-//     </>
-//   );
-// };
-
-// export default HolidayCalendarView;
-
 import React, { useState, useEffect } from "react";
 import HolidayCalendarHeader from "./HolidayCalendarHeader";
 import HolidayCalendarSearchForm from "./HolidayCalendarSearchForm";
-
 import getAPI from "../../../../../api/getAPI";
-
 import HolidayCalendar from "./HolidayCalendar";
 import HolidayList from "./HolidayList";
 
 const HolidayCalendarView = () => {
-  const [holidays, setHolidays] = useState([]);
-  const [selectedHoliday, setSelectedHoliday] = useState(null);
+  const [allHolidays, setAllHolidays] = useState([]); // For Calendar
+  const [filteredHolidays, setFilteredHolidays] = useState([]); // For List
 
   useEffect(() => {
     const fetchHolidayData = async () => {
@@ -50,7 +18,9 @@ const HolidayCalendarView = () => {
           response.data &&
           Array.isArray(response.data.data)
         ) {
-          setHolidays(response.data.data);
+          const holidays = response.data.data;
+          setAllHolidays(holidays); // Set data for Calendar
+          setFilteredHolidays(holidays); // Initialize List with all data
         } else {
           console.error("Invalid response format or error in response");
         }
@@ -63,19 +33,16 @@ const HolidayCalendarView = () => {
   }, []);
 
   const handleSearchResults = (searchedHolidays) => {
-    setHolidays(searchedHolidays);
+    setFilteredHolidays(searchedHolidays); // Only update list data
   };
+
   return (
     <>
       <HolidayCalendarHeader />
       <HolidayCalendarSearchForm onSearchResults={handleSearchResults} />
       <div className="row">
-        <HolidayCalendar
-          holidays={holidays}
-          selectedHoliday={selectedHoliday}
-          setSelectedHoliday={setSelectedHoliday}
-        />
-        <HolidayList holidays={holidays} />
+        <HolidayCalendar holidays={allHolidays} />
+        <HolidayList holidays={filteredHolidays} />
       </div>
     </>
   );
