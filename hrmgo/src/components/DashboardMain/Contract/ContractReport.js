@@ -42,7 +42,7 @@ const ContractReport = () => {
               <div className="row align-items-center">
                 <div className="col">
                   <h6 className="m-b-20">{data.title}</h6>
-                  <h3 className={data.textClass}>${data.value.toFixed(2)}</h3>
+                  <h3 className={data.textClass}>₹{data.value.toFixed(2)}</h3>
                 </div>
                 <div className={`badge theme-avtar ${data.badgeClass}`}>
                   <i className={data.iconClass} />

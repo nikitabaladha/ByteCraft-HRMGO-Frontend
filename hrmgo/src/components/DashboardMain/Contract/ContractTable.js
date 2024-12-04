@@ -5,6 +5,7 @@ import { TiEyeOutline } from "react-icons/ti";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
 import ConfirmationDialog from "./ConfirmationDialog";
+import UpdateContractModal from "./UpdateContractModal";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -16,6 +17,7 @@ function formatDate(dateString) {
 
 const ContractTable = ({ contracts }) => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedContracts, setSelectedContracts] = useState(null);
 
   const openDeleteDialog = (contract) => {
@@ -26,6 +28,11 @@ const ContractTable = ({ contracts }) => {
   const handleDeleteCancel = () => {
     setIsDeleteDialogOpen(false);
     setSelectedContracts(null);
+  };
+
+  const handleUpdate = (contract) => {
+    setSelectedContracts(contract);
+    setIsUpdateModalOpen(true);
   };
 
   const statusColors = {
@@ -108,11 +115,11 @@ const ContractTable = ({ contracts }) => {
                             </div>
                             <div className="action-btn bg-info me-2">
                               <Link
-                                to=""
                                 className="mx-3 btn btn-sm d-inline-flex align-items-center"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
                                 title="Edit"
+                                onClick={() => handleUpdate(contract)}
                               >
                                 <span className="text-white">
                                   <TbPencil />
@@ -148,6 +155,13 @@ const ContractTable = ({ contracts }) => {
         <ConfirmationDialog
           contracts={selectedContracts}
           onCancel={handleDeleteCancel}
+        />
+      )}
+
+      {isUpdateModalOpen && (
+        <UpdateContractModal
+          contracts={selectedContracts}
+          onClose={() => setIsUpdateModalOpen(false)}
         />
       )}
     </>
