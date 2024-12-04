@@ -6,6 +6,7 @@ import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
 import ConfirmationDialog from "./ConfirmationDialog";
 import UpdateContractModal from "./UpdateContractModal";
+import CopyContractModal from "./CopyContractModal";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -18,6 +19,7 @@ function formatDate(dateString) {
 const ContractTable = ({ contracts }) => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
   const [selectedContracts, setSelectedContracts] = useState(null);
 
   const openDeleteDialog = (contract) => {
@@ -33,6 +35,11 @@ const ContractTable = ({ contracts }) => {
   const handleUpdate = (contract) => {
     setSelectedContracts(contract);
     setIsUpdateModalOpen(true);
+  };
+
+  const handleCopyContract = (contract) => {
+    setSelectedContracts(contract);
+    setIsCopyModalOpen(true);
   };
 
   const statusColors = {
@@ -94,6 +101,7 @@ const ContractTable = ({ contracts }) => {
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
                                 title="Duplicate"
+                                onClick={() => handleCopyContract(contract)}
                               >
                                 <span className="text-white">
                                   <TbCopy />
@@ -162,6 +170,13 @@ const ContractTable = ({ contracts }) => {
         <UpdateContractModal
           contracts={selectedContracts}
           onClose={() => setIsUpdateModalOpen(false)}
+        />
+      )}
+
+      {isCopyModalOpen && (
+        <CopyContractModal
+          contracts={selectedContracts}
+          onClose={() => setIsCopyModalOpen(false)}
         />
       )}
     </>
