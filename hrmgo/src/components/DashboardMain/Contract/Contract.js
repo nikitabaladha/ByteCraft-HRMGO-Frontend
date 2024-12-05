@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ContractHeader from "./ContractHeader";
 import ContractReport from "./ContractReport";
 import ContractTable from "./ContractTable";
@@ -8,7 +8,7 @@ import getAPI from "../../../api/getAPI";
 import ContractDetail from "./ContractDetail/ContractDetail";
 
 const Contract = () => {
-  const location = useLocation();
+  const { id } = useParams();
   const [contracts, setContracts] = useState([]);
 
   const fetchContractData = async () => {
@@ -32,14 +32,15 @@ const Contract = () => {
     fetchContractData();
   }, []);
 
-  // Check
-  const isContractViewRoute =
-    location.pathname === "/dashboard/contract/contract-detail";
+  // Find the contract details for the current ID (if available)
+  const selectedContract = id
+    ? contracts.find((contract) => contract.id === parseInt(id))
+    : null;
 
   return (
     <>
-      {isContractViewRoute ? (
-        <ContractDetail />
+      {id ? ( // If there's an ID in the route, render the detail component
+        <ContractDetail contract={selectedContract} />
       ) : (
         <>
           <ContractHeader />
@@ -54,7 +55,6 @@ const Contract = () => {
               </div>
             </div>
           </div>
-          />
         </>
       )}
     </>

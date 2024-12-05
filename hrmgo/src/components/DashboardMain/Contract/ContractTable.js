@@ -19,9 +19,9 @@ function formatDate(dateString) {
 const ContractTable = ({ contracts }) => {
   const navigate = useNavigate();
 
-  const navigateToCalendarDetail = (event) => {
+  const navigateToContractDetail = (event, contract) => {
     event.preventDefault();
-    navigate("/dashboard/contract/contract-detail");
+    navigate(`/dashboard/contract/${contract.id}`, { state: contract });
   };
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -122,7 +122,9 @@ const ContractTable = ({ contracts }) => {
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
                                 title="View"
-                                onClick={navigateToCalendarDetail}
+                                onClick={(e) =>
+                                  navigateToContractDetail(e, contract)
+                                }
                               >
                                 <span className="text-white">
                                   <TiEyeOutline />

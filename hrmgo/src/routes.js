@@ -98,9 +98,8 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
               <Route path="calendar" element={<HolidayCalendarView />} />
             </Route>
 
-            <Route path="contract" element={<Contract />}>
-              <Route path="contract-detail" element={<ContractDetail />} />
-            </Route>
+            <Route path="contract" element={<Contract />} />
+            <Route path="contract/:id" element={<ContractDetail />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/dashboard" replace />} />

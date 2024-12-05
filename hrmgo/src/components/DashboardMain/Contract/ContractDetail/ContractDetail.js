@@ -7,10 +7,22 @@ import ContractDetailDescription from "./ContractDetailDescription";
 import ContractDetailAttachment from "./ContractDetailAttachment";
 import ContractDetailComment from "./ContractDetailComment";
 import ContractDetailNotes from "./ContractDetailNotes";
+import { useLocation, useParams } from "react-router-dom";
 
-const ContractDetail = () => {
+const ContractDetail = ({ contract }) => {
+  const location = useLocation();
+  const { id } = useParams();
+
+  // Use `contract` from props or fallback to state if available
+  const contractData = contract || location.state;
+
+  if (!contractData) {
+    return <p>Loading contract details...</p>;
+  }
+
   return (
     <>
+      {" "}
       <ContractDetailHeader />
       <div className="row">
         <div className="">
@@ -25,7 +37,9 @@ const ContractDetail = () => {
                       {/* cards */}
                       <ContractDetailInfoCard />
                       {/* contract detail */}
-                      <ContractDetailCard />
+
+                      {/* I want to pass contract data in contract detail card */}
+                      <ContractDetailCard contractData={contractData} />
                     </div>
 
                     {/* Description */}
