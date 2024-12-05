@@ -7,8 +7,8 @@ import { IoMdSearch } from "react-icons/io";
 const TimeSheetSearchForm = ({ setFilters }) => {
   const [employeeName, setEmployeeName] = useState([]);
   const [formData, setFormData] = useState({
-    startDate: "",
-    endDate: "",
+    startDate: new Date().toISOString().split("T")[0],
+    endDate: new Date().toISOString().split("T")[0],
     employeeId: "",
   });
 
@@ -25,6 +25,7 @@ const TimeSheetSearchForm = ({ setFilters }) => {
         console.error("Error fetching Employee Name:", err);
       }
     };
+
     fetchEmployeeName();
   }, []);
 

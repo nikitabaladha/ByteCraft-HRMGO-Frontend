@@ -8,7 +8,7 @@ const AttendanceTable = ({ attendanceData, selectedMonthYear }) => {
   const [year, month] = selectedMonthYear.split("-").map(Number);
 
   const monthName = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
-    new Date(year, month - 1) // Adjust for zero-based month index
+    new Date(year, month - 1)
   );
 
   const totalDaysInMonth = new Date(year, month, 0).getDate();

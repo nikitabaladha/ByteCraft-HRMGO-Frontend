@@ -32,19 +32,6 @@ const BulkAttendanceTable = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // if (!date) {
-    //   toast.error("Date must be selected!");
-    //   return;
-    // }
-    // if (!selectedBranch) {
-    //   toast.error("Branch must be selected!");
-    //   return;
-    // }
-    // if (!selectedDepartment) {
-    //   toast.error("Department must be selected!");
-    //   return;
-    // }
-
     const attendanceData = filteredEmployees.map((employee) => {
       const clockIn = event.target[`in-${employee.id}`]?.value || "09:00";
       const clockOut = event.target[`out-${employee.id}`]?.value || "18:00";

@@ -6,11 +6,11 @@ import AttendanceTable from "./AttendanceTable";
 
 const MonthlyAttendance = () => {
   const [attendanceData, setAttendanceData] = useState([]);
-  const [selectedMonthYear, setSelectedMonthYear] = useState(""); // Add state for monthYear
+  const [selectedMonthYear, setSelectedMonthYear] = useState("");
 
   const handleDataFetched = (data, monthYear) => {
     setAttendanceData(data);
-    setSelectedMonthYear(monthYear); // Capture the selected monthYear
+    setSelectedMonthYear(monthYear);
     console.log("Fetched attendance data:", data, "Month-Year:", monthYear);
   };
 
@@ -23,7 +23,7 @@ const MonthlyAttendance = () => {
 
         <AttendanceTable
           attendanceData={attendanceData}
-          selectedMonthYear={selectedMonthYear} // Pass monthYear to AttendanceTable
+          selectedMonthYear={selectedMonthYear}
         />
       </div>
     </>
