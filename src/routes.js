@@ -18,6 +18,9 @@ import Appraisal from "./components/DashboardMain/Performance/Appraisal/Appraisa
 import TrainingList from "./components/DashboardMain/Training/TrainingList/TrainingList.js";
 import Trainer from "./components/DashboardMain/Training/Trainer/Trainer.js";
 import TrainingListView from "./components/DashboardMain/Training/TrainingList/TrainingListView.js";
+import RecruitmentJobs from "./components/DashboardMain/Recruitment/Jobs/jobs.js";
+import CreateJob from "./components/DashboardMain/Recruitment/Create Jobs/CreateJob.js";
+import JobView from "./components/DashboardMain/Recruitment/Jobs/JobView.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -64,6 +67,9 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
             <Route path="/dashboard/training" element={<TrainingList />}></Route>
             <Route path="/dashboard/trainingList-View/:id" element={<TrainingListView />}></Route>
             <Route path="/dashboard/training/trainer" element={<Trainer />}></Route>
+            <Route path="/dashboard/recruitment/create-job" element={<CreateJob/>}></Route>
+            <Route path="/dashboard/recruitment/jobs" element={<RecruitmentJobs/>}></Route>
+            <Route path="/dashboard/recruitment/jobs/:id" element={<JobView/>}></Route>
           </Route>
 
           

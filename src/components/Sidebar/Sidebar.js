@@ -262,6 +262,7 @@ const menuConfig = [
     ],
   },
 
+  
   // hr admin setup
   {
     id: "hrAdminSetup",
@@ -333,12 +334,12 @@ const menuConfig = [
       {
         id: "jobs",
         label: "Jobs",
-        link: "/dashboard/recruitment/job",
+        link: "/dashboard/recruitment/jobs",
       },
       {
         id: "jobCreate",
         label: "Job Create",
-        link: "/dashboard/recruitment/job-create",
+        link: "/dashboard/recruitment/create-job",
       },
       {
         id: "jobApplication",
