@@ -23,7 +23,7 @@ const ContractDetail = ({ contract }) => {
   return (
     <>
       {" "}
-      <ContractDetailHeader />
+      <ContractDetailHeader contractData={contractData} />
       <div className="row">
         <div className="">
           <div className="col-xl-12">

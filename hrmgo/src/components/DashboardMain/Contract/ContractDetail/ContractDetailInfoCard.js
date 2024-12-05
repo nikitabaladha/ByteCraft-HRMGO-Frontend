@@ -1,5 +1,7 @@
 import React from "react";
-
+import { LuUserPlus } from "react-icons/lu";
+import { LuMousePointerClick } from "react-icons/lu";
+import { FaRegFile } from "react-icons/fa";
 const ContractDetailInfoCard = () => {
   return (
     <>
@@ -10,7 +12,7 @@ const ContractDetailInfoCard = () => {
             <div className="card">
               <div className="card-body" style={{ minHeight: 205 }}>
                 <div className="badge theme-avtar bg-primary">
-                  <i className="ti ti-user-plus" />
+                  <LuUserPlus />
                 </div>
                 <h6 className="mb-3 mt-4">Attachment</h6>
                 <h3 className="mb-0">1</h3>
@@ -22,7 +24,7 @@ const ContractDetailInfoCard = () => {
             <div className="card">
               <div className="card-body" style={{ minHeight: 205 }}>
                 <div className="badge theme-avtar bg-info">
-                  <i className="ti ti-click" />
+                  <LuMousePointerClick />
                 </div>
                 <h6 className="mb-3 mt-4">Comment</h6>
                 <h3 className="mb-0">2</h3>
@@ -33,7 +35,7 @@ const ContractDetailInfoCard = () => {
             <div className="card">
               <div className="card-body" style={{ minHeight: 205 }}>
                 <div className="badge theme-avtar bg-warning">
-                  <i className="ti ti-file" />
+                  <FaRegFile />
                 </div>
                 <h6 className="mb-3 mt-4 ">Notes</h6>
                 <h3 className="mb-0">2</h3>

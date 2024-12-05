@@ -1,6 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { MdMailOutline } from "react-icons/md";
+import { TbCopy } from "react-icons/tb";
+import { MdOutlineFileDownload } from "react-icons/md";
+import { TiEyeOutline } from "react-icons/ti";
+import { TbWritingSign } from "react-icons/tb";
 
-const ContractDetailHeader = () => {
+const ContractDetailHeader = ({ contractData }) => {
   return (
     <>
       <div className="page-header">
@@ -8,14 +14,14 @@ const ContractDetailHeader = () => {
           <div className="row align-items-center">
             <div className="col-auto">
               <div className="page-header-title">
-                <h4 className="m-b-10">At nostrum laboriosa</h4>
+                <h4 className="m-b-10">{contractData.subject || "N/A"} </h4>
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <a href="https://demo.workdo.io/hrmgo/dashboard">Home</a>
+                  <Link to="/hrmgo/dashboard">Home</Link>
                 </li>
                 <li className="breadcrumb-item" aria-current="page">
-                  <a href="https://demo.workdo.io/hrmgo/contract">Contract</a>
+                  <Link to="/hrmgo/contract">Contract</Link>
                 </li>
                 <li className="breadcrumb-item active" aria-current="page" />
                 Contract Detail
@@ -24,34 +30,15 @@ const ContractDetailHeader = () => {
             <div className="col">
               <div className="float-end ">
                 <div className="col-md-12 text-end d-flex ">
-                  <div className="text-end pt-2">
-                    <a
-                      href="#"
-                      className="btn btn-sm btn-primary"
-                      data-size="medium"
-                      data-ajax-popup-over="true"
-                      data-url="https://demo.workdo.io/hrmgo/generate/contracts"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title=""
-                      data-title="Generate Content With AI"
-                      data-bs-original-title="Generate"
-                    >
-                      <i className="fas fa-robot" /> Generate With AI
-                    </a>
-                  </div>
-                  <a
-                    href="https://demo.workdo.io/hrmgo/contract/1/mail"
+                  <Link
                     className="btn btn-sm btn-primary btn-icon m-2"
                     data-bs-toggle="tooltip"
                     data-bs-original-title="Send Email"
                   >
-                    <i className="ti ti-mail text-white" />
-                  </a>
-                  <a
-                    href="#"
+                    <MdMailOutline className="text-white" />
+                  </Link>
+                  <Link
                     data-size="lg"
-                    data-url="https://demo.workdo.io/hrmgo/contract/copy/1"
                     data-ajax-popup="true"
                     data-title="Duplicate"
                     className="btn btn-sm btn-primary btn-icon m-2"
@@ -61,10 +48,9 @@ const ContractDetailHeader = () => {
                     data-bs-original-title="Duplicate"
                     aria-label="Duplicate"
                   >
-                    <i className="ti ti-copy text-white" />
-                  </a>
-                  <a
-                    href="https://demo.workdo.io/hrmgo/contract/pdf/eyJpdiI6IlUremx3Z2Ura0lqMmZoWkdNbjIxdlE9PSIsInZhbHVlIjoieTdLTHlxSnRzd2VyT2pDck14Zks3QT09IiwibWFjIjoiYjYyMjZjZmQ0NTRmYzRiMjMzY2U5YWVkMDg3OTA1ZTRiZWQwMWM2NTVjMzc3Zjk5MmYwYzZmZjVkZGZjM2U3NCIsInRhZyI6IiJ9"
+                    <TbCopy className="text-white" />
+                  </Link>
+                  <Link
                     className="btn btn-sm btn-primary btn-icon m-2"
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
@@ -73,10 +59,9 @@ const ContractDetailHeader = () => {
                     data-bs-original-title="Download"
                     aria-label="Download"
                   >
-                    <i className="ti ti-download text-white" />
-                  </a>
-                  <a
-                    href="https://demo.workdo.io/hrmgo/contract/1/get_contract"
+                    <MdOutlineFileDownload className="text-white" />
+                  </Link>
+                  <Link
                     target="_blank"
                     className="btn btn-sm btn-primary btn-iconn m-2"
                     title=""
@@ -85,9 +70,10 @@ const ContractDetailHeader = () => {
                     data-bs-original-title="Preview"
                   >
                     <i className="ti ti-eye" />
-                  </a>
-                  <a
-                    href="#"
+
+                    <TiEyeOutline />
+                  </Link>
+                  <Link
                     className="btn btn-sm btn-primary btn-icon m-2"
                     data-url="https://demo.workdo.io/hrmgo/signature/1"
                     data-ajax-popup="true"
@@ -98,8 +84,8 @@ const ContractDetailHeader = () => {
                     data-bs-placement="top"
                     data-bs-original-title="Signature"
                   >
-                    <i className="ti ti-writing-sign" />
-                  </a>
+                    <TbWritingSign />
+                  </Link>
                 </div>
               </div>
             </div>

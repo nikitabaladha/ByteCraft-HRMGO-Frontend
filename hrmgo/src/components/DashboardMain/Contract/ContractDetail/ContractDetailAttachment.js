@@ -1,4 +1,7 @@
 import React from "react";
+import { MdOutlineFileDownload } from "react-icons/md";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const ContractDetailAttachment = () => {
   return (
@@ -35,8 +38,7 @@ const ContractDetailAttachment = () => {
                       <div className="dt-buttons">
                         <span>
                           <div className="action-btn bg-warning me-2">
-                            <a
-                              href="https://demo.workdo.io/hrmgo/storage/contract_attechment/user-4.jpg"
+                            <Link
                               className=" btn btn-sm d-inline-flex align-items-center"
                               download=""
                               data-bs-toggle="tooltip"
@@ -44,17 +46,13 @@ const ContractDetailAttachment = () => {
                               data-bs-original-title="Download"
                             >
                               <span className="text-white">
-                                <i className="ti ti-download" />
+                                <MdOutlineFileDownload />
                               </span>
-                            </a>
+                            </Link>
                           </div>
                           <div className="action-btn bg-danger">
-                            <form
-                              method="GET"
-                              action="https://demo.workdo.io/hrmgo/contract/1/file/delete/1"
-                              acceptCharset="UTF-8"
-                            >
-                              <a
+                            <form method="GET" acceptCharset="UTF-8">
+                              <Link
                                 href="#"
                                 className="mx-3 btn btn-sm  align-items-center bs-pass-para"
                                 data-bs-toggle="tooltip"
@@ -63,9 +61,9 @@ const ContractDetailAttachment = () => {
                                 aria-label="Delete"
                               >
                                 <span className="text-white">
-                                  <i className="ti ti-trash" />
+                                  <FaRegTrashAlt />
                                 </span>
-                              </a>
+                              </Link>
                             </form>
                           </div>
                         </span>

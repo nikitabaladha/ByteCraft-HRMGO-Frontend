@@ -1,4 +1,7 @@
 import React from "react";
+import { TbBrandTelegram } from "react-icons/tb";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const ContractDetailAttachment = () => {
   return (
@@ -14,11 +17,7 @@ const ContractDetailAttachment = () => {
                 <div className="card-footer">
                   <div className="col-12 d-flex">
                     <div className="form-group mb-0 form-send w-100">
-                      <input
-                        type="hidden"
-                        id="commenturl"
-                        defaultValue="https://demo.workdo.io/hrmgo/contract/1/commentstore"
-                      />
+                      <input type="hidden" id="commenturl" />
                       <textarea
                         rows={3}
                         id="formComment"
@@ -54,7 +53,7 @@ const ContractDetailAttachment = () => {
                       />
                     </div>
                     <button id="comment_submit" className="btn b tn-send">
-                      <i className="f-16 text-primary ti ti-brand-telegram"></i>
+                      <TbBrandTelegram className="f-16 text-primary"></TbBrandTelegram>
                     </button>
                   </div>
                   <div className="">
@@ -65,17 +64,15 @@ const ContractDetailAttachment = () => {
                       <div className="list-group-item ">
                         <div className="d-flex align-items-center">
                           <div className="col-auto">
-                            <a
-                              href="https://demo.workdo.io/hrmgo/storage/uploads/avatar//owner.jpg"
-                              target="_blank"
-                            >
+                            <Link target="_blank">
                               <img
                                 className="img-fluid rounded border-2 border border-primary"
                                 width="35px"
                                 style={{ height: 35 }}
                                 src="https://demo.workdo.io/hrmgo/storage/uploads/avatar//owner.jpg"
+                                alt="owner"
                               />
-                            </a>
+                            </Link>
                           </div>
                           <div className="col ml-n2" style={{ marginLeft: 10 }}>
                             <p className="d-block h6 text-sm font-weight-light mb-0 text-break">
@@ -89,13 +86,8 @@ const ContractDetailAttachment = () => {
                             <span>
                               <div className="action-btn bg-danger">
                                 <form action="" />
-                                <form
-                                  method="GET"
-                                  action="https://demo.workdo.io/hrmgo/contract/1/comment"
-                                  acceptCharset="UTF-8"
-                                >
-                                  <a
-                                    href="#!"
+                                <form method="GET" acceptCharset="UTF-8">
+                                  <Link
                                     className="btn btn-sm d-inline-flex align-items-center bs-pass-para"
                                     data-bs-toggle="tooltip"
                                     data-bs-placement="top"
@@ -104,9 +96,9 @@ const ContractDetailAttachment = () => {
                                   >
                                     <span className="text-white">
                                       {" "}
-                                      <i className="ti ti-trash" />
+                                      <FaRegTrashAlt />
                                     </span>
-                                  </a>
+                                  </Link>
                                 </form>
                               </div>
                             </span>
@@ -116,17 +108,15 @@ const ContractDetailAttachment = () => {
                       <div className="list-group-item ">
                         <div className="d-flex align-items-center">
                           <div className="col-auto">
-                            <a
-                              href="https://demo.workdo.io/hrmgo/storage/uploads/avatar//user-1.jpg"
-                              target="_blank"
-                            >
+                            <Link target="_blank">
                               <img
                                 className="img-fluid rounded border-2 border border-primary"
                                 width="35px"
                                 style={{ height: 35 }}
                                 src="https://demo.workdo.io/hrmgo/storage/uploads/avatar//user-1.jpg"
+                                alt="owner"
                               />
-                            </a>
+                            </Link>
                           </div>
                           <div className="col ml-n2" style={{ marginLeft: 10 }}>
                             <p className="d-block h6 text-sm font-weight-light mb-0 text-break">
@@ -153,7 +143,7 @@ const ContractDetailAttachment = () => {
                                   >
                                     <span className="text-white">
                                       {" "}
-                                      <i className="ti ti-trash" />
+                                      <FaRegTrashAlt />
                                     </span>
                                   </a>
                                 </form>

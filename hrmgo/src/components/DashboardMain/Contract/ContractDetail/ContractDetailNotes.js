@@ -1,4 +1,6 @@
 import React from "react";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const ContractDetailNotes = () => {
   return (
@@ -11,8 +13,8 @@ const ContractDetailNotes = () => {
                 <div className="card-header">
                   <h5>Notes</h5>
                   <div className="text-end">
-                    <a
-                      href="#"
+                    <Link
+                      to=""
                       data-size="md"
                       className="btn btn-primary btn-icon btn-sm"
                       data-ajax-popup-over="true"
@@ -23,7 +25,7 @@ const ContractDetailNotes = () => {
                     >
                       <i className="ti ti-rotate" />
                       <span>Grammar check with AI</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="card-body">
@@ -92,17 +94,15 @@ const ContractDetailNotes = () => {
                       <div className="list-group-item ">
                         <div className="d-flex align-items-center">
                           <div className="col-auto">
-                            <a
-                              href="https://demo.workdo.io/hrmgo/storage/uploads/avatar//owner.jpg"
-                              target="_blank"
-                            >
+                            <Link target="_blank">
                               <img
                                 className="img-fluid rounded border-2 border border-primary"
                                 width="35px"
                                 style={{ height: 35 }}
                                 src="https://demo.workdo.io/hrmgo/storage/uploads/avatar//owner.jpg"
+                                alt="owner"
                               />
-                            </a>
+                            </Link>
                           </div>
                           <div className="col ml-n2" style={{ marginLeft: 10 }}>
                             <p className="d-block h6 text-sm font-weight-light mb-0 text-break">
@@ -116,13 +116,8 @@ const ContractDetailNotes = () => {
                           <div className="dt-buttons">
                             <span>
                               <div className="action-btn bg-danger">
-                                <form
-                                  method="GET"
-                                  action="https://demo.workdo.io/hrmgo/contract/1/note"
-                                  acceptCharset="UTF-8"
-                                >
-                                  <a
-                                    href="#!"
+                                <form method="GET" acceptCharset="UTF-8">
+                                  <Link
                                     className=" btn btn-sm d-inline-flex align-items-center bs-pass-para "
                                     data-bs-toggle="tooltip"
                                     data-bs-placement="top"
@@ -131,9 +126,9 @@ const ContractDetailNotes = () => {
                                   >
                                     <span className="text-white">
                                       {" "}
-                                      <i className="ti ti-trash" />
+                                      <FaRegTrashAlt />
                                     </span>
-                                  </a>
+                                  </Link>
                                 </form>
                               </div>
                             </span>
@@ -143,17 +138,15 @@ const ContractDetailNotes = () => {
                       <div className="list-group-item ">
                         <div className="d-flex align-items-center">
                           <div className="col-auto">
-                            <a
-                              href="https://demo.workdo.io/hrmgo/storage/uploads/avatar//user-1.jpg"
-                              target="_blank"
-                            >
+                            <Link target="_blank">
                               <img
                                 className="img-fluid rounded border-2 border border-primary"
                                 width="35px"
                                 style={{ height: 35 }}
                                 src="https://demo.workdo.io/hrmgo/storage/uploads/avatar//user-1.jpg"
+                                alt="owner"
                               />
-                            </a>
+                            </Link>
                           </div>
                           <div className="col ml-n2" style={{ marginLeft: 10 }}>
                             <p className="d-block h6 text-sm font-weight-light mb-0 text-break">
@@ -167,13 +160,8 @@ const ContractDetailNotes = () => {
                           <div className="dt-buttons">
                             <span>
                               <div className="action-btn bg-danger">
-                                <form
-                                  method="GET"
-                                  action="https://demo.workdo.io/hrmgo/contract/2/note"
-                                  acceptCharset="UTF-8"
-                                >
-                                  <a
-                                    href="#!"
+                                <form method="GET" acceptCharset="UTF-8">
+                                  <Link
                                     className=" btn btn-sm d-inline-flex align-items-center bs-pass-para "
                                     data-bs-toggle="tooltip"
                                     data-bs-placement="top"
@@ -181,10 +169,9 @@ const ContractDetailNotes = () => {
                                     data-bs-original-title="Delete"
                                   >
                                     <span className="text-white">
-                                      {" "}
-                                      <i className="ti ti-trash" />
+                                      <FaRegTrashAlt />
                                     </span>
-                                  </a>
+                                  </Link>
                                 </form>
                               </div>
                             </span>
