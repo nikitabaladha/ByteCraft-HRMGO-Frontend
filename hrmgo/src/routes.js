@@ -32,6 +32,7 @@ import Holiday from "./components/DashboardMain/HrAdminSetup/Holiday/Holiday.js"
 import HolidayCalendarView from "./components/DashboardMain/HrAdminSetup/Holiday/HolidayCalendarView/HolidayCalendarView.js";
 
 import Contract from "./components/DashboardMain/Contract/Contract.js";
+import ContractDetail from "./components/DashboardMain/Contract/ContractDetail/ContractDetail.js";
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
     <Routes>
@@ -97,7 +98,9 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
               <Route path="calendar" element={<HolidayCalendarView />} />
             </Route>
 
-            <Route path="contract" element={<Contract />} />
+            <Route path="contract" element={<Contract />}>
+              <Route path="contract-detail" element={<ContractDetail />} />
+            </Route>
           </Route>
 
           <Route path="*" element={<Navigate to="/dashboard" replace />} />

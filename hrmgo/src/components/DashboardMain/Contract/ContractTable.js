@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { TbCopy } from "react-icons/tb";
 import { TiEyeOutline } from "react-icons/ti";
 import { TbPencil } from "react-icons/tb";
@@ -17,6 +17,13 @@ function formatDate(dateString) {
 }
 
 const ContractTable = ({ contracts }) => {
+  const navigate = useNavigate();
+
+  const navigateToCalendarDetail = (event) => {
+    event.preventDefault();
+    navigate("/dashboard/contract/contract-detail");
+  };
+
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
@@ -115,6 +122,7 @@ const ContractTable = ({ contracts }) => {
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
                                 title="View"
+                                onClick={navigateToCalendarDetail}
                               >
                                 <span className="text-white">
                                   <TiEyeOutline />

@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import ContractHeader from "./ContractHeader";
 import ContractReport from "./ContractReport";
 import ContractTable from "./ContractTable";
 import getAPI from "../../../api/getAPI";
 
+import ContractDetail from "./ContractDetail/ContractDetail";
+
 const Contract = () => {
+  const location = useLocation();
   const [contracts, setContracts] = useState([]);
 
   const fetchContractData = async () => {
@@ -28,20 +32,31 @@ const Contract = () => {
     fetchContractData();
   }, []);
 
+  // Check
+  const isContractViewRoute =
+    location.pathname === "/dashboard/contract/contract-detail";
+
   return (
     <>
-      <ContractHeader />
-      <div className="row">
-        <div className="col-xl-12">
+      {isContractViewRoute ? (
+        <ContractDetail />
+      ) : (
+        <>
+          <ContractHeader />
           <div className="row">
-            <ContractReport />
-            <ContractTable
-              contracts={contracts}
-              fetchContractData={fetchContractData}
-            />
+            <div className="col-xl-12">
+              <div className="row">
+                <ContractReport />
+                <ContractTable
+                  contracts={contracts}
+                  fetchContractData={fetchContractData}
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+          />
+        </>
+      )}
     </>
   );
 };
