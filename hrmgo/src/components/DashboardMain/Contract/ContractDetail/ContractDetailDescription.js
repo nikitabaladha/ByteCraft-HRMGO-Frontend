@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { toast } from "react-toastify";
+import putAPI from "../../../../api/putAPI";
 
-const ContractDetailDescription = () => {
+const ContractDetailDescription = ({ contractData }) => {
   const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (contractData && contractData.description) {
+      setDescription(contractData.description);
+    }
+  }, [contractData]);
 
   const modules = {
     toolbar: [
@@ -35,9 +43,29 @@ const ContractDetailDescription = () => {
     "unordered",
   ];
 
-  const handleSubmit = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    console.log("Submitted Description:", description);
+
+    const updatedContractDescription = {
+      description,
+    };
+
+    try {
+      const response = await putAPI(
+        `/contract-description/${contractData.id}`,
+        updatedContractDescription,
+        true
+      );
+      console.log("Updated Contract: " + JSON.stringify(response));
+
+      if (!response.hasError) {
+        toast.success("Contract description updated successfully!");
+      } else {
+        toast.error("Failed to update Contract.");
+      }
+    } catch (error) {
+      toast.error("An error occurred while updating the Contract description.");
+    }
   };
 
   return (
@@ -46,10 +74,9 @@ const ContractDetailDescription = () => {
         <h5 className="mb-0">Description</h5>
       </div>
       <div className="card-body p-3">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleUpdate}>
           <div className="col-md-12">
             <div className="form-group mt-3">
-              {/* Render the React Quill Editor */}
               <ReactQuill
                 value={description}
                 onChange={setDescription}

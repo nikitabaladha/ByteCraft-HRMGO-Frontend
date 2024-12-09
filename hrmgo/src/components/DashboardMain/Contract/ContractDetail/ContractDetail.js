@@ -55,7 +55,7 @@ const ContractDetail = ({ contract }) => {
         true,
         true
       );
-      console.log("API Response for Notes:", response); // Debugging line
+
       if (
         !response.hasError &&
         response.data &&
@@ -103,7 +103,7 @@ const ContractDetail = ({ contract }) => {
                   </div>
 
                   {/* Description */}
-                  <ContractDetailDescription />
+                  <ContractDetailDescription contractData={contractData} />
                 </div>
                 {/* Attachment */}
                 <ContractDetailAttachment />
