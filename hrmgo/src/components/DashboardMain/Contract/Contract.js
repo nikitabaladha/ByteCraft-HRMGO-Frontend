@@ -51,6 +51,7 @@ const Contract = () => {
                 <ContractTable
                   contracts={contracts}
                   fetchContractData={fetchContractData}
+                  setContracts={setContracts}
                 />
               </div>
             </div>

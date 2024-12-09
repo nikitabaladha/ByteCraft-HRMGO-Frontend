@@ -10,7 +10,7 @@ function formatDate(dateString) {
 
 const ContractDetailCard = ({ contractData }) => {
   if (!contractData) {
-    return <p>Loading contract details...</p>;
+    return <p>Loading contract details card...</p>;
   }
 
   return (

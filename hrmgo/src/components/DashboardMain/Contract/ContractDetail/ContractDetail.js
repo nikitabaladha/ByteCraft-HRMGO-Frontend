@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ContractDetailHeader from "./ContractDetailHeader";
 import ContractDetailSidebar from "./ContractDetailSidebar";
 import ContractDetailInfoCard from "./ContractDetailInfoCard";
@@ -8,13 +8,77 @@ import ContractDetailAttachment from "./ContractDetailAttachment";
 import ContractDetailComment from "./ContractDetailComment";
 import ContractDetailNotes from "./ContractDetailNotes";
 import { useLocation, useParams } from "react-router-dom";
+import getAPI from "../../../../api/getAPI";
 
 const ContractDetail = ({ contract }) => {
   const location = useLocation();
   const { id } = useParams();
 
-  // Use `contract` from props or fallback to state if available
   const contractData = contract || location.state;
+
+  const [comments, setComments] = useState([]);
+  const [notes, setNotes] = useState([]);
+
+  // Fetch contract comments
+  const fetchContractCommentData = async () => {
+    try {
+      const response = await getAPI(
+        `/contract-comment?contractId=${id}`,
+        {},
+        true,
+        true
+      );
+      if (
+        !response.hasError &&
+        response.data &&
+        Array.isArray(response.data.data)
+      ) {
+        setComments(response.data.data);
+        console.log("Contract comments:", response.data.data);
+      } else {
+        console.error(
+          "Invalid response format or error in response for comments",
+          response
+        );
+      }
+    } catch (err) {
+      console.error("Error fetching Contract comment Data:", err);
+    }
+  };
+
+  // Fetch contract notes
+  const fetchContractNoteData = async () => {
+    try {
+      const response = await getAPI(
+        `/contract-note?contractId=${id}`,
+        {},
+        true,
+        true
+      );
+      console.log("API Response for Notes:", response); // Debugging line
+      if (
+        !response.hasError &&
+        response.data &&
+        Array.isArray(response.data.data)
+      ) {
+        setNotes(response.data.data);
+        console.log("Contract notes:", response.data.data);
+      } else {
+        console.error(
+          "Invalid response format or error in response for notes",
+          response
+        );
+      }
+    } catch (err) {
+      console.error("Error fetching Contract note Data:", err);
+    }
+  };
+
+  // Use effects to fetch data when component mounts
+  useEffect(() => {
+    fetchContractCommentData();
+    fetchContractNoteData();
+  }, [id]);
 
   if (!contractData) {
     return <p>Loading contract details...</p>;
@@ -22,39 +86,34 @@ const ContractDetail = ({ contract }) => {
 
   return (
     <>
-      {" "}
       <ContractDetailHeader contractData={contractData} />
       <div className="row">
-        <div className="">
-          <div className="col-xl-12">
-            <div className="col-sm-12">
-              <div className="row">
-                {/* Sidebar */}
-                <ContractDetailSidebar />
-                <div className="col-xl-9">
-                  <div id="general">
-                    <div className="row">
-                      {/* cards */}
-                      <ContractDetailInfoCard />
-                      {/* contract detail */}
-
-                      {/* I want to pass contract data in contract detail card */}
-                      <ContractDetailCard contractData={contractData} />
-                    </div>
-
-                    {/* Description */}
-                    <ContractDetailDescription />
+        <div className="col-xl-12">
+          <div className="col-sm-12">
+            <div className="row">
+              {/* Sidebar */}
+              <ContractDetailSidebar />
+              <div className="col-xl-9">
+                <div id="general">
+                  <div className="row">
+                    {/* cards */}
+                    <ContractDetailInfoCard />
+                    {/* contract detail */}
+                    <ContractDetailCard contractData={contractData} />
                   </div>
 
-                  {/* Attachment */}
-                  <ContractDetailAttachment />
-
-                  {/* Comment */}
-                  <ContractDetailComment />
-
-                  {/* Notes */}
-                  <ContractDetailNotes />
+                  {/* Description */}
+                  <ContractDetailDescription />
                 </div>
+                {/* Attachment */}
+                <ContractDetailAttachment />
+                {/* Comment */}
+                <ContractDetailComment
+                  comments={comments}
+                  setComments={setComments}
+                />
+                {/* Notes */}
+                <ContractDetailNotes notes={notes} setNotes={setNotes} />
               </div>
             </div>
           </div>

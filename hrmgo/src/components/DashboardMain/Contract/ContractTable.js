@@ -4,7 +4,7 @@ import { TbCopy } from "react-icons/tb";
 import { TiEyeOutline } from "react-icons/ti";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
-import ConfirmationDialog from "./ConfirmationDialog";
+import ConfirmationDialog from "../Performance/ConfirmationDialog";
 import UpdateContractModal from "./UpdateContractModal";
 import CopyContractModal from "./CopyContractModal";
 
@@ -16,7 +16,7 @@ function formatDate(dateString) {
   return `${month} ${day}, ${year}`;
 }
 
-const ContractTable = ({ contracts }) => {
+const ContractTable = ({ contracts, setContracts }) => {
   const navigate = useNavigate();
 
   const navigateToContractDetail = (event, contract) => {
@@ -25,19 +25,26 @@ const ContractTable = ({ contracts }) => {
   };
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
-  const [selectedContracts, setSelectedContracts] = useState(null);
+
+  const handleDeleteCancel = () => {
+    setIsDeleteDialogOpen(false);
+    setSelectedContracts(null);
+  };
+
+  const handleDeleteConfirmed = (id) => {
+    setContracts((prevContracts) =>
+      prevContracts.filter((contract) => contract.id !== id)
+    );
+  };
 
   const openDeleteDialog = (contract) => {
     setSelectedContracts(contract);
     setIsDeleteDialogOpen(true);
   };
 
-  const handleDeleteCancel = () => {
-    setIsDeleteDialogOpen(false);
-    setSelectedContracts(null);
-  };
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
+  const [selectedContracts, setSelectedContracts] = useState(null);
 
   const handleUpdate = (contract) => {
     setSelectedContracts(contract);
@@ -171,8 +178,10 @@ const ContractTable = ({ contracts }) => {
 
       {isDeleteDialogOpen && (
         <ConfirmationDialog
-          contracts={selectedContracts}
-          onCancel={handleDeleteCancel}
+          onClose={handleDeleteCancel}
+          deleteType="contract"
+          id={selectedContracts.id}
+          onDeleted={handleDeleteConfirmed}
         />
       )}
 

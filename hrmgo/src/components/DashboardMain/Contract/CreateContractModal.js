@@ -81,6 +81,7 @@ const CreateContractModal = ({ onClose }) => {
 
       if (!response.hasError) {
         toast.success("Contract created successfully!");
+
         setFormData({
           employeeId: "",
           contractTypeId: "",
