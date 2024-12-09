@@ -97,7 +97,10 @@ const ContractDetail = ({ contract }) => {
                 <div id="general">
                   <div className="row">
                     {/* cards */}
-                    <ContractDetailInfoCard />
+                    <ContractDetailInfoCard
+                      commentCount={comments.length}
+                      noteCount={notes.length}
+                    />
                     {/* contract detail */}
                     <ContractDetailCard contractData={contractData} />
                   </div>

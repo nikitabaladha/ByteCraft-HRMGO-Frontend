@@ -87,9 +87,12 @@ const ContractDetailDescription = ({ contractData }) => {
               />
             </div>
           </div>
-          <button type="submit" className="btn btn-primary mt-3">
-            Submit
-          </button>
+
+          <div className="col-md-12 text-end">
+            <div className="form-group mt-3 me-3">
+              <input className="btn  btn-primary" type="submit" value="Add" />
+            </div>
+          </div>
         </form>
       </div>
     </div>

@@ -145,11 +145,6 @@ const ContractDetailNotes = ({ notes, setNotes }) => {
                     </div>
                   </div>
                 ))}
-                {notes.length === 0 && (
-                  <div className="list-group-item text-center">
-                    <p>No notes available.</p>
-                  </div>
-                )}
               </div>
             </div>
           </div>
