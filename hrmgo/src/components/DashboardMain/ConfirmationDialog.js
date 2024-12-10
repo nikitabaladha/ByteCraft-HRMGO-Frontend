@@ -17,22 +17,22 @@ const DELETE_CONFIG = {
     idKey: "appraisalId",
   },
   comment: {
-    getEndpoint: (id) => `/contract-comment/${id}`, // Adjust this based on your API
+    getEndpoint: (id) => `/contract-comment/${id}`,
     successMessage: "Comment successfully deleted!",
     errorMessage: "Failed to delete comment.",
     idKey: "commentId",
   },
   note: {
-    getEndpoint: (id) => `/contract-note/${id}`, // Update endpoint for notes
+    getEndpoint: (id) => `/contract-note/${id}`,
     successMessage: "Note successfully deleted!",
     errorMessage: "Failed to delete note.",
-    idKey: "noteId", // Ensure this is correct based on your backend
+    idKey: "noteId",
   },
   contract: {
-    getEndpoint: (id) => `/contract/${id}`, // Add the endpoint for contract deletion
+    getEndpoint: (id) => `/contract/${id}`,
     successMessage: "Contract successfully deleted!",
     errorMessage: "Failed to delete contract.",
-    idKey: "contractId", // Ensure this matches your backend
+    idKey: "contractId",
   },
 };
 
@@ -93,46 +93,6 @@ function ConfirmationDialog({ onClose, deleteType, id, onDeleted }) {
   }, [onClose]);
 
   return (
-    // <div
-    //   id="confirmation-dialog"
-    //   className="swal2-container swal2-center swal2-backdrop-show"
-    //   style={{ overflowY: "auto" }}
-    // >
-    //   <div
-    //     aria-labelledby="swal2-title"
-    //     aria-describedby="swal2-html-container"
-    //     className="swal2-popup swal2-modal swal2-icon-warning swal2-show"
-    //     tabIndex={-1}
-    //     role="dialog"
-    //     aria-live="assertive"
-    //     aria-modal="true"
-    //     style={{ display: "grid" }}
-    //   >
-    //     <h2 className="swal2-title" id="swal2-title">
-    //       Are you sure?
-    //     </h2>
-    //     <div className="swal2-html-container" id="swal2-html-container">
-    //       This action cannot be undone. Do you want to continue?
-    //     </div>
-    //     <div className="swal2-actions" style={{ display: "flex" }}>
-    //       <button
-    //         type="button"
-    //         className="swal2-cancel btn btn-danger"
-    //         onClick={onClose}
-    //       >
-    //         No
-    //       </button>
-    //       <button
-    //         type="button"
-    //         className="swal2-confirm btn btn-success"
-    //         onClick={handleDelete}
-    //       >
-    //         Yes
-    //       </button>
-    //     </div>
-    //   </div>
-    // </div>
-
     <>
       <>
         <div

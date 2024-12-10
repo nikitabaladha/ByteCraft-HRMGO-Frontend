@@ -81,7 +81,6 @@ const CopyContractModal = ({ contracts, onClose }) => {
 
     try {
       const response = await postAPI(`/contract`, copiedContract, true);
-      console.log("Updated Contract: " + JSON.stringify(response));
 
       if (!response.hasError) {
         toast.success("Contract Copied successfully!");

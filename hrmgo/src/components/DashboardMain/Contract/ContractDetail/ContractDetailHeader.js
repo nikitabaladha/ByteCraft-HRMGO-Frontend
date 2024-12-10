@@ -1,21 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { MdMailOutline } from "react-icons/md";
-import { TbCopy } from "react-icons/tb";
-import { MdOutlineFileDownload } from "react-icons/md";
+import { MdMailOutline, MdOutlineFileDownload } from "react-icons/md";
+import { TbCopy, TbWritingSign } from "react-icons/tb";
 import { TiEyeOutline } from "react-icons/ti";
-import { TbWritingSign } from "react-icons/tb";
-import { useState } from "react";
 import CopyContractModal from "../CopyContractModal";
 
 const ContractDetailHeader = ({ contractData }) => {
   const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
-  const [selectedContracts, setSelectedContracts] = useState(null);
 
-  const handleCopyContract = (contractData) => {
-    setSelectedContracts(contractData);
+  const handleCopyContract = (event) => {
+    event.preventDefault();
+
     setIsCopyModalOpen(true);
   };
+
+  const handleDownload = (event) => {
+    event.preventDefault(); // Prevent default if linked to an anchor tag
+  };
+
+  const handlePreview = (event) => {
+    event.preventDefault();
+  };
+
+  const handleSignature = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       <div className="page-header">
@@ -23,76 +33,66 @@ const ContractDetailHeader = ({ contractData }) => {
           <div className="row align-items-center">
             <div className="col-auto">
               <div className="page-header-title">
-                <h4 className="m-b-10">{contractData.subject || "N/A"} </h4>
+                <h4 className="m-b-10">{contractData?.subject || "N/A"}</h4>
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
                   <Link to="/hrmgo/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item" aria-current="page">
+                <li className="breadcrumb-item">
                   <Link to="/hrmgo/contract">Contract</Link>
                 </li>
-                <li className="breadcrumb-item active" aria-current="page" />
-                Contract Detail
+                <li className="breadcrumb-item active">Contract Detail</li>
               </ul>
             </div>
             <div className="col">
-              <div className="float-end ">
-                <div className="col-md-12 text-end d-flex ">
+              <div className="float-end">
+                <div className="d-flex">
                   <Link
+                    to="#"
                     className="btn btn-sm btn-primary btn-icon m-2"
                     data-bs-toggle="tooltip"
-                    data-bs-original-title="Send Email"
+                    title="Send Email"
+                    onClick={(e) => e.preventDefault()}
                   >
-                    <MdMailOutline className="text-white" />
+                    <MdMailOutline />
                   </Link>
-                  <Link
-                    data-size="lg"
-                    data-ajax-popup="true"
-                    data-title="Duplicate"
+                  <button
                     className="btn btn-sm btn-primary btn-icon m-2"
                     data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title=""
-                    data-bs-original-title="Duplicate"
-                    aria-label="Duplicate"
-                    onClick={() => handleCopyContract(contractData)}
+                    title="Duplicate"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleCopyContract(e);
+                    }}
                   >
-                    <TbCopy className="text-white" />
-                  </Link>
-                  <Link
-                    className="btn btn-sm btn-primary btn-icon m-2"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title=""
-                    target="_blanks"
-                    data-bs-original-title="Download"
-                    aria-label="Download"
-                  >
-                    <MdOutlineFileDownload className="text-white" />
-                  </Link>
-                  <Link
-                    target="_blank"
-                    className="btn btn-sm btn-primary btn-iconn m-2"
-                    title=""
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    data-bs-original-title="Preview"
-                  >
-                    <i className="ti ti-eye" />
+                    <TbCopy />
+                  </button>
 
+                  <Link
+                    to="#"
+                    className="btn btn-sm btn-primary btn-icon m-2"
+                    data-bs-toggle="tooltip"
+                    title="Download"
+                    onClick={handleDownload}
+                  >
+                    <MdOutlineFileDownload />
+                  </Link>
+                  <Link
+                    to="#"
+                    className="btn btn-sm btn-primary btn-icon m-2"
+                    data-bs-toggle="tooltip"
+                    title="Preview"
+                    onClick={handlePreview}
+                  >
                     <TiEyeOutline />
                   </Link>
                   <Link
+                    to="#"
                     className="btn btn-sm btn-primary btn-icon m-2"
-                    data-url="https://demo.workdo.io/hrmgo/signature/1"
-                    data-ajax-popup="true"
-                    data-title="Signature"
-                    data-size="md"
-                    title=""
                     data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    data-bs-original-title="Signature"
+                    title="Signature"
+                    onClick={handleSignature}
                   >
                     <TbWritingSign />
                   </Link>
@@ -105,7 +105,7 @@ const ContractDetailHeader = ({ contractData }) => {
 
       {isCopyModalOpen && (
         <CopyContractModal
-          contractData={selectedContracts}
+          contracts={contractData}
           onClose={() => setIsCopyModalOpen(false)}
         />
       )}
