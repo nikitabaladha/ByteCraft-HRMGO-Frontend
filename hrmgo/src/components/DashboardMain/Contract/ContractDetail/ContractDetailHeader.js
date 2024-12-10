@@ -15,7 +15,7 @@ const ContractDetailHeader = ({ contractData }) => {
   };
 
   const handleDownload = (event) => {
-    event.preventDefault(); // Prevent default if linked to an anchor tag
+    event.preventDefault();
   };
 
   const handlePreview = (event) => {

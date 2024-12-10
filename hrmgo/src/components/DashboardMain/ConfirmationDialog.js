@@ -34,6 +34,12 @@ const DELETE_CONFIG = {
     errorMessage: "Failed to delete contract.",
     idKey: "contractId",
   },
+  attachment: {
+    getEndpoint: (id) => `/contract-attachment/${id}`,
+    successMessage: "Attachment successfully deleted!",
+    errorMessage: "Failed to delete Attachment.",
+    idKey: "attachmentId",
+  },
 };
 
 function ConfirmationDialog({ onClose, deleteType, id, onDeleted }) {

@@ -16,8 +16,36 @@ const ContractDetail = ({ contract }) => {
 
   const contractData = contract || location.state;
 
+  const [attachments, setAttachments] = useState([]);
   const [comments, setComments] = useState([]);
+
   const [notes, setNotes] = useState([]);
+
+  const fetchContractAttachmentData = async () => {
+    try {
+      const response = await getAPI(
+        `/contract-attachment?contractId=${id}`,
+        {},
+        true,
+        true
+      );
+      if (
+        !response.hasError &&
+        response.data &&
+        Array.isArray(response.data.data)
+      ) {
+        setAttachments(response.data.data);
+        console.log("Contract attachments:", response.data.data);
+      } else {
+        console.error(
+          "Invalid response format or error in response for attachments",
+          response
+        );
+      }
+    } catch (err) {
+      console.error("Error fetching Contract attachment Data:", err);
+    }
+  };
 
   // Fetch contract comments
   const fetchContractCommentData = async () => {
@@ -78,6 +106,7 @@ const ContractDetail = ({ contract }) => {
   useEffect(() => {
     fetchContractCommentData();
     fetchContractNoteData();
+    fetchContractAttachmentData();
   }, [id]);
 
   if (!contractData) {
@@ -109,7 +138,10 @@ const ContractDetail = ({ contract }) => {
                   <ContractDetailDescription contractData={contractData} />
                 </div>
                 {/* Attachment */}
-                <ContractDetailAttachment />
+                <ContractDetailAttachment
+                  attachments={attachments}
+                  setAttachments={setAttachments}
+                />
                 {/* Comment */}
                 <ContractDetailComment
                   comments={comments}
