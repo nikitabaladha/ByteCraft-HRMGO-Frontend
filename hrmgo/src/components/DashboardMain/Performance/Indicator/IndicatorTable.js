@@ -276,7 +276,7 @@ import getAPI from "../../../../api/getAPI.js";
 import moment from "moment";
 import IndicatorDetailModal from "./IndicatorDetailModal.js";
 import IndicatorUpdateModal from "./IndicatorUpdateModal.js";
-import ConfirmationDialog from "../ConfirmationDialog.js";
+import ConfirmationDialog from "../../ConfirmationDialog";
 
 const IndicatorTable = () => {
   const [indicators, setIndicators] = useState([]);

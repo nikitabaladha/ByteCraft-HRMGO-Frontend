@@ -5,8 +5,17 @@ import { TbCopy } from "react-icons/tb";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { TiEyeOutline } from "react-icons/ti";
 import { TbWritingSign } from "react-icons/tb";
+import { useState } from "react";
+import CopyContractModal from "../CopyContractModal";
 
 const ContractDetailHeader = ({ contractData }) => {
+  const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
+  const [selectedContracts, setSelectedContracts] = useState(null);
+
+  const handleCopyContract = (contractData) => {
+    setSelectedContracts(contractData);
+    setIsCopyModalOpen(true);
+  };
   return (
     <>
       <div className="page-header">
@@ -47,6 +56,7 @@ const ContractDetailHeader = ({ contractData }) => {
                     title=""
                     data-bs-original-title="Duplicate"
                     aria-label="Duplicate"
+                    onClick={() => handleCopyContract(contractData)}
                   >
                     <TbCopy className="text-white" />
                   </Link>
@@ -92,6 +102,13 @@ const ContractDetailHeader = ({ contractData }) => {
           </div>
         </div>
       </div>
+
+      {isCopyModalOpen && (
+        <CopyContractModal
+          contractData={selectedContracts}
+          onClose={() => setIsCopyModalOpen(false)}
+        />
+      )}
     </>
   );
 };

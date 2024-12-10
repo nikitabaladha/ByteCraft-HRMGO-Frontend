@@ -291,7 +291,8 @@ import React, { useEffect, useState } from "react";
 import getAPI from "../../../../api/getAPI.js";
 import moment from "moment";
 import AppraisalDetailModal from "./AppraisalDetailModal.js";
-import ConfirmationDialog from "../ConfirmationDialog.js";
+import ConfirmationDialog from "../../ConfirmationDialog";
+
 import AppraisalUpdateModal from "./AppraisalUpdateModal.js";
 
 const AppraisalTable = () => {
@@ -548,8 +549,8 @@ const AppraisalTable = () => {
       {isDeleteDialogOpen && (
         <ConfirmationDialog
           onClose={handleDeleteCancel}
-          deleteType="appraisal" // Specify that we're deleting an appraisal
-          id={appraisalIdToDelete} // Pass the id to delete
+          deleteType="appraisal"
+          id={appraisalIdToDelete}
           onDeleted={handleDeleteSuccess}
         />
       )}

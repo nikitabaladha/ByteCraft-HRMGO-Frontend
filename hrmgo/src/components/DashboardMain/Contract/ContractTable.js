@@ -4,7 +4,7 @@ import { TbCopy } from "react-icons/tb";
 import { TiEyeOutline } from "react-icons/ti";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
-import ConfirmationDialog from "../Performance/ConfirmationDialog";
+import ConfirmationDialog from "../ConfirmationDialog";
 import UpdateContractModal from "./UpdateContractModal";
 import CopyContractModal from "./CopyContractModal";
 
@@ -192,6 +192,7 @@ const ContractTable = ({ contracts, setContracts }) => {
         />
       )}
 
+      {/* here i am passing contracts  */}
       {isCopyModalOpen && (
         <CopyContractModal
           contracts={selectedContracts}

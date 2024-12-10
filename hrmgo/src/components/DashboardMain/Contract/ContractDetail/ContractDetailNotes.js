@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import ConfirmationDialog from "../../Performance/ConfirmationDialog";
+import ConfirmationDialog from "../../ConfirmationDialog";
 import postAPI from "../../../../api/postAPI";
 import { useParams } from "react-router-dom";
 
