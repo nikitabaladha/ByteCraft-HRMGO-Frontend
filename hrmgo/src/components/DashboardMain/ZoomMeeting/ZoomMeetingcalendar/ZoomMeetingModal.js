@@ -77,7 +77,7 @@ const ZoomMeetingModal = ({ onClose }) => {
       employeeNames: formData.user_id,
       start_date: formData.start_date,
       duration: formData.duration,
-      password: formData.password,
+      password: formData.password || "",  
       join_url: "", 
       status: "Waiting", 
     };

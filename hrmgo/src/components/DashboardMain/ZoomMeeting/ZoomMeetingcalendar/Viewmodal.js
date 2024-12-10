@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { HiExternalLink } from "react-icons/hi";
-import putAPI from "../../../api/putAPI"; 
+import putAPI from "../../../../api/putAPI"; 
 import { toast } from 'react-toastify'; 
 
 const ZoomMeetingModal = ({ meeting, onClose }) => {

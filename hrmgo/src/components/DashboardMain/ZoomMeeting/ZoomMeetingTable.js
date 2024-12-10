@@ -4,9 +4,11 @@ import { TiEyeOutline } from "react-icons/ti";
 import { RiDeleteBinLine } from "react-icons/ri";
 import ViewModal from "./Viewmodal";
 import getAPI from "../../../api/getAPI";  
-import ConfirmationDialog from "./ConfirmationDialog";
+import ConfirmationDialog from "../ConfirmationDialog";
 import dayjs from 'dayjs';  
 import { HiExternalLink } from "react-icons/hi";
+import putAPI from "../../../api/putAPI"; 
+import { toast } from 'react-toastify'; 
 
 const ZoomMeetingTable = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -14,35 +16,103 @@ const ZoomMeetingTable = () => {
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(""); 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [meetingToDelete, setMeetingToDelete] = useState(null);
-  // const [showModal, setShowModal] = useState(false);
+  const [selectedMeeting, setSelectedMeeting] = useState(null);
 
-  const openDeleteDialog = (meetingId) => {
-    setMeetingToDelete(meetingId);
-    setIsDeleteDialogOpen(true);
+    /* entries pagination */
+
+    const [entriesPerPage, setEntriesPerPage] = useState(10); 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchQuery, setSearchQuery] = useState("");
+
+    
+  const handleEntriesPerPageChange = (event) => {
+    setEntriesPerPage(Number(event.target.value));
+    setCurrentPage(1); // Reset to the first page
   };
 
-  const closeDeleteDialog = () => {
-    setIsDeleteDialogOpen(false);
-    setMeetingToDelete(null);
-  };
+  const filteredMeetings = meetings.filter((meeting) =>
+    meeting.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-  const handleDeleteSuccess = (deletedMeetingId) => {
-    setMeetings((prevMeetings) =>
-      prevMeetings.filter((meeting) => meeting._id !== deletedMeetingId)
-    );
-    closeDeleteDialog();
-  };
+  const paginatedMeetings = filteredMeetings.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
 
-  const toggleModal = () => {
+
+const handleDeleteCancel = () => {
+  setIsDeleteDialogOpen(false);
+  setSelectedMeeting(null);
+};
+
+const handleDeleteConfirmed = (id) => {
+  setMeetings((prevMeetings) =>
+    prevMeetings.filter((meeting) => meeting._id !== id)
+  );
+};
+
+const openDeleteDialog = (meeting) => {
+  setSelectedMeeting(meeting);
+  setIsDeleteDialogOpen(true);
+};
+
+
+  const toggleModal = (meeting) => {
+    setSelectedMeeting(meeting);
     setModalOpen(!isModalOpen);
+  };
+
+  // Function to handle meeting start click and update status
+  const handleStartMeeting = async (meetingId) => {
+    try {
+      const response = await putAPI(`/update_meeting_status/${meetingId}`, { status: "Starting" }, true);
+
+      if (!response.hasError) {
+        setMeetings((prevMeetings) =>
+          prevMeetings.map((meeting) =>
+            meeting._id === meetingId ? { ...meeting, status: "Starting" } : meeting
+          )
+        );
+      } else {
+        toast.error(`Failed to start meeting: ${response.message}`);
+      }
+    } catch (error) {
+      toast.error("An error occurred while starting the meeting.");
+      console.error("Error starting meeting:", error);
+    }
+  };
+
+  // Function to check if the meeting is over and update status to "Ended"
+  const updateMeetingStatus = async () => {
+    const now = dayjs();
+    setMeetings((prevMeetings) => {
+      return prevMeetings.map((meeting) => {
+        const meetingEnd = dayjs(meeting.start_date).add(meeting.duration, "minute");
+
+        if (meeting.status === "Starting" && now.isAfter(meetingEnd)) {
+          // If the meeting is over, update status to "Ended"
+          const updatedMeeting = { ...meeting, status: "Ended" };
+
+          // Send a PUT request to update the status on the server
+          putAPI(`/update_meeting_status/${meeting._id}`, { status: "Ended" }, true)
+            .catch((err) => console.error("Error updating meeting status on server:", err));
+
+          return updatedMeeting;
+        }
+        return meeting;
+      });
+    });
   };
 
   useEffect(() => {
     const fetchMeetings = async () => {
       try {
         const response = await getAPI("/getall_zoommeeting", {}, true);
-        setMeetings(response.data.meetings);
+        const updatedMeetings = response.data.meetings.map(meeting => ({
+          ...meeting,
+          status: meeting.status || "Waiting" // Default status to "Waiting"
+        }));
+        setMeetings(updatedMeetings);
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch Meetings");
@@ -51,6 +121,13 @@ const ZoomMeetingTable = () => {
     };
 
     fetchMeetings();
+  }, []);
+
+  useEffect(() => {
+    // Periodically check for meetings that need to be updated to "Ended"
+    const intervalId = setInterval(updateMeetingStatus, 60000); // Check every minute
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []);
 
   if (loading) {
@@ -63,379 +140,237 @@ const ZoomMeetingTable = () => {
 
   return (
     <div className="dash-content">
-      <div className="row">
-        <div className="col-xl-12">
-          <div className="card">
-            <div className="card-header card-body table-border-style">
-              <div className="table-responsive">
-                <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                  <div className="dataTable-top">
-                    <div className="dataTable-dropdown">
-                      <label>
-                        <select className="dataTable-selector">
-                          <option value="5">5</option>
-                          <option value="10" selected>
-                            10
-                          </option>
-                          <option value="15">15</option>
-                          <option value="20">20</option>
-                          <option value="25">25</option>
-                        </select>{' '}
-                        entries per page
-                      </label>
-                    </div>
-                    <div className="dataTable-search">
-                      <input className="dataTable-input" placeholder="Search..." type="text" />
-                    </div>
-                  </div>
-                  <div className="dataTable-container">
-                    <table className="table dataTable-table" id="pc-dt-simple">
-                      <thead>
-                        <tr>
-                          <th style={{ width: '33.37%' }}>Title</th>
-                          <th style={{ width: '28.14%' }}>Meeting Time</th>
-                          <th style={{ width: '16.23%' }}>Duration</th>
-                          <th style={{ width: '13.34%' }}>User</th>
-                          <th style={{ width: '24.17%' }}>Join URL</th>
-                          <th style={{ width: '16.96%' }}>Status</th>
-                          <th width="200px" style={{ width: '19.30%' }}>
-                            Action
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {meetings.map((meeting) => (
-                          <tr key={meeting._id}>
-                            <td>{meeting.title}</td>
-                            <td>{dayjs(meeting.start_date).format("YYYY-MM-DD HH:mm:ss")}</td> 
-                            <td>{meeting.duration} Minute</td>
-                            <td>
-                              <div className="user-group">
-                                {/* Add images or avatars here */}
-                              </div>
-                            </td>
-                            <td>
-                              <a href={meeting.join_url} className="text-secondary">
-                                <p className="mb-0">
-                                  <b>Start meeting</b> <HiExternalLink /> 
-                                </p>
-                              </a>
-                            </td>
-                            <td>
-                              <span className={`badge ${meeting.status === "End" ? "bg-danger" : "bg-info"} p-2 px-3`}>
-                                {meeting.status}
-                              </span>
-                            </td>
-                            <td>
-                              <div className="dt-buttons">
-                                <span>
-                                  <div className="action-btn bg-warning me-2">
-                                    <Link
-                                      className="mx-3 btn btn-sm align-items-center"
-                                      data-bs-toggle="tooltip"
-                                      title="View"
-                                      onClick={toggleModal}
-                                    >
-                                      <span className="text-white">
-                                        <TiEyeOutline className="text-white" />
-                                      </span>
-                                    </Link>
-                                  </div>
-                                  <div className="action-btn bg-danger">
-                                    <button
-                                      onClick={() => openDeleteDialog(meeting._id)}
-                                      className="mx-3 btn btn-sm align-items-center"
-                                      data-bs-toggle="tooltip"
-                                      title="Delete"
-                                    >
-                                      <span className="text-white">
-                                        <RiDeleteBinLine />
-                                      </span>
-                                    </button>
-                                  </div>
-                                </span>
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+    <div className="card">
+      <div className="card-header card-body table-border-style">
+        <div className="table-responsive">
+          <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+            <div className="dataTable-top">
+              <div className="dataTable-dropdown">
+                <label>
+                  <select
+                    className="dataTable-selector"
+                    value={entriesPerPage}
+                    onChange={handleEntriesPerPageChange}
+                  >
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                  </select>{" "}
+                  entries per page
+                </label>
               </div>
+              <div className="dataTable-search">
+                <input
+                  className="dataTable-input"
+                  placeholder="Search..."
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="dataTable-container">
+                <table className="table dataTable-table" id="pc-dt-simple">
+                  <thead>
+                    <tr>
+                      <th style={{ width: '33.37%' }}>Title</th>
+                      <th style={{ width: '28.14%' }}>Meeting Time</th>
+                      <th style={{ width: '16.23%' }}>Duration</th>
+                      <th style={{ width: '13.34%' }}>User</th>
+                      <th style={{ width: '24.17%' }}>Join URL</th>
+                      <th style={{ width: '16.96%' }}>Status</th>
+                      <th width="200px" style={{ width: '19.30%' }}>
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {paginatedMeetings.map((meeting) => (
+                      <tr key={meeting._id}>
+                        <td>{meeting.title}</td>
+                        <td>{dayjs(meeting.start_date).format("YYYY-MM-DD HH:mm:ss")}</td>
+                        <td>{meeting.duration} Minute</td>
+                        <td>
+                          <div className="user-group">
+                            {/* Add images or avatars here */}
+                          </div>
+                        </td>
+                        <td>
+                          {meeting.status !== "Ended" ? (
+                            <a
+                              href={meeting.join_url}
+                              className="text-secondary"
+                              onClick={() => handleStartMeeting(meeting._id)}  // Call handleStartMeeting here
+                            >
+                              <p className="mb-0">
+                                <b>Start meeting</b> <HiExternalLink />
+                              </p>
+                            </a>
+                          ) : (
+                            <span className="text-secondary">-</span>
+                          )}
+                        </td>
+                        <td>
+                          <span
+                            className={`badge ${
+                              meeting.status === "Ended"
+                                ? "bg-danger"
+                                : meeting.status === "Starting"
+                                ? "bg-success"
+                                : "bg-info"
+                            } p-2 px-3`}
+                          >
+                            {meeting.status === "Ended" ? "Ended" : meeting.status === "Starting" ? "Starting" : "Waiting"}
+                          </span>
+                        </td>
+                        <td>
+                          <div className="dt-buttons">
+                            <div className="action-btn bg-warning me-2">
+                              <Link
+                                className="mx-3 btn btn-sm align-items-center"
+                                data-bs-toggle="tooltip"
+                                title="View"
+                                onClick={() => toggleModal(meeting)}
+                              >
+                                <span className="text-white">
+                                  <TiEyeOutline className="text-white" />
+                                </span>
+                              </Link>
+                            </div>
+                            <div className="action-btn bg-danger">
+                              <button
+                             onClick={(e) => {
+                              e.preventDefault();
+                              openDeleteDialog(meeting);
+                            }}
+                                className="mx-3 btn btn-sm align-items-center"
+                                data-bs-toggle="tooltip"
+                                title="Delete"
+                              >
+                                <span className="text-white">
+                                  <RiDeleteBinLine />
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="dataTable-bottom">
+                <div className="dataTable-info">
+                  Showing {Math.min((currentPage - 1) * entriesPerPage + 1, filteredMeetings.length)}{" "}
+                  to {Math.min(currentPage * entriesPerPage, filteredMeetings.length)}{" "}
+                  of {filteredMeetings.length} entries
+                </div>
+                <nav className="dataTable-pagination">
+                  <ul
+                    className="dataTable-pagination-list"
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      listStyleType: 'none',
+                      padding: 0,
+                      margin: 0,
+                    }}
+                  >
+
+                    {currentPage > 1 && (
+                      <li
+                        className="page-item"
+                        style={{
+                          margin: '0 5px',
+                        }}
+                      >
+                        <button
+                          className="page-link"
+                          onClick={() => setCurrentPage(currentPage - 1)}
+                          style={{
+                            cursor: 'pointer',
+                            padding: '8px 16px',
+                            borderRadius: '4px',
+                            backgroundColor: 'transparent',
+                            border: 'none',
+                            color: '#6FD943',
+                          }}
+                        >
+                          ‹
+                        </button>
+                      </li>
+                    )}
+
+                    {Array.from({ length: Math.ceil(filteredMeetings.length / entriesPerPage) }, (_, index) => (
+                      <li
+                        key={index + 1}
+                        className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+                        style={{
+                          margin: '0 5px',
+                        }}
+                      >
+                        <button
+                          className="page-link"
+                          onClick={() => setCurrentPage(index + 1)}
+                          style={{
+                            cursor: 'pointer',
+                            padding: '6px 12px',
+                            backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
+                            border: 'none',
+                            color: '#6FD943',
+                          }}
+                        >
+                          {index + 1}
+                        </button>
+                      </li>
+                    ))}
+
+                    {currentPage < Math.ceil(filteredMeetings.length / entriesPerPage) && (
+                      <li
+                        className="page-item"
+                        style={{
+                          margin: '0 5px',
+                        }}
+                      >
+                        <button
+                          className="page-link"
+                          onClick={() => setCurrentPage(currentPage + 1)}
+                          style={{
+                            cursor: 'pointer',
+                            padding: '8px 16px',
+                            borderRadius: '4px',
+                            backgroundColor: 'transparent',
+                            border: 'none',
+                            color: '#6FD943',
+                          }}
+                        >
+                          ›
+                        </button>
+                      </li>
+                    )}
+                  </ul>
+                </nav>
+                </div>
             </div>
           </div>
         </div>
       </div>
       {isDeleteDialogOpen && (
-        <ConfirmationDialog
-          onClose={closeDeleteDialog}
-          meetingId={meetingToDelete}
-          deleteType="meeting"
-          onDeleted={handleDeleteSuccess}
-        />
+  <ConfirmationDialog
+    onClose={handleDeleteCancel}
+    deleteType="zoommeeting"
+    id={selectedMeeting._id}
+    onDeleted={handleDeleteConfirmed}
+  />
+)}
+
+      {isModalOpen && (
+        <ViewModal meeting={selectedMeeting} onClose={toggleModal} />
       )}
-      {isModalOpen && <ViewModal onClose={toggleModal} />}
     </div>
   );
 };
 
 export default ZoomMeetingTable;
-
-
-// import React,{ useState } from 'react';
-// import { Link } from 'react-router-dom';
-// import { TiEyeOutline } from "react-icons/ti";
-// import { RiDeleteBinLine } from "react-icons/ri";
-// import ViewModal from "./Viewmodal";
-
-
-// const ZoomMeetingTable = () => {
-//   const [isModalOpen, setModalOpen] = useState(false);
-  
-
-//   const toggleModal = () => {
-//     setModalOpen(!isModalOpen);
-//   };
-//   return (
-//     <div className="dash-content">
-//     <div className="row">
-//       <div className="col-xl-12">
-//         <div className="card">
-//           <div className="card-header card-body table-border-style">
-//             <div className="table-responsive">
-//               <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-//                 <div className="dataTable-top">
-//                   <div className="dataTable-dropdown">
-//                     <label>
-//                       <select className="dataTable-selector">
-//                         <option value="5">5</option>
-//                         <option value="10" selected>
-//                           10
-//                         </option>
-//                         <option value="15">15</option>
-//                         <option value="20">20</option>
-//                         <option value="25">25</option>
-//                       </select>{' '}
-//                       entries per page
-//                     </label>
-//                   </div>
-//                   <div className="dataTable-search">
-//                     <input className="dataTable-input" placeholder="Search..." type="text" />
-//                   </div>
-//                 </div>
-//                 <div className="dataTable-container">
-//                   <table className="table dataTable-table" id="pc-dt-simple">
-//                     <thead>
-//                       <tr>
-//                         <th style={{ width: '33.37%' }}>Title</th>
-//                         <th style={{ width: '28.14%' }}>Meeting Time</th>
-//                         <th style={{ width: '16.23%' }}>Duration</th>
-//                         <th style={{ width: '13.34%' }}>User</th>
-//                         <th style={{ width: '24.17%' }}>Join URL</th>
-//                         <th style={{ width: '16.96%' }}>Status</th>
-//                         <th width="200px" style={{ width: '19.30%' }}>
-//                           Action
-//                         </th>
-//                       </tr>
-//                     </thead>
-//                     <tbody>
-//                       <tr>
-//                         <td>Reprehenderit quo er</td>
-//                         <td>2024-11-17 17:00:00</td>
-//                         <td>4 Minute</td>
-//                         <td>
-//                           <div className="user-group">
-//                             <img
-//                               alt="image"
-//                               src="https://demo.workdo.io/hrmgo/storage/uploads/avatar/user-1.jpg"
-//                               className="rounded-circle"
-//                               width="25"
-//                               height="25"
-//                               title="Julie Lynn"
-//                             />
-//                           </div>
-//                         </td>
-//                         <td>-</td>
-//                         <td>
-//                           <span className="badge bg-danger p-2 px-3">End</span>
-//                         </td>
-//                         <td>
-//                           <div className="dt-buttons">
-//                             <span>
-//                               <div className="action-btn bg-warning me-2">
-//                                 <Link
-//                                   // to="https://demo.workdo.io/hrmgo/zoom-meeting/1"
-//                                   className="mx-3 btn btn-sm align-items-center"
-//                                   data-bs-toggle="tooltip"
-//                                   title="View"
-//                                   onClick={toggleModal}
-//                                 >
-//                                   <span className="text-white">
-//                                   <TiEyeOutline className="text-white" />
-//                                   </span>
-//                                 </Link>
-//                               </div>
-//                               <div className="action-btn bg-danger">
-//                                 <button
-//                                   onClick={() => {
-                                
-//                                     alert('Delete');
-//                                   }}
-//                                   className="mx-3 btn btn-sm align-items-center"
-//                                   data-bs-toggle="tooltip"
-//                                   title="Delete"
-//                                 >
-//                                   <span className="text-white">
-//                                   <RiDeleteBinLine />
-//                                   </span>
-//                                 </button>
-//                               </div>
-//                             </span>
-//                           </div>
-//                         </td>
-//                       </tr>
-
-//                       <tr>
-//                         <td>Vero officiis tempor</td>
-//                         <td>2024-12-01 13:49:00</td>
-//                         <td>15 Minute</td>
-//                         <td>
-//                           <div className="user-group">
-//                             <img
-//                               alt="image"
-//                               src="https://demo.workdo.io/hrmgo/storage/uploads/avatar/user-2.jpg"
-//                               className="rounded-circle"
-//                               width="25"
-//                               height="25"
-//                               title="Lunea Todd"
-//                             />
-//                             <img
-//                               alt="image"
-//                               src="https://demo.workdo.io/hrmgo/storage/uploads/avatar/user-3.jpg"
-//                               className="rounded-circle"
-//                               width="25"
-//                               height="25"
-//                               title="Ida F. Mullen"
-//                             />
-//                           </div>
-//                         </td>
-//                         <td>-</td>
-//                         <td>
-//                           <span className="badge bg-danger p-2 px-3">End</span>
-//                         </td>
-//                         <td>
-//                           <div className="dt-buttons">
-//                             <span>
-//                               <div className="action-btn bg-warning me-2">
-//                                 <Link
-//                                   // to="https://demo.workdo.io/hrmgo/zoom-meeting/2"
-//                                   className="mx-3 btn btn-sm align-items-center"
-//                                   data-bs-toggle="tooltip"
-//                                   title="View"
-//                                   onClick={toggleModal}
-//                                 >
-//                                   <span className="text-white">
-//                                   <TiEyeOutline className="text-white" />
-//                                   </span>
-//                                 </Link>
-//                               </div>
-//                               <div className="action-btn bg-danger">
-//                                 <button
-//                                   onClick={() => {
-                                    
-//                                     alert('Delete');
-//                                   }}
-//                                   className="mx-3 btn btn-sm align-items-center"
-//                                   data-bs-toggle="tooltip"
-//                                   title="Delete"
-//                                 >
-//                                   <span className="text-white">
-//                                   <RiDeleteBinLine />
-//                                   </span>
-//                                 </button>
-//                               </div>
-//                             </span>
-//                           </div>
-//                         </td>
-//                       </tr>
-
-//                       <tr>
-//                         <td>General information</td>
-//                         <td>2025-01-25 11:36:16</td>
-//                         <td>20 Minute</td>
-//                         <td>
-//                           <div className="user-group">
-//                             <img
-//                               alt="image"
-//                               src="https://demo.workdo.io/hrmgo/storage/uploads/avatar/user-9.jpg"
-//                               className="rounded-circle"
-//                               width="25"
-//                               height="25"
-//                               title="Nyssa Sloan"
-//                             />
-//                           </div>
-//                         </td>
-//                         <td>
-//                           <a
-//                             href="https://us05web.zoom.us/s/81493773234?zak=..."
-//                             className="text-secondary"
-//                           >
-//                             <p className="mb-0">
-//                               <b>Start meeting</b> <i className="ti ti-external-link"></i>
-//                             </p>
-//                           </a>
-//                         </td>
-//                         <td>
-//                           <span className="badge bg-info p-2 px-3">Waiting</span>
-//                         </td>
-//                         <td>
-//                           <div className="dt-buttons">
-//                             <span>
-//                               <div className="action-btn bg-warning me-2">
-//                                 <Link
-//                                   // to="https://demo.workdo.io/hrmgo/zoom-meeting/3"
-//                                   className="mx-3 btn btn-sm align-items-center"
-//                                   data-bs-toggle="tooltip"
-//                                   title="View"
-//                                   onClick={toggleModal}
-//                                 >
-//                                   <span className="text-white">
-//                                   <TiEyeOutline className="text-white" />
-//                                   </span>
-//                                 </Link>
-//                               </div>
-//                               <div className="action-btn bg-danger">
-//                                 <button
-//                                   onClick={() => {
-//                                     // Handle delete logic here
-//                                     alert('Delete');
-//                                   }}
-//                                   className="mx-3 btn btn-sm align-items-center"
-//                                   data-bs-toggle="tooltip"
-//                                   title="Delete"
-//                                 >
-//                                   <span className="text-white">
-//                                   <RiDeleteBinLine />
-//                                   </span>
-//                                 </button>
-//                               </div>
-//                             </span>
-//                           </div>
-//                         </td>
-//                       </tr>
-//                     </tbody>
-//                   </table>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//     {isModalOpen && <ViewModal onClose={toggleModal} />}
-//     </div>
-//   );
-// };
-
-// export default ZoomMeetingTable;

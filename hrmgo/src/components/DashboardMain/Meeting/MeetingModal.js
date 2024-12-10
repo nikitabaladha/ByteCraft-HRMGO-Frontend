@@ -353,7 +353,6 @@ const employeeOptions = [
                             transform: 'translateY(-50%)',
                             fontSize: '12px',
                             color: state.isSelected ? 'transparent' : '#aaa',
-                            
                           },
                         }),
                       }}

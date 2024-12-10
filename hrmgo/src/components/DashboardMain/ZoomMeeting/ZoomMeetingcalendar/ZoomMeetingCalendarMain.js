@@ -5,6 +5,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { CiCalendarDate } from "react-icons/ci";
 import getAPI from "../../../../api/getAPI";
+import ViewModal from "./Viewmodal";
 
 const MeetingCalendar = () => {
     const [meetings, setMeetings] = useState([]);
@@ -12,6 +13,7 @@ const MeetingCalendar = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+    const [selectedMeeting, setSelectedMeeting] = useState(null);
 
     useEffect(() => {
         const fetchMeetings = async () => {
@@ -50,7 +52,16 @@ const MeetingCalendar = () => {
         id: `meeting-${index}`,
         title: meeting.title,
         start: meeting.start_date,
+        extendedProps: { ...meeting },
     }));
+
+    const handleEventClick = (clickInfo) => {
+        setSelectedMeeting(clickInfo.event.extendedProps);
+    };
+
+    const handleCloseModal = () => {
+        setSelectedMeeting(null);
+    };
 
     const renderEventContent = (eventInfo) => {
         return (
@@ -62,6 +73,7 @@ const MeetingCalendar = () => {
                     borderRadius: "2px",
                     fontSize: "12px",
                     textAlign: "center",
+                    cursor: "pointer",
                 }}
             >
                 {eventInfo.event.title}
@@ -121,6 +133,7 @@ const MeetingCalendar = () => {
                                     }}
                                     events={events} 
                                     displayEventTime={false}
+                                    eventClick={handleEventClick}
                                     eventContent={renderEventContent}
                                     datesSet={handleDateChange} 
                                 />
@@ -143,7 +156,7 @@ const MeetingCalendar = () => {
                                                         <CiCalendarDate />
                                                     </div>
                                                     <div className="ms-3">
-                                                        <h6 className="card-text small text-primary">
+                                                        <h6 className=" text-primary">
                                                             {meeting.title}
                                                         </h6>
                                                         <div className="card-text small text-dark">
@@ -170,6 +183,9 @@ const MeetingCalendar = () => {
                     </div>
                 </div>
             </div>
+            {selectedMeeting && (
+                <ViewModal meeting={selectedMeeting} onClose={handleCloseModal} />
+            )}
         </div>
     );
 };
