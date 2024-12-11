@@ -6,6 +6,7 @@ import postAPI from "../../../../api/postAPI";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
+import getAPI from "../../../../api/getAPI";
 
 const ContractDetailAttachment = ({ attachments, setAttachments }) => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -66,6 +67,61 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
       toast.error("An unexpected error occurred. Please try again.");
     }
   };
+
+  const handleDownload = async (id) => {
+    try {
+      // Make a request to the backend to download the file
+      const response = await getAPI(
+        `contract-attachment/download/${id}`,
+        {},
+        true
+      );
+
+      if (!response.hasError && response.data) {
+        const a = document.createElement("a");
+        a.href = response.data.data;
+        // Set the filename if available in the response
+        a.download = response.data.fileName || `attachment-${id}.png`; // Default filename if not provided
+        document.body.appendChild(a);
+        a.click(); // Trigger the download
+        a.remove(); // Clean up
+        window.URL.revokeObjectURL(a.href); // Clean up URL object
+      } else {
+        toast.error(response.message || "Failed to download attachment.");
+      }
+    } catch (err) {
+      toast.error("An unexpected error occurred while downloading the file.");
+      console.error("Error fetching Contract attachment Data:", err);
+    }
+  };
+
+  // const handleDownload = async (id) => {
+  //   try {
+  //     const response = await getAPI(
+  //       `contract-attachment/download/${id}`,
+  //       {},
+  //       true
+  //     );
+
+  //     if (!response.hasError) {
+  //       // Create a Blob from the response
+  //       const blob = new Blob([response.data], { type: response.data.type });
+  //       const url = window.URL.createObjectURL(blob);
+  //       const a = document.createElement("a");
+  //       a.href = url;
+  //       a.download = attachments.fileName; // Make sure to use the correct filename
+  //       document.body.appendChild(a);
+  //       a.click();
+  //       a.remove();
+  //       window.URL.revokeObjectURL(url); // Clean up
+  //     } else {
+  //       toast.error(response.message || "Failed to download attachment.");
+  //     }
+  //   } catch (err) {
+  //     toast.error("An unexpected error occurred while downloading the file.");
+  //     console.error("Error fetching Contract attachment Data:", err);
+  //   }
+  // };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -133,8 +189,11 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
                         <div className="col">
                           <h6 className="text-sm mb-0">
                             <Link
-                              to={attachment.contractAttachmentUrl}
+                              // insted of this give me proper function to call backend to download
+                              to={`http://localhost:3001/contract-attachment/download/${attachment.id}`}
                               download
+                              target="_blank"
+                              rel="noopener noreferrer"
                             >
                               {attachment.fileName}
                             </Link>
@@ -146,17 +205,18 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
                         <div className="dt-buttons">
                           <span>
                             <div className="action-btn bg-warning me-2">
-                              <Link
+                              <button
                                 className="btn btn-sm d-inline-flex align-items-center"
-                                to={attachment.contractAttachmentUrl}
-                                download
+                                onClick={() => handleDownload(attachment.id)}
+                                // target="_blank"
+                                // rel="noopener noreferrer"
                                 data-bs-toggle="tooltip"
                                 title="Download"
                               >
                                 <span className="text-white">
                                   <MdOutlineFileDownload />
                                 </span>
-                              </Link>
+                              </button>
                             </div>
                             <div className="action-btn bg-danger">
                               <form method="GET" acceptCharset="UTF-8">

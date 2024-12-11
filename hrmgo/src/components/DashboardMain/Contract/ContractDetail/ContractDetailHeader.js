@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdMailOutline, MdOutlineFileDownload } from "react-icons/md";
 import { TbCopy, TbWritingSign } from "react-icons/tb";
 import { TiEyeOutline } from "react-icons/ti";
 import CopyContractModal from "../CopyContractModal";
 
 const ContractDetailHeader = ({ contractData }) => {
+  const navigate = useNavigate();
   const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
 
   const handleCopyContract = (event) => {
@@ -18,8 +19,11 @@ const ContractDetailHeader = ({ contractData }) => {
     event.preventDefault();
   };
 
-  const handlePreview = (event) => {
+  const navigateToContractDetail = (event, contractData) => {
     event.preventDefault();
+    navigate(`/contract/preview/${contractData.id}`, {
+      state: contractData,
+    });
   };
 
   const handleSignature = (event) => {
@@ -83,7 +87,7 @@ const ContractDetailHeader = ({ contractData }) => {
                     className="btn btn-sm btn-primary btn-icon m-2"
                     data-bs-toggle="tooltip"
                     title="Preview"
-                    onClick={handlePreview}
+                    onClick={(e) => navigateToContractDetail(e, contractData)}
                   >
                     <TiEyeOutline />
                   </Link>

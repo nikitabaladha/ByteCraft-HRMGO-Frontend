@@ -33,6 +33,7 @@ import HolidayCalendarView from "./components/DashboardMain/HrAdminSetup/Holiday
 
 import Contract from "./components/DashboardMain/Contract/Contract.js";
 import ContractDetail from "./components/DashboardMain/Contract/ContractDetail/ContractDetail.js";
+import ContractPreview from "./components/DashboardMain/Contract/ContractDetail/ContractPreview.js";
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
     <Routes>
@@ -45,6 +46,8 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
       ) : (
         <>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
+          <Route path="/contract/preview/:id" element={<ContractPreview />} />
           <Route path="/dashboard" element={<DashboardMain />}>
             <Route index element={<Navigate to="overview" replace />} />
             <Route path="overview" element={<Overview />} />

@@ -39,7 +39,7 @@ const Contract = () => {
 
   return (
     <>
-      {id ? ( // If there's an ID in the route, render the detail component
+      {id ? (
         <ContractDetail contract={selectedContract} />
       ) : (
         <>
