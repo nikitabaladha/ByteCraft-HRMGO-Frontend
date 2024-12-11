@@ -2,11 +2,15 @@ import React from "react";
 import { LuUserPlus } from "react-icons/lu";
 import { LuMousePointerClick } from "react-icons/lu";
 import { FaRegFile } from "react-icons/fa";
-const ContractDetailInfoCard = ({ commentCount, noteCount }) => {
+const ContractDetailInfoCard = ({
+  commentCount,
+  noteCount,
+  attachmentCount,
+}) => {
   return (
     <>
       {" "}
-      <div className="col-xl-7">
+      <div className="col-xl-7" id="general">
         <div className="row">
           <div className="col-lg-4 col-6">
             <div className="card">
@@ -15,7 +19,7 @@ const ContractDetailInfoCard = ({ commentCount, noteCount }) => {
                   <LuUserPlus />
                 </div>
                 <h6 className="mb-3 mt-4">Attachment</h6>
-                <h3 className="mb-0">1</h3>
+                <h3 className="mb-0">{attachmentCount}</h3>
                 <h3 className="mb-0" />
               </div>
             </div>

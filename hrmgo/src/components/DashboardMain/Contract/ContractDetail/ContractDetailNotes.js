@@ -1,3 +1,5 @@
+// ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Contract\ContractDetail\ContractDetailNotes.js
+
 import React, { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";

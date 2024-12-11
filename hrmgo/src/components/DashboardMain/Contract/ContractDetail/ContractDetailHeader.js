@@ -19,7 +19,9 @@ const ContractDetailHeader = ({ contractData }) => {
     event.preventDefault();
   };
 
-  const navigateToContractDetail = (event, contractData) => {
+  const navigateToContractDetailPreview = (event, contractData) => {
+    console.log("Contract data from contract detail header", contractData);
+    // i am successfully able to navigate to contract detail preview page now i want to pass the data to that page so how to do that
     event.preventDefault();
     navigate(`/contract/preview/${contractData.id}`, {
       state: contractData,
@@ -87,7 +89,9 @@ const ContractDetailHeader = ({ contractData }) => {
                     className="btn btn-sm btn-primary btn-icon m-2"
                     data-bs-toggle="tooltip"
                     title="Preview"
-                    onClick={(e) => navigateToContractDetail(e, contractData)}
+                    onClick={(e) =>
+                      navigateToContractDetailPreview(e, contractData)
+                    }
                   >
                     <TiEyeOutline />
                   </Link>

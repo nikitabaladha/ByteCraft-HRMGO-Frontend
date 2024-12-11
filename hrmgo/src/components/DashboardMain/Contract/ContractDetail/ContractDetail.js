@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import getAPI from "../../../../api/getAPI";
 import ContractDetailHeader from "./ContractDetailHeader";
-import ContractDetailSidebar from "./ContractDetailSidebar";
 import ContractDetailInfoCard from "./ContractDetailInfoCard";
 import ContractDetailCard from "./ContractDetailCard";
 import ContractDetailDescription from "./ContractDetailDescription";
 import ContractDetailAttachment from "./ContractDetailAttachment";
 import ContractDetailComment from "./ContractDetailComment";
 import ContractDetailNotes from "./ContractDetailNotes";
-import { useLocation, useParams } from "react-router-dom";
-import getAPI from "../../../../api/getAPI";
+import ContractDetailSidebar from "./ContractDetailSidebar";
 
 const ContractDetail = ({ contract }) => {
   const location = useLocation();
@@ -18,7 +18,6 @@ const ContractDetail = ({ contract }) => {
 
   const [attachments, setAttachments] = useState([]);
   const [comments, setComments] = useState([]);
-
   const [notes, setNotes] = useState([]);
 
   const fetchContractAttachmentData = async () => {
@@ -35,19 +34,12 @@ const ContractDetail = ({ contract }) => {
         Array.isArray(response.data.data)
       ) {
         setAttachments(response.data.data);
-        console.log("Contract attachments:", response.data.data);
-      } else {
-        console.error(
-          "Invalid response format or error in response for attachments",
-          response
-        );
       }
     } catch (err) {
       console.error("Error fetching Contract attachment Data:", err);
     }
   };
 
-  // Fetch contract comments
   const fetchContractCommentData = async () => {
     try {
       const response = await getAPI(
@@ -62,19 +54,12 @@ const ContractDetail = ({ contract }) => {
         Array.isArray(response.data.data)
       ) {
         setComments(response.data.data);
-        console.log("Contract comments:", response.data.data);
-      } else {
-        console.error(
-          "Invalid response format or error in response for comments",
-          response
-        );
       }
     } catch (err) {
       console.error("Error fetching Contract comment Data:", err);
     }
   };
 
-  // Fetch contract notes
   const fetchContractNoteData = async () => {
     try {
       const response = await getAPI(
@@ -83,31 +68,30 @@ const ContractDetail = ({ contract }) => {
         true,
         true
       );
-
       if (
         !response.hasError &&
         response.data &&
         Array.isArray(response.data.data)
       ) {
         setNotes(response.data.data);
-        console.log("Contract notes:", response.data.data);
-      } else {
-        console.error(
-          "Invalid response format or error in response for notes",
-          response
-        );
       }
     } catch (err) {
       console.error("Error fetching Contract note Data:", err);
     }
   };
 
-  // Use effects to fetch data when component mounts
   useEffect(() => {
     fetchContractCommentData();
     fetchContractNoteData();
     fetchContractAttachmentData();
   }, [id]);
+
+  const handleScrollToSection = (sectionId) => {
+    const sectionElement = document.getElementById(sectionId);
+    if (sectionElement) {
+      sectionElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   if (!contractData) {
     return <p>Loading contract details...</p>;
@@ -120,35 +104,41 @@ const ContractDetail = ({ contract }) => {
         <div className="col-xl-12">
           <div className="col-sm-12">
             <div className="row">
-              {/* Sidebar */}
-              <ContractDetailSidebar />
+              {/* Sidebar section */}
+
+              <ContractDetailSidebar
+                handleScrollToSection={handleScrollToSection}
+              />
+
+              {/* Main content section */}
               <div className="col-xl-9">
                 <div id="general">
                   <div className="row">
-                    {/* cards */}
                     <ContractDetailInfoCard
                       commentCount={comments.length}
                       noteCount={notes.length}
+                      attachmentCount={attachments.length}
                     />
-                    {/* contract detail */}
                     <ContractDetailCard contractData={contractData} />
                   </div>
-
-                  {/* Description */}
                   <ContractDetailDescription contractData={contractData} />
                 </div>
-                {/* Attachment */}
+                {/* i want attachment count but its  */}
                 <ContractDetailAttachment
                   attachments={attachments}
                   setAttachments={setAttachments}
+                  sectionId="attachments"
                 />
-                {/* Comment */}
                 <ContractDetailComment
                   comments={comments}
                   setComments={setComments}
+                  sectionId="comments"
                 />
-                {/* Notes */}
-                <ContractDetailNotes notes={notes} setNotes={setNotes} />
+                <ContractDetailNotes
+                  notes={notes}
+                  setNotes={setNotes}
+                  sectionId="notes"
+                />
               </div>
             </div>
           </div>

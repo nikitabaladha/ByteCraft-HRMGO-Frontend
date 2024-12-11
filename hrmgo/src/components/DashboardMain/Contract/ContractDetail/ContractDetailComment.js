@@ -74,7 +74,7 @@ const ContractDetailComment = ({ comments, setComments }) => {
 
   return (
     <>
-      <div id="comment" role="tabpanel" aria-labelledby="pills-comments-tab">
+      <div id="comments" role="tabpanel" aria-labelledby="pills-comments-tab">
         <div className="row pt-2">
           <div className="col-12">
             <div className="card">
