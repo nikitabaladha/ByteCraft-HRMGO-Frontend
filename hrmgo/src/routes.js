@@ -28,6 +28,8 @@ import Meeting from "./components/DashboardMain/Meeting/Meeting.js";
 import MeetingCalendar from "./components/DashboardMain/Meeting/Meetingcalendar/MeetingCalendar.js";
 import ZoomMeeting from "./components/DashboardMain/ZoomMeeting/ZoomMeeting.js"
 import ZoomMeetingCalendar from "./components/DashboardMain/ZoomMeeting/ZoomMeetingcalendar/ZoomMeetingCalendar.js";
+// import Event from "./components/DashboardMain/Event/Event.js";
+import CompanyPolicy from "./components/DashboardMain/CompanyPolicy/ComapnyPolicy.js"
 
 
 
@@ -100,6 +102,10 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
 
             <Route path="zoom-meeting"element={<ZoomMeeting />} />
             <Route path="Zoom-meetings" element={<ZoomMeetingCalendar />} />
+
+            {/* <Route path="event"element={<Event />} /> */}
+            <Route path="company-policy" element={<CompanyPolicy />} />
+
            
 
 

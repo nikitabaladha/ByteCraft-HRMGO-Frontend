@@ -119,9 +119,28 @@ const TicketDashboard = () => {
     setCurrentPage(1);
   };
 
-  const filteredTickets = tickets.filter((ticket) =>
-    ticket.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredTickets = tickets.filter((ticket) => {
+    const query = searchQuery.toLowerCase();
+    const ticketDate = new Date(ticket.end_date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    }).toLowerCase();
+  
+    const ticketCode = ticket.ticket_code.toString().padStart(4, '0');
+    
+    
+    return (
+      ticket.title.toLowerCase().includes(query) ||
+      ticketCode.toLowerCase().includes(query) ||  
+      ticket.employee_name.toLowerCase().includes(query) ||
+      ticket.priority.toLowerCase().includes(query) ||
+      ticket.status.toLowerCase().includes(query) ||
+      ticket.created_by.toLowerCase().includes(query) ||
+      ticketDate.includes(query)  
+    );
+  });
+  
 
   const paginatedTicket = filteredTickets.slice(
     (currentPage - 1) * entriesPerPage,

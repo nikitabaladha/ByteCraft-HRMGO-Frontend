@@ -68,9 +68,29 @@ const MeetingTable = () => {
     setCurrentPage(1); // Reset to the first page
   };
 
-  const filteredMeetings = meetings.filter((meeting) =>
-    meeting.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredMeetings = meetings.filter((meeting) => {
+    const searchTerm = searchQuery.toLowerCase();
+  
+    const formattedDate = new Date(meeting.date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }).toLowerCase();
+    
+    const formattedTime = new Date("1970-01-01T" + meeting.time).toLocaleTimeString("en-IN", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    }).toLowerCase();
+  
+    return (
+      meeting.title.toLowerCase().includes(searchTerm) ||
+      formattedDate.includes(searchTerm) ||
+      formattedTime.includes(searchTerm)
+    );
+  });
+  
+  
 
   const paginatedMeetings = filteredMeetings.slice(
     (currentPage - 1) * entriesPerPage,

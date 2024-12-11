@@ -3,6 +3,7 @@ import deleteAPI from "../../api/deleteAPI";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 const DELETE_CONFIG = {
   indicator: {
     getEndpoint: (id) => `/indicator/${id}`,
@@ -45,6 +46,12 @@ const DELETE_CONFIG = {
     successMessage: "Zoom meeting successfully deleted!",
     errorMessage: "Failed to delete Zoom meeting.",
     idKey: "meetingId"
+  },
+  Companypolicy:{
+    getEndpoint: (id) => `/deletecompany_policy/${id}`,
+    successMessage: "Comapany Policy successfully deleted!",
+    errorMessage: "Failed to delete company Policy.",
+    idKey: "policyId"
   }
 };
 
