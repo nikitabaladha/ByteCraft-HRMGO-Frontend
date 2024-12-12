@@ -7,14 +7,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import ConfirmationDialog from "../ConfirmationDialog";
 import UpdateContractModal from "./UpdateContractModal";
 import CopyContractModal from "./CopyContractModal";
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  const month = date.toLocaleString("default", { month: "short" });
-  const day = date.getDate();
-  const year = date.getFullYear();
-  return `${month} ${day}, ${year}`;
-}
+import { formatDate, formatCost } from "../../../Js/custom";
 
 const ContractTable = ({ contracts, setContracts }) => {
   const navigate = useNavigate();
@@ -94,7 +87,8 @@ const ContractTable = ({ contracts, setContracts }) => {
                       </td>
                       <td>{contract.employeeName}</td>
                       <td>{contract.subject}</td>
-                      <td>₹{contract.value}</td>
+
+                      <td> {formatCost(contract.value)}</td>
                       <td>{contract.contractType}</td>
                       <td>{formatDate(contract.startDate)}</td>
                       <td>{formatDate(contract.endDate)}</td>

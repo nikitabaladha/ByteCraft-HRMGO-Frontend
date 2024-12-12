@@ -1,12 +1,5 @@
 import React from "react";
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  const month = date.toLocaleString("default", { month: "short" });
-  const day = date.getDate();
-  const year = date.getFullYear();
-  return `${month} ${day}, ${year}`;
-}
+import { formatDate, formatCost } from "../../../../Js/custom";
 
 const ContractDetailCard = ({ contractData }) => {
   if (!contractData) {
@@ -38,7 +31,7 @@ const ContractDetailCard = ({ contractData }) => {
                 <div className="col-sm-4 h6 text-sm">Value</div>
                 <div className="col-sm-8 text-sm">
                   {" "}
-                  ₹{contractData.value || "0.00"}
+                  {formatCost(contractData.value)}
                 </div>
                 <div className="col-sm-4 h6 text-sm">Start Date</div>
                 <div className="col-sm-8 text-sm">

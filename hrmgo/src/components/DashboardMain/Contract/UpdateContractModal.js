@@ -260,8 +260,8 @@ const UpdateContractModal = ({ contracts, onClose }) => {
                         rows={3}
                         placeholder="Enter Description"
                         name="description"
-                        value={formData.description}
                         onChange={handleChange}
+                        value={formData.description.replace(/<[^>]*>/g, "")}
                       />
                     </div>
                   </div>
