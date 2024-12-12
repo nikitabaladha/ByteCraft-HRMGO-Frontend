@@ -12,7 +12,6 @@ const UpdateContractModal = ({ contracts, onClose }) => {
     contractTypeId: "",
     startDate: "",
     endDate: "",
-    description: "",
   });
   const [employees, setEmployees] = useState([]);
   const [contractTypes, setContractTypes] = useState([]);
@@ -26,7 +25,6 @@ const UpdateContractModal = ({ contracts, onClose }) => {
         contractTypeId: contracts.contractTypeId || "",
         startDate: contracts.startDate ? contracts.startDate.split("T")[0] : "",
         endDate: contracts.endDate ? contracts.endDate.split("T")[0] : "",
-        description: contracts.description || "",
       });
     }
   }, [contracts]);
@@ -249,21 +247,6 @@ const UpdateContractModal = ({ contracts, onClose }) => {
                       value={formData.endDate}
                       onChange={handleChange}
                     />
-                  </div>
-                  <div className="col-md-12">
-                    <div className="form-group">
-                      <label htmlFor="description" className="col-form-label">
-                        Description
-                      </label>
-                      <textarea
-                        className="form-control"
-                        rows={3}
-                        placeholder="Enter Description"
-                        name="description"
-                        onChange={handleChange}
-                        value={formData.description.replace(/<[^>]*>/g, "")}
-                      />
-                    </div>
                   </div>
                 </div>
               </div>

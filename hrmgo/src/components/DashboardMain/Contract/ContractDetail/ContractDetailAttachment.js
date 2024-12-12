@@ -189,7 +189,6 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
                         <div className="col">
                           <h6 className="text-sm mb-0">
                             <Link
-                              // insted of this give me proper function to call backend to download
                               to={`http://localhost:3001/contract-attachment/download/${attachment.id}`}
                               download
                               target="_blank"

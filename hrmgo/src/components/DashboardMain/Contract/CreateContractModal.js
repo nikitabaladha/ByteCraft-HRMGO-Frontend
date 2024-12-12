@@ -16,7 +16,6 @@ const CreateContractModal = ({ onClose }) => {
     value: "",
     startDate: new Date().toISOString().split("T")[0],
     endDate: new Date().toISOString().split("T")[0],
-    description: "",
   });
 
   // Fetch employees
@@ -72,7 +71,6 @@ const CreateContractModal = ({ onClose }) => {
           contractTypeId: formData.contractTypeId,
           startDate: formData.startDate,
           endDate: formData.endDate,
-          description: formData.description,
           subject: formData.subject,
           value: formData.value,
         },
@@ -89,7 +87,6 @@ const CreateContractModal = ({ onClose }) => {
           value: "",
           startDate: new Date().toISOString().split("T")[0],
           endDate: new Date().toISOString().split("T")[0],
-          description: "",
         });
         onClose();
       } else {
@@ -253,21 +250,6 @@ const CreateContractModal = ({ onClose }) => {
                         value={formData.endDate}
                         onChange={handleChange}
                       />
-                    </div>
-                    <div className="col-md-12">
-                      <div className="form-group">
-                        <label htmlFor="description" className="col-form-label">
-                          Description
-                        </label>
-                        <textarea
-                          className="form-control"
-                          rows={3}
-                          placeholder="Enter Description"
-                          name="description"
-                          value={formData.description}
-                          onChange={handleChange}
-                        />
-                      </div>
                     </div>
                   </div>
                 </div>
