@@ -188,11 +188,7 @@ const IndicatorCreateModal = ({ closeModal }) => {
                 noValidate=""
                 onSubmit={handleSubmit}
               >
-                <input
-                  name="_token"
-                  type="hidden"
-                  defaultValue="rDtGmON270RmzECD5tQsLf49tuPSf6XJb2lsG5qd"
-                />
+                <input name="_token" type="hidden" />
                 <div className="modal-body">
                   <div className="row">
                     <div className="col-md-12">

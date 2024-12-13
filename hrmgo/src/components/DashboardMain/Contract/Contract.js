@@ -52,7 +52,6 @@ const Contract = () => {
     fetchContractData();
   }, []);
 
-  // Find the contract details for the current ID (if available)
   const selectedContract = id
     ? contracts.find((contract) => contract.id === parseInt(id))
     : null;
@@ -67,7 +66,6 @@ const Contract = () => {
           <div className="row">
             <div className="col-xl-12">
               <div className="row">
-                {/* i want to pass totalValue, totalValueOfThisMonth, totalValueOfThisWeek, And totalValue ofLast30 days to contractReport */}
                 <ContractReport
                   totalValue={totalValue}
                   totalValueOfThisMonth={totalValueOfThisMonth}

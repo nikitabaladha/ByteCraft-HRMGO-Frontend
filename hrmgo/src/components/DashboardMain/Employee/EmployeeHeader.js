@@ -5,8 +5,16 @@ import { Link } from "react-router-dom";
 import { TbFileExport } from "react-icons/tb";
 import { CiFileOn } from "react-icons/ci";
 import { FiPlus } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
-const EmployeeHeader = () => {
+const EmployeeHeader = ({ employeeData }) => {
+  console.log("employeeData from header", employeeData);
+  const navigate = useNavigate();
+
+  const navigateToEmployeeCreate = () => {
+    navigate(`/dashboard/employee/create`);
+  };
+
   return (
     <>
       <div className="page-header">
@@ -47,12 +55,12 @@ const EmployeeHeader = () => {
                   <CiFileOn />
                 </Link>
                 <Link
-                  to="/employee/create"
                   data-title="Create New Employee"
                   data-bs-toggle="tooltip"
                   title=""
                   className="btn btn-sm btn-primary"
                   data-bs-original-title="Create"
+                  onClick={navigateToEmployeeCreate(employeeData)}
                 >
                   <FiPlus />
                 </Link>

@@ -12,6 +12,7 @@ import Leave from "./components/DashboardMain/Dashboard/Report/Leave/Leave";
 import AccountStatement from "./components/DashboardMain/Dashboard/Report/AccountStatement/AccountStatement.js";
 
 import Employee from "./components/DashboardMain/Employee/Employee.js";
+import CreateEmployee from "./components/DashboardMain/Employee/CreateEmployee/CreateEmployee.js";
 
 import ManageLeave from "./components/DashboardMain/Timesheet/ManageLeave/ManageLeave.js";
 import TimeSheet from "./components/DashboardMain/Timesheet/TimeSheet/TimeSheet.js";
@@ -64,7 +65,10 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
               path="report/account-statement"
               element={<AccountStatement />}
             />
-            <Route path="employee" element={<Employee />} />
+
+            <Route path="employee" element={<Employee />}>
+              <Route path="create" element={<CreateEmployee />} />
+            </Route>
 
             <Route path="time-sheet/manage-leave" element={<ManageLeave />} />
             <Route path="time-sheet/time-sheet" element={<TimeSheet />} />

@@ -36,7 +36,6 @@ const Holiday = () => {
     setHolidays(searchedHolidays);
   };
 
-  // Check
   const isCalendarRoute =
     location.pathname === "/dashboard/hr-admin-setup/holiday/calendar";
 

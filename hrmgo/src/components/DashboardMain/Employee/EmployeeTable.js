@@ -1,42 +1,11 @@
 import React, { useEffect, useState } from "react";
-import getAPI from "../../../api/getAPI.js";
+
 import { Link } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { formatDate } from "../../../Js/custom";
 
-const EmployeeTable = () => {
-  const [employeeData, setEmployeeData] = useState([]);
-
-  useEffect(() => {
-    const fetchEmployeeData = async () => {
-      try {
-        const response = await getAPI(`/employee-get-all`, {}, true);
-        if (
-          !response.hasError &&
-          response.data &&
-          Array.isArray(response.data.data)
-        ) {
-          setEmployeeData(response.data.data);
-          console.log("Employee Data fetched successfully", response.data.data);
-        } else {
-          console.error("Invalid response format or error in response");
-        }
-      } catch (err) {
-        console.error("Error fetching Employee Data:", err);
-      }
-    };
-
-    fetchEmployeeData();
-  }, []);
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const month = date.toLocaleString("default", { month: "short" });
-    const day = date.getDate();
-    const year = date.getFullYear();
-    return `${month} ${day}, ${year}`;
-  }
-
+const EmployeeTable = ({ employeeData }) => {
   return (
     <>
       <div className="row">
@@ -70,7 +39,7 @@ const EmployeeTable = () => {
                         <td>{employee.branchName}</td>
                         <td>{employee.departmentName}</td>
                         <td>{employee.designationName}</td>
-                        <td>{formatDate(employee.joiningDate)}</td>
+                        <td>{formatDate(employee.dateOfJoining)}</td>
                         <td className="Action">
                           <span>
                             <div className="action-btn bg-info ms-2">
@@ -84,24 +53,13 @@ const EmployeeTable = () => {
                               </Link>
                             </div>
                             <div className="action-btn bg-danger ms-2">
-                              <form
-                                method="POST"
-                                action={`https://demo.workdo.io/hrmgo/employee/${
-                                  index + 1
-                                }`}
-                                acceptCharset="UTF-8"
-                                id={`delete-form-${index + 1}`}
-                              >
+                              <form method="POST" acceptCharset="UTF-8">
                                 <input
                                   name="_method"
                                   type="hidden"
                                   defaultValue="DELETE"
                                 />
-                                <input
-                                  name="_token"
-                                  type="hidden"
-                                  defaultValue="1VeqiEqyagA6XjCZr049aILUNogdAGa44buw9sQP"
-                                />
+                                <input name="_token" type="hidden" />
                                 <Link
                                   to="/"
                                   className="mx-3 btn btn-sm align-items-center bs-pass-para"
