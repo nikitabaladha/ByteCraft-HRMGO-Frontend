@@ -60,7 +60,6 @@ const WarningTable = () => {
 
   return (
     <>
-      {" "}
       <div className="row">
         <div className="col-xl-12">
           <div className="card">

@@ -11,8 +11,6 @@ import { useState, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
 const AppraisalUpdateModal = ({ closeModal, appraisal, onUpdateSuccess }) => {
-  console.log("AppraisalUpdateModal", appraisal);
-
   const [ratings, setRatings] = useState({
     organizational: {},
     technical: {},
@@ -117,8 +115,15 @@ const AppraisalUpdateModal = ({ closeModal, appraisal, onUpdateSuccess }) => {
         toast.error("Failed to update Appraisal.");
       }
     } catch (error) {
-      toast.error("An error occurred while updating Appraisal.");
-      console.error("error", error);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     }
   };
 

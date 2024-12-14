@@ -7,11 +7,11 @@ import { CiFileOn } from "react-icons/ci";
 import { FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
-const EmployeeHeader = ({ employeeData }) => {
-  console.log("employeeData from header", employeeData);
+const EmployeeHeader = () => {
   const navigate = useNavigate();
 
-  const navigateToEmployeeCreate = () => {
+  const navigateToEmployeeCreate = (event) => {
+    event.preventDefault();
     navigate(`/dashboard/employee/create`);
   };
 
@@ -60,7 +60,7 @@ const EmployeeHeader = ({ employeeData }) => {
                   title=""
                   className="btn btn-sm btn-primary"
                   data-bs-original-title="Create"
-                  onClick={navigateToEmployeeCreate(employeeData)}
+                  onClick={(event) => navigateToEmployeeCreate(event)}
                 >
                   <FiPlus />
                 </Link>

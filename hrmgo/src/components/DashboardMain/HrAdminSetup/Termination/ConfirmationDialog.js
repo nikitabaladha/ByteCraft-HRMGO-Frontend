@@ -4,8 +4,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function ConfirmationDialog({ onCancel, termination }) {
-  console.log("Confirmation Dialog open", termination);
-  // i am not able to pass termination here why i am getting undefined
   const handleDelete = async () => {
     try {
       const response = await deleteAPI(

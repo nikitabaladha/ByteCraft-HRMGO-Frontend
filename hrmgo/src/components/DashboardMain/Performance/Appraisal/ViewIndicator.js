@@ -6,8 +6,6 @@ const ViewIndicator = ({ appraisal }) => {
     return null;
   }
 
-  console.log("Appraisal data in ViewIndicator for view:", appraisal);
-
   const renderRating = (name, value, type = "appraisal") => {
     return (
       <fieldset id="demo1" className="rate">

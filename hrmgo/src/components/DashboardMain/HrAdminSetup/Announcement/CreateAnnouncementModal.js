@@ -36,7 +36,6 @@ const CreateAnnouncementModal = ({ onClose }) => {
     setSelectedBranch(branchId);
     setFormData((prevData) => ({ ...prevData, branchId }));
 
-    // it wokrs fine but why to need this prevdata and all why not directly using branchid why
     if (branchId) {
       const fetchDepartmentByBranchId = async () => {
         try {
@@ -172,7 +171,15 @@ const CreateAnnouncementModal = ({ onClose }) => {
         toast.error("Error creating announcement.");
       }
     } catch (error) {
-      toast.error("An unexpected error occurred. Please try again.");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     }
   };
 

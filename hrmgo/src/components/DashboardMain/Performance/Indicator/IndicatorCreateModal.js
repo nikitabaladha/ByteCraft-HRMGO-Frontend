@@ -146,7 +146,15 @@ const IndicatorCreateModal = ({ closeModal }) => {
         toast.error("Error creating indicator: " + response.message);
       }
     } catch (error) {
-      console.error("Error creating indicator: " + error.message);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     }
   };
 

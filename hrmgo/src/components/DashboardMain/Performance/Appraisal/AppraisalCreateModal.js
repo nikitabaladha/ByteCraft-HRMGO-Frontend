@@ -170,9 +170,6 @@ const AppraisalCreateModal = ({ closeModal }) => {
       indicatorId: indicatorData._id,
     };
 
-    console.log("Competencies Data from appraisal create:", data.competencies);
-    console.log("data", data);
-
     try {
       const response = await postAPI("/appraisal", data, true);
       if (!response.hasError) {
@@ -182,8 +179,15 @@ const AppraisalCreateModal = ({ closeModal }) => {
         toast.error("Error creating appraisal: " + response.message);
       }
     } catch (error) {
-      console.error("Error creating appraisal: " + error.message);
-      toast.error("Error creating appraisal. Please try again.");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     }
   };
   return (

@@ -93,7 +93,15 @@ const CreateContractModal = ({ onClose }) => {
         toast.error(response.message || "Failed to create Contract.");
       }
     } catch (error) {
-      toast.error("An unexpected error occurred. Please try again.");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     }
   };
 

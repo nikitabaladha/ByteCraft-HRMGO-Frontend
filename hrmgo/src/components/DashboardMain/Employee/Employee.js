@@ -42,7 +42,7 @@ const Employee = () => {
         <CreateEmployee />
       ) : (
         <>
-          <EmployeeHeader employeeData={employeeData} />
+          <EmployeeHeader />
           <EmployeeTable employeeData={employeeData} />
         </>
       )}

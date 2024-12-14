@@ -49,7 +49,15 @@ const UpdateHolidayModal = ({ holiday, onClose }) => {
         toast.error("Failed to update Holiday.");
       }
     } catch (error) {
-      toast.error("An error occurred while updating the Holiday.");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     }
   };
 
