@@ -53,6 +53,7 @@ const Holiday = () => {
           <HolidaySearchForm onSearchResults={handleSearchResults} />
           <HolidayTable
             holidays={holidays}
+            setHolidays={setHolidays}
             selectedHoliday={selectedHoliday}
             setSelectedHoliday={setSelectedHoliday}
           />

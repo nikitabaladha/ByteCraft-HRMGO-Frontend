@@ -11,8 +11,6 @@ const UpdateModal = ({ leave, onClose, onUpdateSuccess }) => {
   const [endDate, setEndDate] = useState(new Date(leave?.endDate));
   const [reason, setReason] = useState(leave?.reason || "");
 
-  console.log("Leave date from table", leave);
-
   useEffect(() => {
     if (leave) {
       setLeaveType(leave.leaveType);
@@ -39,7 +37,6 @@ const UpdateModal = ({ leave, onClose, onUpdateSuccess }) => {
         updatedLeave,
         true
       );
-      console.log("Updated leave: " + JSON.stringify(response));
 
       if (!response.hasError) {
         toast.success("Leave updated successfully!");
@@ -48,7 +45,15 @@ const UpdateModal = ({ leave, onClose, onUpdateSuccess }) => {
         toast.error("Failed to update leave.");
       }
     } catch (error) {
-      toast.error("An error occurred while updating the leave.");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     }
   };
 

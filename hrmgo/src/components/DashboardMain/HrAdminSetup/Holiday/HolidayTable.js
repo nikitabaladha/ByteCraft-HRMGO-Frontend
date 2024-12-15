@@ -4,9 +4,15 @@ import { Link } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
 import UpdateHolidayModal from "./UpdateHolidayModal";
-import ConfirmationDialog from "./ConfirmationDialog";
+import ConfirmationDialog from "../../ConfirmationDialog";
+import { formatDate } from "../../../../Js/custom";
 
-const HolidayTable = ({ holidays, selectedHoliday, setSelectedHoliday }) => {
+const HolidayTable = ({
+  holidays,
+  setHolidays,
+  selectedHoliday,
+  setSelectedHoliday,
+}) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
@@ -23,6 +29,12 @@ const HolidayTable = ({ holidays, selectedHoliday, setSelectedHoliday }) => {
   const handleDeleteCancel = () => {
     setIsDeleteDialogOpen(false);
     setSelectedHoliday(null);
+  };
+
+  const handleDeleteConfirmed = (id) => {
+    setHolidays((prevHolidays) =>
+      prevHolidays.filter((holiday) => holiday.id !== id)
+    );
   };
 
   return (
@@ -61,9 +73,11 @@ const HolidayTable = ({ holidays, selectedHoliday, setSelectedHoliday }) => {
                             </div>
                             <div className="action-btn bg-danger">
                               <Link
-                                href="#"
                                 className="mx-3 btn btn-sm align-items-center bs-pass-para"
-                                onClick={() => openDeleteDialog(holiday)}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  openDeleteDialog(holiday);
+                                }}
                               >
                                 <span className="text-white">
                                   <FaRegTrashAlt />
@@ -90,8 +104,10 @@ const HolidayTable = ({ holidays, selectedHoliday, setSelectedHoliday }) => {
       )}
       {isDeleteDialogOpen && selectedHoliday && (
         <ConfirmationDialog
-          holiday={selectedHoliday}
-          onCancel={handleDeleteCancel}
+          onClose={handleDeleteCancel}
+          deleteType="holiday"
+          id={selectedHoliday.id}
+          onDeleted={handleDeleteConfirmed}
         />
       )}
     </>
@@ -99,11 +115,3 @@ const HolidayTable = ({ holidays, selectedHoliday, setSelectedHoliday }) => {
 };
 
 export default HolidayTable;
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  const month = date.toLocaleString("default", { month: "short" });
-  const day = date.getDate();
-  const year = date.getFullYear();
-  return `${month} ${day}, ${year}`;
-}

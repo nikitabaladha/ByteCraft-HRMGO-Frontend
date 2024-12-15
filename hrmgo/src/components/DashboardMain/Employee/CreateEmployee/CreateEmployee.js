@@ -213,53 +213,6 @@ const CreateEmployee = () => {
         setResumePreview("");
       } else {
         toast.error(response.data.message || "Failed to create Employee.");
-
-        //   response{
-        //     "data": {
-        //         "hasError": true,
-        //         "message": "\"name\" is not allowed to be empty"
-        //     },
-        //     "status": 400,
-        //     "statusText": "Bad Request",
-        //     "headers": {
-        //         "content-length": "65",
-        //         "content-type": "application/json; charset=utf-8"
-        //     },
-        //     "config": {
-        //         "transitional": {
-        //             "silentJSONParsing": true,
-        //             "forcedJSONParsing": true,
-        //             "clarifyTimeoutError": false
-        //         },
-        //         "adapter": [
-        //             "xhr",
-        //             "http",
-        //             "fetch"
-        //         ],
-        //         "transformRequest": [
-        //             null
-        //         ],
-        //         "transformResponse": [
-        //             null
-        //         ],
-        //         "timeout": 0,
-        //         "xsrfCookieName": "XSRF-TOKEN",
-        //         "xsrfHeaderName": "X-XSRF-TOKEN",
-        //         "maxContentLength": -1,
-        //         "maxBodyLength": -1,
-        //         "env": {},
-        //         "headers": {
-        //             "Accept": "application/json, text/plain, */*",
-        //             "Content-Type": "multipart/form-data",
-        //             "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MjllODE5ODEyMTg5NjJjZGU2MWFmYyIsImxhc3ROYW1lIjoiQmFsYWRoYSIsImVtYWlsIjoibmlraXRhQGdtYWlsLmNvbSIsInJvbGUiOiJlbXBsb3llZSIsInBhc3N3b3JkIjoiOGY1ZWI1OWQ3NTE1MDZjNzAwODJlYTVlNTYwOTk2NzU3MzZlMDdjZWZlOGEwYTlkN2MzMDlkYjI5ZDk1OTJhMzA1NDc0NjQyNTFlYzBlMTI3YjlkODFhOWNlM2M1YmQ1MjM4OTVjYjQ4ZTc5MGJlMzMyNWExMWYxNzE1NzA2MjgiLCJpYXQiOjE3MzQwNTI0ODEsImV4cCI6MTczNDY1NzI4MX0.og0ZpbZm6-c6bcInhev5EEV_lyp0ymRlRHMq3YMd3Vg"
-        //         },
-        //         "baseURL": "http://localhost:3001/api",
-        //         "method": "post",
-        //         "url": "/employee",
-        //         "data": {}
-        //     },
-        //     "request": {}
-        // }
       }
     } catch (error) {
       if (
@@ -324,7 +277,7 @@ const CreateEmployee = () => {
                           </label>
                           <input
                             className="form-control"
-                            // required
+                            required
                             placeholder="Enter employee Name"
                             name="name"
                             type="text"

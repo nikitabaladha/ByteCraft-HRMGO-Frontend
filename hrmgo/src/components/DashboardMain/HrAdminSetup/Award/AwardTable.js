@@ -4,7 +4,7 @@ import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
 import getAPI from "../../../../api/getAPI";
 import UpdateAwardModal from "./UpdateAwardModal";
-import ConfirmationDialog from "./ConfirmationDialog";
+import ConfirmationDialog from "../../ConfirmationDialog";
 
 const AwardTable = () => {
   const [awards, setAwards] = useState([]);
@@ -82,6 +82,10 @@ const AwardTable = () => {
   const handleDeleteCancel = () => {
     setIsDeleteDialogOpen(false);
     setSelectedAward(null);
+  };
+
+  const handleDeleteConfirmed = (id) => {
+    setAwards((prevAwards) => prevAwards.filter((award) => award.id !== id));
   };
 
   return (
@@ -208,8 +212,10 @@ const AwardTable = () => {
       )}
       {isDeleteDialogOpen && (
         <ConfirmationDialog
-          award={selectedAward}
-          onCancel={handleDeleteCancel}
+          onClose={handleDeleteCancel}
+          deleteType="award"
+          id={selectedAward.id}
+          onDeleted={handleDeleteConfirmed}
         />
       )}
     </>

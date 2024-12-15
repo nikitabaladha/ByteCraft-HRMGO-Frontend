@@ -3,6 +3,7 @@ import getAPI from "../../../../api/getAPI.js";
 import { Link } from "react-router-dom";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { TbPencil } from "react-icons/tb";
+import { formatDate } from "../../../../Js/custom.js";
 
 const TimeSheetTable = ({ filters }) => {
   const [timeSheetData, setTimeSheetData] = useState([]);
@@ -14,8 +15,6 @@ const TimeSheetTable = ({ filters }) => {
 
         if (!response.hasError && Array.isArray(response.data.data)) {
           const data = response.data.data;
-
-          console.log("Api called");
 
           // Filter data based on the filters state
           const filteredData = data.filter((entry) => {
@@ -42,14 +41,6 @@ const TimeSheetTable = ({ filters }) => {
 
     fetchTimeSheetData();
   }, [filters]);
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const month = date.toLocaleString("default", { month: "short" });
-    const day = date.getDate();
-    const year = date.getFullYear();
-    return `${month} ${day}, ${year}`;
-  }
 
   return (
     <div className="col-xl-12">

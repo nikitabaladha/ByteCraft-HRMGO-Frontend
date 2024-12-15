@@ -1,50 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
-import getAPI from "../../../../api/getAPI";
+
 import UpdatePromotionModal from "./UpdatePromotionModal";
-import ConfirmationDialog from "./ConfirmationDialog";
+import ConfirmationDialog from "../../ConfirmationDialog";
+import { formatDate } from "../../../../Js/custom";
 
-const PromotionTable = () => {
-  const [promotions, setPromotions] = useState([]);
-  const [selectedPromotion, setSelectedPromotion] = useState(null);
-
+const PromotionTable = ({
+  promotions,
+  setPromotions,
+  selectedPromotion,
+  setSelectedPromotion,
+}) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchPromotionData = async () => {
-      try {
-        const response = await getAPI(`/Promotion`, {}, true);
-        if (
-          !response.hasError &&
-          response.data &&
-          Array.isArray(response.data.data)
-        ) {
-          setPromotions(response.data.data);
-          console.log(
-            "Promotion Data fetched successfully",
-            response.data.data
-          );
-        } else {
-          console.error("Invalid response format or error in response");
-        }
-      } catch (err) {
-        console.error("Error fetching Promotion Data:", err);
-      }
-    };
-
-    fetchPromotionData();
-  }, []);
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const month = date.toLocaleString("default", { month: "short" });
-    const day = date.getDate();
-    const year = date.getFullYear();
-    return `${month} ${day}, ${year}`;
-  }
 
   const handleUpdate = (promotion) => {
     setSelectedPromotion(promotion);
@@ -59,6 +29,12 @@ const PromotionTable = () => {
   const handleDeleteCancel = () => {
     setIsDeleteDialogOpen(false);
     setSelectedPromotion(null);
+  };
+
+  const handleDeleteConfirmed = (id) => {
+    setPromotions((prevPromotions) =>
+      prevPromotions.filter((promotion) => promotion.id !== id)
+    );
   };
 
   return (
@@ -120,13 +96,15 @@ const PromotionTable = () => {
                                     defaultValue="DELETE"
                                   />
                                   <Link
-                                    href="#"
                                     className="mx-3 btn btn-sm  align-items-center bs-pass-para"
                                     data-bs-toggle="tooltip"
                                     title=""
                                     data-bs-original-title="Delete"
                                     aria-label="Delete"
-                                    onClick={() => openDeleteDialog(promotion)}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      openDeleteDialog(promotion);
+                                    }}
                                   >
                                     <span className="text-white">
                                       <FaRegTrashAlt />
@@ -155,8 +133,10 @@ const PromotionTable = () => {
       {/* Confirmation Dialog */}
       {isDeleteDialogOpen && selectedPromotion && (
         <ConfirmationDialog
-          promotion={selectedPromotion}
-          onCancel={handleDeleteCancel}
+          onClose={handleDeleteCancel}
+          deleteType="promotion"
+          id={selectedPromotion.id}
+          onDeleted={handleDeleteConfirmed}
         />
       )}
     </>

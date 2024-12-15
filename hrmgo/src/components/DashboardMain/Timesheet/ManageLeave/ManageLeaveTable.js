@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { TbPencil, TbCaretRight } from "react-icons/tb";
 import StatusModal from "./StatusModal";
-import ConfirmationDialog from "./ConfirmationDialog";
+import StatusChangeConfirmationDialog from "./StatusChangeConfirmationDialog";
 import UpdateModal from "./UpdateModal.js";
 
 const ManageLeaveTable = () => {
@@ -63,30 +63,10 @@ const ManageLeaveTable = () => {
     return statusObj ? statusObj.statusColor : "secondary";
   }
 
-  // Handle delete confirmation
-  const handleDeleteConfirmation = ({ leaveId }) => {
-    setLeaveId(leaveId);
-    setIsDeleteDialogOpen(true);
-    setIsStatusModalOpen(false);
-    setIsUpdateModalOpen(false);
-  };
-
   const handleUpdateConfirmation = (leave) => {
     setSelectedLeave(leave);
     setIsUpdateModalOpen(true);
     setIsStatusModalOpen(false);
-    setIsDeleteDialogOpen(false);
-  };
-
-  const handleLeaveDeleted = (deletedLeaveId) => {
-    setLeaveData((prevData) =>
-      prevData.filter((leave) => leave.leaveId !== deletedLeaveId)
-    );
-    setIsDeleteDialogOpen(false);
-  };
-
-  // Handle cancellation of delete
-  const handleCancelDelete = () => {
     setIsDeleteDialogOpen(false);
   };
 
@@ -98,8 +78,24 @@ const ManageLeaveTable = () => {
           : leave
       )
     );
+  };
 
-    console.log("Updated Leave Data:", leaveData);
+  const handleLeaveDeleted = (deletedLeaveId) => {
+    setLeaveData((prevData) =>
+      prevData.filter((leave) => leave.leaveId !== deletedLeaveId)
+    );
+    setIsDeleteDialogOpen(false);
+  };
+
+  const handleCancelDelete = () => {
+    setIsDeleteDialogOpen(false);
+  };
+
+  // Handle delete confirmation
+  const handleDeleteConfirmation = ({ leaveId }) => {
+    setLeaveId(leaveId);
+    setIsDeleteDialogOpen(true);
+    setIsStatusModalOpen(false);
     setIsUpdateModalOpen(false);
   };
 
@@ -226,7 +222,7 @@ const ManageLeaveTable = () => {
 
       {/* Confirmation Dialog */}
       {isDeleteDialogOpen && (
-        <ConfirmationDialog
+        <StatusChangeConfirmationDialog
           onCancel={handleCancelDelete}
           leaveId={leaveId}
           onLeaveDeleted={handleLeaveDeleted}

@@ -1,50 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
-import getAPI from "../../../../api/getAPI";
+
 import UpdateComplaintModal from "./UpdateComplaintModal";
-import ConfirmationDialog from "./ConfirmationDialog";
+import ConfirmationDialog from "../../ConfirmationDialog";
 
-const ComplaintTable = () => {
-  const [complaints, setComplaints] = useState([]);
-  const [selectedComplaint, setSelectedComplaint] = useState(null);
+import { formatDate } from "../../../../Js/custom";
 
+const ComplaintTable = ({
+  complaints,
+  selectedComplaint,
+  setSelectedComplaint,
+  setComplaints,
+}) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchComplaintData = async () => {
-      try {
-        const response = await getAPI(`/complaint`, {}, true);
-        if (
-          !response.hasError &&
-          response.data &&
-          Array.isArray(response.data.data)
-        ) {
-          setComplaints(response.data.data);
-          console.log(
-            "Complaint Data fetched successfully",
-            response.data.data
-          );
-        } else {
-          console.error("Invalid response format or error in response");
-        }
-      } catch (err) {
-        console.error("Error fetching Complaint Data:", err);
-      }
-    };
-
-    fetchComplaintData();
-  }, []);
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const month = date.toLocaleString("default", { month: "short" });
-    const day = date.getDate();
-    const year = date.getFullYear();
-    return `${month} ${day}, ${year}`;
-  }
 
   const handleUpdate = (complaint) => {
     setSelectedComplaint(complaint);
@@ -59,6 +30,12 @@ const ComplaintTable = () => {
   const handleDeleteCancel = () => {
     setIsDeleteDialogOpen(false);
     setSelectedComplaint(null);
+  };
+
+  const handleDeleteConfirmed = (id) => {
+    setComplaints((prevComplaints) =>
+      prevComplaints.filter((complaint) => complaint.id !== id)
+    );
   };
 
   return (
@@ -126,7 +103,10 @@ const ComplaintTable = () => {
                                     title=""
                                     data-bs-original-title="Delete"
                                     aria-label="Delete"
-                                    onClick={() => openDeleteDialog(complaint)}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      openDeleteDialog(complaint);
+                                    }}
                                   >
                                     <span className="text-white">
                                       <FaRegTrashAlt />
@@ -155,8 +135,10 @@ const ComplaintTable = () => {
       {/* Confirmation Dialog */}
       {isDeleteDialogOpen && selectedComplaint && (
         <ConfirmationDialog
-          complaint={selectedComplaint}
-          onCancel={handleDeleteCancel}
+          onClose={handleDeleteCancel}
+          deleteType="complaint"
+          id={selectedComplaint.id}
+          onDeleted={handleDeleteConfirmed}
         />
       )}
     </>

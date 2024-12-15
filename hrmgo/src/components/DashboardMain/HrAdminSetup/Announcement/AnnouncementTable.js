@@ -1,50 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
-import getAPI from "../../../../api/getAPI";
+import { formatDate } from "../../../../Js/custom";
 import UpdateAnnouncementModal from "./UpdateAnnouncementModal";
-import ConfirmationDialog from "./ConfirmationDialog";
+import ConfirmationDialog from "../../ConfirmationDialog";
 
-const AnnouncementTable = () => {
-  const [announcements, setAnnouncements] = useState([]);
-  const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
-
+const AnnouncementTable = ({
+  announcements,
+  selectedAnnouncement,
+  setSelectedAnnouncement,
+  setAnnouncements,
+}) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchAnnouncementData = async () => {
-      try {
-        const response = await getAPI(`/announcement`, {}, true);
-        if (
-          !response.hasError &&
-          response.data &&
-          Array.isArray(response.data.data)
-        ) {
-          setAnnouncements(response.data.data);
-          console.log(
-            "Announcement Data fetched successfully",
-            response.data.data
-          );
-        } else {
-          console.error("Invalid response format or error in response");
-        }
-      } catch (err) {
-        console.error("Error fetching Announcement Data:", err);
-      }
-    };
-
-    fetchAnnouncementData();
-  }, []);
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const month = date.toLocaleString("default", { month: "short" });
-    const day = date.getDate();
-    const year = date.getFullYear();
-    return `${month} ${day}, ${year}`;
-  }
 
   const handleUpdate = (announcement) => {
     setSelectedAnnouncement(announcement);
@@ -61,9 +30,14 @@ const AnnouncementTable = () => {
     setSelectedAnnouncement(null);
   };
 
+  const handleDeleteConfirmed = (id) => {
+    setAnnouncements((prevAnnouncements) =>
+      prevAnnouncements.filter((announcement) => announcement.id !== id)
+    );
+  };
+
   return (
     <>
-      {" "}
       <div className="row">
         <div className="col-xl-12">
           <div className="card">
@@ -125,9 +99,10 @@ const AnnouncementTable = () => {
                                     title=""
                                     data-bs-original-title="Delete"
                                     aria-label="Delete"
-                                    onClick={() =>
-                                      openDeleteDialog(announcement)
-                                    }
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      openDeleteDialog(announcement);
+                                    }}
                                   >
                                     <span className="text-white">
                                       <FaRegTrashAlt />
@@ -147,17 +122,19 @@ const AnnouncementTable = () => {
           </div>
         </div>
       </div>
-      {isUpdateModalOpen && setAnnouncements && (
+      {isUpdateModalOpen && selectedAnnouncement && (
         <UpdateAnnouncementModal
           announcement={selectedAnnouncement}
           onClose={() => setIsUpdateModalOpen(false)}
         />
       )}
-      {/* Confirmation Dialog */}
-      {isDeleteDialogOpen && selectedAnnouncement && (
+
+      {isDeleteDialogOpen && (
         <ConfirmationDialog
-          announcement={selectedAnnouncement}
-          onCancel={handleDeleteCancel}
+          onClose={handleDeleteCancel}
+          deleteType="announcement"
+          id={selectedAnnouncement.id}
+          onDeleted={handleDeleteConfirmed}
         />
       )}
     </>

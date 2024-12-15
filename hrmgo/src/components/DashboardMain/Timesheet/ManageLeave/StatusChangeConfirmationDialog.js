@@ -1,20 +1,26 @@
 import React, { useEffect } from "react";
-import deleteAPI from "../../../../api/deleteAPI.js";
+import putAPI from "../../../../api/putAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function ConfirmationDialog({ onCancel, warning }) {
-  const handleDelete = async () => {
+function StatusChangeConfirmationDialog({ onCancel, leaveId, onLeaveDeleted }) {
+  const handleUpdateStatusDelete = async () => {
     try {
-      const response = await deleteAPI(`/warning/${warning.id}`, {}, true);
+      const response = await putAPI(
+        `/manage-leave-delete/${leaveId}`,
+        { status: "Cancelled" },
+        {},
+        true
+      );
 
       if (!response.hasError) {
+        console.log(`Leave status updated to`, response.data.data.status);
         onCancel();
-
-        toast.success("warning successfully deleted!");
+        onLeaveDeleted(leaveId);
+        toast.success("Employee leave status successfully deleted!");
       } else {
-        console.error("Error deleting warning:", response.message);
-        toast.error(`Failed to delete warning: ${response.message}`);
+        console.error("Error updating leave status:", response.message);
+        toast.error(`Failed to update status: ${response.message}`);
       }
     } catch (error) {
       console.error("Error while updating leave status:", error);
@@ -137,7 +143,7 @@ function ConfirmationDialog({ onCancel, warning }) {
               aria-label=""
               style={{ display: "inline-block" }}
               onClick={() => {
-                handleDelete();
+                handleUpdateStatusDelete();
               }}
             >
               Yes
@@ -157,4 +163,4 @@ function ConfirmationDialog({ onCancel, warning }) {
   );
 }
 
-export default ConfirmationDialog;
+export default StatusChangeConfirmationDialog;

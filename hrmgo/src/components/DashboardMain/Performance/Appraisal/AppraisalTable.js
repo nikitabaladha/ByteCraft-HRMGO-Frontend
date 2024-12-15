@@ -290,9 +290,9 @@ import { LuTrash2 } from "react-icons/lu";
 import React, { useEffect, useState } from "react";
 import getAPI from "../../../../api/getAPI.js";
 import moment from "moment";
+
 import AppraisalDetailModal from "./AppraisalDetailModal.js";
 import ConfirmationDialog from "../../ConfirmationDialog";
-
 import AppraisalUpdateModal from "./AppraisalUpdateModal.js";
 
 const AppraisalTable = () => {
@@ -303,7 +303,6 @@ const AppraisalTable = () => {
   const [appraisalIdToDelete, setAppraisalIdToDelete] = useState(null);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
-  // Function to render dynamic stars based on the rating
   useEffect(() => {
     const fetchAppraisalData = async () => {
       try {
@@ -311,8 +310,6 @@ const AppraisalTable = () => {
 
         if (!response.hasError && Array.isArray(response.data.data)) {
           const data = response.data.data;
-
-          console.log("Appraisal get all API called", data);
 
           setAppraisals(
             data.map((item) => ({
@@ -343,8 +340,6 @@ const AppraisalTable = () => {
       const response = await getAPI(`/appraisal/${appraisal.id}`, {}, true);
 
       if (!response.hasError && response.data.data) {
-        console.log("Appraisal by ID: ", response.data.data);
-
         setSelectedAppraisal(response.data.data);
         setIsDetailModalOpen(true);
       } else {

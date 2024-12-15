@@ -40,6 +40,54 @@ const DELETE_CONFIG = {
     errorMessage: "Failed to delete Attachment.",
     idKey: "attachmentId",
   },
+  announcement: {
+    getEndpoint: (id) => `/announcement/${id}`,
+    successMessage: "Announcement successfully deleted!",
+    errorMessage: "Failed to delete Announcement.",
+    idKey: "announcementId",
+  },
+  award: {
+    getEndpoint: (id) => `/award/${id}`,
+    successMessage: "Award successfully deleted!",
+    errorMessage: "Failed to delete Award.",
+    idKey: "awardId",
+  },
+  complaint: {
+    getEndpoint: (id) => `/complaint/${id}`,
+    successMessage: "Complaint successfully deleted!",
+    errorMessage: "Failed to delete Complaint.",
+    idKey: "complaintId",
+  },
+  holiday: {
+    getEndpoint: (id) => `/holiday/${id}`,
+    successMessage: "Holiday successfully deleted!",
+    errorMessage: "Failed to delete Holiday.",
+    idKey: "holidayId",
+  },
+  promotion: {
+    getEndpoint: (id) => `/promotion/${id}`,
+    successMessage: "Promotion successfully deleted!",
+    errorMessage: "Failed to delete Promotion.",
+    idKey: "promotionId",
+  },
+  resignation: {
+    getEndpoint: (id) => `/resignation/${id}`,
+    successMessage: "Resignation successfully deleted!",
+    errorMessage: "Failed to delete Resignation.",
+    idKey: "resignationId",
+  },
+  termination: {
+    getEndpoint: (id) => `/termination/${id}`,
+    successMessage: "Termination successfully deleted!",
+    errorMessage: "Failed to delete Termination.",
+    idKey: "terminationId",
+  },
+  warning: {
+    getEndpoint: (id) => `/warning/${id}`,
+    successMessage: "Warning successfully deleted!",
+    errorMessage: "Failed to delete Warning.",
+    idKey: "warningId",
+  },
 };
 
 function ConfirmationDialog({ onClose, deleteType, id, onDeleted }) {

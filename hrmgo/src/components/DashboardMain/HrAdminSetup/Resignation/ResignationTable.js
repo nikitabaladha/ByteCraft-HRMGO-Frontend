@@ -1,42 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
-import getAPI from "../../../../api/getAPI";
+
 import UpdateResignationModal from "./UpdateResignationModal";
-import ConfirmationDialog from "./ConfirmationDialog";
+import ConfirmationDialog from "../../ConfirmationDialog";
 
-const ResignationTable = () => {
-  const [resignations, setResignations] = useState([]);
-  const [selectedResignation, setSelectedResignation] = useState(null);
-
+const ResignationTable = ({
+  resignations,
+  setResignations,
+  selectedResignation,
+  setSelectedResignation,
+}) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchResignationData = async () => {
-      try {
-        const response = await getAPI(`/resignation`, {}, true);
-        if (
-          !response.hasError &&
-          response.data &&
-          Array.isArray(response.data.data)
-        ) {
-          setResignations(response.data.data);
-          console.log(
-            "Resignation Data fetched successfully",
-            response.data.data
-          );
-        } else {
-          console.error("Invalid response format or error in response");
-        }
-      } catch (err) {
-        console.error("Error fetching Resignation Data:", err);
-      }
-    };
-
-    fetchResignationData();
-  }, []);
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -59,6 +36,12 @@ const ResignationTable = () => {
   const handleDeleteCancel = () => {
     setIsDeleteDialogOpen(false);
     setSelectedResignation(null);
+  };
+
+  const handleDeleteConfirmed = (id) => {
+    setResignations((prevResignations) =>
+      prevResignations.filter((resignation) => resignation.id !== id)
+    );
   };
 
   return (
@@ -124,9 +107,10 @@ const ResignationTable = () => {
                                     title=""
                                     data-bs-original-title="Delete"
                                     aria-label="Delete"
-                                    onClick={() =>
-                                      openDeleteDialog(resignation)
-                                    }
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      openDeleteDialog(resignation);
+                                    }}
                                   >
                                     <span className="text-white">
                                       <FaRegTrashAlt />
@@ -155,8 +139,10 @@ const ResignationTable = () => {
       {/* Confirmation Dialog */}
       {isDeleteDialogOpen && selectedResignation && (
         <ConfirmationDialog
-          resignation={selectedResignation}
-          onCancel={handleDeleteCancel}
+          onClose={handleDeleteCancel}
+          deleteType="resignation"
+          id={selectedResignation.id}
+          onDeleted={handleDeleteConfirmed}
         />
       )}
     </>

@@ -67,8 +67,15 @@ const CreateModal = ({ onClose }) => {
         toast.error(response?.message || "Failed to create leave.");
       }
     } catch (error) {
-      console.error("Error during leave creation:", error);
-      toast.error("An error occurred while creating the leave.");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     }
   };
 

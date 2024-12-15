@@ -1,47 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
-import getAPI from "../../../../api/getAPI";
+
 import UpdateWarningModal from "./UpdateWarningModal";
-import ConfirmationDialog from "./ConfirmationDialog";
 
-const WarningTable = () => {
-  const [warnings, setWarnings] = useState([]);
-  const [selectedWarning, setSelectedWarning] = useState(null);
+import { formatDate } from "../../../../Js/custom";
+import ConfirmationDialog from "../../ConfirmationDialog";
 
+const WarningTable = ({
+  warnings,
+  setWarnings,
+  selectedWarning,
+  setSelectedWarning,
+}) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchWarningData = async () => {
-      try {
-        const response = await getAPI(`/warning`, {}, true);
-        if (
-          !response.hasError &&
-          response.data &&
-          Array.isArray(response.data.data)
-        ) {
-          setWarnings(response.data.data);
-          console.log("Warning Data fetched successfully", response.data.data);
-        } else {
-          console.error("Invalid response format or error in response");
-        }
-      } catch (err) {
-        console.error("Error fetching Warning Data:", err);
-      }
-    };
-
-    fetchWarningData();
-  }, []);
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const month = date.toLocaleString("default", { month: "short" });
-    const day = date.getDate();
-    const year = date.getFullYear();
-    return `${month} ${day}, ${year}`;
-  }
 
   const handleUpdate = (warning) => {
     setSelectedWarning(warning);
@@ -56,6 +30,12 @@ const WarningTable = () => {
   const handleDeleteCancel = () => {
     setIsDeleteDialogOpen(false);
     setSelectedWarning(null);
+  };
+
+  const handleDeleteConfirmed = (id) => {
+    setWarnings((prevWarnings) =>
+      prevWarnings.filter((warning) => warning.id !== id)
+    );
   };
 
   return (
@@ -116,13 +96,15 @@ const WarningTable = () => {
                                     defaultValue="DELETE"
                                   />
                                   <Link
-                                    href="#"
                                     className="mx-3 btn btn-sm  align-items-center bs-pass-para"
                                     data-bs-toggle="tooltip"
                                     title=""
                                     data-bs-original-title="Delete"
                                     aria-label="Delete"
-                                    onClick={() => openDeleteDialog(warning)}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      openDeleteDialog(warning);
+                                    }}
                                   >
                                     <span className="text-white">
                                       <FaRegTrashAlt />
@@ -151,8 +133,10 @@ const WarningTable = () => {
       {/* Confirmation Dialog */}
       {isDeleteDialogOpen && selectedWarning && (
         <ConfirmationDialog
-          warning={selectedWarning}
-          onCancel={handleDeleteCancel}
+          onClose={handleDeleteCancel}
+          deleteType="warning"
+          id={selectedWarning.id}
+          onDeleted={handleDeleteConfirmed}
         />
       )}
     </>

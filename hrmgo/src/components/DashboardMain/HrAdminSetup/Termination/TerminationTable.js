@@ -1,53 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
-import getAPI from "../../../../api/getAPI";
+
 import UpdateTerminationModal from "./UpdateTerminationModal";
-import ConfirmationDialog from "./ConfirmationDialog";
+
 import { FaComment } from "react-icons/fa";
 import TerminationDescriptionModal from "./TerminationDescriptionModal";
-
-const TerminationTable = () => {
-  const [terminations, setTerminations] = useState([]);
-  const [selectedTermination, setSelectedTermination] = useState(null);
-
+import { formatDate } from "../../../../Js/custom";
+import ConfirmationDialog from "../../ConfirmationDialog";
+const TerminationTable = ({
+  terminations,
+  setTerminations,
+  selectedTermination,
+  setSelectedTermination,
+}) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDescriptionModalOpen, setIsDescriptionModalOpen] = useState(false);
-  useEffect(() => {
-    const fetchTerminationData = async () => {
-      try {
-        const response = await getAPI(`/termination`, {}, true);
-        if (
-          !response.hasError &&
-          response.data &&
-          Array.isArray(response.data.data)
-        ) {
-          setTerminations(response.data.data);
-          console.log("terminations", terminations);
-          console.log(
-            "Termination Data fetched successfully",
-            response.data.data
-          );
-        } else {
-          console.error("Invalid response format or error in response");
-        }
-      } catch (err) {
-        console.error("Error fetching Termination Data:", err);
-      }
-    };
-
-    fetchTerminationData();
-  }, []);
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const month = date.toLocaleString("default", { month: "short" });
-    const day = date.getDate();
-    const year = date.getFullYear();
-    return `${month} ${day}, ${year}`;
-  }
 
   const handleUpdate = (termination) => {
     setSelectedTermination(termination);
@@ -60,7 +30,6 @@ const TerminationTable = () => {
   };
 
   const openDeleteDialog = (termination) => {
-    console.log("open Delete Dialog pass", termination);
     setSelectedTermination(termination);
     setIsDeleteDialogOpen(true);
   };
@@ -68,6 +37,12 @@ const TerminationTable = () => {
   const handleDeleteCancel = () => {
     setIsDeleteDialogOpen(false);
     setSelectedTermination(null);
+  };
+
+  const handleDeleteConfirmed = (id) => {
+    setTerminations((prevTerminations) =>
+      prevTerminations.filter((terminations) => terminations.id !== id)
+    );
   };
 
   return (
@@ -153,9 +128,10 @@ const TerminationTable = () => {
                                     title=""
                                     data-bs-original-title="Delete"
                                     aria-label="Delete"
-                                    onClick={() =>
-                                      openDeleteDialog(termination)
-                                    }
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      openDeleteDialog(termination);
+                                    }}
                                   >
                                     <span className="text-white">
                                       <FaRegTrashAlt />
@@ -184,8 +160,10 @@ const TerminationTable = () => {
       {/* Confirmation Dialog */}
       {isDeleteDialogOpen && selectedTermination && (
         <ConfirmationDialog
-          termination={selectedTermination}
-          onCancel={handleDeleteCancel}
+          onClose={handleDeleteCancel}
+          deleteType="termination"
+          id={selectedTermination.id}
+          onDeleted={handleDeleteConfirmed}
         />
       )}
 

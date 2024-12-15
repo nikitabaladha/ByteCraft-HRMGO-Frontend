@@ -164,7 +164,7 @@ const CreatePromotionModal = ({ onClose }) => {
                       <span className="text-danger">*</span>
                       <select
                         className="form-control"
-                        name="employeeId" // This name should match the formData key
+                        name="employeeId"
                         value={formData.employeeId}
                         onChange={handleChange}
                       >
