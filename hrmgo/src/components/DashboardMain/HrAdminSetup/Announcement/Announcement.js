@@ -1,8 +1,3 @@
-// This is main page where i am displaying all things all announcement list in table
-
-// The create button is present in announcement header by clicking it announcement create modal open
-
-// when i successfully create a new announcement i want that newly created announcement must be shown here in table
 import React from "react";
 import AnnouncementHeader from "./AnnouncementHeader";
 import AnnouncementTable from "./AnnouncementTable";
@@ -35,14 +30,20 @@ const Announcement = () => {
   }, []);
 
   const addAnnouncement = (newAnnouncement) => {
-    console.log(
-      "new Announcement from addAnnouncement function",
-      newAnnouncement
-    );
     setAnnouncements((prevAnnouncements) => [
       ...prevAnnouncements,
       newAnnouncement,
     ]);
+  };
+
+  const updateAnnouncement = (newUpdatedAnnouncement) => {
+    setAnnouncements((prevAnnouncements) =>
+      prevAnnouncements.map((announcement) =>
+        announcement.id === newUpdatedAnnouncement.id
+          ? newUpdatedAnnouncement
+          : announcement
+      )
+    );
   };
 
   return (
@@ -54,7 +55,7 @@ const Announcement = () => {
         selectedAnnouncement={selectedAnnouncement}
         setSelectedAnnouncement={setSelectedAnnouncement}
         setAnnouncements={setAnnouncements}
-        addAnnouncement={addAnnouncement}
+        updateAnnouncement={updateAnnouncement}
       />
     </>
   );

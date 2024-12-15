@@ -31,12 +31,16 @@ const Employee = () => {
     fetchEmployeeData();
   }, []);
 
+  const addEmployee = (newEmployee) => {
+    setEmployeeData((prevEmployees) => [...prevEmployees, newEmployee]);
+  };
+
   const isCreateRoute = location.pathname === "/dashboard/employee/create";
 
   return (
     <>
       {isCreateRoute ? (
-        <CreateEmployee />
+        <CreateEmployee addEmployee={addEmployee} />
       ) : (
         <>
           <EmployeeHeader />

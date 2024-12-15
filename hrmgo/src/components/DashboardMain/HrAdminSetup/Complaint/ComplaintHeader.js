@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import CreateComplaintModal from "./CreateComplaintModal";
 
-const ComplaintHeader = () => {
+const ComplaintHeader = ({ addComplaint }) => {
   const [isCreateComplaintModalOpen, setIsCreateComplaintModalOpen] =
     useState(false);
 
@@ -52,7 +52,10 @@ const ComplaintHeader = () => {
       </div>
 
       {isCreateComplaintModalOpen && (
-        <CreateComplaintModal onClose={closeModal} />
+        <CreateComplaintModal
+          onClose={closeModal}
+          addComplaint={addComplaint}
+        />
       )}
     </>
   );

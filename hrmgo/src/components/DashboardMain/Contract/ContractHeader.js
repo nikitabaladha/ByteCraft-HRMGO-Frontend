@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import CreateContractModal from "./CreateContractModal";
 
-const ContractHeader = () => {
+const ContractHeader = ({ addContract }) => {
   const [isCreateContractModalOpen, setIsCreateContractModalOpen] =
     useState(false);
 
@@ -53,7 +53,7 @@ const ContractHeader = () => {
       </div>
 
       {isCreateContractModalOpen && (
-        <CreateContractModal onClose={closeModal} />
+        <CreateContractModal onClose={closeModal} addContract={addContract} />
       )}
     </>
   );

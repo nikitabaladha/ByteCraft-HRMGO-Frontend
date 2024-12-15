@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import getAPI from "../../../api/getAPI";
 import putAPI from "../../../api/putAPI";
 
-const UpdateContractModal = ({ contracts, onClose }) => {
+const UpdateContractModal = ({ contracts, onClose, updateContract }) => {
   const [formData, setFormData] = useState({
     employeeId: "",
     subject: "",
@@ -82,6 +82,30 @@ const UpdateContractModal = ({ contracts, onClose }) => {
 
       if (!response.hasError) {
         toast.success("Contract updated successfully!");
+
+        const employeeName = employees.find(
+          (emp) => emp._id === formData.employeeId
+        )?.name;
+
+        const contractType = contractTypes.find(
+          (con) => con._id === formData.contractTypeId
+        )?.contractName;
+
+        const newUpdatedContract = {
+          id: response.data.data._id,
+          contractId: response.data.data.id,
+          subject: response.data.data.subject,
+          value: response.data.data.value,
+          contractType: contractType,
+          startDate: response.data.data.startDate,
+          endDate: response.data.data.endDate,
+          status: response.data.data.status,
+          description: response.data.data.description,
+          employeeName: employeeName,
+        };
+
+        updateContract(newUpdatedContract);
+
         onClose();
       } else {
         toast.error("Failed to update Contract.");

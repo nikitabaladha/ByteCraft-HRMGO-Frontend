@@ -4,6 +4,8 @@ import ComplaintTable from "./ComplaintTable";
 import getAPI from "../../../../api/getAPI";
 import { useState, useEffect } from "react";
 
+// just like create i want that whatever the upadated complaints are i want to show immediately in table so what to do?
+
 const Complaint = () => {
   const [complaints, setComplaints] = useState([]);
   const [selectedComplaint, setSelectedComplaint] = useState(null);
@@ -29,14 +31,29 @@ const Complaint = () => {
     fetchComplaintData();
   }, []);
 
+  const addComplaint = (newComplaint) => {
+    setComplaints((prevComplaints) => [...prevComplaints, newComplaint]);
+  };
+
+  const updateComplaint = (newUpdatedComplaint) => {
+    setComplaints((prevComplaints) =>
+      prevComplaints.map((complaint) =>
+        complaint.id === newUpdatedComplaint.id
+          ? newUpdatedComplaint
+          : complaint
+      )
+    );
+  };
+
   return (
     <>
-      <ComplaintHeader />
+      <ComplaintHeader addComplaint={addComplaint} />
       <ComplaintTable
         complaints={complaints}
         selectedComplaint={selectedComplaint}
         setSelectedComplaint={setSelectedComplaint}
         setComplaints={setComplaints}
+        updateComplaint={updateComplaint}
       />
     </>
   );

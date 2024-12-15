@@ -4,7 +4,7 @@ import getAPI from "../../../../api/getAPI";
 import postAPI from "../../../../api/postAPI";
 import { toast } from "react-toastify";
 
-const CreateEmployee = () => {
+const CreateEmployee = ({ addEmployee }) => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -186,6 +186,32 @@ const CreateEmployee = () => {
 
       if (!response.hasError) {
         toast.success("Employee created successfully!");
+        console.log("response.data", response.data);
+
+        const branchName = branches.find(
+          (br) => br._id === formData.branchId
+        )?.branchName;
+
+        const departmentName = departments.find(
+          (dep) => dep._id === formData.departmentId
+        )?.departmentName;
+
+        const designationName = designations.find(
+          (des) => des._id === formData.designationId
+        )?.designationName;
+
+        const newEmployee = {
+          id: response.data.data.id,
+          email: response.data.data.email,
+          name: response.data.data.name,
+          dateOfJoining: response.data.data.dateOfJoining,
+          designationName: branchName,
+          departmentName: departmentName,
+          branchName: designationName,
+        };
+
+        addEmployee(newEmployee);
+
         setFormData({
           name: "",
           phone: "",

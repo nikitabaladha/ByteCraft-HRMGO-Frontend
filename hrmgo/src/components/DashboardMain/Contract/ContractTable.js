@@ -9,7 +9,7 @@ import UpdateContractModal from "./UpdateContractModal";
 import CopyContractModal from "./CopyContractModal";
 import { formatDate, formatCost } from "../../../Js/custom";
 
-const ContractTable = ({ contracts, setContracts }) => {
+const ContractTable = ({ contracts, setContracts, updateContract }) => {
   const navigate = useNavigate();
 
   const navigateToContractDetail = (event, contract) => {
@@ -79,8 +79,8 @@ const ContractTable = ({ contracts, setContracts }) => {
                 </thead>
                 <tbody>
                   {contracts.map((contract, index) => (
-                    <tr key={index}>
-                      <td className="Id">
+                    <tr key={contract.id}>
+                      <td className="id">
                         <Link className="btn btn-outline-primary">
                           {contract.contractId}
                         </Link>
@@ -186,6 +186,7 @@ const ContractTable = ({ contracts, setContracts }) => {
         <UpdateContractModal
           contracts={selectedContracts}
           onClose={() => setIsUpdateModalOpen(false)}
+          updateContract={updateContract}
         />
       )}
 

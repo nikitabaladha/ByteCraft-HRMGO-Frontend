@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import putAPI from "../../../../api/putAPI.js";
 import getAPI from "../../../../api/getAPI.js";
 
-const UpdateComplaintModal = ({ complaint, onClose }) => {
+const UpdateComplaintModal = ({ complaint, onClose, updateComplaint }) => {
   const [complaintFrom, setComplaintFrom] = useState(
     complaint?.complaintFrom || ""
   );
@@ -63,6 +63,22 @@ const UpdateComplaintModal = ({ complaint, onClose }) => {
       );
       if (!response.hasError) {
         toast.success("Complaint updated successfully!");
+
+        const complaintFromName = complaintFrom;
+        const complaintAgainstName = complaintAgainst.find(
+          (emp) => emp._id === complaintAgainstId
+        )?.name;
+
+        const newUpdatedComplaint = {
+          id: response.data.data._id,
+          title: response.data.data.title,
+          complaintDate: response.data.data.complaintDate,
+          description: response.data.data.description,
+          complaintAgainst: complaintAgainstName,
+          complaintFrom: complaintFromName,
+        };
+
+        updateComplaint(newUpdatedComplaint);
         onClose();
       } else {
         toast.error("Failed to update Complaint.");

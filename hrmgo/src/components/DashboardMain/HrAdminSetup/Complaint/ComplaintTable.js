@@ -13,6 +13,7 @@ const ComplaintTable = ({
   selectedComplaint,
   setSelectedComplaint,
   setComplaints,
+  updateComplaint,
 }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -130,6 +131,7 @@ const ComplaintTable = ({
         <UpdateComplaintModal
           complaint={selectedComplaint}
           onClose={() => setIsUpdateModalOpen(false)}
+          updateComplaint={updateComplaint}
         />
       )}
       {/* Confirmation Dialog */}

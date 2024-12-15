@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DatePicker from "react-datepicker";
 
-const CreateComplaintModal = ({ onClose }) => {
+const CreateComplaintModal = ({ onClose, addComplaint }) => {
   const [employees, setEmployees] = useState([]);
   const [formData, setFormData] = useState({
     complaintFromId: "",
@@ -60,6 +60,26 @@ const CreateComplaintModal = ({ onClose }) => {
 
       if (!response.hasError) {
         toast.success("Complaint created successfully!");
+
+        const complaintFromName = employees.find(
+          (emp) => emp._id === formData.complaintFromId
+        )?.name;
+
+        const complaintAgainstName = employees.find(
+          (emp) => emp._id === formData.complaintAgainstId
+        )?.name;
+
+        const newComplaint = {
+          id: response.data.data._id,
+          title: response.data.data.title,
+          complaintDate: response.data.data.complaintDate,
+          description: response.data.data.description,
+          complaintAgainst: complaintAgainstName,
+          complaintFrom: complaintFromName,
+        };
+
+        addComplaint(newComplaint);
+
         setFormData({
           complaintFromId: "",
           complaintAgainstId: "",
@@ -158,6 +178,7 @@ const CreateComplaintModal = ({ onClose }) => {
                         {employees.map((emp) => (
                           <option key={emp._id} value={emp._id}>
                             {emp.name}
+                            {/* complaint from Name will be what ever name is selected here so can you pass it in newComplaint directly */}
                           </option>
                         ))}
                       </select>

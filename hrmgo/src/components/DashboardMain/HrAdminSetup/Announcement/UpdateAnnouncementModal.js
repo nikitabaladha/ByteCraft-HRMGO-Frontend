@@ -6,7 +6,11 @@ import Select from "react-select";
 import putAPI from "../../../../api/putAPI.js";
 import getAPI from "../../../../api/getAPI.js";
 
-const UpdateAnnouncementModal = ({ announcement, onClose }) => {
+const UpdateAnnouncementModal = ({
+  announcement,
+  onClose,
+  UpdateAnnouncement,
+}) => {
   const [formData, setFormData] = useState({
     title: announcement?.title || "",
     description: announcement?.description || "",
@@ -125,6 +129,37 @@ const UpdateAnnouncementModal = ({ announcement, onClose }) => {
 
       if (!response.data.hasError) {
         toast.success("Announcement updated successfully!");
+        console.log(response.data);
+
+        //   {
+        //     "_id": "675f25239a2420d19ec9533a",
+        //     "title": "qwert 123",
+        //     "branchId": "673343c5400c5058306d7e62",
+        //     "departmentId": "6733463a3a0c40c0cea3bf4a",
+        //     "employeeId": [
+        //         "675e310bc4cf6696c888a86f",
+        //         "675e310bc4cf6696c888a86f",
+        //         "675e310bc4cf6696c888a86f",
+        //         "675e593edbcf69f1e612c5ab",
+        //         "675e310bc4cf6696c888a86f"
+        //     ],
+        //     "startDate": "2024-12-15T18:50:53.533Z",
+        //     "endDate": "2024-12-15T18:50:53.533Z",
+        //     "description": "qwert",
+        //     "createdAt": "2024-12-15T18:51:15.056Z",
+        //     "updatedAt": "2024-12-15T20:27:01.535Z",
+        //     "__v": 4
+        // }
+
+        const newUpdatedAnnouncement = {
+          id: response.data.data._id,
+          title: response.data.data.title,
+          startDate: response.data.data.startDate,
+          endDate: response.data.data.endDate,
+          description: response.data.data.description,
+        };
+
+        UpdateAnnouncement(newUpdatedAnnouncement);
         onClose();
       } else {
         toast.error("Failed to update Announcement.");

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import getAPI from "../../../api/getAPI.js";
 import postAPI from "../../../api/postAPI.js";
 
-const CreateContractModal = ({ onClose }) => {
+const CreateContractModal = ({ onClose, addContract }) => {
   const [employees, setEmployees] = useState([]);
   const [contractTypes, setContractTypes] = useState([]);
 
@@ -75,6 +75,28 @@ const CreateContractModal = ({ onClose }) => {
       if (!response.hasError) {
         toast.success("Contract created successfully!");
 
+        const employeeName = employees.find(
+          (emp) => emp._id === formData.employeeId
+        )?.name;
+
+        const contractType = contractTypes.find(
+          (con) => con._id === formData.contractTypeId
+        )?.contractName;
+
+        const newContract = {
+          id: response.data.data._id,
+          contractId: response.data.data.id,
+          startDate: response.data.data.startDate,
+          endDate: response.data.data.endDate,
+          subject: response.data.data.subject,
+          value: response.data.data.value,
+          employeeName: employeeName,
+          contractType: contractType,
+          status: response.data.data.status,
+        };
+
+        addContract(newContract);
+
         setFormData({
           employeeId: "",
           contractTypeId: "",
@@ -100,7 +122,6 @@ const CreateContractModal = ({ onClose }) => {
     }
   };
 
-  // Handle outside click to close modal
   useEffect(() => {
     const handleClickOutside = (event) => {
       const modalDialog = document.querySelector(".modal-dialog");

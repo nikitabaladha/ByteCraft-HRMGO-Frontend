@@ -40,6 +40,18 @@ const Contract = () => {
     fetchContractData();
   }, []);
 
+  const addContract = (newContract) => {
+    setContracts((prevContracts) => [...prevContracts, newContract]);
+  };
+
+  const updateContract = (newUpdatedContract) => {
+    setContracts((prevContracts) =>
+      prevContracts.map((contract) =>
+        contract.id === newUpdatedContract.id ? newUpdatedContract : contract
+      )
+    );
+  };
+
   const selectedContract = id
     ? contracts.find((contract) => contract.id === parseInt(id))
     : null;
@@ -50,7 +62,7 @@ const Contract = () => {
         <ContractDetail contract={selectedContract} />
       ) : (
         <>
-          <ContractHeader />
+          <ContractHeader addContract={addContract} />
           <div className="row">
             <div className="col-xl-12">
               <div className="row">
@@ -64,6 +76,7 @@ const Contract = () => {
                   contracts={contracts}
                   fetchContractData={fetchContractData}
                   setContracts={setContracts}
+                  updateContract={updateContract}
                 />
               </div>
             </div>

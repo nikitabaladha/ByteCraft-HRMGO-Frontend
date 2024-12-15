@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Link } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
@@ -28,7 +28,7 @@ const EmployeeTable = ({ employeeData }) => {
                   </thead>
                   <tbody>
                     {employeeData.map((employee, index) => (
-                      <tr key={employee.id}>
+                      <tr key={employee._id}>
                         <td>
                           <Link className="btn btn-outline-primary" to="">
                             #{employee.id}
