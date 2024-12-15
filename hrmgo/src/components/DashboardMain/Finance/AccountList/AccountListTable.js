@@ -171,6 +171,13 @@ const ManageAccount = () => {
   const [accountToDelete, setAccountToDelete] = useState(null);
   // const [selectedAccount, setSelectedAccount] = useState(null);
 
+        /* entries pagination */
+
+  // const [entriesPerPage, setEntriesPerPage] = useState(10); 
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [searchQuery, setSearchQuery] = useState("");
+      
+
   const openDeleteDialog = (accountId) => {
     setAccountToDelete(accountId);
     setIsDeleteDialogOpen(true);

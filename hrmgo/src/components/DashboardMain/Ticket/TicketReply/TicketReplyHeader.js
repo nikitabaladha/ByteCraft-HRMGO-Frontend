@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom'; 
-import { useParams } from 'react-router-dom';// Import Link component
+import { useParams } from 'react-router-dom';
 import { HiOutlinePencil } from "react-icons/hi";
 import EditTicketModal from "./EditTicketModal"; 
 

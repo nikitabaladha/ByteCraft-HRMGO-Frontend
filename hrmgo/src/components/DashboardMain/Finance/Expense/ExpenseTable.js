@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
-import EditExpenseModal from "./EditExpenseModal";  // Updated to use ExpenseModal component
-import getAPI from "../../../../api/getAPI"; // Make sure the path is correct
+import EditExpenseModal from "./EditExpenseModal";  
+import getAPI from "../../../../api/getAPI"; 
 import ConfirmationDialog from "./ConfirmationDialog";
 
 const ExpenseTable = () => {
-  const [expenses, setExpenses] = useState([]); // State to store expenses
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(""); // Error state
-  const [isModalOpen, setIsModalOpen] = useState(false);  // State to control modal visibility
+  const [expenses, setExpenses] = useState([]); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(""); 
+  const [isModalOpen, setIsModalOpen] = useState(false);  
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [expenseToDelete, setExpenseToDelete] = useState(null);
   const [selectedExpense, setSelectedExpense] = useState(null);
@@ -42,27 +42,27 @@ const ExpenseTable = () => {
   };
 
   useEffect(() => {
-    // Fetch expenses on component mount
+  
     const fetchExpenses = async () => {
       try {
-        const response = await getAPI("/getall_expense", {}, true); // Updated to use /getall_expense endpoint
-        setExpenses(response.data.data); // Set expenses in state
-        setLoading(false); // Set loading to false after data is fetched
+        const response = await getAPI("/getall_expense", {}, true); 
+        setExpenses(response.data.data); 
+        setLoading(false); 
       } catch (err) {
-        setError("Failed to fetch expenses"); // Set error message if API call fails
+        setError("Failed to fetch expenses"); 
         setLoading(false);
       }
     };
 
     fetchExpenses();
-  }, []); // Empty dependency array means this runs only once on mount
+  }, []); 
 
   if (loading) {
-    return <div>Loading...</div>; // You can customize loading state
+    return <div>Loading...</div>; 
   }
 
   if (error) {
-    return <div>{error}</div>; // Display error message if fetching fails
+    return <div>{error}</div>; 
   }
 
   return (

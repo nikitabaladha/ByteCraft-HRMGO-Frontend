@@ -83,7 +83,7 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
 
             <Route path="payroll/payslip" element={<Payslip />} />
             <Route path="payroll/set-salary" element={<SetSalary />} />
-            <Route path="payroll/employee-set-salary" element={<EmployeeSetSalary />} />
+            <Route path="payroll/employee-set-salary/:employeeId" element={<EmployeeSetSalary />} />
 
 
             <Route path="finance/account-list" element={<AccountList />} />

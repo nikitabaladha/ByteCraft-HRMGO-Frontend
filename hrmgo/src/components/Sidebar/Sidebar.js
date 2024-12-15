@@ -133,11 +133,11 @@ const menuConfig = [
         link: "/dashboard/payroll/payslip",
       },
 
-      {
-        id: "EmployeeSetSalary",
-        label: "EmployeeSetSalary",
-        link: "/dashboard/payroll/employee-set-salary",
-      },
+      // {
+      //   id: "EmployeeSetSalary",
+      //   label: "EmployeeSetSalary",
+      //   link: "/dashboard/payroll/employee-set-salary",
+      // },
     ],
   },
 

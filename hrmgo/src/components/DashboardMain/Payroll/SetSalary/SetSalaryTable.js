@@ -1,140 +1,146 @@
 import React, { useState, useEffect } from 'react';
 import getAPI from "../../../../api/getAPI.js";
 import { TiEyeOutline } from "react-icons/ti";
-import { Link } from 'react-router-dom'; // Import Link
+import { HiOutlinePencil } from "react-icons/hi";
+import { Link } from 'react-router-dom';
 
 const SetSalaryTable = () => {
     const [entriesPerPage, setEntriesPerPage] = useState(5);
-    const [searchQuery, setSearchQuery] = useState('');
     const [employeeData, setEmployeeData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [viewModeId, setViewModeId] = useState(null); // Track row in view mode
+    const [viewModeId] = useState(null);
 
     useEffect(() => {
         const fetchEmployeeData = async () => {
             try {
-                const response = await getAPI(`/SetSalary-get-all`, {}, true);
-                setEmployeeData(response.data.data);
-                console.log('fetch EmployeeData from set salary table', response.data.data );
+                const employeeResponse = await getAPI(`/employee-get-all`, {}, true);
+                const employeeList = employeeResponse.data.data;
+
+                const salaryList = await Promise.all(
+                    employeeList.map(async (employee) => {
+                        const salaryResponse = await getAPI(`/getemployeedatabyid/${employee._id}`, {}, true);
+                        console.log(salaryResponse);
+                        const salarylist = salaryResponse.data.data;
+                        return {
+                            employeeId: employee._id,
+                            payrollType: salarylist.salaryType,
+                            salary: salarylist.salary,
+
+                        };
+                    })
+                );
+                console.log('Final salaryList:', salaryList);
+
+                const mergedData = employeeList.map(employee => {
+                    const salaryInfo = salaryList.find(salary => salary.employeeId === employee._id);
+                    console.log(`Merging Employee ${employee._id}:`, salaryInfo);
+                    return {
+                        ...employee,
+                        salary: salaryInfo ? salaryInfo.salary : 'N/A',
+                        payrollType: salaryInfo ? salaryInfo.payrollType : 'N/A',
+                    };
+                });
+                console.log('Merged Data:', mergedData);
+                setEmployeeData(mergedData);
             } catch (error) {
                 console.error('Error fetching payroll data:', error);
-            } finally {
-                setLoading(false);
             }
         };
 
         fetchEmployeeData();
     }, []);
-
-    // Filter employee data based on search query
-    const filteredEmployeeData = employeeData.filter(employee =>
-        employee?.employeeId?.name?.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-
     const handleEntriesChange = (event) => {
         setEntriesPerPage(Number(event.target.value));
     };
 
-    const handleSearchChange = (event) => {
-        setSearchQuery(event.target.value);
-    };
 
-    const handleViewClick = (employeeId) => {
-        setViewModeId(employeeId); // Set the employee ID for view mode
-    };
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
 
     return (
-        <div>
-            <div className="dataTable-top">
-                <div className="dataTable-dropdown">
-                    <label>
-                        <select
-                            className="dataTable-selector"
-                            value={entriesPerPage}
-                            onChange={handleEntriesChange}
-                        >
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="20">20</option>
-                            <option value="25">25</option>
-                        </select>
-                        entries per page
-                    </label>
+        <div className="dash-content">
+            <div>
+                <div className="dataTable-top">
+                    <div className="dataTable-dropdown">
+                        <label>
+                            <select
+                                className="dataTable-selector"
+                                value={entriesPerPage}
+                                onChange={handleEntriesChange}
+                            >
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                            </select>
+                            entries per page
+                        </label>
+                    </div>
                 </div>
-                <div className="dataTable-search">
-                    <input
-                        className="dataTable-input"
-                        placeholder="Search..."
-                        type="text"
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                    />
-                </div>
-            </div>
 
-            <div className="row">
-                <div className="col-md-12">
-                    <div className="card">
-                        <div className="card-header card-body">
-                            <div className="table-responsive">
-                                {filteredEmployeeData.length > 0 ? (
-                                    <table className="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Employee Id</th>
-                                                <th>Name</th>
-                                                {viewModeId === null && <th>Payroll Type</th>} {/* Hide on view */}
-                                                {viewModeId === null && <th>Salary</th>} {/* Hide on view */}
-                                                <th>Net Salary</th>
-                                                <th width="200px">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {filteredEmployeeData
-                                                .slice(0, entriesPerPage)
-                                                .map((employee) => (
-                                                    <tr key={employee._id}>
-                                                        <td>
-                                                            <Link
-                                                                to={`SetSalary-get-all/${employee._id}`} // Use Link here
-                                                                className="btn btn-outline-primary"
-                                                            >
-                                                                {employee.employeeId?.id || 'N/A'}
-                                                            </Link>
-                                                        </td>
-                                                        <td>{employee.employeeId?.name || 'N/A'}</td>
-                                                        {viewModeId === employee._id || viewModeId === null ? (
-                                                            <>
-                                                                <td>{employee.payrollType}</td>
-                                                                <td>{`$${employee.salary.toFixed(2)}`}</td>
-                                                            </>
-                                                        ) : null}
-                                                        <td>{`$${employee.netSalary.toFixed(2)}`}</td>
-                                                        <td className="Action">
-                                                            <span>
-                                                                <div className="action-btn bg-warning ms-2">
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="card">
+                            <div className="card-header card-body">
+                                <div className="table-responsive">
+                                    {employeeData.length > 0 ? (
+                                        <table className="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Employee Id</th>
+                                                    <th>Name</th>
+                                                    {viewModeId === null && <th>Payroll Type</th>}
+                                                    {viewModeId === null && <th>Salary</th>}
+                                                    <th>Net Salary</th>
+                                                    <th width="200px">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {employeeData
+                                                    .slice(0, entriesPerPage)
+                                                    .map((employee) => (
+                                                        <tr key={employee._id}>
+                                                            <td>
+                                                                <Link
+                                                                    
+                                                                    className="btn btn-outline-primary"
+                                                                >
+                                                                    {employee.id || 'N/A'}
+                                                                </Link>
+                                                            </td>
+                                                            <td>{employee.name || 'N/A'}</td>
+                                                            <td>{employee.payrollType}</td>
+                                                            <td>{`$${employee.salary?.toFixed(2) || '0.00'}`}</td>
+                                                            <td>{`$${employee.netSalary?.toFixed(2) || '0.00'}`}</td>
+                                                            <td className="Action">
+                                                                <div className="action-btn bg-info me-2">
                                                                     <Link
-                                                                        to={`/dashboard/payroll/employee-set-salary/${employee._id}`}
-                                                                        title="View"
-                                                                        onClick={() => handleViewClick(employee._id)}
+                                                                        className="mx-3 btn btn-sm align-items-center"
+                                                                        data-bs-toggle="tooltip"
+                                                                        data-bs-original-title="Edit"
+                                                                        to={`/Dashboard/payroll/employee-set-salary/${employee._id}`}
+                                                                        
                                                                     >
-                                                                        <TiEyeOutline className="text-white" />
+                                                                        <span className="text-white">
+                                                                            <HiOutlinePencil />
+                                                                        </span>
                                                                     </Link>
                                                                 </div>
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                        </tbody>
-                                    </table>
-                                ) : (
-                                    <div>No data available.</div>
-                                )}
+                                                                <span>
+                                                                    <div className="action-btn bg-warning ms-2">
+                                                                        <Link
+                                                                            // to={`/Dashboard/payroll/employee-set-salary/${employee._id}`}
+                                                                            title="View"
+                                                                        >
+                                                                            <TiEyeOutline className="text-white" />
+                                                                        </Link>
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                            </tbody>
+                                        </table>
+                                    ) : null}
+                                </div>
                             </div>
                         </div>
                     </div>
