@@ -11,7 +11,6 @@ const MonthlyAttendance = () => {
   const handleDataFetched = (data, monthYear) => {
     setAttendanceData(data);
     setSelectedMonthYear(monthYear);
-    console.log("Fetched attendance data:", data, "Month-Year:", monthYear);
   };
 
   return (

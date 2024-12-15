@@ -81,7 +81,7 @@ const ContractTable = ({ contracts, setContracts }) => {
                   {contracts.map((contract, index) => (
                     <tr key={index}>
                       <td className="Id">
-                        <Link to="" className="btn btn-outline-primary">
+                        <Link className="btn btn-outline-primary">
                           {contract.contractId}
                         </Link>
                       </td>
@@ -106,7 +106,6 @@ const ContractTable = ({ contracts, setContracts }) => {
                           <span>
                             <div className="action-btn bg-primary me-2">
                               <Link
-                                to=""
                                 className="mx-3 btn btn-sm d-inline-flex align-items-center"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
@@ -120,7 +119,6 @@ const ContractTable = ({ contracts, setContracts }) => {
                             </div>
                             <div className="action-btn bg-warning me-2">
                               <Link
-                                to=""
                                 className="mx-3 btn btn-sm d-inline-flex align-items-center"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"

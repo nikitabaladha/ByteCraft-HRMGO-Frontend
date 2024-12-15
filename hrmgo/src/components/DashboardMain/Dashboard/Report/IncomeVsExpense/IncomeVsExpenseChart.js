@@ -10,8 +10,6 @@ const IncomeVsExpenseChart = ({ data }) => {
 
   useEffect(() => {
     if (data && data.length) {
-      console.log("Fetched Data:", data);
-
       const categories = data.map((item) => {
         const date = new Date(item.categories);
         return date.toLocaleString("default", {

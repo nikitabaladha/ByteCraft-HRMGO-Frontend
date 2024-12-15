@@ -63,12 +63,11 @@ const LeaveSearchForm = ({ onDataFetched }) => {
 
     let date = "";
     if (searchType === "monthly") {
-      // Reformat selectedMonth from "YYYY-MM" to "MM-YYYY"
       const [year, month] = selectedMonth.split("-");
       date = `${month}-${year}`;
       console.log("date", date);
     } else {
-      date = selectedYear; // Yearly case
+      date = selectedYear;
     }
 
     try {
@@ -80,9 +79,7 @@ const LeaveSearchForm = ({ onDataFetched }) => {
       );
 
       if (!response.hasError && Array.isArray(response.data.data)) {
-        console.log("Fetched leave Data", response);
         onDataFetched(response.data.data);
-        console.log("Fetched leave Data", response.data.data);
       } else {
         console.error("Invalid response format or error in response");
       }

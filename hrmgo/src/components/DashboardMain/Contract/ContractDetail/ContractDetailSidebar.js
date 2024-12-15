@@ -7,7 +7,6 @@ const ContractDetailSidebar = ({ handleScrollToSection }) => {
       <div className="card sticky-top" style={{ top: 30 }}>
         <div className="list-group list-group-flush" id="useradd-sidenav">
           <Link
-            to="#"
             className="list-group-item list-group-item-action border-0"
             onClick={(e) => {
               e.preventDefault();
@@ -20,7 +19,6 @@ const ContractDetailSidebar = ({ handleScrollToSection }) => {
             </div>
           </Link>
           <Link
-            to="#"
             className="list-group-item list-group-item-action border-0"
             onClick={(e) => {
               e.preventDefault();
@@ -33,7 +31,6 @@ const ContractDetailSidebar = ({ handleScrollToSection }) => {
             </div>
           </Link>
           <Link
-            to="#"
             className="list-group-item list-group-item-action border-0"
             onClick={(e) => {
               e.preventDefault();
@@ -46,7 +43,6 @@ const ContractDetailSidebar = ({ handleScrollToSection }) => {
             </div>
           </Link>
           <Link
-            to="#"
             className="list-group-item list-group-item-action border-0"
             onClick={(e) => {
               e.preventDefault();

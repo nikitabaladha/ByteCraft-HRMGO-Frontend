@@ -7,7 +7,6 @@ import {
 } from "react-icons/tb";
 import { CiCalendarDate } from "react-icons/ci";
 
-// Card data configuration
 const cardData = [
   {
     id: 1,
@@ -15,7 +14,7 @@ const cardData = [
     backgroundColor: "bg-primary",
     title: "Report",
     subtitle: "Monthly Leave Summary",
-    isLarge: true, // Flag to make this card large (col-md-6)
+    isLarge: true,
   },
   {
     id: 2,
@@ -23,7 +22,7 @@ const cardData = [
     backgroundColor: "bg-secondary",
     title: "Duration",
     subtitle: "Nov-2024",
-    isLarge: true, // Flag to make this card large (col-md-6)
+    isLarge: true,
   },
   {
     id: 3,
@@ -31,7 +30,7 @@ const cardData = [
     backgroundColor: "bg-primary",
     title: "Approved Leaves",
     subtitle: "3",
-    isLarge: false, // Flag to make this card small (col-md-4)
+    isLarge: false,
   },
   {
     id: 4,
@@ -39,7 +38,7 @@ const cardData = [
     backgroundColor: "bg-secondary",
     title: "Rejected Leave",
     subtitle: "4",
-    isLarge: false, // Flag to make this card small (col-md-4)
+    isLarge: false,
   },
   {
     id: 5,
@@ -47,11 +46,10 @@ const cardData = [
     backgroundColor: "bg-primary",
     title: "Pending Leaves",
     subtitle: "5",
-    isLarge: false, // Flag to make this card small (col-md-4)
+    isLarge: false,
   },
 ];
 
-// Reusable Card Component
 const Card = ({ icon, backgroundColor, title, subtitle, isLarge }) => (
   <div className={`col-md-${isLarge ? 6 : 4} col-lg-${isLarge ? 6 : 4}`}>
     <div className="card">

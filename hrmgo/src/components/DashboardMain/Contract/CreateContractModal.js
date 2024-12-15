@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import getAPI from "../../../api/getAPI.js";
@@ -8,7 +8,6 @@ const CreateContractModal = ({ onClose }) => {
   const [employees, setEmployees] = useState([]);
   const [contractTypes, setContractTypes] = useState([]);
 
-  // State for form data
   const [formData, setFormData] = useState({
     employeeId: "",
     contractTypeId: "",
@@ -18,7 +17,6 @@ const CreateContractModal = ({ onClose }) => {
     endDate: new Date().toISOString().split("T")[0],
   });
 
-  // Fetch employees
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
@@ -35,7 +33,6 @@ const CreateContractModal = ({ onClose }) => {
     fetchEmployeeData();
   }, []);
 
-  // Fetch contract types
   useEffect(() => {
     const fetchContractTypeData = async () => {
       try {
@@ -53,13 +50,11 @@ const CreateContractModal = ({ onClose }) => {
     fetchContractTypeData();
   }, []);
 
-  // Handle form changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 

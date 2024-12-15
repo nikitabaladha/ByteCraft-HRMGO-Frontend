@@ -15,3 +15,17 @@ export const formatCost = (value) => {
     minimumFractionDigits: 2,
   }).format(value);
 };
+
+export const handleClickOutside = (ref, onClose) => {
+  const listener = (event) => {
+    if (ref.current && !ref.current.contains(event.target)) {
+      onClose();
+    }
+  };
+
+  document.addEventListener("mousedown", listener);
+
+  return () => {
+    document.removeEventListener("mousedown", listener);
+  };
+};

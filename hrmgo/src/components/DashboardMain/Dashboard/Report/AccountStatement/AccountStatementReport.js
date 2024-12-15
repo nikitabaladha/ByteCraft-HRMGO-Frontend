@@ -2,7 +2,6 @@ import React from "react";
 import { TbReport, TbSitemap, TbLayoutList } from "react-icons/tb";
 import { CiCalendarDate } from "react-icons/ci";
 
-// Unified data configuration
 const data = [
   {
     type: "card",

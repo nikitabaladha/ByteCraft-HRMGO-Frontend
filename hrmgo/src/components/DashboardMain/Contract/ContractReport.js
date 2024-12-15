@@ -10,7 +10,6 @@ const ContractReport = ({
   const [contractData, setContractData] = useState([]);
 
   useEffect(() => {
-    // Update the contractData whenever the props change
     setContractData([
       {
         title: "Total Contracts",

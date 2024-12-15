@@ -8,7 +8,7 @@ const LeaveTable = ({ leaveData }) => {
 
   const handleOpenCommonLeaveModal = (employee, status) => {
     setSelectedEmployee({ ...employee, leaveStatus: status });
-    setIsCommonLeaveModalOpen(true); // Open the modal
+    setIsCommonLeaveModalOpen(true);
   };
 
   return (

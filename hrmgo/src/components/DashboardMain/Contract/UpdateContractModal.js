@@ -29,7 +29,6 @@ const UpdateContractModal = ({ contracts, onClose }) => {
     }
   }, [contracts]);
 
-  // Fetch employees
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
@@ -46,7 +45,6 @@ const UpdateContractModal = ({ contracts, onClose }) => {
     fetchEmployeeData();
   }, []);
 
-  // Fetch contract types
   useEffect(() => {
     const fetchContractTypeData = async () => {
       try {
@@ -63,7 +61,6 @@ const UpdateContractModal = ({ contracts, onClose }) => {
     fetchContractTypeData();
   }, []);
 
-  // Handle form changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -72,7 +69,6 @@ const UpdateContractModal = ({ contracts, onClose }) => {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    // Prepare updated Contract data
     const updatedContract = {
       ...formData,
     };
@@ -83,7 +79,6 @@ const UpdateContractModal = ({ contracts, onClose }) => {
         updatedContract,
         true
       );
-      console.log("Updated Contract: " + JSON.stringify(response));
 
       if (!response.hasError) {
         toast.success("Contract updated successfully!");

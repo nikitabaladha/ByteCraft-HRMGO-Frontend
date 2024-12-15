@@ -92,7 +92,6 @@ const ContractPreview = () => {
                   </button>
                 </div>
 
-                {/* Content to display contract details */}
                 <div
                   className="card mt-5"
                   id="printTable"
@@ -101,11 +100,6 @@ const ContractPreview = () => {
                   <div className="card-body">
                     <div className="row invoice-title mt-2">
                       <div className="col-xs-12 col-sm-12 col-nd-6 col-lg-6 col-12 ">
-                        {/* <img
-                          src="https://demo.workdo.io/hrmgo/storage/uploads/logo//logo-dark.png?1733880344"
-                          style={{ maxWidth: 150 }}
-                          alt="logo"
-                        /> */}
                         <img
                           src={logoDark}
                           alt="Logo Dark"
@@ -202,7 +196,6 @@ const ContractPreview = () => {
                     </div>
                   </div>
                 </div>
-                {/* End of content */}
               </div>
             </div>
           </div>

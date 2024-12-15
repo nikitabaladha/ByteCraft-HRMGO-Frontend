@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 const CommonLeaveModal = ({ employee, onClose }) => {
   const { leaves, leaveStatus } = employee;
 
-  // Filter leaves based on the selected status
   const filteredLeaves = leaves?.filter(
     (leave) => leave.status === leaveStatus
   );
@@ -19,7 +18,6 @@ const CommonLeaveModal = ({ employee, onClose }) => {
     const handleClickOutside = (event) => {
       const modalDialog = document.querySelector(".modal-dialog");
 
-      // Check if the click happened outside the modal dialog
       if (modalDialog && !modalDialog.contains(event.target)) {
         onClose();
       }

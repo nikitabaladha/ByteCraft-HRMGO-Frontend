@@ -103,34 +103,6 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
     }
   };
 
-  // const handleDownload = async (id) => {
-  //   try {
-  //     const response = await getAPI(
-  //       `contract-attachment/download/${id}`,
-  //       {},
-  //       true
-  //     );
-
-  //     if (!response.hasError) {
-  //       // Create a Blob from the response
-  //       const blob = new Blob([response.data], { type: response.data.type });
-  //       const url = window.URL.createObjectURL(blob);
-  //       const a = document.createElement("a");
-  //       a.href = url;
-  //       a.download = attachments.fileName; // Make sure to use the correct filename
-  //       document.body.appendChild(a);
-  //       a.click();
-  //       a.remove();
-  //       window.URL.revokeObjectURL(url); // Clean up
-  //     } else {
-  //       toast.error(response.message || "Failed to download attachment.");
-  //     }
-  //   } catch (err) {
-  //     toast.error("An unexpected error occurred while downloading the file.");
-  //     console.error("Error fetching Contract attachment Data:", err);
-  //   }
-  // };
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -215,8 +187,7 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
                               <button
                                 className="btn btn-sm d-inline-flex align-items-center"
                                 onClick={() => handleDownload(attachment.id)}
-                                // target="_blank"
-                                // rel="noopener noreferrer"
+                                rel="noopener noreferrer"
                                 data-bs-toggle="tooltip"
                                 title="Download"
                               >

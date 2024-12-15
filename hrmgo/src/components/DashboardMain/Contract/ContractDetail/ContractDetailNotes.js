@@ -1,5 +1,3 @@
-// ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Contract\ContractDetail\ContractDetailNotes.js
-
 import React, { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -49,8 +47,6 @@ const ContractDetailNotes = ({ notes, setNotes }) => {
       const response = await postAPI("/contract-note", payload, true);
 
       if (!response.hasError) {
-        console.log("Note create response", response);
-
         const now = new Date();
         const relativeTime = formatDistance(now, now, { addSuffix: true });
 

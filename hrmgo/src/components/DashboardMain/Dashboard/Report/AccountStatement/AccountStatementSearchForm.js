@@ -12,12 +12,7 @@ const AccountStatementSearchForm = () => {
         <div className="mt-2 " id="">
           <div className="card">
             <div className="card-body">
-              <form
-                method="GET"
-                action="/report/account-statement"
-                acceptCharset="UTF-8"
-                id="report_acc_filter"
-              >
+              <form method="GET" acceptCharset="UTF-8" id="report_acc_filter">
                 <div className="d-flex align-items-center justify-content-end">
                   <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2 month">
                     <div className="btn-box">
@@ -86,7 +81,6 @@ const AccountStatementSearchForm = () => {
                   </div>
                   <div className="col-auto float-end ms-2 mt-4">
                     <Link
-                      to="/"
                       className="btn btn-sm btn-primary"
                       onclick="document.getElementById('report_acc_filter').submit(); return false;"
                       data-bs-toggle="tooltip"
@@ -98,7 +92,6 @@ const AccountStatementSearchForm = () => {
                       </span>
                     </Link>
                     <Link
-                      to="/report/account-statement"
                       className="btn btn-sm btn-danger "
                       data-bs-toggle="tooltip"
                       title="Reset"

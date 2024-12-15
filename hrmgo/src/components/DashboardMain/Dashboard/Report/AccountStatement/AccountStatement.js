@@ -1,5 +1,3 @@
-//components/DashboardMain/Report/IncomeVsExpense/IncomeVsExpense.js
-
 import React from "react";
 import AccountStatementHeader from "./AccountStatementHeader";
 import AccountStatementSearchForm from "./AccountStatementSearchForm";

@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
 import getAPI from "../../../../api/getAPI.js";
+import { formatDate } from "../../../../Js/custom.js";
 
 const Announcement = () => {
   const [announcements, setAnnouncements] = useState([]);
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const month = date.toLocaleString("default", { month: "short" });
-    const day = date.getDate();
-    const year = date.getFullYear();
-    return `${month} ${day}, ${year}`;
-  }
 
   useEffect(() => {
     const fetchAnnouncement = async () => {

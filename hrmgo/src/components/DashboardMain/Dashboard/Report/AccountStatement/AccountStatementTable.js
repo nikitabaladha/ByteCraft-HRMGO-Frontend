@@ -1,6 +1,5 @@
 import React from "react";
 
-// Sample dynamic data structure for employees and their AccountStatement
 const data = [
   { account: "Benjamin Adams", date: "Oct 28, 2023", amount: "$1,000.00" },
   { account: "Benjamin Adams", date: "Sep 26, 2023", amount: "$500.00" },

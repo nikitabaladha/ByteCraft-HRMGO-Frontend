@@ -25,7 +25,6 @@ const AccountStatementHeader = () => {
             <div className="col">
               <div className="float-end ">
                 <Link
-                  to="/"
                   className="btn btn-sm btn-primary"
                   onclick="saveAsPDF()"
                   data-bs-toggle="tooltip"
@@ -38,7 +37,6 @@ const AccountStatementHeader = () => {
                   </span>
                 </Link>
                 <Link
-                  to="/export/accountstatement/report"
                   className="btn btn-sm btn-primary float-end"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Export"

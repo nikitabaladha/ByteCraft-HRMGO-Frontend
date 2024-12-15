@@ -1,5 +1,3 @@
-//components/DashboardMain/Report/IncomeVsExpense/IncomeVsExpenseHeader.js
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineFileDownload } from "react-icons/md";

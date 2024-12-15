@@ -14,7 +14,6 @@ const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
   const [selectedMonthYear, setSelectedMonthYear] = useState("");
 
-  // Fetch branches
   useEffect(() => {
     const fetchBranchData = async () => {
       try {
@@ -108,8 +107,7 @@ const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
       );
 
       if (!response.hasError && response.data && response.data.data) {
-        const employeesData = response.data.data; // Array of employee data
-        console.log("employeesData from form", employeesData);
+        const employeesData = response.data.data;
 
         onDataFetched(employeesData, selectedMonthYear);
       } else {

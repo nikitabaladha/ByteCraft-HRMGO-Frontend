@@ -41,10 +41,10 @@ const ContractDetailHeader = ({ contractData }) => {
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <Link to="/hrmgo/dashboard">Home</Link>
+                  <Link to="dashboard">Home</Link>
                 </li>
                 <li className="breadcrumb-item">
-                  <Link to="/hrmgo/contract">Contract</Link>
+                  <Link>Contract</Link>
                 </li>
                 <li className="breadcrumb-item active">Contract Detail</li>
               </ul>
@@ -53,7 +53,6 @@ const ContractDetailHeader = ({ contractData }) => {
               <div className="float-end">
                 <div className="d-flex">
                   <Link
-                    to="#"
                     className="btn btn-sm btn-primary btn-icon m-2"
                     data-bs-toggle="tooltip"
                     title="Send Email"

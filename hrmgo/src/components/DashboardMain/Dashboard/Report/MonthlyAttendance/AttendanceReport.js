@@ -7,7 +7,6 @@ import { FaRegClock } from "react-icons/fa";
 import { BsInfoCircle } from "react-icons/bs";
 import { IoMdAlarm } from "react-icons/io";
 
-// Card data configuration
 const cardData = [
   {
     icon: <TbReport />,

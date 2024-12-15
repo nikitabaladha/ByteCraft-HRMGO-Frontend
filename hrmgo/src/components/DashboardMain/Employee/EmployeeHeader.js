@@ -1,5 +1,3 @@
-//components/DashboardMain/Report/Employee/EmployeeHeader.js
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { TbFileExport } from "react-icons/tb";
@@ -34,7 +32,6 @@ const EmployeeHeader = () => {
             <div className="col">
               <div className="float-end ">
                 <Link
-                  to="/export/employee"
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
                   data-bs-original-title="Export"
@@ -43,8 +40,6 @@ const EmployeeHeader = () => {
                   <TbFileExport />
                 </Link>
                 <Link
-                  to="/"
-                  data-url="/import/employee/file"
                   data-ajax-popup="true"
                   data-title="Import  employee CSV file"
                   data-bs-toggle="tooltip"

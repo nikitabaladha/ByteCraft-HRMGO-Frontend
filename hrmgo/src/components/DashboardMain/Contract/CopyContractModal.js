@@ -29,7 +29,6 @@ const CopyContractModal = ({ contracts, onClose }) => {
     }
   }, [contracts]);
 
-  // Fetch employees
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
@@ -46,7 +45,6 @@ const CopyContractModal = ({ contracts, onClose }) => {
     fetchEmployeeData();
   }, []);
 
-  // Fetch contract types
   useEffect(() => {
     const fetchContractTypeData = async () => {
       try {
@@ -63,7 +61,6 @@ const CopyContractModal = ({ contracts, onClose }) => {
     fetchContractTypeData();
   }, []);
 
-  // Handle form changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -72,7 +69,6 @@ const CopyContractModal = ({ contracts, onClose }) => {
   const handleCopy = async (e) => {
     e.preventDefault();
 
-    // Prepare updated Contract data
     const copiedContract = {
       ...formData,
     };

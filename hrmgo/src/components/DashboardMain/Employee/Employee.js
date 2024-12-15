@@ -1,5 +1,3 @@
-// components/DashboardMain/Overview/Overview.js
-
 import React from "react";
 import EmployeeHeader from "./EmployeeHeader";
 import EmployeeTable from "./EmployeeTable";
@@ -22,7 +20,6 @@ const Employee = () => {
           Array.isArray(response.data.data)
         ) {
           setEmployeeData(response.data.data);
-          console.log("Employee Data fetched successfully", response.data.data);
         } else {
           console.error("Invalid response format or error in response");
         }

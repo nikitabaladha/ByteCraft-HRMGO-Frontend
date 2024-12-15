@@ -131,7 +131,7 @@ const Calendar = () => {
         <div
           className="popup-overlay"
           id="fc-dom-121"
-          onClick={handlePopupClick} // This will trigger the modal to open
+          onClick={handlePopupClick}
           style={{
             position: "fixed",
             top: 0,

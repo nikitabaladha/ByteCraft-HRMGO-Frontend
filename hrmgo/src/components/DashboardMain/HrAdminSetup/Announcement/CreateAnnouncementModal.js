@@ -464,8 +464,6 @@ const CreateAnnouncementModal = ({ onClose, addAnnouncement }) => {
               label: employee.name,
             }));
 
-            console.log("Formatted Employees:", formattedEmployees);
-
             setEmployees(formattedEmployees);
           } else {
             console.error("Invalid response format or error in response");

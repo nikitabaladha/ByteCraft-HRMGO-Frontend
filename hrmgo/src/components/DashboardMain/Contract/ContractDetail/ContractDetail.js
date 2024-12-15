@@ -123,7 +123,7 @@ const ContractDetail = ({ contract }) => {
                   </div>
                   <ContractDetailDescription contractData={contractData} />
                 </div>
-                {/* i want attachment count but its  */}
+
                 <ContractDetailAttachment
                   attachments={attachments}
                   setAttachments={setAttachments}

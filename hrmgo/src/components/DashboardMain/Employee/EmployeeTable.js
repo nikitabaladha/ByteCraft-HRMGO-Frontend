@@ -44,7 +44,6 @@ const EmployeeTable = ({ employeeData }) => {
                           <span>
                             <div className="action-btn bg-info ms-2">
                               <Link
-                                to=""
                                 className="mx-3 btn btn-sm align-items-center"
                                 data-bs-toggle="tooltip"
                                 title="Edit"
@@ -61,7 +60,6 @@ const EmployeeTable = ({ employeeData }) => {
                                 />
                                 <input name="_token" type="hidden" />
                                 <Link
-                                  to="/"
                                   className="mx-3 btn btn-sm align-items-center bs-pass-para"
                                   data-bs-toggle="tooltip"
                                   title="Delete"
