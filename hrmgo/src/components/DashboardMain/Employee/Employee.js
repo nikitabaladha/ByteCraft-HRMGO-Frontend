@@ -5,6 +5,7 @@ import getAPI from "../../../api/getAPI";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import CreateEmployee from "./CreateEmployee/CreateEmployee";
+import UpdateEmployee from "./UpdateEmployee/UpdateEmployee";
 
 const Employee = () => {
   const location = useLocation();
@@ -36,11 +37,14 @@ const Employee = () => {
   };
 
   const isCreateRoute = location.pathname === "/dashboard/employee/create";
+  const isUpdateRoute = location.pathname === "/dashboard/employee/update";
 
   return (
     <>
       {isCreateRoute ? (
         <CreateEmployee addEmployee={addEmployee} />
+      ) : isUpdateRoute ? (
+        <UpdateEmployee />
       ) : (
         <>
           <EmployeeHeader />

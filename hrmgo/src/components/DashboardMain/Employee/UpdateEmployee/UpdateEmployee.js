@@ -1,41 +1,59 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import getAPI from "../../../../api/getAPI";
-import postAPI from "../../../../api/postAPI";
+import putAPI from "../../../../api/putAPI";
 import { toast } from "react-toastify";
 
-const CreateEmployee = ({ addEmployee }) => {
+const UpdateEmployee = () => {
+  const location = useLocation();
+  const employee = location.state?.employee;
+
   const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    dateOfBirth: new Date().toISOString().split("T")[0],
-    gender: "Male",
-    email: "",
-    password: "",
-    address: "",
-    dateOfJoining: new Date().toISOString().split("T")[0],
-    branchId: "",
-    departmentId: "",
-    designationId: "",
-    accountHolderName: "",
-    accountNumber: "",
-    bankName: "",
-    bankIdentifierCode: "",
-    branchLocation: "",
-    taxPayerId: "",
+    name: employee?.name || "",
+    phone: employee?.phone || "",
+    dateOfBirth: employee?.dateOfBirth
+      ? new Date(employee.dateOfBirth).toISOString().split("T")[0]
+      : "",
+    gender: employee?.gender || "",
+    address: employee?.address || "",
+    branchId: employee?.branchId || "",
+    departmentId: employee?.departmentId || "",
+    designationId: employee?.designationId || "",
+    dateOfJoining: employee?.dateOfJoining
+      ? new Date(employee.dateOfJoining).toISOString().split("T")[0]
+      : "",
+    accountHolderName: employee?.accountHolderName || "",
+    accountNumber: employee?.accountNumber || "",
+    bankName: employee?.bankName || "",
+    bankIdentifierCode: employee?.bankIdentifierCode || "",
+    branchLocation: employee?.branchLocation || "",
+    taxPayerId: employee?.taxPayerId || "",
   });
 
   const [branches, setBranches] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [designations, setDesignations] = useState([]);
 
-  const [employeePhoto, setEmployeePhoto] = useState(null);
-  const [employeeCertificate, setEmployeeCertificate] = useState(null);
-  const [employeeResume, setEmployeeResume] = useState(null);
+  const [employeePhoto, setEmployeePhoto] = useState(
+    employee?.employeePhotoUrl || null
+  );
+  const [employeeCertificate, setEmployeeCertificate] = useState(
+    employee?.employeeCertificateUrl || null
+  );
+  const [employeeResume, setEmployeeResume] = useState(
+    employee?.employeeResumeUrl || null
+  );
 
-  const [imagePreview, setImagePreview] = useState("");
-  const [certificatePreview, setCertificatePreview] = useState("");
-  const [resumePreview, setResumePreview] = useState("");
+  const [imagePreview, setImagePreview] = useState(
+    employee?.employeePhotoUrl || ""
+  );
+  const [certificatePreview, setCertificatePreview] = useState(
+    employee?.employeeCertificateUrl || ""
+  );
+  const [resumePreview, setResumePreview] = useState(
+    employee?.employeeResumeUrl || ""
+  );
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
@@ -45,46 +63,30 @@ const CreateEmployee = ({ addEmployee }) => {
 
       if (name === "employeePhotoUrl") {
         setEmployeePhoto(file);
-
-        if (file.type.startsWith("image/")) {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            setImagePreview(reader.result);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          setImagePreview("");
-        }
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreview(reader.result);
+        };
+        reader.readAsDataURL(file);
       } else if (name === "employeeCertificateUrl") {
         setEmployeeCertificate(file);
-        setCertificatePreview(file.name);
-        setImagePreview("");
+        setCertificatePreview(URL.createObjectURL(file));
       } else if (name === "employeeResumeUrl") {
         setEmployeeResume(file);
-        setResumePreview(file.name);
-        setImagePreview("");
+        setResumePreview(URL.createObjectURL(file));
       }
     } else {
       if (name === "employeePhotoUrl") {
         setEmployeePhoto(null);
-        setImagePreview("");
+        setImagePreview(employee?.employeePhotoUrl || "");
       } else if (name === "employeeCertificateUrl") {
         setEmployeeCertificate(null);
-        setCertificatePreview("");
+        setCertificatePreview(employee?.employeeCertificateUrl || "");
       } else if (name === "employeeResumeUrl") {
         setEmployeeResume(null);
-        setResumePreview("");
+        setResumePreview(employee?.employeeResumeUrl || "");
       }
     }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleDateChange = (e, name) => {
-    setFormData((prevData) => ({ ...prevData, [name]: e.target.value }));
   };
 
   useEffect(() => {
@@ -103,147 +105,101 @@ const CreateEmployee = ({ addEmployee }) => {
     fetchBranches();
   }, []);
 
-  const handleBranchChange = async (e) => {
-    const branchId = e.target.value;
+  useEffect(() => {
+    // Fetch departments when the branchId changes
+    const fetchDepartments = async () => {
+      if (formData.branchId) {
+        try {
+          const response = await getAPI(
+            `/department-get-all-by-branch-id?branchId=${formData.branchId}`,
+            {},
+            true,
+            true
+          );
+          if (!response.hasError && Array.isArray(response.data.data)) {
+            setDepartments(response.data.data);
+          } else {
+            console.error("Error fetching departments.");
+          }
+        } catch (err) {
+          console.error("Error fetching department data:", err);
+        }
+      } else {
+        setDepartments([]); // Clear departments if no branch is selected
+      }
+    };
+    fetchDepartments();
+  }, [formData.branchId]);
+
+  useEffect(() => {
+    // Fetch designations when the departmentId changes
+    const fetchDesignations = async () => {
+      if (formData.departmentId) {
+        try {
+          const response = await getAPI(
+            `/designation-get-all-by-department-id?departmentId=${formData.departmentId}`,
+            {},
+            true,
+            true
+          );
+          if (!response.hasError && Array.isArray(response.data.data)) {
+            setDesignations(response.data.data);
+          } else {
+            console.error("Error fetching designations.");
+          }
+        } catch (err) {
+          console.error("Error fetching designation data:", err);
+        }
+      } else {
+        setDesignations([]); // Clear designations if no department is selected
+      }
+    };
+    fetchDesignations();
+  }, [formData.departmentId]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      branchId,
-      departmentId: "",
-      designationId: "",
+      [name]: value,
     }));
-    setDepartments([]);
-    setDesignations([]);
-
-    if (branchId) {
-      try {
-        const response = await getAPI(
-          `/department-get-all-by-branch-id?branchId=${branchId}`,
-          {},
-          true,
-          true
-        );
-        if (!response.hasError && Array.isArray(response.data.data)) {
-          setDepartments(response.data.data);
-        } else {
-          console.error("Error fetching departments.");
-        }
-      } catch (err) {
-        console.error("Error fetching department data:", err);
-      }
-    }
   };
 
-  const handleDepartmentChange = async (e) => {
-    const departmentId = e.target.value;
-    setFormData((prevData) => ({
-      ...prevData,
-      departmentId,
-      designationId: "",
-    }));
-    setDesignations([]);
-
-    if (departmentId) {
-      try {
-        const response = await getAPI(
-          `/designation-get-all-by-department-id?departmentId=${departmentId}`,
-          {},
-          true,
-          true
-        );
-        if (!response.hasError && Array.isArray(response.data.data)) {
-          setDesignations(response.data.data);
-        } else {
-          console.error("Error fetching designations.");
-        }
-      } catch (err) {
-        console.error("Error fetching designation data:", err);
-      }
-    }
-  };
-
-  const handleSubmit = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    const dataToSubmit = new FormData();
 
-    Object.keys(formData).forEach((key) => {
-      dataToSubmit.append(key, formData[key]);
-    });
+    const formDataToSend = new FormData();
 
-    if (employeePhoto) dataToSubmit.append("employeePhotoUrl", employeePhoto);
-    if (employeeCertificate)
-      dataToSubmit.append("employeeCertificateUrl", employeeCertificate);
-    if (employeeResume)
-      dataToSubmit.append("employeeResumeUrl", employeeResume);
-
-    for (let [key, value] of dataToSubmit.entries()) {
-      console.log(key, value instanceof File ? value.name : value);
+    // Append form data
+    for (const key in formData) {
+      formDataToSend.append(key, formData[key]);
     }
 
+    // Append files if they exist
+    if (employeePhoto) {
+      formDataToSend.append("employeePhotoUrl", employeePhoto);
+    }
+    if (employeeCertificate) {
+      formDataToSend.append("employeeCertificateUrl", employeeCertificate);
+    }
+    if (employeeResume) {
+      formDataToSend.append("employeeResumeUrl", employeeResume);
+    }
     try {
-      const response = await postAPI(
-        "/employee",
-        dataToSubmit,
+      const response = await putAPI(
+        `/employee/${employee._id}`,
+        formDataToSend,
         {
           "Content-Type": "multipart/form-data",
         },
         true
       );
 
-      if (!response.hasError) {
-        toast.success("Employee created successfully!");
-        console.log("response.data", response.data);
-
-        const branchName = branches.find(
-          (br) => br._id === formData.branchId
-        )?.branchName;
-
-        const departmentName = departments.find(
-          (dep) => dep._id === formData.departmentId
-        )?.departmentName;
-
-        const designationName = designations.find(
-          (des) => des._id === formData.designationId
-        )?.designationName;
-
-        const newEmployee = {
-          id: response.data.data.id,
-          email: response.data.data.email,
-          name: response.data.data.name,
-          dateOfJoining: response.data.data.dateOfJoining,
-          designationName: branchName,
-          departmentName: departmentName,
-          branchName: designationName,
-        };
-
-        addEmployee(newEmployee);
-
-        setFormData({
-          name: "",
-          phone: "",
-          dateOfBirth: new Date().toISOString().split("T")[0],
-          gender: "Male",
-          email: "",
-          password: "",
-          address: "",
-          dateOfJoining: new Date().toISOString().split("T")[0],
-          branchId: "",
-          departmentId: "",
-          designationId: "",
-          accountHolderName: "",
-          accountNumber: "",
-          bankName: "",
-          bankIdentifierCode: "",
-          branchLocation: "",
-          taxPayerId: "",
-        });
-        setEmployeePhoto(null);
-        setEmployeeCertificate(null);
-        setEmployeeResume(null);
-        setImagePreview("");
-        setCertificatePreview("");
-        setResumePreview("");
+      if (!response.data.hasError) {
+        toast.success("Employee updated successfully!");
+        console.log(response.data);
       } else {
-        toast.error(response.data.message || "Failed to create Employee.");
+        toast.error("Failed to update Employee.");
       }
     } catch (error) {
       if (
@@ -258,6 +214,10 @@ const CreateEmployee = ({ addEmployee }) => {
     }
   };
 
+  if (!employee) {
+    return <div>No employee data provided!</div>;
+  }
+
   return (
     <>
       <div className="page-header">
@@ -265,35 +225,37 @@ const CreateEmployee = ({ addEmployee }) => {
           <div className="row align-items-center">
             <div className="col-auto">
               <div className="page-header-title">
-                <h4 className="m-b-10">Create Employee</h4>
+                <h4 className="m-b-10">Edit Employee</h4>
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <Link>Home</Link>
+                  <Link to="/dashboard">Home</Link>
                 </li>
                 <li className="breadcrumb-item">
-                  <Link>Employee</Link>
+                  <Link to="">Employee</Link>
                 </li>
-                <li className="breadcrumb-item">Create Employee</li>
+                <li className="breadcrumb-item">Edit Employee</li>
               </ul>
+            </div>
+            <div className="col">
+              <div className="float-end"></div>
             </div>
           </div>
         </div>
       </div>
-
       <div className="row">
         <div className="">
-          {" "}
           <div className="">
-            <div className="row"></div>{" "}
             <form
               method="POST"
               acceptCharset="UTF-8"
               encType="multipart/form-data"
               className="needs-validation"
               noValidate=""
-              onSubmit={handleSubmit}
+              onSubmit={handleUpdate}
             >
+              <input name="_method" type="hidden" defaultValue="PUT" />
+              <input name="_token" type="hidden" />
               <div className="row">
                 <div className="col-md-6">
                   <div className="card em-card">
@@ -304,46 +266,47 @@ const CreateEmployee = ({ addEmployee }) => {
                       <div className="row">
                         <div className="form-group col-md-6">
                           <label htmlFor="name" className="form-label">
-                            Name <span className="text-danger">*</span>
+                            Name
                           </label>
+                          <span className="text-danger">*</span>
                           <input
                             className="form-control"
-                            required
-                            placeholder="Enter employee Name"
-                            name="name"
+                            required="required"
                             type="text"
+                            name="name"
+                            defaultValue={formData.name}
                             id="name"
-                            value={formData.name}
                             onChange={handleChange}
                           />
                         </div>
                         <div className="col-md-6">
                           <div className="form-group">
                             <label htmlFor="phone" className="form-label">
-                              Phone <span className="text-danger">*</span>
-                            </label>
+                              Phone
+                            </label>{" "}
+                            <span className="text-danger">*</span>
                             <input
                               className="form-control"
                               placeholder="Enter employee phone"
                               pattern="^\+\d{1,3}\d{9,13}$"
                               id="phone"
-                              required
+                              required="true"
                               name="phone"
                               type="text"
                               value={formData.phone}
                               onChange={handleChange}
                             />
-                            <div className="text-xs text-danger">
+                            <div className=" text-xs text-danger">
                               Please use with country code. (ex. +91)
                             </div>
                           </div>
                         </div>
                         <div className="col-md-6">
                           <div className="form-group">
-                            <label htmlFor="dateOf" className="form-label">
-                              Date of Birth{" "}
-                              <span className="text-danger">*</span>
+                            <label htmlFor="dob" className="form-label">
+                              Date of Birth
                             </label>
+                            <span className="text-danger">*</span>
                             <input
                               className="form-control"
                               required
@@ -353,17 +316,16 @@ const CreateEmployee = ({ addEmployee }) => {
                               type="date"
                               id="dateOfBirth"
                               value={formData.dateOfBirth}
-                              onChange={(e) =>
-                                handleDateChange(e, "dateOfBirth")
-                              }
+                              onChange={handleChange}
                             />
                           </div>
                         </div>
                         <div className="col-md-6">
                           <div className="form-group">
                             <label htmlFor="gender" className="form-label">
-                              Gender <span className="text-danger">*</span>
+                              Gender
                             </label>
+                            <span className="text-danger">*</span>
                             <div className="d-flex radio-check">
                               <div className="custom-control custom-radio custom-control-inline">
                                 <input
@@ -372,7 +334,7 @@ const CreateEmployee = ({ addEmployee }) => {
                                   value="Male"
                                   name="gender"
                                   className="form-check-input"
-                                  checked={formData.gender === "Male"}
+                                  defaultChecked={formData.gender === "Male"}
                                   onChange={handleChange}
                                 />
                                 <label
@@ -389,7 +351,7 @@ const CreateEmployee = ({ addEmployee }) => {
                                   value="Female"
                                   name="gender"
                                   className="form-check-input"
-                                  checked={formData.gender === "Female"}
+                                  defaultChecked={formData.gender === "Female"}
                                   onChange={handleChange}
                                 />
                                 <label
@@ -402,51 +364,21 @@ const CreateEmployee = ({ addEmployee }) => {
                             </div>
                           </div>
                         </div>
-                        <div className="form-group col-md-6">
-                          <label htmlFor="email" className="form-label">
-                            Email <span className="text-danger">*</span>
-                          </label>
-                          <input
-                            className="form-control"
-                            required
-                            placeholder="Enter employee email"
-                            name="email"
-                            type="email"
-                            id="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                          />
-                        </div>
-                        <div className="form-group col-md-6">
-                          <label htmlFor="password" className="form-label">
-                            Password <span className="text-danger">*</span>
-                          </label>
-                          <input
-                            className="form-control"
-                            required
-                            placeholder="Enter employee password"
-                            name="password"
-                            type="password"
-                            id="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                          />
-                        </div>
-                        <div className="form-group col-md-12">
-                          <label htmlFor="address" className="form-label">
-                            Address <span className="text-danger">*</span>
-                          </label>
-                          <textarea
-                            className="form-control"
-                            required
-                            placeholder="Enter employee address"
-                            name="address"
-                            rows="3"
-                            id="address"
-                            value={formData.address}
-                            onChange={handleChange}
-                          ></textarea>
-                        </div>
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="address" className="form-label">
+                          Address
+                        </label>
+                        <span className="text-danger">*</span>
+                        <textarea
+                          className="form-control"
+                          rows={3}
+                          name="address"
+                          cols={50}
+                          id="address"
+                          value={formData.address}
+                          onChange={handleChange}
+                        />
                       </div>
                     </div>
                   </div>
@@ -458,18 +390,34 @@ const CreateEmployee = ({ addEmployee }) => {
                     </div>
                     <div className="card-body">
                       <div className="row">
-                        <div className="form-group col-md-6">
-                          <label htmlFor="branch" className="form-label">
-                            Branch <span className="text-danger">*</span>
+                        <input type="hidden" name="_token" autoComplete="off" />
+                        <div className="form-group">
+                          <label htmlFor="employee_id" className="form-label">
+                            Employee ID
                           </label>
+                          <input
+                            className="form-control"
+                            disabled="disabled"
+                            name="employee_id"
+                            type="text"
+                            value={employee.id}
+                            id="employee_id"
+                          />
+                        </div>
+                        <div className="form-group col-md-6">
+                          <label htmlFor="branch_id" className="form-label">
+                            Branch
+                          </label>
+                          <span className="text-danger">*</span>
                           <select
-                            className="form-control select"
+                            className="form-control"
+                            required="required"
                             id="branch_id"
                             name="branchId"
                             value={formData.branchId}
-                            onChange={handleBranchChange}
+                            onChange={handleChange}
                           >
-                            <option value="">All</option>
+                            <option value="">Select Branch</option>
                             {branches.map((branch) => (
                               <option key={branch._id} value={branch._id}>
                                 {branch.branchName}
@@ -478,78 +426,87 @@ const CreateEmployee = ({ addEmployee }) => {
                           </select>
                         </div>
                         <div className="form-group col-md-6">
-                          <label htmlFor="department" className="form-label">
-                            Department <span className="text-danger">*</span>
+                          <label htmlFor="department_id" className="form-label">
+                            Select Department
                           </label>
-                          <select
-                            className="form-control select"
-                            id="department_id"
-                            name="departmentId"
-                            value={formData.departmentId}
-                            onChange={handleDepartmentChange}
-                          >
-                            <option value="">Select Department</option>
-                            {departments.map((department) => (
-                              <option
-                                key={department._id}
-                                value={department._id}
-                              >
-                                {department.departmentName}
-                              </option>
-                            ))}
-                          </select>
+                          <span className="text-danger">*</span>
+                          <div className="department_div">
+                            <select
+                              className="form-control select department_id"
+                              name="departmentId"
+                              id="department_id"
+                              placeholder="Select Department"
+                              required=""
+                              value={formData.departmentId}
+                              onChange={handleChange}
+                            >
+                              <option value="">Select any Department</option>
+                              {departments.map((department) => (
+                                <option
+                                  key={department._id}
+                                  value={department._id}
+                                >
+                                  {department.departmentName}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
                         </div>
                         <div className="form-group col-md-6">
-                          <label htmlFor="designation" className="form-label">
-                            Designation <span className="text-danger">*</span>
-                          </label>
-                          <select
-                            className="form-control select"
-                            id="designation_id"
-                            name="designationId"
-                            value={formData.designationId}
-                            onChange={handleChange}
-                            s
+                          <label
+                            htmlFor="designation_id"
+                            className="form-label"
                           >
-                            <option value="">Select Designation</option>
-                            {designations.map((designation) => (
-                              <option
-                                key={designation._id}
-                                value={designation._id}
+                            Designation
+                          </label>
+                          <span className="text-danger">*</span>
+                          <div className="form-icon-user">
+                            <div className="designation_div">
+                              <select
+                                className="form-control designation_id"
+                                name="designationId"
+                                placeholder="Select Designation"
+                                required=""
+                                value={formData.designationId}
+                                onChange={handleChange}
                               >
-                                {designation.designationName}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="col-md-6">
-                          <div className="form-group">
-                            <label htmlFor="company_doj" className="form-label">
-                              Company Date Of Joining{" "}
-                              <span className="text-danger">*</span>
-                            </label>
-                            <input
-                              className="form-control"
-                              required
-                              autoComplete="off"
-                              placeholder="Select Company Date of Joining"
-                              name="company_doj"
-                              type="date"
-                              id="company_doj"
-                              value={formData.dateOfJoining}
-                              onChange={(e) =>
-                                handleDateChange(e, "dateOfJoining")
-                              }
-                            />
+                                <option value="">Select any Designation</option>
+                                {designations.map((designation) => (
+                                  <option
+                                    key={designation._id}
+                                    value={designation._id}
+                                  >
+                                    {designation.designationName}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
                           </div>
+                        </div>
+                        <div className="form-group col-md-6">
+                          <label htmlFor="company_doj" className="form-label">
+                            Company Date Of Joining
+                          </label>
+                          <span className="text-danger">*</span>
+                          <input
+                            className="form-control"
+                            required
+                            autoComplete="off"
+                            placeholder="Select Date of Birth"
+                            name="dateOfJoining"
+                            type="date"
+                            id="dateOfJoining"
+                            value={formData.dateOfJoining}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
               <div className="row">
-                {" "}
                 <div className="col-md-6 ">
                   <div className="card em-card ">
                     <div className="card-header">
@@ -682,12 +639,12 @@ const CreateEmployee = ({ addEmployee }) => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-6 ">
-                  <div className="card em-card">
+                <div className="col-md-6">
+                  <div className="card em-card ">
                     <div className="card-header">
                       <h5>Bank Account Detail</h5>
                     </div>
-                    <div className="card-body employee-detail-create-body">
+                    <div className="card-body">
                       <div className="row">
                         <div className="form-group col-md-6">
                           <label
@@ -698,11 +655,10 @@ const CreateEmployee = ({ addEmployee }) => {
                           </label>
                           <input
                             className="form-control"
-                            placeholder="Enter Account Holder Name"
                             name="accountHolderName"
                             type="text"
-                            id="account_holder_name"
                             value={formData.accountHolderName}
+                            id="accountHolderName"
                             onChange={handleChange}
                           />
                         </div>
@@ -715,11 +671,10 @@ const CreateEmployee = ({ addEmployee }) => {
                           </label>
                           <input
                             className="form-control"
-                            placeholder="Enter Account Number"
                             name="accountNumber"
                             type="number"
-                            id="accountNumber"
                             value={formData.accountNumber}
+                            id="accountNumber"
                             onChange={handleChange}
                           />
                         </div>
@@ -729,11 +684,10 @@ const CreateEmployee = ({ addEmployee }) => {
                           </label>
                           <input
                             className="form-control"
-                            placeholder="Enter Bank Name"
                             name="bankName"
                             type="text"
-                            id="bank_name"
                             value={formData.bankName}
+                            id="bankName"
                             onChange={handleChange}
                           />
                         </div>
@@ -746,11 +700,10 @@ const CreateEmployee = ({ addEmployee }) => {
                           </label>
                           <input
                             className="form-control"
-                            placeholder="Enter Bank Identifier Code"
                             name="bankIdentifierCode"
                             type="text"
-                            id="bank_identifier_code"
                             value={formData.bankIdentifierCode}
+                            id="bankIdentifierCode"
                             onChange={handleChange}
                           />
                         </div>
@@ -763,11 +716,10 @@ const CreateEmployee = ({ addEmployee }) => {
                           </label>
                           <input
                             className="form-control"
-                            placeholder="Enter Branch Location"
                             name="branchLocation"
                             type="text"
-                            id="branch_location"
                             value={formData.branchLocation}
+                            id="branchLocation"
                             onChange={handleChange}
                           />
                         </div>
@@ -777,11 +729,10 @@ const CreateEmployee = ({ addEmployee }) => {
                           </label>
                           <input
                             className="form-control"
-                            placeholder="Enter Tax Payer Id"
                             name="taxPayerId"
                             type="text"
-                            id="tax_payer_id"
                             value={formData.taxPayerId}
+                            id="taxPayerId"
                             onChange={handleChange}
                           />
                         </div>
@@ -791,16 +742,19 @@ const CreateEmployee = ({ addEmployee }) => {
                 </div>
               </div>
 
-              <div className="row">
-                <div className="col-md-12 text-end">
-                  <Link to="/employee" className="btn btn-secondary me-2">
-                    Cancel
-                  </Link>
-                  <button type="submit" className="btn btn-primary">
-                    Create
-                  </button>
-                </div>
+              <div className="float-end">
+                <Link className="btn btn-secondary btn-submit" to="">
+                  Cancel
+                </Link>
+                <button
+                  className="btn btn-primary btn-submit ms-1"
+                  type="submit"
+                  id="submit"
+                >
+                  Update
+                </button>
               </div>
+              <div className="col-12"></div>
             </form>
           </div>
         </div>
@@ -809,4 +763,4 @@ const CreateEmployee = ({ addEmployee }) => {
   );
 };
 
-export default CreateEmployee;
+export default UpdateEmployee;

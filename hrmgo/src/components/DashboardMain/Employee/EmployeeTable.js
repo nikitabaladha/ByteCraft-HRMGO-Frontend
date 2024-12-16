@@ -1,11 +1,23 @@
+// ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Employee\EmployeeTable.js
+
 import React from "react";
 
 import { Link } from "react-router-dom";
+
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { formatDate } from "../../../Js/custom";
+import { useNavigate } from "react-router-dom";
 
+// from main page data is passing to the table
 const EmployeeTable = ({ employeeData }) => {
+  const navigate = useNavigate();
+
+  const navigateToEmployeeUpdate = (event, employee) => {
+    event.preventDefault();
+    navigate(`/dashboard/employee/update`, { state: { employee } });
+  };
+
   return (
     <>
       <div className="row">
@@ -47,6 +59,9 @@ const EmployeeTable = ({ employeeData }) => {
                                 className="mx-3 btn btn-sm align-items-center"
                                 data-bs-toggle="tooltip"
                                 title="Edit"
+                                onClick={(event) =>
+                                  navigateToEmployeeUpdate(event, employee)
+                                }
                               >
                                 <TbPencil className="text-white" />
                               </Link>

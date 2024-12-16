@@ -13,6 +13,7 @@ import AccountStatement from "./components/DashboardMain/Dashboard/Report/Accoun
 
 import Employee from "./components/DashboardMain/Employee/Employee.js";
 import CreateEmployee from "./components/DashboardMain/Employee/CreateEmployee/CreateEmployee.js";
+import UpdateEmployee from "./components/DashboardMain/Employee/UpdateEmployee/UpdateEmployee.js";
 
 import ManageLeave from "./components/DashboardMain/Timesheet/ManageLeave/ManageLeave.js";
 import TimeSheet from "./components/DashboardMain/Timesheet/TimeSheet/TimeSheet.js";
@@ -68,6 +69,7 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
 
             <Route path="employee" element={<Employee />}>
               <Route path="create" element={<CreateEmployee />} />
+              <Route path="update" element={<UpdateEmployee />} />
             </Route>
 
             <Route path="time-sheet/manage-leave" element={<ManageLeave />} />
