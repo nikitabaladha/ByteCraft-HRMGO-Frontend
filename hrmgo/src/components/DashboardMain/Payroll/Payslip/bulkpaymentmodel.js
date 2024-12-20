@@ -36,7 +36,7 @@ const BulkpaymentModal = ({ isOpen, title, body, onClose, onBulkPayment }) => {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={onBulkPayment} // Trigger bulk payment
+                onClick={onBulkPayment} 
               >
                 Bulk Payment
               </button>

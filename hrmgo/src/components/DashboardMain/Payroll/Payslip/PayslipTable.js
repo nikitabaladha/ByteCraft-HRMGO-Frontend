@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,useEffect} from "react";
 import getAPI from "../../../../api/getAPI.js";
 import putAPI from "../../../../api/putAPI.js";
 import { Link } from "react-router-dom";
@@ -15,55 +15,65 @@ import * as XLSX from "xlsx";  // Import XLSX for export
 
 const PayslipTable = () => {
   const [payrollData, setPayrollData] = useState([]);
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const handleMonthChange = (e) => setMonth(e.target.value);
-  const handleYearChange = (e) => setYear(e.target.value);
+  const [loading] = useState(false);
+  const [error] = useState("");
   const [isEditModalOpen, setEditModalOpen] = useState(false); 
   const [selectedPayslip, setSelectedPayslip] = useState(null);
   const [isPayslipReceiptOpen, setPayslipReceiptOpen] = useState(false);
   const [selectedPayslipForReceipt, setSelectedPayslipForReceipt] = useState(null);
-  
-  
 
+useEffect(() => {
+    const fetchEmployeeData = async () => {
 
-  const fetchPayrollData = async () => {
-    setLoading(true);
-    setError("");
+      try {
+        const employeeResponse = await getAPI(`/employee-get-all`, {}, true);
+        const employeeList = employeeResponse.data.data;
 
-    try {
-      const response = await getAPI(`/payslip-get-all?month=${month}&year=${year}`, {}, true);
-      console.log("Fetched data:", response.data.data);
-      
-      // Ensure status and payslipId are included
-      const normalizedData = (response.data.data || []).map((item) => ({
-        employeeId: item.employeeId.id,
-        name: item.employeeId.name,
-        payrollType: item.payrollType,
-        salary: item.salary,
-        netSalary: item.netSalary,
-        status: item.status,  
-        payslipId: item._id,  
-        paydate:item.paydate
-      }));
+        const salaryList = await Promise.all(
+          employeeList.map(async (employee) => {
+            const salaryResponse = await getAPI(`/getemployeedatabyid/${employee._id}`, {}, true);
+            const salaryData = salaryResponse.data.data;
+            return {
+              employeeId: employee._id,
+              payrollType: salaryData?.salary.salaryType,
+              salary: salaryData?.salary.salary,
+              grandTotal: salaryData?.salary.grandTotal,
+              status:salaryData?.salary.status,
+              payDate:salaryData?.salary.payDate
+            };
+          })
+        );
 
-      setPayrollData(normalizedData);
-    } catch (err) {
-      setError("Failed to fetch payroll data. Please try again later.");
-    } finally {
-      setLoading(false);
+        const mergedData = employeeList.map(employee => {
+          const salaryInfo = salaryList.find(salary => salary.employeeId === employee._id);
+          const netSalary = salaryInfo ? salaryInfo.salary + (salaryInfo.grandTotal || 0) : '';
+          return {
+            ...employee,
+            salary: salaryInfo ? salaryInfo.salary : '',
+            payrollType: salaryInfo ? salaryInfo.payrollType : '',
+            grandTotal: salaryInfo ? salaryInfo.grandTotal : '',
+            netSalary: netSalary,
+            status:salaryInfo ? salaryInfo.status : '',
+            payDate:salaryInfo?salaryInfo.payDate:''
+            
+          };
+        });
+        console.log('Merged Data:', mergedData);
+        setPayrollData(mergedData);
+    } catch (error) {
+        console.error('Error fetching payroll data:', error);
     }
-  };
+};
 
-  const updatePayslipStatus = async (payslipId) => {
+       
+    fetchEmployeeData();
+  }, []);
+
+  const updatePayslipStatus = async (employeeId) => {
     try {
-      await putAPI(`/payslipupdatestatus/${payslipId}`, {}, true); // Call without storing response
-  
-      // Update payroll data locally
+      await putAPI(`/updatestatus/${employeeId}`, {}, true); 
       const updatedData = payrollData.map((row) =>
-        row.payslipId === payslipId ? { ...row, status: "paid" } : row
+        row.employeeId === employeeId ? { ...row, status: "paid" } : row
       );
   
       setPayrollData(updatedData);
@@ -103,12 +113,12 @@ const PayslipTable = () => {
     const unpaidEmployees = payrollData.filter((row) => row.status !== "paid");
     
     try {
-      // Update status for all unpaid employees
-      for (const employee of unpaidEmployees) {
-        await putAPI(`/payslipupdatestatus/${employee.payslipId}`, {}, true);
+
+      for (const row of unpaidEmployees) {
+        const employeeId = row._id;
+        await putAPI(`/updatestatus/${employeeId}`, {}, true);
       }
   
-      // Update local state after successful update
       const updatedData = payrollData.map((row) =>
         row.status !== "paid" ? { ...row, status: "paid" } : row
       );
@@ -121,15 +131,11 @@ const PayslipTable = () => {
     }
   };
 
-  const [showPaySlipModal, setShowPaySlipModal] = useState(false);
-  
-  const handleClosePaySlip = () => setShowPaySlipModal(false);
-  const handleShowPaySlip = () => setShowPaySlipModal(true);
+
 
   const handleExportToExcel = () => {
-    // Modify the payroll data before exporting
     const exportData = payrollData.map((row) => ({
-      EmployeeId: row.employeeId,   // Display employeeId.id
+      EmployeeId: row.id,   
       Name: row.name,
       PayrollType: row.payrollType,
       Salary: row.salary,
@@ -137,7 +143,7 @@ const PayslipTable = () => {
       Status: row.status
     }));
 
-    // Convert the data to a worksheet
+ 
     const ws = XLSX.utils.json_to_sheet(exportData);  
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Payslip Data");
@@ -145,6 +151,7 @@ const PayslipTable = () => {
   };
 
   const handleEditPayslip = (payslip) => {
+    console.log("Data being passed to EditPayslipModal:", payslip)
     setSelectedPayslip(payslip);
     setEditModalOpen(true);
   };
@@ -158,8 +165,8 @@ const PayslipTable = () => {
   };
 
   const handleShowPayslipReceipt = (payslip) => {
-    setSelectedPayslipForReceipt(payslip); // Set the payslip data to be shown in the modal
-    setPayslipReceiptOpen(true); // Open the modal
+    setSelectedPayslipForReceipt(payslip); 
+    setPayslipReceiptOpen(true); 
   };
   
   
@@ -167,10 +174,8 @@ const PayslipTable = () => {
     setPayslipReceiptOpen(false);
     setSelectedPayslipForReceipt(null);
   };
-  
-  useEffect(() => {
-    fetchPayrollData();
-  }, [month, year]);
+
+
 
   
 
@@ -200,8 +205,6 @@ const PayslipTable = () => {
                       className="form-control select"
                       id="month"
                       name="month"
-                      value={month}
-                      onChange={handleMonthChange}
                     >
                       {[
                         "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
@@ -222,8 +225,7 @@ const PayslipTable = () => {
                       className="form-control select"
                       id="year"
                       name="year"
-                      value={year}
-                      onChange={handleYearChange}
+                     
                     >
                       {Array.from({ length: 10 }, (_, idx) => 2021 + idx).map((yr) => (
                         <option key={yr} value={yr}>
@@ -263,8 +265,6 @@ const PayslipTable = () => {
                       <select
                         className="form-control month_date"
                         name="month"
-                        value={month}
-                        onChange={handleMonthChange}
                       >
                         <option value="--">--</option>
                         <option value="01">JAN</option>
@@ -289,8 +289,6 @@ const PayslipTable = () => {
                       <select
                         className="form-control year_date"
                         name="year"
-                        value={year}
-                        onChange={handleYearChange}
                       >
                         <option value="2021">2021</option>
                         <option value="2022">2022</option>
@@ -315,8 +313,8 @@ const PayslipTable = () => {
                     // onSubmit={handleSubmit}
                   >
                     <input name="_token" type="hidden" value="Lp81DxPCUuxJdGJZpGF0iIzfmIUj0a4dOX7ZDogF" />
-                    <input type="hidden" name="filter_month" className="filter_month" value={month} />
-                    <input type="hidden" name="filter_year" className="filter_year" value={year} />
+                    <input type="hidden" name="filter_month" className="filter_month"  />
+                    <input type="hidden" name="filter_year" className="filter_year"  />
                   </form>
                   <input type="submit" value="Export" className="btn btn-primary" onClick={handleExportToExcel}/>
                   <div className="ml-2 float-end">
@@ -354,16 +352,16 @@ const PayslipTable = () => {
                   </thead>
                   <tbody>
                     {payrollData.map((row) => (
-                      <tr key={row.employeeId}>
+                      <tr key={row._id}>
                         <td>
                           <button className="btn btn-outline-primary">
-                            {row.employeeId}
+                            {row.id}
                           </button>
                         </td>
                         <td>{row.name}</td>
                         <td>{row.payrollType}</td>
-                        <td>{row.salary}</td>
-                        <td>{row.netSalary}</td>
+                        <td>{`₹${typeof row.salary === 'number' ? new Intl.NumberFormat('en-IN', { maximumFractionDigits: 2 }).format(row.salary) : '0.00'}`}</td>
+                        <td>{`₹${typeof row.netSalary === 'number' ? new Intl.NumberFormat('en-IN', { maximumFractionDigits: 2 }).format(row.netSalary) : '0.00'}`}</td>
                         <td>
                           <span
                             className={`badge ${
@@ -385,12 +383,13 @@ const PayslipTable = () => {
                             >
                               <TbReportMoney />
                             </Link>
-                            {row.status !== "paid" && row.payslipId && (
+                            {row.status !== "paid" && row.id && (
                             <button
                             className="btn-sm btn btn-primary me-1"
                             title="Pay Salary"
-                            onClick={() => updatePayslipStatus(row.payslipId)
-                            }
+                            onClick={() => {
+                                updatePayslipStatus(row._id);
+                              }}
                           >
                             <TbCurrencyDollar />
                           </button>
@@ -410,7 +409,7 @@ const PayslipTable = () => {
                                title="Delete"
                                onClick={() => {
                                 console.log("Delete button clicked");
-                                handleUpdateStatusDelete(row.payslipId);
+                                handleUpdateStatusDelete(row);
                               }}
                              >
                               <RiDeleteBinLine />
@@ -433,7 +432,7 @@ const PayslipTable = () => {
           onClose={closeModal}
           onBulkPayment={handleBulkPayment}
           />
-             <EditPayslipModal
+       <EditPayslipModal
         isOpen={isEditModalOpen}
         onClose={() => setEditModalOpen(false)}
         onSubmit={handleSaveEdit}

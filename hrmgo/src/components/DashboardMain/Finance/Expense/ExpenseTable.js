@@ -38,7 +38,7 @@ const ExpenseTable = () => {
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);  // Close the modal
+    setIsModalOpen(false);  
   };
 
   useEffect(() => {
@@ -108,7 +108,7 @@ const ExpenseTable = () => {
                         {expenses.map((expense) => (
                           <tr key={expense._id}>
                             <td>{expense.account_name}</td>
-                            <td>{expense.payee_name}</td> {/* Updated from payer_name to payee_name */}
+                            <td>{expense.payee_name}</td> 
                             <td>{`₹${new Intl.NumberFormat('en-IN').format(expense.amount)}`}</td>
                             <td>{expense.category}</td>
                             <td>{expense.ref}</td>
@@ -123,7 +123,7 @@ const ExpenseTable = () => {
                                 <span>
                                   <div className="action-btn bg-info me-2">
                                     <button
-                                      onClick={() => handleEdit(expense)}  // Open modal on button click
+                                      onClick={() => handleEdit(expense)} 
                                       className="mx-3 btn btn-sm align-items-center"
                                     >
                                       <span className="text-white">
@@ -166,19 +166,18 @@ const ExpenseTable = () => {
         </div>
       </div>
 
-      {/* Pass modal visibility and close handler as props */}
       {isModalOpen && (
         <EditExpenseModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          selectedExpense={selectedExpense}  // Updated to use selectedExpense
+          selectedExpense={selectedExpense}  
         />
       )}
 
       {isDeleteDialogOpen && (
         <ConfirmationDialog
           onClose={closeDeleteDialog}
-          expenseId={expenseToDelete}  // Updated to use expenseId
+          expenseId={expenseToDelete}  
           deleteType="expense"
           onDeleted={handleDeleteSuccess}
         />

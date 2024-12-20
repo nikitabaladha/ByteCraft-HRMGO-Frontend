@@ -69,7 +69,7 @@ const EmployeeTable = () => {
                         <td>{employee.email}</td>
                         <td>{employee.branchName}</td>
                         <td>{employee.departmentName}</td>
-                        <td>{employee.designation}</td>
+                        <td>{employee.designationName}</td>
                         <td>{formatDate(employee.joiningDate)}</td>
                         <td className="Action">
                           <span>

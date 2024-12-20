@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React from "react";
 const EditPayslipModal = ({ isOpen, onClose, payslip }) => {
   if (!isOpen) return null;
   const formatPayDate = (paydate) => {
@@ -19,7 +19,7 @@ const EditPayslipModal = ({ isOpen, onClose, payslip }) => {
             <div className="row px-3">
               <div className="col-md-4 mb-3">
                 <h5 className="emp-title mb-0">Employee</h5>
-                <h5 className="emp-title black-text"> #{payslip?.employeeId || "N/A"}</h5>
+                <h5 className="emp-title black-text"> #{payslip?.id || "N/A"}</h5>
               </div>
               <div className="col-md-4 mb-3">
                 <h5 className="emp-title mb-0">Basic Salary</h5>
@@ -27,7 +27,7 @@ const EditPayslipModal = ({ isOpen, onClose, payslip }) => {
               </div>
               <div className="col-md-4 mb-3">
                 <h5 className="emp-title mb-0">Payroll Month</h5>
-               <h5 className="emp-title black-text">{payslip?.paydate ? formatPayDate(payslip.paydate) : "N/A"}</h5>
+               <h5 className="emp-title black-text">{payslip?.payDate ? formatPayDate(payslip.payDate) : "N/A"}</h5>
               </div>
             </div>
   

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import getAPI from "../../../../api/getAPI.js";
 import { TiEyeOutline } from "react-icons/ti";
@@ -19,12 +20,12 @@ const SetSalaryTable = () => {
                     employeeList.map(async (employee) => {
                         const salaryResponse = await getAPI(`/getemployeedatabyid/${employee._id}`, {}, true);
                         console.log(salaryResponse);
-                        const salarylist = salaryResponse.data.data;
+                        const salaryData = salaryResponse.data.data;
                         return {
                             employeeId: employee._id,
-                            payrollType: salarylist.salaryType,
-                            salary: salarylist.salary,
-
+                            payrollType: salaryData?.salary.salaryType,
+                            salary: salaryData?.salary.salary,
+                            grandTotal: salaryData?.salary.grandTotal,  
                         };
                     })
                 );
@@ -33,10 +34,16 @@ const SetSalaryTable = () => {
                 const mergedData = employeeList.map(employee => {
                     const salaryInfo = salaryList.find(salary => salary.employeeId === employee._id);
                     console.log(`Merging Employee ${employee._id}:`, salaryInfo);
+
+                  
+                    const netSalary = salaryInfo ? salaryInfo.salary + (salaryInfo.grandTotal || 0) : '';
+
                     return {
                         ...employee,
-                        salary: salaryInfo ? salaryInfo.salary : 'N/A',
-                        payrollType: salaryInfo ? salaryInfo.payrollType : 'N/A',
+                        salary: salaryInfo ? salaryInfo.salary : '',
+                        payrollType: salaryInfo ? salaryInfo.payrollType : '',
+                        grandTotal: salaryInfo ? salaryInfo.grandTotal : '',
+                        netSalary: netSalary,  
                     };
                 });
                 console.log('Merged Data:', mergedData);
@@ -48,11 +55,10 @@ const SetSalaryTable = () => {
 
         fetchEmployeeData();
     }, []);
+
     const handleEntriesChange = (event) => {
         setEntriesPerPage(Number(event.target.value));
     };
-
-
 
     return (
         <div className="dash-content">
@@ -100,16 +106,20 @@ const SetSalaryTable = () => {
                                                         <tr key={employee._id}>
                                                             <td>
                                                                 <Link
-                                                                    
                                                                     className="btn btn-outline-primary"
                                                                 >
-                                                                    {employee.id || 'N/A'}
+                                                                    {employee.id}
                                                                 </Link>
                                                             </td>
-                                                            <td>{employee.name || 'N/A'}</td>
+                                                            <td>{employee.name }</td>
                                                             <td>{employee.payrollType}</td>
-                                                            <td>{`$${employee.salary?.toFixed(2) || '0.00'}`}</td>
-                                                            <td>{`$${employee.netSalary?.toFixed(2) || '0.00'}`}</td>
+                                                            <td>
+                                                                {`₹${typeof employee.salary === 'number' ? new Intl.NumberFormat('en-IN', { maximumFractionDigits: 2 }).format(employee.salary) : '0.00'}`}
+                                                            </td>
+
+                                                            <td>
+                                                                {`₹${typeof employee.netSalary === 'number' ? new Intl.NumberFormat('en-IN', { maximumFractionDigits: 2 }).format(employee.netSalary) : '0.00'}`}
+                                                            </td>
                                                             <td className="Action">
                                                                 <div className="action-btn bg-info me-2">
                                                                     <Link
@@ -117,7 +127,6 @@ const SetSalaryTable = () => {
                                                                         data-bs-toggle="tooltip"
                                                                         data-bs-original-title="Edit"
                                                                         to={`/Dashboard/payroll/employee-set-salary/${employee._id}`}
-                                                                        
                                                                     >
                                                                         <span className="text-white">
                                                                             <HiOutlinePencil />
@@ -127,8 +136,8 @@ const SetSalaryTable = () => {
                                                                 <span>
                                                                     <div className="action-btn bg-warning ms-2">
                                                                         <Link
-                                                                            // to={`/Dashboard/payroll/employee-set-salary/${employee._id}`}
                                                                             title="View"
+                                                                            to={`/Dashboard/payroll/employee-set-salaryview/${employee._id}`}
                                                                         >
                                                                             <TiEyeOutline className="text-white" />
                                                                         </Link>
@@ -151,3 +160,4 @@ const SetSalaryTable = () => {
 };
 
 export default SetSalaryTable;
+

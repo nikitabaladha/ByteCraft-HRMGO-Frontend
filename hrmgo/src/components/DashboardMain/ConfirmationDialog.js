@@ -47,12 +47,45 @@ const DELETE_CONFIG = {
     errorMessage: "Failed to delete Zoom meeting.",
     idKey: "meetingId"
   },
-  Companypolicy:{
-    getEndpoint: (id) => `/deletecompany_policy/${id}`,
-    successMessage: "Comapany Policy successfully deleted!",
-    errorMessage: "Failed to delete company Policy.",
-    idKey: "policyId"
-  }
+  
+  allowance : {
+    getEndpoint: (id) => `/deleteallowance/${id}`,  
+    successMessage: "Allowance successfully deleted!",  
+    errorMessage: "Failed to delete allowance.",  
+    idKey: "allowanceId"  
+  },
+  commission: {
+    getEndpoint: (id) => `/deletecommission/${id}`,  
+    successMessage: "Commission successfully deleted!",  
+    errorMessage: "Failed to delete commission.",  
+    idKey: "commissionId"  
+},
+loan: {
+  getEndpoint: (id) => `/deleteloan/${id}`,  
+  successMessage: "Loan successfully deleted!",  
+  errorMessage: "Failed to delete Loan.",  
+  idKey: "LoanId" 
+},
+
+otherpayment: {
+  getEndpoint: (id) => `/deleteotherpayment/${id}`,  
+  successMessage: "Other deduction successfully deleted!",  
+  errorMessage: "Failed to delete Other deduction.",  
+  idKey: "OtherpaymentId" 
+},
+tax: {
+  getEndpoint: (id) => `/deletetax/${id}`,
+  successMessage: "Tax successfully deleted!",
+  errorMessage: "Failed to delete Tax.",
+  idKey: "TaxId"
+},
+overtime: {
+  getEndpoint: (id) => `/deleteovertime/${id}`,
+  successMessage: "Overtime successfully deleted!",
+  errorMessage: "Failed to delete Overtime.",
+  idKey: "OvertimeId"
+}
+
 };
 
 function ConfirmationDialog({ onClose, deleteType, id, onDeleted }) {

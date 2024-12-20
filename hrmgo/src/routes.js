@@ -15,6 +15,7 @@ import MarkedAttendance from "./components/DashboardMain/Timesheet/Attendance/Ma
 import BulkAttendance from "./components/DashboardMain/Timesheet/Attendance/BulkAttendance/BulkAttendance.js";
 import SetSalary from "./components/DashboardMain/Payroll/SetSalary/SetSalary.js";
 import EmployeeSetSalary from "./components/DashboardMain/Payroll/EmployeeSetSalary/EmployeeSetSalary.js";
+import EmployeeSetSalaryview from "./components/DashboardMain/Payroll/EmployeeSetSalryview/EmployeeSetSalaryview.js";
 import AccountList from "./components/DashboardMain/Finance/AccountList/AccountList.js";
 import AccountBalance from "./components/DashboardMain/Finance/AccountBalance/AccountBalance.js";
 import Payees from "./components/DashboardMain/Finance/Payees/Payees.js";
@@ -84,6 +85,9 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
             <Route path="payroll/payslip" element={<Payslip />} />
             <Route path="payroll/set-salary" element={<SetSalary />} />
             <Route path="payroll/employee-set-salary/:employeeId" element={<EmployeeSetSalary />} />
+            <Route path="payroll/employee-set-salaryview/:employeeId" element={<EmployeeSetSalaryview />} />
+           
+
 
 
             <Route path="finance/account-list" element={<AccountList />} />
