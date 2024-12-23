@@ -2,19 +2,37 @@ import React, { useEffect, useState } from "react";
 import getAPI from "../../../../../api/getAPI.js";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-
 import { TbRefresh } from "react-icons/tb";
 import { IoMdSearch } from "react-icons/io";
 import { FaRegFile } from "react-icons/fa";
 
-const MarkedAttendanceSearchForm = ({ onDataFetched }) => {
+const MarkedAttendanceSearchForm = ({
+  onDataFetched,
+
+  onReset,
+
+  selectedBranch,
+
+  selectedDepartment,
+
+  selectedMonth,
+
+  selectedDate,
+
+  searchType,
+
+  setSelectedBranch,
+
+  setSelectedDepartment,
+
+  setSearchType,
+
+  setSelectedMonth,
+
+  setSelectedDate,
+}) => {
   const [branches, setBranches] = useState([]);
-  const [selectedBranch, setSelectedBranch] = useState("");
   const [departments, setDepartments] = useState([]);
-  const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [searchType, setSearchType] = useState("monthly");
-  const [selectedMonth, setSelectedMonth] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
     const currentDate = new Date();
@@ -24,7 +42,6 @@ const MarkedAttendanceSearchForm = ({ onDataFetched }) => {
       .padStart(2, "0")}`;
     setSelectedMonth(monthFormatted);
 
-    const day = currentDate.getDate();
     const formattedDate = currentDate.toISOString().split("T")[0];
     setSelectedDate(formattedDate);
   }, []);
@@ -227,16 +244,17 @@ const MarkedAttendanceSearchForm = ({ onDataFetched }) => {
                           <IoMdSearch />
                         </span>
                       </button>
-                      <Link
-                        to="/attendanceemployee"
+                      <button
+                        type="button"
                         className="btn btn-sm btn-danger"
                         data-bs-toggle="tooltip"
                         title="Reset"
+                        onClick={onReset}
                       >
                         <span className="btn-inner--icon">
                           <TbRefresh className="text-white-off" />
                         </span>
-                      </Link>
+                      </button>
                       <Link
                         to="/"
                         data-url="/import/attendance/file"
