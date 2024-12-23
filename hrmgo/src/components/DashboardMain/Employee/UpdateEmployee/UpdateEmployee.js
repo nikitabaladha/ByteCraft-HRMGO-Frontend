@@ -9,6 +9,8 @@ const UpdateEmployee = () => {
   const location = useLocation();
   const employee = location.state?.employee;
 
+  console.log("Updating employee", employee);
+
   const [formData, setFormData] = useState({
     name: employee?.name || "",
     phone: employee?.phone || "",
