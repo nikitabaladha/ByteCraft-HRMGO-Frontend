@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
 import putAPI from "../../../../api/putAPI.js";
 
 const UpdateResignationModal = ({ resignation, onClose }) => {
@@ -9,18 +8,27 @@ const UpdateResignationModal = ({ resignation, onClose }) => {
     resignation?.employeeName || ""
   );
 
+  const today = new Date().toISOString().split("T")[0];
   const [resignationDate, setResignationDate] = useState(
-    new Date(resignation?.resignationDate || "")
+    resignation?.resignationDate
+      ? new Date(resignation.resignationDate).toISOString().split("T")[0]
+      : today
   );
   const [lastWorkingDay, setLastWorkingDay] = useState(
-    new Date(resignation?.lastWorkingDay || "")
+    resignation?.lastWorkingDay
+      ? new Date(resignation.lastWorkingDay).toISOString().split("T")[0]
+      : today
   );
   const [reason, setReason] = useState(resignation?.reason || "");
 
   useEffect(() => {
     if (resignation) {
-      setResignationDate(new Date(resignation.resignationDate));
-      setLastWorkingDay(new Date(resignation.lastWorkingDay));
+      setResignationDate(
+        new Date(resignation.resignationDate).toISOString().split("T")[0]
+      );
+      setLastWorkingDay(
+        new Date(resignation.lastWorkingDay).toISOString().split("T")[0]
+      );
       setReason(resignation.reason);
     }
   }, [resignation]);
@@ -34,8 +42,8 @@ const UpdateResignationModal = ({ resignation, onClose }) => {
     }
 
     const updatedResignation = {
-      resignationDate: resignationDate.toISOString().split("T")[0],
-      lastWorkingDay: lastWorkingDay.toISOString().split("T")[0],
+      resignationDate,
+      lastWorkingDay,
       reason,
     };
 
@@ -64,11 +72,12 @@ const UpdateResignationModal = ({ resignation, onClose }) => {
     }
   };
 
-  const handleDateChange = (date, field) => {
+  const handleDateChange = (e, field) => {
+    const value = e.target.value;
     if (field === "resignationDate") {
-      setResignationDate(date);
+      setResignationDate(value);
     } else if (field === "lastWorkingDay") {
-      setLastWorkingDay(date);
+      setLastWorkingDay(value);
     }
   };
 
@@ -147,24 +156,18 @@ const UpdateResignationModal = ({ resignation, onClose }) => {
                       Resignation Date
                     </label>
                     <span className="text-danger">*</span>
-                    <div>
-                      <DatePicker
-                        selected={resignationDate}
-                        onChange={(date) =>
-                          handleDateChange(date, "resignationDate")
-                        }
-                        dateFormat="yyyy-MM-dd"
-                        className="form-control d_week current_date datepicker-input"
-                        autoComplete="off"
-                        required="required"
-                        name="date"
-                        type="text"
-                        id="date"
-                        style={{
-                          width: "100%",
-                        }}
-                      />
-                    </div>
+                    <input
+                      value={resignationDate}
+                      onChange={(e) => handleDateChange(e, "resignationDate")}
+                      className="form-control"
+                      required="required"
+                      name="resignationDate"
+                      type="date"
+                      id="resignationDate"
+                      style={{
+                        width: "100%",
+                      }}
+                    />
                   </div>
 
                   <div className="form-group col-md-6 col-lg-6">
@@ -172,24 +175,18 @@ const UpdateResignationModal = ({ resignation, onClose }) => {
                       Last Working Day
                     </label>
                     <span className="text-danger">*</span>
-                    <div>
-                      <DatePicker
-                        selected={lastWorkingDay}
-                        onChange={(date) =>
-                          handleDateChange(date, "lastWorkingDay")
-                        }
-                        dateFormat="yyyy-MM-dd"
-                        className="form-control d_week current_date datepicker-input"
-                        autoComplete="off"
-                        required="required"
-                        name="lastWorkingDay"
-                        type="text"
-                        id="lastWorkingDay"
-                        style={{
-                          width: "100%",
-                        }}
-                      />
-                    </div>
+                    <input
+                      value={lastWorkingDay}
+                      onChange={(e) => handleDateChange(e, "lastWorkingDay")}
+                      className="form-control"
+                      required="required"
+                      name="lastWorkingDay"
+                      type="date"
+                      id="lastWorkingDay"
+                      style={{
+                        width: "100%",
+                      }}
+                    />
                   </div>
 
                   <div className="form-group col-md-12">

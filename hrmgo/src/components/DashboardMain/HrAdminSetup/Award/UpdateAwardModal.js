@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
 import putAPI from "../../../../api/putAPI.js";
 
 const UpdateAwardModal = ({ award, onClose }) => {
-  console.log(award);
   const [employeeName, setEmployeeName] = useState(award?.employeeName || "");
   const [awardType, setAwardType] = useState(award?.awardType || "");
-  const [date, setDate] = useState(new Date(award?.date || ""));
+  const [date, setDate] = useState(
+    award?.date ? new Date(award.date).toISOString().split("T")[0] : ""
+  );
   const [gift, setGift] = useState(award?.gift || "");
   const [description, setDescription] = useState(award?.description || "");
 
   useEffect(() => {
     if (award) {
+      setEmployeeName(award.employeeName);
       setAwardType(award.awardType);
-      setDate(new Date(award.date));
+      setDate(
+        award.date ? new Date(award.date).toISOString().split("T")[0] : ""
+      );
       setGift(award.gift);
       setDescription(award.description);
     }
@@ -27,43 +30,34 @@ const UpdateAwardModal = ({ award, onClose }) => {
     // Prepare updated award data
     const updatedAward = {
       awardType,
-      date: date.toISOString().split("T")[0],
+      date,
       gift,
       description,
     };
 
     try {
       const response = await putAPI(`/award/${award.id}`, updatedAward, true);
-      console.log("Updated award: " + JSON.stringify(response));
 
       if (!response.hasError) {
         toast.success("Award updated successfully!");
-        console.log("Award updated successfully!");
         onClose();
       } else {
         toast.error("Failed to update award.");
       }
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("An unexpected error occurred. Please try again.");
-      }
+      const errorMessage =
+        error.response?.data?.message || "An unexpected error occurred.";
+      toast.error(errorMessage);
     }
   };
 
-  const handleDateChange = (date) => {
-    setDate(date);
+  const handleDateChange = (e) => {
+    setDate(e.target.value);
   };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       const modalDialog = document.querySelector(".modal-dialog");
-
       if (modalDialog && !modalDialog.contains(event.target)) {
         onClose();
       }
@@ -99,124 +93,94 @@ const UpdateAwardModal = ({ award, onClose }) => {
             <button
               type="button"
               className="btn-close"
-              data-bs-dismiss="modal"
               aria-label="Close"
               onClick={onClose}
             />
           </div>
-          <div className="body">
+          <div className="modal-body">
             <form
-              method="POST"
-              acceptCharset="UTF-8"
               className="needs-validation"
-              noValidate=""
+              noValidate
               onSubmit={handleUpdate}
             >
-              <div className="modal-body">
-                <div className="row">
-                  <div className="form-group col-md-6 col-lg-6 ">
-                    <label htmlFor="employee_id" className="col-form-label">
-                      Employee
-                    </label>
-                    <select
-                      className="form-control"
-                      name="employeeId"
-                      value={employeeName}
-                      onChange={(e) => setEmployeeName(e.target.value)}
-                      disabled
-                      aria-readonly
-                    >
-                      <option value={employeeName}>{employeeName}</option>
-                    </select>
-                  </div>
-                  <div className="form-group col-md-6 col-lg-6">
-                    <label htmlFor="award_type" className="col-form-label">
-                      Award Type
-                    </label>
-                    <span className="text-danger">*</span>
-                    <select
-                      className="form-control"
-                      required="required"
-                      id="award_type"
-                      name="awardType"
-                      value={awardType}
-                      onChange={(e) => setAwardType(e.target.value)} // Handle selection change
-                    >
-                      <option value="">Select Award</option>
-                      <option value="Trophy">Trophy</option>
-                      <option value="Certificate">Certificate</option>
-                    </select>
-                  </div>
-                  <div className="form-group col-md-6 col-lg-6">
-                    <label htmlFor="date" className="col-form-label">
-                      Date
-                    </label>
-                    <span className="text-danger">*</span>
-                    <div>
-                      <DatePicker
-                        selected={date}
-                        onChange={handleDateChange}
-                        dateFormat="yyyy-MM-dd"
-                        className="form-control d_week current_date datepicker-input"
-                        autoComplete="off"
-                        required="required"
-                        name="date"
-                        type="text"
-                        id="date"
-                        style={{
-                          width: "100%",
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div className="form-group col-md-6 col-lg-6">
-                    <label htmlFor="gift" className="col-form-label">
-                      Gift
-                    </label>
-                    <span className="text-danger">*</span>
-                    <input
-                      className="form-control"
-                      required="required"
-                      placeholder="Enter Gift"
-                      name="gift"
-                      type="text"
-                      id="gift"
-                      value={gift} // Bind value to state
-                      onChange={(e) => setGift(e.target.value)} // Handle input change
-                    />
-                  </div>
-                  <div className="form-group col-md-12">
-                    <label htmlFor="description" className="col-form-label">
-                      Description
-                    </label>
-                    <span className="text-danger">*</span>
-                    <textarea
-                      className="form-control"
-                      placeholder="Enter Description"
-                      rows={3}
-                      required="required"
-                      name="description"
-                      cols={50}
-                      id="description"
-                      value={description} // Bind value to state
-                      onChange={(e) => setDescription(e.target.value)} // Handle input change
-                    />
-                  </div>
+              <div className="row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="employee_id" className="col-form-label">
+                    Employee
+                  </label>
+                  <select
+                    className="form-control"
+                    value={employeeName}
+                    disabled
+                  >
+                    <option value={employeeName}>{employeeName}</option>
+                  </select>
+                </div>
+                <div className="form-group col-md-6">
+                  <label htmlFor="award_type" className="col-form-label">
+                    Award Type <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    className="form-control"
+                    required
+                    value={awardType}
+                    onChange={(e) => setAwardType(e.target.value)}
+                  >
+                    <option value="">Select Award</option>
+                    <option value="Trophy">Trophy</option>
+                    <option value="Certificate">Certificate</option>
+                  </select>
+                </div>
+                <div className="form-group col-md-6">
+                  <label htmlFor="date" className="col-form-label">
+                    Date <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={date}
+                    onChange={handleDateChange}
+                    required
+                  />
+                </div>
+                <div className="form-group col-md-6">
+                  <label htmlFor="gift" className="col-form-label">
+                    Gift <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter Gift"
+                    value={gift}
+                    onChange={(e) => setGift(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="form-group col-md-12">
+                  <label htmlFor="description" className="col-form-label">
+                    Description <span className="text-danger">*</span>
+                  </label>
+                  <textarea
+                    className="form-control"
+                    placeholder="Enter Description"
+                    rows={3}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    required
+                  />
                 </div>
               </div>
               <div className="modal-footer">
                 <button
                   type="button"
                   className="btn btn-secondary"
-                  onClick={onClose} // Close modal on cancel
+                  onClick={onClose}
                 >
                   Cancel
                 </button>
-                <input
-                  type="submit"
-                  value="Update"
-                  className="btn btn-primary"
-                />
+                <button type="submit" className="btn btn-primary">
+                  Update
+                </button>
               </div>
             </form>
           </div>

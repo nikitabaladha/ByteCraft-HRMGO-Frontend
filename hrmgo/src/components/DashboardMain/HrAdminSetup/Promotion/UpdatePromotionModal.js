@@ -1,33 +1,42 @@
 import React, { useState, useEffect } from "react";
+import getAPI from "../../../../api/getAPI.js";
+import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
-import putAPI from "../../../../api/putAPI.js";
-import getAPI from "../../../../api/getAPI.js";
 
 const UpdatePromotionModal = ({ promotion, onClose }) => {
-  console.log("promotion", promotion);
-  const [employeeName, setEmployeeName] = useState(
-    promotion?.employeeName || ""
-  );
+  const [employees, setEmployees] = useState([]);
   const [promotionTitle, setPromotionTitle] = useState(
     promotion?.promotionTitle || ""
   );
+
   const [promotionDate, setPromotionDate] = useState(
-    new Date(promotion?.promotionDate || "")
+    promotion?.promotionDate
+      ? new Date(promotion.promotionDate).toISOString().split("T")[0]
+      : ""
   );
+
   const [description, setDescription] = useState(promotion?.description || "");
-  const [designationId, setDesignationId] = useState("");
+  const [designationId, setDesignationId] = useState(
+    promotion?.designationId || ""
+  );
   const [designations, setDesignations] = useState([]);
 
   useEffect(() => {
-    if (promotion) {
-      setPromotionTitle(promotion.promotionTitle);
-      setPromotionDate(new Date(promotion.promotionDate));
-      setDescription(promotion.description);
-      setDesignationId(promotion.designationId);
-    }
-  }, [promotion]);
+    const fetchEmployeeData = async () => {
+      try {
+        const response = await getAPI("/employee-get-all-name", {}, true);
+        if (!response.hasError && Array.isArray(response.data.data)) {
+          setEmployees(response.data.data);
+        } else {
+          toast.error("Failed to load employees.");
+        }
+      } catch (err) {
+        toast.error("Error fetching employee data.");
+      }
+    };
+    fetchEmployeeData();
+  }, []);
 
   useEffect(() => {
     const fetchDesignationData = async () => {
@@ -45,18 +54,33 @@ const UpdatePromotionModal = ({ promotion, onClose }) => {
     fetchDesignationData();
   }, []);
 
+  // Update state when the promotion prop changes
+  useEffect(() => {
+    if (promotion) {
+      setPromotionTitle(promotion.promotionTitle || "");
+      setPromotionDate(
+        promotion.promotionDate
+          ? new Date(promotion.promotionDate).toISOString().split("T")[0]
+          : ""
+      );
+
+      setDescription(promotion.description || "");
+      setDesignationId(promotion.designationId || "");
+    }
+  }, [promotion]);
+
   const handleUpdate = async (e) => {
     e.preventDefault();
 
     const updatedPromotion = {
       promotionTitle,
-      promotionDate: promotionDate.toISOString().split("T")[0],
+      promotionDate,
       description,
       designationId: designationId || promotion.designationId,
     };
 
     try {
-      const response = await putAPI(
+      const response = await postAPI(
         `/promotion/${promotion.id}`,
         updatedPromotion,
         true
@@ -68,20 +92,15 @@ const UpdatePromotionModal = ({ promotion, onClose }) => {
         toast.error("Failed to update Promotion.");
       }
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("An unexpected error occurred. Please try again.");
-      }
+      toast.error(
+        error.response?.data?.message ||
+          "An unexpected error occurred. Please try again."
+      );
     }
   };
 
-  const handleDateChange = (date) => {
-    setPromotionDate(date);
+  const handleDateChange = (e) => {
+    setPromotionDate(e.target.value);
   };
 
   useEffect(() => {
@@ -121,7 +140,6 @@ const UpdatePromotionModal = ({ promotion, onClose }) => {
             <button
               type="button"
               className="btn-close"
-              data-bs-dismiss="modal"
               aria-label="Close"
               onClick={onClose}
             />
@@ -129,9 +147,8 @@ const UpdatePromotionModal = ({ promotion, onClose }) => {
           <div className="body">
             <form
               method="POST"
-              acceptCharset="UTF-8"
               className="needs-validation"
-              noValidate=""
+              noValidate
               onSubmit={handleUpdate}
             >
               <div className="modal-body">
@@ -143,12 +160,12 @@ const UpdatePromotionModal = ({ promotion, onClose }) => {
                     <select
                       className="form-control"
                       name="employeeId"
-                      value={employeeName}
-                      onChange={(e) => setEmployeeName(e.target.value)}
+                      value={promotion?.employeeName || ""}
                       disabled
-                      aria-readonly
                     >
-                      <option value={employeeName}>{employeeName}</option>
+                      <option value={promotion?.employeeId}>
+                        {promotion?.employeeName}
+                      </option>
                     </select>
                   </div>
                   <div className="form-group col-md-6 col-lg-6">
@@ -159,18 +176,15 @@ const UpdatePromotionModal = ({ promotion, onClose }) => {
                     <select
                       className="form-control"
                       name="designationId"
-                      value={designationId} // Bind value to the state variable
+                      value={designationId}
                       onChange={(e) => setDesignationId(e.target.value)}
+                      required
                     >
                       <option value="" disabled>
                         Select Designation
                       </option>
                       {designations.map((des) => (
-                        <option
-                          key={des.id}
-                          value={des.id}
-                          selected={des.id === designationId}
-                        >
+                        <option key={des.id} value={des.id}>
                           {des.designationName}
                         </option>
                       ))}
@@ -183,7 +197,7 @@ const UpdatePromotionModal = ({ promotion, onClose }) => {
                     <span className="text-danger">*</span>
                     <input
                       className="form-control"
-                      required="required"
+                      required
                       id="promotion_title"
                       name="promotionTitle"
                       value={promotionTitle}
@@ -191,26 +205,20 @@ const UpdatePromotionModal = ({ promotion, onClose }) => {
                     />
                   </div>
                   <div className="form-group col-md-6 col-lg-6">
-                    <label htmlFor="date" className="col-form-label">
+                    <label htmlFor="promotionDate" className="col-form-label">
                       Date
                     </label>
                     <span className="text-danger">*</span>
-                    <div>
-                      <DatePicker
-                        selected={promotionDate}
-                        onChange={handleDateChange}
-                        dateFormat="yyyy-MM-dd"
-                        className="form-control d_week current_date datepicker-input"
-                        autoComplete="off"
-                        required="required"
-                        name="promotionDate"
-                        type="text"
-                        id="promotionDate"
-                        style={{ width: "100%" }}
-                      />
-                    </div>
+                    <input
+                      className="form-control"
+                      required
+                      name="promotionDate"
+                      type="date"
+                      id="promotionDate"
+                      value={promotionDate}
+                      onChange={handleDateChange}
+                    />
                   </div>
-
                   <div className="form-group col-md-12">
                     <label htmlFor="description" className="col-form-label">
                       Description
@@ -220,9 +228,8 @@ const UpdatePromotionModal = ({ promotion, onClose }) => {
                       className="form-control"
                       placeholder="Enter Description"
                       rows={3}
-                      required="required"
+                      required
                       name="description"
-                      cols={50}
                       id="description"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}

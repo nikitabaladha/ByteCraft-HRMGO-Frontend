@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
+
 import putAPI from "../../../../api/putAPI.js";
 import getAPI from "../../../../api/getAPI.js";
 
@@ -11,14 +11,21 @@ const UpdateWarningModal = ({ warning, onClose }) => {
   const [warningToId, setWarningToId] = useState(warning?.warningToId || "");
   const [subject, setSubject] = useState(warning?.subject || "");
   const [warningDate, setWarningDate] = useState(
-    new Date(warning?.warningDate || "")
+    warning?.warningDate
+      ? new Date(warning.warningDate).toISOString().split("T")[0]
+      : ""
   );
   const [description, setDescription] = useState(warning?.description || "");
 
   useEffect(() => {
     if (warning) {
       setSubject(warning.subject);
-      setWarningDate(new Date(warning.warningDate));
+      setWarningDate(
+        warning.warningDate
+          ? new Date(warning.warningDate).toISOString().split("T")[0]
+          : ""
+      );
+
       setDescription(warning.description);
       setWarningToId(warning.warningToId);
       setWarningBy(warning.warningBy);
@@ -46,7 +53,7 @@ const UpdateWarningModal = ({ warning, onClose }) => {
 
     const updatedWarning = {
       subject,
-      warningDate: warningDate.toISOString().split("T")[0],
+      warningDate,
       description,
       warningToId: warningToId || warning.warningToId,
     };
@@ -58,7 +65,7 @@ const UpdateWarningModal = ({ warning, onClose }) => {
         true
       );
       if (!response.hasError) {
-        toast.success("warning updated successfully!");
+        toast.success("Warning updated successfully!");
         onClose();
       } else {
         toast.error("Failed to update warning.");
@@ -76,8 +83,8 @@ const UpdateWarningModal = ({ warning, onClose }) => {
     }
   };
 
-  const handleDateChange = (date) => {
-    setWarningDate(date);
+  const handleDateChange = (e) => {
+    setWarningDate(e.target.value); // Correctly extract the value
   };
 
   useEffect(() => {
@@ -189,22 +196,18 @@ const UpdateWarningModal = ({ warning, onClose }) => {
                       Warning Date
                     </label>
                     <span className="text-danger">*</span>
-                    <div>
-                      <DatePicker
-                        selected={warningDate}
-                        onChange={handleDateChange}
-                        dateFormat="yyyy-MM-dd"
-                        className="form-control d_week current_date datepicker-input"
-                        autoComplete="off"
-                        required
-                        name="warningDate"
-                        type="text"
-                        id="warningDate"
-                        style={{ width: "100%" }}
-                      />
-                    </div>
+                    <input
+                      value={warningDate}
+                      onChange={handleDateChange} // Corrected
+                      className="form-control"
+                      autoComplete="off"
+                      required
+                      name="warningDate"
+                      type="date"
+                      id="warningDate"
+                      style={{ width: "100%" }}
+                    />
                   </div>
-
                   <div className="form-group col-md-12">
                     <label htmlFor="description" className="col-form-label">
                       Description

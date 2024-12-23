@@ -1,3 +1,5 @@
+// ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Timesheet\Attendance\BulkAttendance\BulkAttendance.js
+
 import React, { useState, useEffect } from "react";
 import BulkAttendanceHeader from "./BulkAttendanceHeader";
 import BulkAttendanceTable from "./BulkAttendanceTable";

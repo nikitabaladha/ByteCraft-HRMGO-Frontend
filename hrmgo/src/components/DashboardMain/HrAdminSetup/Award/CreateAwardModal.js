@@ -3,14 +3,13 @@ import getAPI from "../../../../api/getAPI.js";
 import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
 
 const CreateAwardModal = ({ onClose }) => {
   const [employees, setEmployees] = useState([]);
   const [formData, setFormData] = useState({
     employeeId: "",
     awardType: "",
-    date: new Date(),
+    date: new Date().toISOString().split("T")[0],
     gift: "",
     description: "",
   });
@@ -36,10 +35,6 @@ const CreateAwardModal = ({ onClose }) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleDateChange = (date) => {
-    setFormData((prevData) => ({ ...prevData, date }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -48,7 +43,7 @@ const CreateAwardModal = ({ onClose }) => {
         {
           employeeId: formData.employeeId,
           awardType: formData.awardType,
-          date: formData.date ? formData.date.toISOString() : null,
+          date: formData.date,
           gift: formData.gift,
           description: formData.description,
         },
@@ -60,7 +55,7 @@ const CreateAwardModal = ({ onClose }) => {
         setFormData({
           employeeId: "",
           awardType: "",
-          date: new Date(),
+          date: new Date().toISOString().split("T")[0],
           gift: "",
           description: "",
         });
@@ -179,19 +174,17 @@ const CreateAwardModal = ({ onClose }) => {
                         Date
                       </label>
                       <span className="text-danger">*</span>
-                      <div>
-                        <DatePicker
-                          selected={formData.date}
-                          onChange={handleDateChange}
-                          dateFormat="yyyy-MM-dd"
-                          className="form-control d_week current_date datepicker-input custom-datepicker"
-                          autoComplete="off"
-                          required="required"
-                          name="date"
-                          type="text"
-                          id="date"
-                        />
-                      </div>
+                      <input
+                        value={formData.date}
+                        onChange={handleChange}
+                        dateFormat="yyyy-MM-dd"
+                        className="form-control"
+                        autoComplete="off"
+                        required="required"
+                        name="date"
+                        type="text"
+                        id="date"
+                      />
                     </div>
                     <div className="form-group col-md-6 col-lg-6">
                       <label htmlFor="gift" className="col-form-label">

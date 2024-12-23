@@ -3,7 +3,6 @@ import getAPI from "../../../../api/getAPI.js";
 import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
 
 const CreateComplaintModal = ({ onClose, addComplaint }) => {
   const [employees, setEmployees] = useState([]);
@@ -11,7 +10,7 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
     complaintFromId: "",
     complaintAgainstId: "",
     title: "",
-    complaintDate: new Date(),
+    complaintDate: new Date().toISOString().split("T")[0],
     description: "",
   });
 
@@ -36,10 +35,6 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleDateChange = (date) => {
-    setFormData((prevData) => ({ ...prevData, ComplaintDate: date }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -50,9 +45,7 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
           complaintFromId: formData.complaintFromId,
           complaintAgainstId: formData.complaintAgainstId,
           title: formData.title,
-          complaintDate: formData.complaintDate
-            ? formData.complaintDate.toISOString()
-            : null,
+          complaintDate: formData.complaintDate,
           description: formData.description,
         },
         true
@@ -84,7 +77,7 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
           complaintFromId: "",
           complaintAgainstId: "",
           title: "",
-          complaintDate: new Date(),
+          complaintDate: new Date().toISOString().split("T")[0],
           description: "",
         });
         onClose();
@@ -178,7 +171,6 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
                         {employees.map((emp) => (
                           <option key={emp._id} value={emp._id}>
                             {emp.name}
-                            {/* complaint from Name will be what ever name is selected here so can you pass it in newComplaint directly */}
                           </option>
                         ))}
                       </select>
@@ -232,22 +224,21 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
                         Complaint Date
                       </label>
                       <span className="text-danger">*</span>
-                      <div>
-                        <DatePicker
-                          selected={formData.complaintDate}
-                          onChange={handleDateChange}
-                          dateFormat="yyyy-MM-dd"
-                          className="form-control d_week current_date datepicker-input"
-                          autoComplete="off"
-                          required="required"
-                          name="complaintDate"
-                          type="text"
-                          id="complaintDate"
-                          style={{
-                            width: "100%",
-                          }}
-                        />
-                      </div>
+
+                      <input
+                        value={formData.complaintDate}
+                        onChange={handleChange}
+                        dateFormat="yyyy-MM-dd"
+                        className="form-control"
+                        autoComplete="off"
+                        required="required"
+                        name="complaintDate"
+                        type="text"
+                        id="complaintDate"
+                        style={{
+                          width: "100%",
+                        }}
+                      />
                     </div>
 
                     <div className="form-group col-md-12">

@@ -3,14 +3,13 @@ import getAPI from "../../../../api/getAPI.js";
 import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
 
 const CreateResignationModal = ({ onClose }) => {
   const [employees, setEmployees] = useState([]);
   const [formData, setFormData] = useState({
     employeeId: "",
-    resignationDate: new Date(),
-    lastWorkingDay: new Date(),
+    resignationDate: new Date().toISOString().split("T")[0], // Set the default resignation date to the current date
+    lastWorkingDay: new Date().toISOString().split("T")[0], // Set the default last working day to the current date
     reason: "",
   });
 
@@ -35,10 +34,6 @@ const CreateResignationModal = ({ onClose }) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleDateChange = (date, name) => {
-    setFormData((prevData) => ({ ...prevData, [name]: date }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -53,12 +48,8 @@ const CreateResignationModal = ({ onClose }) => {
         "/resignation",
         {
           employeeId: formData.employeeId,
-          resignationDate: formData.resignationDate
-            ? formData.resignationDate.toISOString()
-            : null,
-          lastWorkingDay: formData.lastWorkingDay
-            ? formData.lastWorkingDay.toISOString()
-            : null,
+          resignationDate: formData.resignationDate,
+          lastWorkingDay: formData.lastWorkingDay,
           reason: formData.reason,
         },
         true
@@ -68,8 +59,8 @@ const CreateResignationModal = ({ onClose }) => {
         toast.success("Resignation created successfully!");
         setFormData({
           employeeId: "",
-          resignationDate: new Date(),
-          lastWorkingDay: new Date(),
+          resignationDate: new Date().toISOString().split("T")[0], // Reset to current date
+          lastWorkingDay: new Date().toISOString().split("T")[0], // Reset to current date
           reason: "",
         });
         onClose();
@@ -173,23 +164,14 @@ const CreateResignationModal = ({ onClose }) => {
                         Resignation Date
                       </label>
                       <span className="text-danger">*</span>
-                      <div>
-                        <DatePicker
-                          selected={formData.resignationDate}
-                          onChange={(date) =>
-                            handleDateChange(date, "resignationDate")
-                          }
-                          dateFormat="yyyy-MM-dd"
-                          className="form-control d_week current_date datepicker-input"
-                          autoComplete="off"
-                          required="required"
-                          name="resignationDate"
-                          id="resignationDate"
-                          style={{
-                            width: "100%",
-                          }}
-                        />
-                      </div>
+                      <input
+                        type="date"
+                        className="form-control"
+                        name="resignationDate"
+                        value={formData.resignationDate}
+                        onChange={handleChange}
+                        required
+                      />
                     </div>
 
                     <div className="form-group col-md-6 col-lg-6">
@@ -200,23 +182,14 @@ const CreateResignationModal = ({ onClose }) => {
                         Last Working Day
                       </label>
                       <span className="text-danger">*</span>
-                      <div>
-                        <DatePicker
-                          selected={formData.lastWorkingDay}
-                          onChange={(date) =>
-                            handleDateChange(date, "lastWorkingDay")
-                          }
-                          dateFormat="yyyy-MM-dd"
-                          className="form-control d_week current_date datepicker-input"
-                          autoComplete="off"
-                          required="required"
-                          name="lastWorkingDay"
-                          id="lastWorkingDay"
-                          style={{
-                            width: "100%",
-                          }}
-                        />
-                      </div>
+                      <input
+                        type="date"
+                        className="form-control"
+                        name="lastWorkingDay"
+                        value={formData.lastWorkingDay}
+                        onChange={handleChange}
+                        required
+                      />
                     </div>
 
                     <div className="form-group col-md-12">
@@ -228,10 +201,8 @@ const CreateResignationModal = ({ onClose }) => {
                         className="form-control"
                         placeholder="Enter Reason"
                         rows={3}
-                        required="required"
+                        required
                         name="reason"
-                        cols={50}
-                        id="reason"
                         value={formData.reason}
                         onChange={handleChange}
                       />
@@ -239,18 +210,14 @@ const CreateResignationModal = ({ onClose }) => {
                   </div>
                 </div>
                 <div className="modal-footer">
-                  <input
-                    type="button"
-                    value="Cancel"
-                    className="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                    onClick={onClose}
-                  />
                   <button
-                    type="submit"
-                    defaultValue="Create"
-                    className="btn btn-primary"
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={onClose}
                   >
+                    Cancel
+                  </button>
+                  <button type="submit" className="btn btn-primary">
                     Create
                   </button>
                 </div>

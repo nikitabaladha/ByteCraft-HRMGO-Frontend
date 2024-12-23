@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
 import putAPI from "../../../../api/putAPI.js";
 import getAPI from "../../../../api/getAPI.js";
 
@@ -14,15 +13,25 @@ const UpdateComplaintModal = ({ complaint, onClose, updateComplaint }) => {
     complaint?.complaintAgainstId || ""
   );
   const [title, setTitle] = useState(complaint?.title || "");
+
   const [complaintDate, setComplaintDate] = useState(
-    new Date(complaint?.complaintDate || "")
+    complaint?.complaintDate
+      ? new Date(complaint.complaintDate).toISOString().split("T")[0]
+      : ""
   );
+
   const [description, setDescription] = useState(complaint?.description || "");
 
   useEffect(() => {
     if (complaint) {
       setTitle(complaint.title);
-      setComplaintDate(new Date(complaint.complaintDate));
+
+      setComplaintDate(
+        complaint.complaintDate
+          ? new Date(complaint.complaintDate).toISOString().split("T")[0]
+          : ""
+      );
+
       setDescription(complaint.description);
       setComplaintAgainstId(complaint.complaintAgainstId);
       setComplaintFrom(complaint.complaintFrom);
@@ -50,7 +59,7 @@ const UpdateComplaintModal = ({ complaint, onClose, updateComplaint }) => {
 
     const updatedComplaint = {
       title,
-      complaintDate: complaintDate.toISOString().split("T")[0],
+      complaintDate,
       description,
       complaintAgainstId: complaintAgainstId || complaint.complaintAgainstId,
     };
@@ -96,8 +105,8 @@ const UpdateComplaintModal = ({ complaint, onClose, updateComplaint }) => {
     }
   };
 
-  const handleDateChange = (date) => {
-    setComplaintDate(date);
+  const handleDateChange = (e) => {
+    setComplaintDate(e.target.value);
   };
 
   useEffect(() => {
@@ -209,20 +218,19 @@ const UpdateComplaintModal = ({ complaint, onClose, updateComplaint }) => {
                       Complaint Date
                     </label>
                     <span className="text-danger">*</span>
-                    <div>
-                      <DatePicker
-                        selected={complaintDate}
-                        onChange={handleDateChange}
-                        dateFormat="yyyy-MM-dd"
-                        className="form-control d_week current_date datepicker-input"
-                        autoComplete="off"
-                        required
-                        name="complaintDate"
-                        type="text"
-                        id="complaintDate"
-                        style={{ width: "100%" }}
-                      />
-                    </div>
+
+                    <input
+                      value={complaintDate}
+                      onChange={handleDateChange}
+                      dateFormat="yyyy-MM-dd"
+                      className="form-control"
+                      autoComplete="off"
+                      required
+                      name="complaintDate"
+                      type="date"
+                      id="complaintDate"
+                      style={{ width: "100%" }}
+                    />
                   </div>
 
                   <div className="form-group col-md-12">

@@ -1,3 +1,5 @@
+// ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Timesheet\Attendance\BulkAttendance\BulkAttendanceSearchForm.js
+
 import React, { useEffect, useState } from "react";
 import getAPI from "../../../../../api/getAPI.js";
 import { Link } from "react-router-dom";
@@ -80,6 +82,13 @@ const BulkAttendanceSearchForm = ({ onDataFetched }) => {
           response.data.data,
           selectedBranch,
           selectedDepartment,
+          formattedDate
+        );
+
+        console.log(
+          "bulk attendance fetched",
+          response.data.data,
+          "date",
           formattedDate
         );
         console.log("Filtered employees:", response.data.data);

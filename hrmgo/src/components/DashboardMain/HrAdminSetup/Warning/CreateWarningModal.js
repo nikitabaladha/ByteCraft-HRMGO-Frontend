@@ -3,7 +3,6 @@ import getAPI from "../../../../api/getAPI.js";
 import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
 
 const CreateWarningModal = ({ onClose }) => {
   const [employees, setEmployees] = useState([]);
@@ -11,7 +10,7 @@ const CreateWarningModal = ({ onClose }) => {
     warningById: "",
     warningToId: "",
     subject: "",
-    warningDate: new Date(),
+    warningDate: new Date().toISOString().split("T")[0],
     description: "",
   });
 
@@ -36,10 +35,6 @@ const CreateWarningModal = ({ onClose }) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleDateChange = (date) => {
-    setFormData((prevData) => ({ ...prevData, WarningDate: date }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -50,9 +45,7 @@ const CreateWarningModal = ({ onClose }) => {
           warningById: formData.warningById,
           warningToId: formData.warningToId,
           subject: formData.subject,
-          warningDate: formData.warningDate
-            ? formData.warningDate.toISOString()
-            : null,
+          warningDate: formData.warningDate,
           description: formData.description,
         },
         true
@@ -64,7 +57,7 @@ const CreateWarningModal = ({ onClose }) => {
           warningById: "",
           warningToId: "",
           subject: "",
-          warningDate: new Date(),
+          warningDate: new Date().toISOString().split("T")[0],
           description: "",
         });
         onClose();
@@ -205,22 +198,21 @@ const CreateWarningModal = ({ onClose }) => {
                         Warning Date
                       </label>
                       <span className="text-danger">*</span>
-                      <div>
-                        <DatePicker
-                          selected={formData.warningDate}
-                          onChange={handleDateChange}
-                          dateFormat="yyyy-MM-dd"
-                          className="form-control d_week current_date datepicker-input"
-                          autoComplete="off"
-                          required="required"
-                          name="warningDate"
-                          type="text"
-                          id="warningDate"
-                          style={{
-                            width: "100%",
-                          }}
-                        />
-                      </div>
+
+                      <input
+                        value={formData.warningDate}
+                        onChange={handleChange}
+                        dateFormat="yyyy-MM-dd"
+                        className="form-control"
+                        autoComplete="off"
+                        required="required"
+                        name="warningDate"
+                        type="text"
+                        id="warningDate"
+                        style={{
+                          width: "100%",
+                        }}
+                      />
                     </div>
 
                     <div className="form-group col-md-12">

@@ -4,8 +4,6 @@ import ComplaintTable from "./ComplaintTable";
 import getAPI from "../../../../api/getAPI";
 import { useState, useEffect } from "react";
 
-// just like create i want that whatever the upadated complaints are i want to show immediately in table so what to do?
-
 const Complaint = () => {
   const [complaints, setComplaints] = useState([]);
   const [selectedComplaint, setSelectedComplaint] = useState(null);
@@ -20,6 +18,7 @@ const Complaint = () => {
           Array.isArray(response.data.data)
         ) {
           setComplaints(response.data.data);
+          console.log("All Complaints", response.data.data);
         } else {
           console.error("Invalid response format or error in response");
         }

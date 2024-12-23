@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
 
 const CreateHolidayModal = ({ onClose }) => {
   const [formData, setFormData] = useState({
     occasion: "",
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: new Date().toISOString().split("T")[0],
+    endDate: new Date().toISOString().split("T")[0],
   });
 
   const formatDateToISO = (date) => {
@@ -21,10 +20,6 @@ const CreateHolidayModal = ({ onClose }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const handleDateChange = (date, fieldName) => {
-    setFormData((prevData) => ({ ...prevData, [fieldName]: date }));
   };
 
   const handleSubmit = async (e) => {
@@ -47,8 +42,8 @@ const CreateHolidayModal = ({ onClose }) => {
         toast.success("Holiday created successfully!");
         setFormData({
           occasion: "",
-          startDate: new Date(),
-          endDate: new Date(),
+          startDate: new Date().toISOString().split("T")[0],
+          endDate: new Date().toISOString().split("T")[0],
         });
         onClose();
       } else {
@@ -144,21 +139,18 @@ const CreateHolidayModal = ({ onClose }) => {
                         Start Date
                       </label>
                       <span className="text-danger">*</span>
-                      <div>
-                        <DatePicker
-                          selected={formData.startDate}
-                          onChange={(date) =>
-                            handleDateChange(date, "startDate")
-                          }
-                          dateFormat="yyyy-MM-dd"
-                          autoComplete="off"
-                          className="form-control current_date"
-                          required="required"
-                          name="start_date"
-                          type="date"
-                          id="start_date"
-                        />
-                      </div>
+
+                      <input
+                        value={formData.startDate}
+                        onChange={handleChange}
+                        dateFormat="yyyy-MM-dd"
+                        autoComplete="off"
+                        className="form-control"
+                        required="required"
+                        name="startDate"
+                        type="date"
+                        id="start_date"
+                      />
                     </div>
                     <div className="form-group col-md-6">
                       <label htmlFor="end_date" className="col-form-label">
@@ -166,19 +158,17 @@ const CreateHolidayModal = ({ onClose }) => {
                       </label>
                       <span className="text-danger">*</span>
 
-                      <div>
-                        <DatePicker
-                          selected={formData.endDate}
-                          onChange={(date) => handleDateChange(date, "endDate")}
-                          dateFormat="yyyy-MM-dd"
-                          autoComplete="off"
-                          required="required"
-                          className="form-control current_date"
-                          name="end_date"
-                          type="date"
-                          id="end_date"
-                        />
-                      </div>
+                      <input
+                        value={formData.endDate}
+                        onChange={handleChange}
+                        dateFormat="yyyy-MM-dd"
+                        autoComplete="off"
+                        className="form-control"
+                        required="required"
+                        name="endDate"
+                        type="date"
+                        id="end_date"
+                      />
                     </div>
                     <div className="form-group col-md-6">
                       <label htmlFor="synchronize_type" className="form-label">

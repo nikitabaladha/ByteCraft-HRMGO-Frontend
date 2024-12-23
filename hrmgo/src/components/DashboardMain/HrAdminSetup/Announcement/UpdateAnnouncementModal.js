@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
 import Select from "react-select";
 import putAPI from "../../../../api/putAPI.js";
 import getAPI from "../../../../api/getAPI.js";
@@ -11,11 +10,17 @@ const UpdateAnnouncementModal = ({
   onClose,
   UpdateAnnouncement,
 }) => {
+  const today = new Date().toISOString().split("T")[0];
+
   const [formData, setFormData] = useState({
     title: announcement?.title || "",
     description: announcement?.description || "",
-    startDate: new Date(announcement?.startDate) || new Date(),
-    endDate: new Date(announcement?.endDate) || new Date(),
+    startDate: announcement?.startDate
+      ? new Date(announcement.startDate).toISOString().split("T")[0]
+      : today,
+    endDate: announcement?.endDate
+      ? new Date(announcement.endDate).toISOString().split("T")[0]
+      : today,
     branchId: announcement?.branchId || "",
     departmentId: announcement?.departmentId || "",
     employeeId: announcement?.employeeId || [],
@@ -99,16 +104,12 @@ const UpdateAnnouncementModal = ({
 
   const handleDepartmentChange = (e) => {
     const departmentId = e.target.value;
-    setFormData((prevData) => ({ ...prevData, departmentId, employeeId: [] })); // Reset employees
+    setFormData((prevData) => ({ ...prevData, departmentId, employeeId: [] }));
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const handleDateChange = (date, name) => {
-    setFormData((prevData) => ({ ...prevData, [name]: date }));
   };
 
   const handleEmployeeChange = (selectedOptions) => {
@@ -120,16 +121,35 @@ const UpdateAnnouncementModal = ({
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+
     try {
+      // Get existing employee IDs from the announcement
+      const existingEmployeeIds = announcement.employeeId || [];
+
+      // Filter out duplicates and store unique employee IDs
+      const uniqueEmployeeIds = Array.from(
+        new Set([
+          ...existingEmployeeIds,
+          ...formData.employeeId, // New selections
+        ])
+      );
+
+      // Create the updated announcement data, ensuring no duplicate employee IDs
+      const updatedData = {
+        ...formData,
+        employeeId: uniqueEmployeeIds, // Only store unique employee IDs
+      };
+
       const response = await putAPI(
         `/announcement/${announcement.id}`,
-        formData,
+        updatedData,
         true
       );
 
-      if (!response.data.hasError) {
+      if (response?.data?.hasError) {
+        toast.error("Failed to update Announcement.");
+      } else {
         toast.success("Announcement updated successfully!");
-        console.log(response.data);
 
         const newUpdatedAnnouncement = {
           id: response.data.data._id,
@@ -141,8 +161,6 @@ const UpdateAnnouncementModal = ({
 
         UpdateAnnouncement(newUpdatedAnnouncement);
         onClose();
-      } else {
-        toast.error("Failed to update Announcement.");
       }
     } catch (error) {
       if (
@@ -290,17 +308,16 @@ const UpdateAnnouncementModal = ({
                           Start Date
                         </label>
                         <span className="text-danger">*</span>
-                        <div>
-                          <DatePicker
-                            selected={formData.startDate}
-                            onChange={(date) =>
-                              handleDateChange(date, "startDate")
-                            }
-                            className="form-control"
-                            dateFormat="yyyy/MM/dd"
-                            required
-                          />
-                        </div>
+
+                        <input
+                          value={formData.startDate}
+                          onChange={(date) => handleChange(date, "startDate")}
+                          className="form-control"
+                          dateFormat="yyyy/MM/dd"
+                          required
+                          type="date"
+                          name="startDate"
+                        />
                       </div>
                     </div>
                     <div className="col-md-6">
@@ -309,17 +326,16 @@ const UpdateAnnouncementModal = ({
                           End Date
                         </label>
                         <span className="text-danger">*</span>
-                        <div>
-                          <DatePicker
-                            selected={formData.endDate}
-                            onChange={(date) =>
-                              handleDateChange(date, "endDate")
-                            }
-                            className="form-control"
-                            dateFormat="yyyy/MM/dd"
-                            required
-                          />
-                        </div>
+
+                        <input
+                          value={formData.endDate}
+                          onChange={(date) => handleChange(date, "endDate")}
+                          className="form-control"
+                          dateFormat="yyyy/MM/dd"
+                          required
+                          type="date"
+                          name="endDate"
+                        />
                       </div>
                     </div>
                     <div className="col-md-12">

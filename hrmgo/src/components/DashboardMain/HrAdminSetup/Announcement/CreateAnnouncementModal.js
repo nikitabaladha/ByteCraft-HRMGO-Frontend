@@ -99,18 +99,14 @@ const CreateAnnouncementModal = ({ onClose, addAnnouncement }) => {
     branchId: "",
     departmentId: "",
     employeeId: [],
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: new Date().toISOString().split("T")[0],
+    endDate: new Date().toISOString().split("T")[0],
     description: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const handleDateChange = (date, name) => {
-    setFormData((prevData) => ({ ...prevData, [name]: date }));
   };
 
   const handleEmployeeChange = (selectedOptions) => {
@@ -168,8 +164,8 @@ const CreateAnnouncementModal = ({ onClose, addAnnouncement }) => {
           branchId: "",
           departmentId: "",
           employeeId: [],
-          startDate: new Date(),
-          endDate: new Date(),
+          startDate: new Date().toISOString().split("T")[0],
+          endDate: new Date().toISOString().split("T")[0],
           description: "",
         });
         setSelectedBranch("");
@@ -333,12 +329,15 @@ const CreateAnnouncementModal = ({ onClose, addAnnouncement }) => {
                         Announcement start Date
                       </label>
                       <span className="text-danger">*</span>
-                      <DatePicker
-                        selected={formData.startDate}
-                        onChange={(date) => handleDateChange(date, "startDate")}
-                        className="form-control"
+                      <input
+                        value={formData.startDate}
                         required
-                        dateFormat="yyyy/MM/dd"
+                        onChange={handleChange}
+                        dateFormat="yyyy-MM-dd"
+                        className="form-control"
+                        autoComplete="off"
+                        type="date"
+                        name="startDate"
                       />
                     </div>
                   </div>
@@ -348,12 +347,15 @@ const CreateAnnouncementModal = ({ onClose, addAnnouncement }) => {
                         Announcement End Date
                       </label>
                       <span className="text-danger">*</span>
-                      <DatePicker
-                        selected={formData.endDate}
-                        onChange={(date) => handleDateChange(date, "endDate")}
-                        className="form-control"
+                      <input
+                        value={formData.endDate}
                         required
-                        dateFormat="yyyy/MM/dd"
+                        onChange={handleChange}
+                        dateFormat="yyyy-MM-dd"
+                        className="form-control"
+                        autoComplete="off"
+                        type="date"
+                        name="endDate"
                       />
                     </div>
                   </div>

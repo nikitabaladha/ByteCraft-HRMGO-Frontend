@@ -3,7 +3,6 @@ import getAPI from "../../../../api/getAPI.js";
 import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
 
 const CreatePromotionModal = ({ onClose }) => {
   const [employees, setEmployees] = useState([]);
@@ -12,7 +11,7 @@ const CreatePromotionModal = ({ onClose }) => {
     employeeId: "",
     designationId: "",
     promotionTitle: "",
-    promotionDate: new Date(),
+    promotionDate: new Date().toISOString().split("T")[0], // Default to current date
     description: "",
   });
 
@@ -38,7 +37,6 @@ const CreatePromotionModal = ({ onClose }) => {
         const response = await getAPI("/designation-get-all", {}, true);
         if (!response.hasError && Array.isArray(response.data.data)) {
           setDesignations(response.data.data);
-          console.log(response.data.data);
         } else {
           toast.error("Failed to load Designations.");
         }
@@ -54,8 +52,9 @@ const CreatePromotionModal = ({ onClose }) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleDateChange = (date) => {
-    setFormData((prevData) => ({ ...prevData, promotionDate: date })); // Fixing the key here
+  const handleDateChange = (e) => {
+    const { value } = e.target;
+    setFormData((prevData) => ({ ...prevData, promotionDate: value }));
   };
 
   const handleSubmit = async (e) => {
@@ -67,9 +66,7 @@ const CreatePromotionModal = ({ onClose }) => {
           employeeId: formData.employeeId,
           designationId: formData.designationId,
           promotionTitle: formData.promotionTitle,
-          promotionDate: formData.promotionDate
-            ? formData.promotionDate.toISOString()
-            : null,
+          promotionDate: formData.promotionDate,
           description: formData.description,
         },
         true
@@ -81,7 +78,7 @@ const CreatePromotionModal = ({ onClose }) => {
           employeeId: "",
           designationId: "",
           promotionTitle: "",
-          promotionDate: new Date(),
+          promotionDate: new Date().toISOString().split("T")[0], // Reset to current date
           description: "",
         });
         onClose();
@@ -222,26 +219,22 @@ const CreatePromotionModal = ({ onClose }) => {
                     </div>
 
                     <div className="form-group col-md-6 col-lg-6">
-                      <label htmlFor="date" className="col-form-label">
+                      <label htmlFor="promotionDate" className="col-form-label">
                         Promotion Date
                       </label>
                       <span className="text-danger">*</span>
-                      <div>
-                        <DatePicker
-                          selected={formData.promotionDate}
-                          onChange={handleDateChange}
-                          dateFormat="yyyy-MM-dd"
-                          className="form-control d_week current_date datepicker-input"
-                          autoComplete="off"
-                          required="required"
-                          name="promotionDate"
-                          type="text"
-                          id="promotionDate"
-                          style={{
-                            width: "100%",
-                          }}
-                        />
-                      </div>
+                      <input
+                        className="form-control"
+                        required="required"
+                        name="promotionDate"
+                        type="date" // Changed to 'date' input type
+                        id="promotionDate"
+                        value={formData.promotionDate}
+                        onChange={handleDateChange}
+                        style={{
+                          width: "100%",
+                        }}
+                      />
                     </div>
 
                     <div className="form-group col-md-12">

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
 import putAPI from "../../../../api/putAPI.js";
 
 const UpdateTerminationModal = ({ termination, onClose }) => {
@@ -11,13 +10,16 @@ const UpdateTerminationModal = ({ termination, onClose }) => {
   const [terminationType, setTerminationType] = useState(
     termination?.terminationType || ""
   );
+
   const [noticeDate, setNoticeDate] = useState(
-    termination?.noticeDate ? new Date(termination.noticeDate) : new Date()
+    termination?.noticeDate
+      ? new Date(termination.noticeDate).toISOString().split("T")[0]
+      : ""
   );
   const [terminationDate, setTerminationDate] = useState(
     termination?.terminationDate
-      ? new Date(termination.terminationDate)
-      : new Date()
+      ? new Date(termination.terminationDate).toISOString().split("T")[0]
+      : ""
   );
   const [description, setDescription] = useState(
     termination?.description || ""
@@ -26,13 +28,16 @@ const UpdateTerminationModal = ({ termination, onClose }) => {
   useEffect(() => {
     if (termination) {
       setTerminationType(termination.terminationType);
+
       setNoticeDate(
-        termination.noticeDate ? new Date(termination.noticeDate) : new Date()
+        termination?.noticeDate
+          ? new Date(termination.noticeDate).toISOString().split("T")[0]
+          : ""
       );
       setTerminationDate(
-        termination.terminationDate
-          ? new Date(termination.terminationDate)
-          : new Date()
+        termination?.terminationDate
+          ? new Date(termination.terminationDate).toISOString().split("T")[0]
+          : ""
       );
       setDescription(termination.description);
     }
@@ -44,8 +49,8 @@ const UpdateTerminationModal = ({ termination, onClose }) => {
     // Prepare updated Termination data
     const updatedTermination = {
       terminationType,
-      noticeDate: noticeDate.toISOString().split("T")[0],
-      terminationDate: terminationDate.toISOString().split("T")[0],
+      noticeDate,
+      terminationDate,
       description,
     };
 
@@ -77,12 +82,13 @@ const UpdateTerminationModal = ({ termination, onClose }) => {
     }
   };
 
-  const handleNoticeDateChange = (date) => {
-    setNoticeDate(date);
-  };
-
-  const handleTerminationDateChange = (date) => {
-    setTerminationDate(date);
+  const handleDateChange = (e, field) => {
+    const value = e.target.value;
+    if (field === "noticeDate") {
+      setNoticeDate(value);
+    } else if (field === "terminationDate") {
+      setTerminationDate(value);
+    }
   };
 
   useEffect(() => {
@@ -179,22 +185,18 @@ const UpdateTerminationModal = ({ termination, onClose }) => {
                       Notice Date
                     </label>
                     <span className="text-danger">*</span>
-                    <div>
-                      <DatePicker
-                        selected={noticeDate}
-                        onChange={handleNoticeDateChange}
-                        dateFormat="yyyy-MM-dd"
-                        className="form-control d_week current_date datepicker-input"
-                        autoComplete="off"
-                        required="required"
-                        name="noticeDate"
-                        type="text"
-                        id="noticeDate"
-                        style={{
-                          width: "100%",
-                        }}
-                      />
-                    </div>
+
+                    <input
+                      value={noticeDate}
+                      onChange={(e) => handleDateChange(e, "noticeDate")}
+                      dateFormat="yyyy-MM-dd"
+                      className="form-control"
+                      autoComplete="off"
+                      required="required"
+                      name="noticeDate"
+                      type="date"
+                      id="noticeDate"
+                    />
                   </div>
 
                   <div className="form-group col-md-6 col-lg-6">
@@ -202,22 +204,18 @@ const UpdateTerminationModal = ({ termination, onClose }) => {
                       Termination Date
                     </label>
                     <span className="text-danger">*</span>
-                    <div>
-                      <DatePicker
-                        selected={terminationDate}
-                        onChange={handleTerminationDateChange}
-                        dateFormat="yyyy-MM-dd"
-                        className="form-control d_week current_date datepicker-input"
-                        autoComplete="off"
-                        required="required"
-                        name="terminationDate"
-                        type="text"
-                        id="terminationDate"
-                        style={{
-                          width: "100%",
-                        }}
-                      />
-                    </div>
+
+                    <input
+                      value={terminationDate}
+                      onChange={(e) => handleDateChange(e, "terminationDate")}
+                      dateFormat="yyyy-MM-dd"
+                      className="form-control"
+                      autoComplete="off"
+                      required="required"
+                      name="terminationDate"
+                      type="date"
+                      id="terminationDate"
+                    />
                   </div>
 
                   <div className="form-group col-md-12">

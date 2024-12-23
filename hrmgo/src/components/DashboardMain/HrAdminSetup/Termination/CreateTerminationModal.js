@@ -3,15 +3,14 @@ import getAPI from "../../../../api/getAPI.js";
 import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
 
 const CreateTerminationModal = ({ onClose }) => {
   const [employees, setEmployees] = useState([]);
   const [formData, setFormData] = useState({
     employeeId: "",
     terminationType: "",
-    noticeDate: new Date(),
-    terminationDate: new Date(),
+    noticeDate: new Date().toISOString().split("T")[0],
+    terminationDate: new Date().toISOString().split("T")[0],
     description: "",
   });
 
@@ -36,10 +35,6 @@ const CreateTerminationModal = ({ onClose }) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleDateChange = (date, fieldName) => {
-    setFormData((prevData) => ({ ...prevData, [fieldName]: date }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -48,12 +43,8 @@ const CreateTerminationModal = ({ onClose }) => {
         {
           employeeId: formData.employeeId,
           terminationType: formData.terminationType,
-          noticeDate: formData.noticeDate
-            ? formData.noticeDate.toISOString()
-            : null,
-          terminationDate: formData.terminationDate
-            ? formData.terminationDate.toISOString()
-            : null,
+          noticeDate: formData.noticeDate,
+          terminationDate: formData.terminationDate,
           description: formData.description,
         },
         true
@@ -64,8 +55,8 @@ const CreateTerminationModal = ({ onClose }) => {
         setFormData({
           employeeId: "",
           terminationType: "",
-          noticeDate: new Date(),
-          terminationDate: new Date(),
+          noticeDate: new Date().toISOString().split("T")[0],
+          terminationDate: new Date().toISOString().split("T")[0],
           description: "",
         });
         onClose();
@@ -190,17 +181,16 @@ const CreateTerminationModal = ({ onClose }) => {
                         Notice Date
                       </label>
                       <span className="text-danger">*</span>
-                      <div>
-                        <DatePicker
-                          selected={formData.noticeDate}
-                          onChange={(date) =>
-                            handleDateChange(date, "noticeDate")
-                          }
-                          dateFormat="yyyy-MM-dd"
-                          className="form-control"
-                          autoComplete="off"
-                        />
-                      </div>
+
+                      <input
+                        value={formData.noticeDate}
+                        onChange={handleChange}
+                        dateFormat="yyyy-MM-dd"
+                        className="form-control"
+                        autoComplete="off"
+                        type="date"
+                        name="noticeDate"
+                      />
                     </div>
 
                     <div className="form-group col-md-6 col-lg-6">
@@ -211,17 +201,16 @@ const CreateTerminationModal = ({ onClose }) => {
                         Termination Date
                       </label>
                       <span className="text-danger">*</span>
-                      <div>
-                        <DatePicker
-                          selected={formData.terminationDate}
-                          onChange={(date) =>
-                            handleDateChange(date, "terminationDate")
-                          }
-                          dateFormat="yyyy-MM-dd"
-                          className="form-control"
-                          autoComplete="off"
-                        />
-                      </div>
+
+                      <input
+                        value={formData.terminationDate}
+                        onChange={handleChange}
+                        dateFormat="yyyy-MM-dd"
+                        className="form-control"
+                        autoComplete="off"
+                        type="date"
+                        name="terminationDate"
+                      />
                     </div>
 
                     <div className="form-group col-md-12">
