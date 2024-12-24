@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import postAPI from '../../../../api/postAPI';
 
-const CreateLoanModal = ({ onClose, employee,toggleUpdateNetSalaryModal }) => {
+const CreateLoanModal = ({ onClose, employee }) => {
     const [loanOption, setLoanOption] = useState('');
     const [title, setTitle] = useState('');
     const [type, setType] = useState('Fixed');
@@ -47,7 +47,6 @@ const CreateLoanModal = ({ onClose, employee,toggleUpdateNetSalaryModal }) => {
         
             if (!response.hasError) {
                 toast.success('Loan Created Successfully');
-                toggleUpdateNetSalaryModal();
                 onClose();
             } else {
                 toast.error(`Failed to create loan: ${response.message}`);

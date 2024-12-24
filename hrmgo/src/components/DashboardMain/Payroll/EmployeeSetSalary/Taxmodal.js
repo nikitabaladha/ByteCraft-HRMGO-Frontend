@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import postAPI from '../../../../api/postAPI';
 
-const CreateTaxModal = ({ onClose, employee,toggleUpdateNetSalaryModal }) => {
+const CreateTaxModal = ({ onClose, employee}) => {
     const [taxes, setTaxes] = useState('');
     const [title, setTitle] = useState('');
     const [type, setType] = useState('Fixed');
@@ -44,7 +44,6 @@ const CreateTaxModal = ({ onClose, employee,toggleUpdateNetSalaryModal }) => {
         
             if (!response.hasError) {
                 toast.success('Tax Created Successfully');
-                toggleUpdateNetSalaryModal();
                 onClose();
             } else {
                 toast.error(`Failed to create tax: ${response.message}`);

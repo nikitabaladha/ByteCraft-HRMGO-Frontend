@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import putAPI from '../../../../api/putAPI'; 
 import { Link } from 'react-router-dom';
 
-const UpdateCommissionModal = ({ onClose, commissionData, employee,toggleUpdateNetSalaryModal }) => {
+const UpdateCommissionModal = ({ onClose, commissionData, employee }) => {
     const [title, setTitle] = useState('');
     const [type, setType] = useState('');
     const [amount, setAmount] = useState('');
@@ -51,7 +51,6 @@ const UpdateCommissionModal = ({ onClose, commissionData, employee,toggleUpdateN
             const response = await putAPI(`/updatecommission/${commissionData._id}`, commissionDataToUpdate, true); 
             if (!response.hasError) {
                 toast.success('Commission Updated Successfully');
-                toggleUpdateNetSalaryModal();
                 onClose();
             } else {
                 toast.error(`Failed to update commission: ${response.message}`);

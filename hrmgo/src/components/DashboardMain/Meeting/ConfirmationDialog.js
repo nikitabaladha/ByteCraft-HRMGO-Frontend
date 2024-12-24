@@ -18,7 +18,7 @@ function ConfirmationDialog({ onClose, meetingId, onDeleted, deleteType }) {
       let errorMessage = "";
 
       if (deleteType === "meeting") {
-        endpoint = `/meetings_delete/${meetingId}`; // Updated endpoint for meeting
+        endpoint = `/meetings_delete/${meetingId}`; 
         successMessage = "Meeting successfully deleted!";
         errorMessage = "Failed to delete meeting.";
       } else {

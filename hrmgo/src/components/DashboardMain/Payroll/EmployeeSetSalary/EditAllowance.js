@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import putAPI from '../../../../api/putAPI'; 
 import { Link } from 'react-router-dom';
 
-const UpdateAllowanceModal = ({ onClose, allowanceData, employee,toggleUpdateNetSalaryModal}) => {
+const UpdateAllowanceModal = ({ onClose, allowanceData, employee}) => {
     const [allowanceOption, setAllowanceOption] = useState('');
     const [title, setTitle] = useState('');
     const [type, setType] = useState('');
@@ -55,7 +55,6 @@ const UpdateAllowanceModal = ({ onClose, allowanceData, employee,toggleUpdateNet
             const response = await putAPI(`/updateallowance/${allowanceData._id}`, allowanceDataToUpdate, true); 
             if (!response.hasError) {
                 toast.success('Allowance Updated Successfully');
-                toggleUpdateNetSalaryModal();
                 onClose();
             } else {
                 toast.error(`Failed to update allowance: ${response.message}`);

@@ -1,12 +1,12 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import putAPI from "../../../../api/putAPI";
 import getAPI from "../../../../api/getAPI";
 
-const Modal = ({ employee, grandTotal }) => {
+const Modal = ({ employee, grandTotal}) => {
   const [salaryType, setSalaryType] = useState("");
   const [salary, setSalary] = useState("");
-  const hasUpdated = useRef(false); // Ref to track update status
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSalaryData = async () => {
@@ -21,6 +21,8 @@ const Modal = ({ employee, grandTotal }) => {
           }
         } catch (error) {
           console.error("Error fetching employee salary data:", error);
+        } finally {
+          setLoading(false);
         }
       }
     };
@@ -29,38 +31,34 @@ const Modal = ({ employee, grandTotal }) => {
   }, [employee?.id]);
 
   useEffect(() => {
-    if (grandTotal && salary && salaryType && employee?.id && !hasUpdated.current) {
-      const updateGrandTotal = async () => {
-        try {
-          const policyData = {
-            employeeId: employee.id,
-            salaryType,
-            salary,
-            grandTotal,
-          };
+    const updateGrandTotal = async () => {
+      try {
+        const policyData = {
+          employeeId: employee.id,
+          salaryType,
+          salary,
+          grandTotal,
+        };
 
-          const response = await putAPI("/updatenetsalary", policyData, true);
+        console.log("Sending API request with policyData:", policyData);
 
-          if (!response.hasError) {
-            toast.success("Net Salary Change Successful");
-            hasUpdated.current = true; // Mark update as completed
-          } else {
-            toast.error("Failed to update Net Salary.");
-          }
-        } catch (error) {
-          console.error("An error occurred while updating the Net Salary:", error);
-          toast.error("An error occurred while updating the Net Salary.");
+        const response = await putAPI("/updatenetsalary", policyData, true);
+
+        if (!response.hasError) {
+          toast.success("Net Salary Change Successful");
+        } else {
+          toast.error("Failed to update Net Salary.");
         }
-      };
+      } catch (error) {
+        console.error("An error occurred while updating the Net Salary:", error);
+        toast.error("An error occurred while updating the Net Salary.");
+      }
+    };
 
+    if (!loading && employee?.id && salaryType && salary && grandTotal) {
       updateGrandTotal();
     }
-  }, [grandTotal, salary, salaryType, employee?.id]);
-
-  return (
-    <div className="modal">
-    </div>
-  );
+  }, [salaryType, salary, grandTotal, employee?.id, loading]);
 };
 
 export default Modal;

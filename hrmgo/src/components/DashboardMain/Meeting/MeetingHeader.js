@@ -18,7 +18,6 @@ const MeetingHeader = () => {
   };
 
   return (
-    <div className="dash-content">
       <div className="page-header">
         <div className="page-block">
           <div className="row align-items-center">
@@ -55,9 +54,6 @@ const MeetingHeader = () => {
             </div>
           </div>
         </div>
-      </div>
-
-     
       {isModalOpen && <MeetingModal onClose={toggleModal} />}
     </div>
   );

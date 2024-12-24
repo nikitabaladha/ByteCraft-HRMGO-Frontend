@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import putAPI from '../../../../api/putAPI'; 
 
-const UpdateTaxModal = ({ onClose, employee, taxData,toggleUpdateNetSalaryModal }) => {
+const UpdateTaxModal = ({ onClose, employee, taxData}) => {
     const [taxes, setTaxes] = useState('');
     const [title, setTitle] = useState('');
     const [type, setType] = useState('Fixed');
@@ -53,7 +53,6 @@ const UpdateTaxModal = ({ onClose, employee, taxData,toggleUpdateNetSalaryModal 
         
             if (!response.hasError) {
                 toast.success('Tax Updated Successfully');
-                toggleUpdateNetSalaryModal();
                 onClose();
             } else {
                 toast.error(`Failed to update tax: ${response.message}`);

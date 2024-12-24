@@ -36,8 +36,7 @@ const SetSalaryTable = () => {
                     console.log(`Merging Employee ${employee._id}:`, salaryInfo);
 
                   
-                    const netSalary = salaryInfo ? salaryInfo.salary + (salaryInfo.grandTotal || 0) : '';
-
+                    const netSalary = salaryInfo.grandTotal ;   
                     return {
                         ...employee,
                         salary: salaryInfo ? salaryInfo.salary : '',

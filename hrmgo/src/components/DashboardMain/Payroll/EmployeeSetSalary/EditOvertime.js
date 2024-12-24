@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import putAPI from '../../../../api/putAPI';
 
-const EditOvertimeModal = ({ onClose, employee, overtimeData,toggleUpdateNetSalaryModal }) => {
+const EditOvertimeModal = ({ onClose, employee, overtimeData}) => {
     const [title, setTitle] = useState('');
     const [numberOfDays, setNumberOfDays] = useState('');
     const [hours, setHours] = useState('');
@@ -35,7 +35,6 @@ const EditOvertimeModal = ({ onClose, employee, overtimeData,toggleUpdateNetSala
 
             if (!response.hasError) {
                 toast.success('Overtime Updated Successfully');
-                toggleUpdateNetSalaryModal();
                 onClose();
             } else {
                 toast.error(`Failed to update overtime: ${response.message}`);

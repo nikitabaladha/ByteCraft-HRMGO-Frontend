@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; // Import the CSS for date picker
+import "react-datepicker/dist/react-datepicker.css"; 
 import { toast } from "react-toastify";
-import putAPI from "../../../../api/putAPI.js";  // Import the putAPI method
+import putAPI from "../../../../api/putAPI.js"; 
 import getAPI from "../../../../api/getAPI.js";
 
 const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
@@ -10,12 +10,12 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
   const [accountname, setAccountId] = useState(selectedExpense?.account_name || '');
   const [amount, setAmount] = useState(selectedExpense?.amount || '');
   const [category, setCategory] = useState(selectedExpense?.category || '');
-  const [payeeName, setPayeeId] = useState(selectedExpense?.payee_name || '');  // Changed from payer_name to payee_name
+  const [payeeName, setPayeeId] = useState(selectedExpense?.payee_name || '');  
   const [paymentType, setPaymentTypeId] = useState(selectedExpense?.payment_type || '');
   const [ref, setRefId] = useState(selectedExpense?.ref || '');
   const [description, setDescription] = useState(selectedExpense?.description || '');
   const [accountNames, setAccountNames] = useState([]);
-  const [payeeNames, setPayeeNames] = useState([]);  // Changed from payerNames to payeeNames
+  const [payeeNames, setPayeeNames] = useState([]);  
 
   useEffect(() => {
     const fetchAccountNames = async () => {
@@ -38,7 +38,7 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
   useEffect(() => {
     const fetchPayeeNames = async () => {
       try {
-        const response = await getAPI('/getall_Payee', {}, true);  // Changed from /getall_Payer to /getall_Payee
+        const response = await getAPI('/getall_Payee', {}, true);  
         if (response.data && !response.data.hasError) {
           setPayeeNames(response.data.data);
         } else {
@@ -59,7 +59,7 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
       setAccountId(selectedExpense.account_name);
       setAmount(selectedExpense.amount);
       setCategory(selectedExpense.category);
-      setPayeeId(selectedExpense.payee_name);  // Changed from payer_name to payee_name
+      setPayeeId(selectedExpense.payee_name);  
       setPaymentTypeId(selectedExpense.payment_type);
       setRefId(selectedExpense.ref);
       setDescription(selectedExpense.description);
@@ -78,14 +78,14 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
       amount: parseFloat(amount),
       date: currentDate,
       category: category,
-      payee_name: payeeName,  // Changed from payer_name to payee_name
+      payee_name: payeeName, 
       payment_type: paymentType,
       ref: ref,
       description: description,
     };
 
     try {
-      const response = await putAPI(`/update_expense/${selectedExpense._id}`, expenseData, true);  // Changed from update_deposit to update_expense
+      const response = await putAPI(`/update_expense/${selectedExpense._id}`, expenseData, true);
       if (!response.hasError) {
         toast.success("Expense Updated Successfully");
         onClose();
@@ -104,7 +104,7 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
       <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">Edit Expense</h5>  {/* Changed from Edit Deposit to Edit Expense */}
+            <h5 className="modal-title" id="exampleModalLabel">Edit Expense</h5> 
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={onClose}></button>
           </div>
           <div className="body">

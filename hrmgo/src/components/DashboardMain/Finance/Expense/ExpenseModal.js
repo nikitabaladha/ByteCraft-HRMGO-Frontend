@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; // Import the CSS for date picker
+import "react-datepicker/dist/react-datepicker.css"; 
 import { toast } from "react-toastify";
-import postAPI from "../../../../api/postAPI.js";  // Import the postAPI method
+import postAPI from "../../../../api/postAPI.js"; 
 import getAPI from "../../../../api/getAPI.js"; 
 
 const ExpenseModal = ({ isOpen, onClose }) => {
-  const [currentDate, setCurrentDate] = useState(null);  // Start with no date selected
+  const [currentDate, setCurrentDate] = useState(null);  
   const [accountId, setAccountId] = useState('');
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState('');
-  const [payeeId, setPayeeId] = useState(''); // Changed payerId to payeeId
+  const [payeeId, setPayeeId] = useState(''); 
   const [paymentTypeId, setPaymentTypeId] = useState('');
   const [refId, setRefId] = useState('');
   const [description, setDescription] = useState('');
   const [accountNames, setAccountNames] = useState([]);
-  const [payeeNames, setPayeeNames] = useState([]); // Changed payerNames to payeeNames
+  const [payeeNames, setPayeeNames] = useState([]); 
 
   useEffect(() => {
     const fetchAccountNames = async () => {
       try {
-        const response = await getAPI('/AccountList-get-all',{}, true); // Adjust the endpoint path as needed
+        const response = await getAPI('/AccountList-get-all',{}, true); 
         if (response.data && !response.data.hasError) {
-          setAccountNames(response.data.data); // Set account names
+          setAccountNames(response.data.data); 
         } else {
           toast.error("Failed to fetch account names.");
         }
@@ -38,9 +38,9 @@ const ExpenseModal = ({ isOpen, onClose }) => {
   useEffect(() => {
     const fetchPayeeNames = async () => {
       try {
-        const response = await getAPI('/getall_Payee',{}, true); // Adjust the endpoint path as needed
+        const response = await getAPI('/getall_Payee',{}, true); 
         if (response.data && !response.data.hasError) {
-          setPayeeNames(response.data.data); // Set payee names
+          setPayeeNames(response.data.data); 
         } else {
           toast.error("Failed to fetch payee names.");
         }
@@ -60,33 +60,33 @@ const ExpenseModal = ({ isOpen, onClose }) => {
     if (month < 10) month = "0" + month;
     if (day < 10) day = "0" + day;
     const today = now.getFullYear() + "-" + month + "-" + day;
-    setCurrentDate(today);  // Initialize with today's date
+    setCurrentDate(today); 
   }, []);
 
   const handleDateChange = (date) => {
-    setCurrentDate(date);  // Update date state when the user selects a date
+    setCurrentDate(date); 
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault(); 
 
     const expenseData = {
       account_name: accountId,
       amount: parseFloat(amount),
       date: currentDate,
       category: category,
-      payee_name: payeeId, // Changed payer_name to payee_name
+      payee_name: payeeId, 
       payment_type: paymentTypeId,
       ref: refId,
       description: description,
     };
 
     try {
-      // Call postAPI to send the data to the backend
-      const response = await postAPI('/create_expense', expenseData, true); // Changed endpoint to /create_expense
+   
+      const response = await postAPI('/create_expense', expenseData, true); 
       if (!response.hasError) {
         toast.success("Expense Created Successfully");
-        onClose(); // Close the modal after successful submission
+        onClose(); 
       } else {
         toast.error(`Failed to create expense: ${response.message}`);
       }
@@ -95,7 +95,7 @@ const ExpenseModal = ({ isOpen, onClose }) => {
     }
   };
 
-  // If modal is not open, return null immediately to avoid rendering unnecessary content
+
   if (!isOpen) return null;
 
   return (

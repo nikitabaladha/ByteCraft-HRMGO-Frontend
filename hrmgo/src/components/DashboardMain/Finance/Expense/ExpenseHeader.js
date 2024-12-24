@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TiPlus } from "react-icons/ti";
 import { TbFileExport } from "react-icons/tb";
-import ExpenseModal from "./ExpenseModal"; // Import the modal
-import * as XLSX from "xlsx"; // Import xlsx for Excel export
+import ExpenseModal from "./ExpenseModal"; 
+import * as XLSX from "xlsx"; 
 
 const ExpenseHeader = ({ expenses = [] }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -64,7 +64,7 @@ const ExpenseHeader = ({ expenses = [] }) => {
                   className="btn btn-sm btn-primary"
                   data-bs-toggle="tooltip"
                   title="Export"
-                  onClick={handleExportToExcel} // Call the export function
+                  onClick={handleExportToExcel}
                 >
                   <TbFileExport />
                 </button>

@@ -1,28 +1,46 @@
-import React, { useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import getAPI from "../../../../api/getAPI.js";
 import putAPI from "../../../../api/putAPI.js";
 import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify"; // Import toast
-import { TbReportMoney ,TbCurrencyDollar} from "react-icons/tb";
+import { toast } from "react-toastify";
+import { TbReportMoney, TbCurrencyDollar } from "react-icons/tb";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import BulkpaymentModal from "./bulkpaymentmodel.js";
-import EditPayslipModal from "./EditPayslipModal.js";
 import Payslipreceipt from "./payslipreceipt.js";
-import * as XLSX from "xlsx";  // Import XLSX for export
-
+import * as XLSX from "xlsx";
+import ConfirmationDialog from "./statusinactive.js";
 
 const PayslipTable = () => {
   const [payrollData, setPayrollData] = useState([]);
   const [loading] = useState(false);
   const [error] = useState("");
-  const [isEditModalOpen, setEditModalOpen] = useState(false); 
-  const [selectedPayslip, setSelectedPayslip] = useState(null);
   const [isPayslipReceiptOpen, setPayslipReceiptOpen] = useState(false);
   const [selectedPayslipForReceipt, setSelectedPayslipForReceipt] = useState(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [employeeIdToDelete, setEmployeeIdToDelete] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(''); 
+  const [selectedYear, setSelectedYear] = useState(''); 
 
-useEffect(() => {
+  const openDeleteDialog = (employeeId) => {
+    setEmployeeIdToDelete(employeeId);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setIsDeleteDialogOpen(false);
+    setEmployeeIdToDelete(null);
+  };
+
+  const handleDeleteSuccess = (employeeId) => {
+
+    const updatedData = payrollData.filter((row) => row._id !== employeeId);
+    setPayrollData(updatedData);
+    closeDeleteDialog();
+  };
+
+  useEffect(() => {
     const fetchEmployeeData = async () => {
 
       try {
@@ -38,47 +56,57 @@ useEffect(() => {
               payrollType: salaryData?.salary.salaryType,
               salary: salaryData?.salary.salary,
               grandTotal: salaryData?.salary.grandTotal,
-              status:salaryData?.salary.status,
-              payDate:salaryData?.salary.payDate
+              status: salaryData?.salary.status,
+              payDate: salaryData?.salary.payDate,
+              statusPayDate: salaryData?.salary.statusPayDate,
+              createdAt:salaryData?.salary.createdAt
+              
             };
           })
         );
 
         const mergedData = employeeList.map(employee => {
           const salaryInfo = salaryList.find(salary => salary.employeeId === employee._id);
-          const netSalary = salaryInfo ? salaryInfo.salary + (salaryInfo.grandTotal || 0) : '';
+          const netSalary = salaryInfo.grandTotal;
           return {
             ...employee,
             salary: salaryInfo ? salaryInfo.salary : '',
             payrollType: salaryInfo ? salaryInfo.payrollType : '',
             grandTotal: salaryInfo ? salaryInfo.grandTotal : '',
             netSalary: netSalary,
-            status:salaryInfo ? salaryInfo.status : '',
-            payDate:salaryInfo?salaryInfo.payDate:''
-            
+            status: salaryInfo ? salaryInfo.status : '',
+            payDate: salaryInfo ? salaryInfo.payDate : '',
+            statusPayDate: salaryInfo ? salaryInfo.statusPayDate : '',
+            createdAt:salaryInfo ? salaryInfo.createdAt : '',
+
           };
         });
         console.log('Merged Data:', mergedData);
         setPayrollData(mergedData);
-    } catch (error) {
+      } catch (error) {
         console.error('Error fetching payroll data:', error);
-    }
-};
+      }
+    };
 
-       
+
     fetchEmployeeData();
   }, []);
 
   const updatePayslipStatus = async (employeeId) => {
-    try {
-      await putAPI(`/updatestatus/${employeeId}`, {}, true); 
-      const updatedData = payrollData.map((row) =>
-        row.employeeId === employeeId ? { ...row, status: "paid" } : row
-      );
+    const updatedData = payrollData.map((row) =>
+      row.employeeId === employeeId ? { ...row, status: "paid" } : row
+    );
+    setPayrollData(updatedData);
+    toast.success("Payslip marked as paid!");
   
-      setPayrollData(updatedData);
+    try {
+      await putAPI(`/updatestatus/${employeeId}`, {}, true);
     } catch (err) {
-      console.error("Error updating payslip status:", err);
+      const revertedData = payrollData.map((row) =>
+        row.employeeId === employeeId ? { ...row, status: "unpaid" } : row
+      );
+      setPayrollData(revertedData);
+      toast.error("Failed to update payslip status.");
     }
   };
 
@@ -86,44 +114,22 @@ useEffect(() => {
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  const handleUpdateStatusDelete = async (payslipId) => {
-    try {
-      const response = await putAPI(
-        `/update-status-delete/${payslipId}`,
-        { status: "inactive" },
-        {},
-        true
-      );
-
-      if (!response.hasError) {
-        console.log(`Payslip deletestatus  to`, response.data.data.status);
-        toast.success("Payslip  successfully delete!");
-
-      } else {
-        console.error("Error updating deletestatus:", response.message);
-        toast.error(`Failed to update deletestatus: ${response.message}`);
-      }
-    } catch (error) {
-      console.error("Error while updating deletestatus:", error);
-      toast.error("An error occurred while updating the deletestatus.");
-    }
-  };
-
+ 
   const handleBulkPayment = async () => {
     const unpaidEmployees = payrollData.filter((row) => row.status !== "paid");
-    
+
     try {
 
       for (const row of unpaidEmployees) {
         const employeeId = row._id;
         await putAPI(`/updatestatus/${employeeId}`, {}, true);
       }
-  
+
       const updatedData = payrollData.map((row) =>
         row.status !== "paid" ? { ...row, status: "paid" } : row
       );
       setPayrollData(updatedData);
-  
+
       toast.success("Bulk Payment successful!");
     } catch (err) {
       console.error("Error updating bulk payment:", err);
@@ -135,7 +141,7 @@ useEffect(() => {
 
   const handleExportToExcel = () => {
     const exportData = payrollData.map((row) => ({
-      EmployeeId: row.id,   
+      EmployeeId: row.id,
       Name: row.name,
       PayrollType: row.payrollType,
       Salary: row.salary,
@@ -143,40 +149,62 @@ useEffect(() => {
       Status: row.status
     }));
 
- 
-    const ws = XLSX.utils.json_to_sheet(exportData);  
+
+    const ws = XLSX.utils.json_to_sheet(exportData);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Payslip Data");
     XLSX.writeFile(wb, "Payslip_Data.xlsx");
   };
 
-  const handleEditPayslip = (payslip) => {
-    console.log("Data being passed to EditPayslipModal:", payslip)
-    setSelectedPayslip(payslip);
-    setEditModalOpen(true);
-  };
 
-  const handleSaveEdit = (updatedPayslip) => {
-    const updatedData = payrollData.map((row) =>
-      row.payslipId === updatedPayslip.payslipId ? updatedPayslip : row
-    );
-    setPayrollData(updatedData);
-    toast.success("Payslip updated successfully!");
-  };
+
 
   const handleShowPayslipReceipt = (payslip) => {
-    setSelectedPayslipForReceipt(payslip); 
-    setPayslipReceiptOpen(true); 
+    setSelectedPayslipForReceipt(payslip);
+    setPayslipReceiptOpen(true);
   };
-  
-  
+
+
   const handleClosePayslipReceipt = () => {
     setPayslipReceiptOpen(false);
     setSelectedPayslipForReceipt(null);
   };
 
 
+  const filteredPayrollData = payrollData.filter((row) => {
+    if (!selectedMonth || !selectedYear) return true;
 
+    const payDate = new Date(row.createdAt);
+    const payMonth = payDate.getMonth() + 1; 
+    const payYear = payDate.getFullYear();
+
+    return payMonth === parseInt(selectedMonth) && payYear === parseInt(selectedYear);
+  });
+
+  const handleMonthChange = (e) => {
+    setSelectedMonth(e.target.value);
+  };
+
+  const handleYearChange = (e) => {
+    setSelectedYear(e.target.value);
+  };
+
+  const handleGeneratePayslip = async () => {
+    try {
+      await putAPI('/updategenratepayslipdate', { payDate: new Date() }, true);
+      const updatedData = payrollData.map((row) => ({
+        ...row,
+        payDate: new Date(), 
+      }));
+      setPayrollData(updatedData);
+  
+      toast.success("Payslips generated successfully for all employees!");
+  
+    } catch (err) {
+      console.error("Error generating payslips:", err);
+      toast.error("Payslip alraedy genrated.");
+    }
+  };
   
 
   return (
@@ -205,6 +233,7 @@ useEffect(() => {
                       className="form-control select"
                       id="month"
                       name="month"
+                      onChange={handleMonthChange}
                     >
                       {[
                         "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
@@ -225,7 +254,7 @@ useEffect(() => {
                       className="form-control select"
                       id="year"
                       name="year"
-                     
+                      onChange={handleYearChange}
                     >
                       {Array.from({ length: 10 }, (_, idx) => 2021 + idx).map((yr) => (
                         <option key={yr} value={yr}>
@@ -239,7 +268,7 @@ useEffect(() => {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={() => document.getElementById("payslip_form").submit()}
+                    onClick={handleGeneratePayslip} 
                     data-bs-toggle="tooltip"
                     title="payslip"
                   >
@@ -265,6 +294,7 @@ useEffect(() => {
                       <select
                         className="form-control month_date"
                         name="month"
+                        onChange={handleMonthChange}
                       >
                         <option value="--">--</option>
                         <option value="01">JAN</option>
@@ -289,6 +319,7 @@ useEffect(() => {
                       <select
                         className="form-control year_date"
                         name="year"
+                        onChange={handleYearChange}
                       >
                         <option value="2021">2021</option>
                         <option value="2022">2022</option>
@@ -310,16 +341,16 @@ useEffect(() => {
                     action="https://demo.workdo.io/hrmgo/export/payslip"
                     acceptCharset="UTF-8"
                     id="payslip_form"
-                    // onSubmit={handleSubmit}
+                  // onSubmit={handleSubmit}
                   >
                     <input name="_token" type="hidden" value="Lp81DxPCUuxJdGJZpGF0iIzfmIUj0a4dOX7ZDogF" />
-                    <input type="hidden" name="filter_month" className="filter_month"  />
-                    <input type="hidden" name="filter_year" className="filter_year"  />
+                    <input type="hidden" name="filter_month" className="filter_month" />
+                    <input type="hidden" name="filter_year" className="filter_year" />
                   </form>
-                  <input type="submit" value="Export" className="btn btn-primary" onClick={handleExportToExcel}/>
+                  <input type="submit" value="Export" className="btn btn-primary" onClick={handleExportToExcel} />
                   <div className="ml-2 float-end">
                     <input
-                     onClick={openModal}
+                      onClick={openModal}
                       type="button"
                       value="Bulk Payment"
                       className="btn btn-primary"
@@ -351,73 +382,75 @@ useEffect(() => {
                     </tr>
                   </thead>
                   <tbody>
-                    {payrollData.map((row) => (
-                      <tr key={row._id}>
-                        <td>
-                          <button className="btn btn-outline-primary">
-                            {row.id}
-                          </button>
-                        </td>
-                        <td>{row.name}</td>
-                        <td>{row.payrollType}</td>
-                        <td>{`₹${typeof row.salary === 'number' ? new Intl.NumberFormat('en-IN', { maximumFractionDigits: 2 }).format(row.salary) : '0.00'}`}</td>
-                        <td>{`₹${typeof row.netSalary === 'number' ? new Intl.NumberFormat('en-IN', { maximumFractionDigits: 2 }).format(row.netSalary) : '0.00'}`}</td>
-                        <td>
-                          <span
-                            className={`badge ${
-                              row.status === "paid"
-                                ? "bg-success text-white"
-                                : "bg-danger text-white"
-                            } p-2 px-3`}
-                          >
-                            {row.status}
-                          </span>
-                        </td>
-                        <td>
-                          <div className="d-flex">
-                            <Link
-                              to="#"
-                              onClick={() => handleShowPayslipReceipt(row)}
-                              className="btn-sm btn btn-warning me-1"
-                              title="Payslip"
-                            >
-                              <TbReportMoney />
-                            </Link>
-                            {row.status !== "paid" && row.id && (
-                            <button
-                            className="btn-sm btn btn-primary me-1"
-                            title="Pay Salary"
-                            onClick={() => {
-                                updatePayslipStatus(row._id);
-                              }}
-                          >
-                            <TbCurrencyDollar />
-                          </button>
-                            )}
-                              {row.status !== "paid" && (
-                            <Link
-                              to="#"
-                              onClick={() => handleEditPayslip(row)}
-                              className="btn-sm btn btn-info me-1"
-                              title="Edit"
-                            >
-                              <HiOutlinePencil />
-                            </Link>
-                              )}
-                               <button
-                               className="btn-sm btn btn-danger"
-                               title="Delete"
-                               onClick={() => {
-                                console.log("Delete button clicked");
-                                handleUpdateStatusDelete(row);
-                              }}
-                             >
-                              <RiDeleteBinLine />
+                    {filteredPayrollData
+                      .filter(row => row.status === "paid" || row.status === "unpaid")
+                      .map((row) => (
+                        <tr key={row._id}>
+                          <td>
+                            <button className="btn btn-outline-primary">
+                              {row.id}
                             </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                          </td>
+                          <td>{row.name}</td>
+                          <td>{row.payrollType}</td>
+                          <td>{`₹${typeof row.salary === 'number' ? new Intl.NumberFormat('en-IN', { maximumFractionDigits: 2 }).format(row.salary) : '0.00'}`}</td>
+                          <td>{`₹${typeof row.netSalary === 'number' ? new Intl.NumberFormat('en-IN', { maximumFractionDigits: 2 }).format(row.netSalary) : '0.00'}`}</td>
+                          <td>
+                            <span
+                              className={`badge ${row.status === "paid"
+                                  ? "bg-success text-white"
+                                  : row.status === "inactive"
+                                    ? "bg-secondary text-white"
+                                    : "bg-danger text-white"
+                                } p-2 px-3`}
+                            >
+                              {row.status}
+                            </span>
+                          </td>
+                          <td>
+                            <div className="d-flex">
+                            {row.payDate && (
+                              <Link
+                                to="#"
+                                onClick={() => handleShowPayslipReceipt(row)}
+                                className="btn-sm btn btn-warning me-1"
+                                title="Payslip"
+                              >
+                                <TbReportMoney />
+                              </Link>
+                                  )}
+                              {row.status !== "paid" && row.id && (
+                                <button
+                                  className="btn-sm btn btn-primary me-1"
+                                  title="Pay Salary"
+                                  onClick={() => {
+                                    updatePayslipStatus(row._id);
+                                  }}
+                                >
+                                  <TbCurrencyDollar />
+                                </button>
+                              )}
+                              {row.status !== "paid" && (
+                                <Link
+                                  // to="#"
+                                  to={`/Dashboard/payroll/employee-set-salary/${row._id}`}
+                                  className="btn-sm btn btn-info me-1"
+                                  title="Edit"
+                                >
+                                  <HiOutlinePencil />
+                                </Link>
+                              )}
+                              <button
+                                className="btn-sm btn btn-danger"
+                                title="Delete"
+                                onClick={() => openDeleteDialog(row._id)}
+                              >
+                                <RiDeleteBinLine />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               )}
@@ -426,23 +459,25 @@ useEffect(() => {
         </div>
       </div>
       <BulkpaymentModal
-          isOpen={isModalOpen}
-          title="Bulk Payment"
-          body={`Total Unpaid Employee ${payrollData.filter((row) => row.status !== "paid").length} out of ${payrollData.length}`}
-          onClose={closeModal}
-          onBulkPayment={handleBulkPayment}
-          />
-       <EditPayslipModal
-        isOpen={isEditModalOpen}
-        onClose={() => setEditModalOpen(false)}
-        onSubmit={handleSaveEdit}
-        payslip={selectedPayslip}
+        isOpen={isModalOpen}
+        title="Bulk Payment"
+        body={`Total Unpaid Employee ${payrollData.filter((row) => row.status !== "paid").length} out of ${payrollData.length}`}
+        onClose={closeModal}
+        onBulkPayment={handleBulkPayment}
       />
-      <Payslipreceipt 
-             isOpen={isPayslipReceiptOpen} 
-             onClose={handleClosePayslipReceipt} 
-            payslip={selectedPayslipForReceipt} 
-           />
+      <Payslipreceipt
+        isOpen={isPayslipReceiptOpen}
+        onClose={handleClosePayslipReceipt}
+        payslip={selectedPayslipForReceipt}
+      />
+
+      {isDeleteDialogOpen && (
+        <ConfirmationDialog
+          onClose={closeDeleteDialog}
+          employeeId={employeeIdToDelete}
+          onUpdated={handleDeleteSuccess}
+        />
+      )}
 
     </div>
   );

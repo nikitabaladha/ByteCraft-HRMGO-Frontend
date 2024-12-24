@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import postAPI from '../../../../api/postAPI';
 import { Link } from 'react-router-dom';
 
-const CreateCommissionModal = ({ onClose, employee,toggleUpdateNetSalaryModal }) => {
+const CreateCommissionModal = ({ onClose, employee }) => {
     const [title, setTitle] = useState('');
     const [type, setType] = useState('Fixed');
     const [amount, setAmount] = useState('');
@@ -43,7 +43,6 @@ const CreateCommissionModal = ({ onClose, employee,toggleUpdateNetSalaryModal })
 
             if (!response.hasError) {
                 toast.success('Commission Created Successfully');
-                toggleUpdateNetSalaryModal();
                 onClose();
             } else {
                 toast.error(`Failed to create commission: ${response.message}`);

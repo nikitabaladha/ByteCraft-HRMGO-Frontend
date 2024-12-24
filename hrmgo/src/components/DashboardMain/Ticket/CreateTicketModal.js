@@ -2,7 +2,7 @@ import React, { useState ,useEffect} from "react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { toast } from 'react-toastify';
-import postAPI from "../../../api/postAPI";  // Your API function
+import postAPI from "../../../api/postAPI"; 
 import getAPI from "../../../api/getAPI.js"; 
 
 const CreateTicketModal = ({ closeModal }) => {
@@ -52,7 +52,7 @@ const CreateTicketModal = ({ closeModal }) => {
     ticketData.append('end_date', endDate);
 
     if (attachment) {
-      ticketData.append('attachment', attachment);  // Append the file
+      ticketData.append('attachment', attachment);  
     }
 
     try {
@@ -64,8 +64,7 @@ const CreateTicketModal = ({ closeModal }) => {
 
       if (!response.hasError) {
         toast.success("Ticket created successfully!");
-        closeModal(); // Close the modal after successful ticket creation
-        // Reset form fields if needed
+        closeModal(); 
         setTitle('');
         setEmployeeId('');
         setPriority('low');

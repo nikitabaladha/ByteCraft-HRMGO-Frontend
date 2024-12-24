@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { FiPlus } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import SetBasicSalary from "./SetBasicSalary";
-import UpdateNetSalaryModal from"./updatenetsalary"
 import getAPI from "../../../../api/getAPI";
 import putAPI from "../../../../api/putAPI";
 import AllowanceModal from './Allowancemodal';
@@ -20,7 +19,9 @@ import UpdateOtherPaymentModal from './EditOtherPaymentModal';
 import CreateTaxModal from './Taxmodal';
 import UpdateTaxModal from './EditTaxModal';
 import CreateOvertimeModal from './Overtime';
-import UpdateOvertimeModal from './EditOvertime'
+import UpdateOvertimeModal from './EditOvertime';
+
+
 
 const EmployeeSetSalary = () => {
     const { employeeId } = useParams();
@@ -39,7 +40,6 @@ const EmployeeSetSalary = () => {
     const [modalType, setModalType] = useState('');
     const [isLoanModalOpen, setIsLoanModalOpen] = useState(false);
     const [isOtherpaymentModalOpen, setIsOtherpaymentnModalOpen] = useState(false);
-    const [isUpdateNetSalaryModalOpen, setIsUpdateNetSalaryModalOpen] = useState(false);
     const [loans, setLoans] = useState([]);
     const [otherPayments, setOtherPayments] = useState([]);
     const [selectedOtherPayment, setSelectedOtherPayment] = useState(null);
@@ -131,8 +131,6 @@ const EmployeeSetSalary = () => {
                 prevOvertimes.filter((overtime) => overtime._id !== selectedOvertime._id)
             );
         }
-      
-        toggleUpdateNetSalaryModal();
         setIsDeleteDialogOpen(false);
     };
 
@@ -185,9 +183,8 @@ const EmployeeSetSalary = () => {
         setIsOvertimeModalOpen((prev) => !prev);
     };
 
-    const toggleUpdateNetSalaryModal = () => {
-        setIsUpdateNetSalaryModalOpen((prev) => !prev);
-    };
+
+   
 
 
     useEffect(() => {
@@ -442,7 +439,7 @@ useEffect(() => {
                                         <div className="project-info-inner mt-3 col-11">
                                             <b className="m-0">Account Type</b>
                                             <div className="project-amnt pt-1">
-                                                {employeeName || 'N/A'}
+                                                {employeeName || ''}
                                             </div>
                                         </div>
                                     </div>
@@ -556,7 +553,6 @@ useEffect(() => {
                             onClose={closeModal}
                             allowanceData={selectedAllowance}
                             employee={{ ...employee, id: employeeId, name: employeeName }}
-                            toggleUpdateNetSalaryModal={toggleUpdateNetSalaryModal}
                         />
                     )}
                 </div>
@@ -660,7 +656,6 @@ useEffect(() => {
                             onClose={closeModal}
                             commissionData={selectedCommission}
                             employee={{ ...employee, id: employeeId, name: employeeName }}
-                            toggleUpdateNetSalaryModal={toggleUpdateNetSalaryModal}
                         />
                     )}
                 </div>
@@ -782,7 +777,6 @@ useEffect(() => {
                             onClose={closeModal}
                             loanData={selectedLoan}
                             employee={{ ...employee, id: employeeId, name: employeeName }}
-                            toggleUpdateNetSalaryModal={toggleUpdateNetSalaryModal}
                         />
                     )}
                 </div>
@@ -900,7 +894,6 @@ useEffect(() => {
                             onClose={closeModal}
                             taxData={selectedTax}
                             employee={{ ...employee, id: employeeId, name: employeeName }}
-                            toggleUpdateNetSalaryModal={toggleUpdateNetSalaryModal}
                         />
                     )}
                 </div>
@@ -1004,7 +997,6 @@ useEffect(() => {
                             onClose={closeModal}
                             paymentData={selectedOtherPayment}
                             employee={{ ...employee, id: employeeId, name: employeeName }}
-                            toggleUpdateNetSalaryModal={toggleUpdateNetSalaryModal}
                         />
                     )}
                 </div>
@@ -1116,7 +1108,6 @@ useEffect(() => {
                         onClose={closeModal}
                         overtimeData={selectedOvertime}
                         employee={{ ...employee, id: employeeId, name: employeeName }}
-                        toggleUpdateNetSalaryModal={toggleUpdateNetSalaryModal}
                     />
                 )}
             </div>
@@ -1132,7 +1123,6 @@ useEffect(() => {
                 <AllowanceModal
                     employee={{ ...employee, id: employeeId, name: employeeName }}
                     onClose={toggleAllowanceModal}
-                    toggleUpdateNetSalaryModal={toggleUpdateNetSalaryModal}
                     
                 />
             )}
@@ -1141,7 +1131,6 @@ useEffect(() => {
                 <CommissionModal
                     employee={{ ...employee, id: employeeId, name: employeeName }}
                     onClose={toggleCommissoinModal}
-                    toggleUpdateNetSalaryModal={toggleUpdateNetSalaryModal}
                 />
             )}
 
@@ -1149,7 +1138,6 @@ useEffect(() => {
                 <CreateLoanModal
                     employee={{ ...employee, id: employeeId, name: employeeName }}
                     onClose={toggleLoanModal}
-                    toggleUpdateNetSalaryModal={toggleUpdateNetSalaryModal}
                 />
             )}
 
@@ -1157,7 +1145,6 @@ useEffect(() => {
                 <CreateOtherpaymentModal
                     employee={{ ...employee, id: employeeId, name: employeeName }}
                     onClose={toggleOtherpaymentModal}
-                    toggleUpdateNetSalaryModal={toggleUpdateNetSalaryModal}
                 />
             )}
 
@@ -1165,7 +1152,6 @@ useEffect(() => {
                 <CreateTaxModal
                     employee={{ ...employee, id: employeeId, name: employeeName }}
                     onClose={toggleTaxModal}
-                    toggleUpdateNetSalaryModal={toggleUpdateNetSalaryModal}
                 />
             )}
 
@@ -1173,18 +1159,8 @@ useEffect(() => {
                 <CreateOvertimeModal
                     employee={{ ...employee, id: employeeId, name: employeeName }}
                     onClose={toggleOvertimeModal}
-                    toggleUpdateNetSalaryModal={toggleUpdateNetSalaryModal}
                 />
             )}
-
-{isUpdateNetSalaryModalOpen && (
-                <UpdateNetSalaryModal
-                    employee={{ ...employee, id: employeeId, name: employeeName }}
-                    onClose={toggleUpdateNetSalaryModal}
-                    grandTotal={NetSalary}
-                />
-            )}
-
 
             {isDeleteDialogOpen && selectedAllowance && (
                 <ConfirmationDialog

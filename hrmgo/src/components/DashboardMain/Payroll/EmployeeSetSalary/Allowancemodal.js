@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import postAPI from '../../../../api/postAPI';
 import { Link } from 'react-router-dom';
 
-const CreateAllowanceModal = ({ onClose, employee,toggleUpdateNetSalaryModal }) => {
+const CreateAllowanceModal = ({ onClose, employee }) => {
     const [allowanceOption, setAllowanceOption] = useState('');
     const [title, setTitle] = useState('');
     const [type, setType] = useState('Fixed');
@@ -47,7 +47,6 @@ const CreateAllowanceModal = ({ onClose, employee,toggleUpdateNetSalaryModal }) 
 
             if (!response.hasError) {
                 toast.success('Allowance Created Successfully');
-                toggleUpdateNetSalaryModal();
                 onClose();
             } else {
                 toast.error(`Failed to create allowance: ${response.message}`);

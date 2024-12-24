@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import postAPI from '../../../../api/postAPI';
 
-const CreateOvertimeModal = ({ onClose, employee,toggleUpdateNetSalaryModal }) => {
+const CreateOvertimeModal = ({ onClose, employee}) => {
     const [title, setTitle] = useState('');
     const [numberOfDays, setNumberOfDays] = useState('');
     const [hours, setHours] = useState('');
@@ -26,7 +26,6 @@ const CreateOvertimeModal = ({ onClose, employee,toggleUpdateNetSalaryModal }) =
 
             if (!response.hasError) {
                 toast.success('Overtime Created Successfully');
-                toggleUpdateNetSalaryModal();
                 onClose();
             } else {
                 toast.error(`Failed to create overtime: ${response.message}`);

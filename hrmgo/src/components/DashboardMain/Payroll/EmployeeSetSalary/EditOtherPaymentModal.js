@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import putAPI from '../../../../api/putAPI';
 
-const UpdateOtherPaymentModal = ({ onClose, employee, paymentData,toggleUpdateNetSalaryModal }) => {
+const UpdateOtherPaymentModal = ({ onClose, employee, paymentData}) => {
     const [title, setTitle] = useState('');
     const [type, setType] = useState('Fixed');
     const [amount, setAmount] = useState('');
@@ -52,7 +52,6 @@ const UpdateOtherPaymentModal = ({ onClose, employee, paymentData,toggleUpdateNe
 
             if (!response.hasError) {
                 toast.success('Other Deduction Updated Successfully');
-                toggleUpdateNetSalaryModal();
                 onClose();
             } else {
                 toast.error(`Failed to update Other Deduction: ${response.message}`);

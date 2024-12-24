@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import postAPI from '../../../../api/postAPI';
 
-const CreateOtherPaymentModal = ({ onClose, employee ,toggleUpdateNetSalaryModal}) => {
+const CreateOtherPaymentModal = ({ onClose, employee }) => {
     const [title, setTitle] = useState('');
     const [type, setType] = useState('Fixed');
     const [amount, setAmount] = useState('');
@@ -39,7 +39,6 @@ const CreateOtherPaymentModal = ({ onClose, employee ,toggleUpdateNetSalaryModal
             const response = await postAPI('/create_otherpayment', paymentData, true);
             if (!response.hasError) {
                 toast.success('Other Deduction Created Successfully');
-                toggleUpdateNetSalaryModal();
                 onClose();
             } else {
                 toast.error(`Failed to create Other Deduction: ${response.message}`);

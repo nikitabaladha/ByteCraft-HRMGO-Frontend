@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import putAPI from '../../../../api/putAPI'; 
 
-const UpdateLoanModal = ({ onClose, employee, loanData,toggleUpdateNetSalaryModal }) => {
+const UpdateLoanModal = ({ onClose, employee, loanData}) => {
     const [loanOption, setLoanOption] = useState('');
     const [title, setTitle] = useState('');
     const [type, setType] = useState('Fixed');
@@ -57,7 +57,6 @@ const UpdateLoanModal = ({ onClose, employee, loanData,toggleUpdateNetSalaryModa
         
             if (!response.hasError) {
                 toast.success('Loan Updated Successfully');
-                toggleUpdateNetSalaryModal();
                 onClose();
             } else {
                 toast.error(`Failed to update loan: ${response.message}`);

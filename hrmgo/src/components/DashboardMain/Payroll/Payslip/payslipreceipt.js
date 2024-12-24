@@ -11,7 +11,7 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
   const [taxes, setTaxes] = useState([]);
   const [basicsalarys, setBasicsalarys] = useState([]);
   const [overtimes, setOvertimes] = useState([]);
-  const [error, setError] = useState("");
+
   
   useEffect(() => {
     if (isOpen && payslip && payslip._id) {
@@ -79,7 +79,6 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
 
           setCommissions(commissionsWithType);
         } catch (err) {
-          setError("Failed to fetch commission data");
           console.error(err);
         }
       };
@@ -102,7 +101,6 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
 
           setOvertimes(overtimesWithType);
         } catch (err) {
-          setError("Failed to fetch overtime data");
           console.error(err)
         }
       };
@@ -125,7 +123,6 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
           }));
           setLoans(loanWithType);
         } catch (err) {
-          setError("Failed to fetch loan data");
           console.error(err);
         }
       };
@@ -145,7 +142,6 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
           }));
           setOtherPayments(otherPaymentWithType);
         } catch (err) {
-          setError("Failed to fetch other payment data");
           console.error(err);
         }
       };
@@ -165,7 +161,7 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
           }));
           setTaxes(taxWithType);
         } catch (err) {
-          setError("Failed to fetch tax data");
+          
           console.error(err);
         }
       };
@@ -300,7 +296,7 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
                                 <strong>Position :</strong>{payslip.designationName}
                                 <br />
                                 <strong>Salary Date :</strong>{" "}
-                                {payslip?.payDate ? formatPayDate(payslip.payDate) : "N/A"}
+                                {payslip?.statusPayDate ? formatPayDate(payslip.statusPayDate) : "N/A"}
                                 <br />
                               </address>
                             </div>
@@ -313,10 +309,10 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
                                 GUJARAT-395006
                                 <br />
                                 <strong>Salary Slip :</strong>{" "}
-                                {payslip?.paydate
-                                  ? new Date(payslip.paydate).getFullYear() +
+                                {payslip?.payDate
+                                  ? new Date(payslip.payDate).getFullYear() +
                                   "-" +
-                                  (new Date(payslip.paydate).getMonth() + 1).toString().padStart(2, "0")
+                                  (new Date(payslip.payDate).getMonth() + 1).toString().padStart(2, "0")
                                   : "N/A"}
                                 <br />
                               </address>
