@@ -64,17 +64,17 @@ const termsWithoutHtml = jobDetails ? removeHtmlTags(jobDetails.terms) : '';
               <h4 className="page-header-title">Job Details</h4>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <a href="/dashboard">Home</a>
+                  <Link to="/dashboard">Home</Link>
                 </li>
                 <li className="breadcrumb-item">
-                  <a href="/job/manage">Manage Job</a>
+                  <Link to="/dashboard/recruitment/jobs">Manage Job</Link>
                 </li>
                 <li className="breadcrumb-item">Job Details</li>
               </ul>
             </div>
             <div className="col text-end">
               <Link
-                // href={`/job/${jobDetails.id}/edit`}
+                to={`/dashboard/recruitment/job-edit/${jobDetails._id}`}
                 className="btn btn-sm btn-info"
                 title="Edit"
               >
@@ -135,12 +135,12 @@ const termsWithoutHtml = jobDetails ? removeHtmlTags(jobDetails.terms) : '';
                   </tr>
                   <tr>
                     <td>Skills</td>
-                    <td>
+                    <td className="">
                       {/* <span className="p-2 px-3  badge bg-primary"> */}
                       {jobDetails.skill.map((skills, index) => (
                         <span
                           key={index}
-                          className="p-2 px-3 badge bg-primary"
+                          className="p-2 px-3 badge bg-primary m-1"
                         >
                           {skills}
                         </span>

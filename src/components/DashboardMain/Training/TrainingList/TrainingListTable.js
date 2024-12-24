@@ -6,7 +6,8 @@ import { FaRegTrashAlt, FaEye } from "react-icons/fa";
 import getAPI from "../../../../api/getAPI";
 // import deleteAPI from "../../../../api/deleteAPI";
 import TrainingListUpdateModel from "./TrainingListUpdateModel";
-import ConfirmationDialog from "./deleteConfirmation";
+import ConfirmationDialog from "../../ConfirmationDialog";
+
 
 const TrainingListTable = () => {
   const [trainings, setTrainings] = useState([]);
@@ -41,6 +42,11 @@ const openDeleteDialog = (training) => {
     setIsModalOpen(true); // Open the modal
   };
 
+  const handleDeleteCancel = () => {
+    setIsDeleteDialogOpen(false);
+    setSelectedTraining(null);
+  };
+
   const handleView = (training) => {
     console.log("Navigating to view training:", training);
     navigate(`/dashboard/trainingList-View/${training._id}`, { state: training }); 
@@ -48,9 +54,10 @@ const openDeleteDialog = (training) => {
     // Navigate to TrainingListView
   };
 
-  const handleDeleteCancel = () => {
-    setIsDeleteDialogOpen(false);
-    setSelectedTraining(null);
+ 
+
+  const handleDeleteConfirmed = (_id) => {
+    setTrainings((prevApp) => prevApp.filter((training) => training._id !== _id));
   };
 
   const ActionButtons = ({ training }) => (
@@ -75,10 +82,10 @@ const openDeleteDialog = (training) => {
       </div>
       <div className="action-btn bg-danger">
         <button
-          // onClick={() => openDeleteDialog(training._id)}
-          onClick={() =>
-            openDeleteDialog(training)
-          }
+         onClick={(e) => {
+          e.preventDefault();
+          openDeleteDialog(training);
+        }}
           className=" btn btn-sm text-white"
           data-bs-toggle="tooltip"
           title="Delete"
@@ -158,6 +165,8 @@ const openDeleteDialog = (training) => {
                                 ? "bg-warning"
                                 : training.status === "Started"
                                 ? "bg-primary"
+                                : training.status === "Terminated"
+                                ? "bg-danger"
                                 : "bg-danger"
                             } p-2 px-3 mt-1`}
                           >
@@ -189,10 +198,14 @@ const openDeleteDialog = (training) => {
         </div>
       </div>
 
-      {isDeleteDialogOpen && selectedTraining &&(
-        <ConfirmationDialog training={selectedTraining}   onCancel={handleDeleteCancel}/>
+      {isDeleteDialogOpen && (
+        <ConfirmationDialog
+          onClose={handleDeleteCancel}
+          deleteType="training"
+          id={selectedTraining._id}
+          onDeleted={handleDeleteConfirmed}
+        />
       )}
-
       {/* Modal for editing training */}
       {isModalOpen && selectedTraining && (
         <TrainingListUpdateModel

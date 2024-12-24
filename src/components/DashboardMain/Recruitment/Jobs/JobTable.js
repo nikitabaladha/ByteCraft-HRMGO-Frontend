@@ -3,13 +3,16 @@ import { Link } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt, FaEye } from "react-icons/fa";
 import getAPI from "../../../../api/getAPI";
+import ConfirmationDialog from "../../ConfirmationDialog";
+
 
 const JobTable = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [selectedTraining, setSelectedTraining] = useState(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
-  // Fetch jobs from the API
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -40,6 +43,22 @@ const JobTable = () => {
     const year = date.getFullYear();
     return `${month} ${day}, ${year}`;
   }
+
+  const openDeleteDialog = (job) => { 
+    console.log("Training form open delete function", job)
+  setSelectedTraining(job);
+  setIsDeleteDialogOpen(true);
+};
+
+const handleDeleteCancel = () => {
+    setIsDeleteDialogOpen(false);
+    setSelectedTraining(null);
+  };
+
+  const handleDeleteConfirmed = (_id) => {
+    setJobs((prevApp) => prevApp.filter((job) => job._id !== _id));
+  };
+
 
   return (
     <div>
@@ -217,7 +236,7 @@ const JobTable = () => {
                               <FaEye />
                             </Link>
                             <Link
-                              to={`#`}
+                              to={`/dashboard/recruitment/job-edit/${job._id}`}
                               className="btn btn-sm bg-info text-white mx-1"
                               title="Edit Job"
                             >
@@ -226,6 +245,9 @@ const JobTable = () => {
                             <button
                               className="btn btn-sm bg-danger text-white mx-1"
                               title="Delete Job"
+                              onClick={() =>
+                                openDeleteDialog(job)
+                              }
                             >
                               <FaRegTrashAlt />
                             </button>
@@ -247,7 +269,16 @@ const JobTable = () => {
       </div>
     </div>
     </div>
+    {isDeleteDialogOpen && (
+        <ConfirmationDialog
+          onClose={handleDeleteCancel}
+          deleteType="job"
+          id={selectedTraining._id}
+          onDeleted={handleDeleteConfirmed}
+        />
+      )}
     </div>
+    
   );
 };
 

@@ -21,6 +21,16 @@ import TrainingListView from "./components/DashboardMain/Training/TrainingList/T
 import RecruitmentJobs from "./components/DashboardMain/Recruitment/Jobs/jobs.js";
 import CreateJob from "./components/DashboardMain/Recruitment/Create Jobs/CreateJob.js";
 import JobView from "./components/DashboardMain/Recruitment/Jobs/JobView.js";
+import EditJob from "./components/DashboardMain/Recruitment/Jobs/editJob.js";
+import JobApplication from "./components/DashboardMain/Recruitment/JobApplication/JobApplication.js";
+import JobApllicationView from "./components/DashboardMain/Recruitment/JobApplication/JobApllicationView.js";
+import JobCandidate from "./components/DashboardMain/Recruitment/JobCandidate/JobCandidate.js";
+import JobOnBoarding from "./components/DashboardMain/Recruitment/JobOnBoarding/JobOnBoarding.js";
+import ConvertToEmployee from "./components/DashboardMain/Recruitment/JobOnBoarding/ConvertToEmployee.js";
+import InterviewScheldule from "./components/DashboardMain/Recruitment/Interview Schedule/InterviewScheldule.js";
+import RecruitmentCareer from "./components/DashboardMain/Recruitment/Career/RecruitmentCareer.js";
+import CareerJobView from "./components/DashboardMain/Recruitment/Career/CareerJobView.js";
+import CareerApplyJob from "./components/DashboardMain/Recruitment/Career/CareerApplyJob.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -70,6 +80,13 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
             <Route path="/dashboard/recruitment/create-job" element={<CreateJob/>}></Route>
             <Route path="/dashboard/recruitment/jobs" element={<RecruitmentJobs/>}></Route>
             <Route path="/dashboard/recruitment/jobs/:id" element={<JobView/>}></Route>
+            <Route path="/dashboard/recruitment/job-edit/:id" element={<EditJob/>}></Route>
+            <Route path="/dashboard/recruitment/job-application" element={<JobApplication/>}></Route>
+            <Route path="/dashboard/recruitment/job-application-view/:id" element={<JobApllicationView/>}></Route>
+            <Route path="/dashboard/recruitment/job-candidate" element={<JobCandidate/>}></Route>
+            <Route path="/dashboard/recruitment/job-on-boarding" element={<JobOnBoarding/>}></Route>
+            <Route path="/dashboard/recruitment/convert-to-emoloyee/:id" element={<ConvertToEmployee/>}></Route>
+            <Route path="/dashboard/recruitment/inrterview-schedule" element={<InterviewScheldule/>}></Route>
           </Route>
 
           
@@ -77,6 +94,9 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </>
       )}
+      <Route path="/dashboard/recruitment/career" element={<RecruitmentCareer/>}></Route>
+      <Route path="/dashboard/recruitment/careerJob/:id" element={<CareerJobView/>}></Route>
+      <Route path="/dashboard/recruitment/applyJob/:id" element={<CareerApplyJob/>}></Route>
     </Routes>
   );
 };

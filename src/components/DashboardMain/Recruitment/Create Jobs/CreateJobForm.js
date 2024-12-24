@@ -27,7 +27,6 @@ const CreateJobForm = () => {
   const [branches, setBranches] = useState([]);
   const [jobCategory, setJobCategory] = useState([]);
   const [showTerms, setShowTerms] = useState(false);
-  
 
   useEffect(() => {
     const fetchBranches = async () => {
@@ -104,7 +103,34 @@ const CreateJobForm = () => {
           : list.filter((item) => item !== value),
       };
     });
-    
+  };
+
+  const [inputValue, setInputValue] = useState(""); 
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      const skill = inputValue.trim(); 
+      if (skill && !formData.skill.includes(skill)) {
+        setFormData((prevData) => ({
+          ...prevData,
+          skill: [...prevData.skill, skill],
+        }));
+      }
+      setInputValue(""); // Clear the input field
+    }
+  }; 
+
+  const handleRemoveSkill = (skillToRemove) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      skill: prevData.skill.filter((skill) => skill !== skillToRemove),
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -116,10 +142,7 @@ const CreateJobForm = () => {
         toast("Job created successfully!");
       }
     } catch (error) {
-      toast.error(
-        "Error creating job:",
-        error.response?.data || error.message
-      );
+      toast.error("Error creating job:", error.response?.data || error.message);
       toast(
         error.response?.data?.message ||
           "An error occurred while creating the job"
@@ -273,21 +296,53 @@ const CreateJobForm = () => {
                         onChange={handleChange}
                       />
                     </div>
+                    
+                        
                     <div className="form-group col-md-12">
-                      <label className="col-form-label" htmlFor="skill">
-                        Skill Box
-                      </label>
-                      <span className="text-danger">*</span>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="skill"
-                        placeholder="Skill"
-                        value={formData.skill}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
+      <label className="col-form-label" htmlFor="skill">
+        Skill Box
+      </label>
+      <span className="text-danger"> *</span>
+      <div
+        className="form-control d-flex align-items-center flex-wrap"
+        style={{
+          minHeight: "50px",
+          gap: "8px",
+        }}
+      >
+        {/* Render skill badges */}
+        {formData.skill.map((skill, index) => (
+          <span
+            key={index}
+            className="badge bg-primary d-flex align-items-center"
+            style={{
+              padding: "0.4rem 0.6rem",
+              gap: "4px",
+            }}
+          >
+            {skill}
+            <button
+              type="button"
+              className="btn-close btn-close-white ms-2"
+              aria-label="Remove"
+              style={{ fontSize: "10px" }}
+              onClick={() => handleRemoveSkill(skill)}
+            ></button>
+          </span>
+        ))}
+
+        {/* Input field for typing new skills */}
+        <input
+          type="text"
+          className="border-0 flex-grow-1"
+          style={{ outline: "none", minWidth: "100px" }}
+          placeholder="Type a skill and press Enter or comma"
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyPress}
+        />
+      </div>
+    </div>
                   </div>
                 </div>
               </div>
@@ -309,48 +364,46 @@ const CreateJobForm = () => {
                               className="form-check-label"
                               htmlFor="check-gender"
                             >
-                             <input
-                              type="checkbox"
-                              className="form-check-input"
-                              name="applicant"
-                              value="Gender"
-                              id="check-gender"
-                              onChange={handleCheckboxChange}
-                            />
+                              <input
+                                type="checkbox"
+                                className="form-check-input"
+                                name="applicant"
+                                value="Gender"
+                                id="check-gender"
+                                onChange={handleCheckboxChange}
+                              />
                               Gender
                             </label>
                           </div>
                           <div className="form-check custom-checkbox">
-                            
                             <label
                               className="form-check-label"
                               htmlFor="check-dob"
                             >
-                                <input
-                              type="checkbox"
-                              className="form-check-input"
-                              name="applicant"
-                              value="Date of Birth"
-                              id="check-dob"
-                              onChange={handleCheckboxChange}
-                            />
+                              <input
+                                type="checkbox"
+                                className="form-check-input"
+                                name="applicant"
+                                value="Date of Birth"
+                                id="check-dob"
+                                onChange={handleCheckboxChange}
+                              />
                               Date Of Birth
                             </label>
                           </div>
                           <div className="form-check custom-checkbox">
-                        
                             <label
                               className="form-check-label"
                               htmlFor="check-address"
                             >
-                                    <input
-                              type="checkbox"
-                              className="form-check-input"
-                              name="applicant"
-                              value="Address"
-                              id="check-address"
-                              onChange={handleCheckboxChange}
-                            />
+                              <input
+                                type="checkbox"
+                                className="form-check-input"
+                                name="applicant"
+                                value="Address"
+                                id="check-address"
+                                onChange={handleCheckboxChange}
+                              />
                               Address
                             </label>
                           </div>
@@ -362,70 +415,66 @@ const CreateJobForm = () => {
                         <h6>Need to show Options ?</h6>
                         <div className="my-4">
                           <div className="form-check custom-checkbox">
-                           
                             <label
                               className="form-check-label"
                               htmlFor="check-profile"
                             >
-                                 <input
-                              type="checkbox"
-                              className="form-check-input"
-                              name="visibility"
-                              value="Profile"
-                              id="check-profile"
-                              onChange={handleCheckboxChange}
-                            />
+                              <input
+                                type="checkbox"
+                                className="form-check-input"
+                                name="visibility"
+                                value="Profile"
+                                id="check-profile"
+                                onChange={handleCheckboxChange}
+                              />
                               Profile Image
                             </label>
                           </div>
                           <div className="form-check custom-checkbox">
-                          
                             <label
                               className="form-check-label"
                               htmlFor="check-resume"
                             >
-                                  <input
-                              type="checkbox"
-                              className="form-check-input"
-                              name="visibility"
-                              value="Resume"
-                              id="check-resume"
-                              onChange={handleCheckboxChange}
-                            />
+                              <input
+                                type="checkbox"
+                                className="form-check-input"
+                                name="visibility"
+                                value="Resume"
+                                id="check-resume"
+                                onChange={handleCheckboxChange}
+                              />
                               Resume
                             </label>
                           </div>
                           <div className="form-check custom-checkbox">
-                            
                             <label
                               className="form-check-label"
                               htmlFor="check-letter"
                             >
-                                <input
-                              type="checkbox"
-                              className="form-check-input"
-                              name="visibility"
-                              value="Letter"
-                              id="check-letter"
-                              onChange={handleCheckboxChange}
-                            />
+                              <input
+                                type="checkbox"
+                                className="form-check-input"
+                                name="visibility"
+                                value="Letter"
+                                id="check-letter"
+                                onChange={handleCheckboxChange}
+                              />
                               Cover Letter
                             </label>
                           </div>
                           <div className="form-check custom-checkbox">
-                            
                             <label
                               className="form-check-label"
                               htmlFor="check-terms"
                             >
-                                <input
-                              type="checkbox"
-                              className="form-check-input"
-                              name="visibility"
-                              value="Terms and Conditions"
-                              id="check-terms"
-                              onChange={handleCheckboxChanged}
-                            />
+                              <input
+                                type="checkbox"
+                                className="form-check-input"
+                                name="visibility"
+                                value="Terms and Conditions"
+                                id="check-terms"
+                                onChange={handleCheckboxChanged}
+                              />
                               Terms And Conditions
                             </label>
                           </div>
@@ -436,56 +485,53 @@ const CreateJobForm = () => {
                       <h6>Custom Questions</h6>
                       <div className="my-4">
                         <div className="form-check custom-checkbox">
-                        
                           <label
                             className="form-check-label"
                             htmlFor="custom_question_1"
                           >
-                              <input
-                            type="checkbox"
-                            className="form-check-input"
-                            name="customQuestions"
-                            value="What Do You Know About This Job?"
-                            required
-                            id="custom_question_1"
-                            onChange={handleCheckboxChange}
-                          />
+                            <input
+                              type="checkbox"
+                              className="form-check-input"
+                              name="customQuestions"
+                              value="What Do You Know About This Job?"
+                              required
+                              id="custom_question_1"
+                              onChange={handleCheckboxChange}
+                            />
                             What Do You Know About This Job?
                           </label>
                         </div>
                         <div className="form-check custom-checkbox">
-                         
                           <label
                             className="form-check-label"
                             htmlFor="custom_question_1"
                           >
-                             <input
-                            type="checkbox"
-                            className="form-check-input"
-                            name="customQuestions"
-                            value="Why do you want this job?"
-                            required
-                            id="custom_question_1"
-                            onChange={handleCheckboxChange}
-                          />
+                            <input
+                              type="checkbox"
+                              className="form-check-input"
+                              name="customQuestions"
+                              value="Why do you want this job?"
+                              required
+                              id="custom_question_1"
+                              onChange={handleCheckboxChange}
+                            />
                             Why do you want this job?
                           </label>
                         </div>
                         <div className="form-check custom-checkbox">
-                         
                           <label
                             className="form-check-label"
                             htmlFor="custom_question_1"
                           >
-                             <input
-                            type="checkbox"
-                            className="form-check-input"
-                            name="customQuestions"
-                            value="Why do you want to work this company?"
-                            required
-                            id="customQuestion"
-                            onChange={handleCheckboxChange}
-                          />
+                            <input
+                              type="checkbox"
+                              className="form-check-input"
+                              name="customQuestions"
+                              value="Why do you want to work this company?"
+                              required
+                              id="customQuestion"
+                              onChange={handleCheckboxChange}
+                            />
                             Why do you want to work this company?
                           </label>
                         </div>
@@ -575,40 +621,40 @@ const CreateJobForm = () => {
 
             {/* <CreateJobTermsAndCondition/> */}
             {showTerms && (
-        <div className="col-md-12" id="termsandcondition">
-          <div className="card card-fluid job-card">
-            <div className="card-body">
-              <div className="row">
-                <div className="form-group col-md-12">
-                  <label
-                    htmlFor="terms_and_conditions"
-                    className="col-form-label"
-                  >
-                    Terms And Conditions
-                  </label>
-                  <span className="text-danger">*</span>
-                  <ReactQuill
-                    value={formData.terms}
-                    onChange={(value) =>
-                      setFormData((prevData) => ({
-                        ...prevData,
-                        terms: value,
-                      }))
-                    }
-                    theme="snow"
-                    style={{
-                      height: "250px",
-                      maxHeight: "300px",
-                      minHeight: "200px",
-                    }}
-                  />
+              <div className="col-md-12" id="termsandcondition">
+                <div className="card card-fluid job-card">
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="form-group col-md-12">
+                        <label
+                          htmlFor="terms_and_conditions"
+                          className="col-form-label"
+                        >
+                          Terms And Conditions
+                        </label>
+                        <span className="text-danger">*</span>
+                        <ReactQuill
+                          value={formData.terms}
+                          onChange={(value) =>
+                            setFormData((prevData) => ({
+                              ...prevData,
+                              terms: value,
+                            }))
+                          }
+                          theme="snow"
+                          style={{
+                            height: "250px",
+                            maxHeight: "300px",
+                            minHeight: "200px",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
-        </div>
-      )}
-      </div>
 
           <div className="col-md-12 text-end">
             <Link className="btn btn-secondary btn-submit" to="/jobs">

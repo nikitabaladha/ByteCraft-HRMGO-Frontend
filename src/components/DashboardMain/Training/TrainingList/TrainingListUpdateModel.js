@@ -97,11 +97,11 @@ const TrainingListUpdateModel = ({ onClose, training, _id }) => {
         
 
       );
-      alert(response.data.message || "Training updated successfully!");
+      toast(response.data.message || "Training updated successfully!");
       onClose(); // Close the modal after successful submission
     } catch (error) {
       console.error("Error updating training:", error);
-      alert(error.response?.data?.message || "Failed to update training");
+      toast(error.response?.data?.message || "Failed to update training");
     }
   };
 

@@ -354,17 +354,17 @@ const menuConfig = [
       {
         id: "jobOnboarding",
         label: "Job On-Boarding",
-        link: "/dashboard/recruitment/job-onboard",
+        link: "/dashboard/recruitment/job-on-boarding",
       },
-      {
-        id: "customQuestion",
-        label: "Custom Question",
-        link: "/dashboard/recruitment/custom-question",
-      },
+      // {
+      //   id: "customQuestion",
+      //   label: "Custom Question",
+      //   link: "/dashboard/recruitment/custom-question",
+      // },
       {
         id: "interviewSchedule",
         label: "Interview Schedule",
-        link: "h/dashboard/recruitment/interview-schedule",
+        link: "/dashboard/recruitment/inrterview-schedule",
       },
       {
         id: "career",

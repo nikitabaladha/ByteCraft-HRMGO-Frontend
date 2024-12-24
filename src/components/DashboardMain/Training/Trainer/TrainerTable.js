@@ -2,17 +2,19 @@ import React, { useState, useEffect } from "react";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt, FaEye } from "react-icons/fa";
 import getAPI from "../../../../api/getAPI";
-import deleteAPI from "../../../../api/deleteAPI";
+// import deleteAPI from "../../../../api/deleteAPI";
 import { toast } from "react-toastify";
 import TraineeViewModel from "./TraineeViewModel";
 import TraineeUpdateDataModel from "./TraineeUpdateDataModel";
 import putAPI from "../../../../api/putAPI";
+import ConfirmationDialog from "../../ConfirmationDialog";
 
 const TrainerTable = () => {
   const [trainers, setTrainers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedTrainee, setSelectedTrainee] = useState(null);
   const [showUpdateModal, setShowUpdateModal] = useState(false); // State for update modal
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   // Fetch trainers data from API
   useEffect(() => {
@@ -50,31 +52,27 @@ const TrainerTable = () => {
   };
 
   // Delete Trainer Handler
-  const handleDelete = async (id) => {
-    if (!id) {
-      toast.error("Invalid trainer ID.");
-      return;
-    }
-
-    try {
-      const response = await deleteAPI(`/traineeDelete/${id}`, {}, true, "DELETE");
-      if (!response.hasError) {
-        setTrainers((prev) => prev.filter((trainer) => trainer.id !== id));
-        toast.success("Trainer deleted successfully.");
-      } else {
-        toast.error(response.error || "Failed to delete trainer.");
-      }
-    } catch (error) {
-      console.error("Error deleting trainer:", error);
-      toast.error("An error occurred while deleting the trainer.");
-    }
-  };
-
+ 
   // Handle Edit Trainer
   const handleEditTrainee = (trainee) => {
     setSelectedTrainee(trainee);
     setShowUpdateModal(true); // Open update modal
   };
+
+  const openDeleteDialog = (trainer) => { 
+    console.log("Training form open delete function", trainer)
+  setSelectedTrainee(trainer);
+  setIsDeleteDialogOpen(true);
+};
+
+const handleDeleteCancel = () => {
+  setIsDeleteDialogOpen(false);
+  setSelectedTrainee(null);
+};
+
+const handleDeleteConfirmed = (id) => {
+  setTrainers((prevApp) => prevApp.filter((trainer) => trainer.id !== id));
+};
 
   // Handle Update Trainer
   const handleUpdateTrainee = async (updatedData) => {
@@ -135,7 +133,10 @@ const TrainerTable = () => {
         <button
           className="btn btn-sm text-white"
           title="Delete"
-          onClick={() => handleDelete(trainer.id)}
+          onClick={(e) => {
+            e.preventDefault();
+            openDeleteDialog(trainer);
+          }}
         >
           <FaRegTrashAlt />
         </button>
@@ -217,7 +218,15 @@ const TrainerTable = () => {
             </div>
           </div>
         </div>
-    
+
+        {isDeleteDialogOpen &&  (
+        <ConfirmationDialog
+          onClose={handleDeleteCancel}
+          deleteType="trainer"
+          id={selectedTrainee.id}
+          onDeleted={handleDeleteConfirmed}
+        />
+      )}
 
       {/* Trainee View Modal */}
       {showModal && selectedTrainee && (
