@@ -137,7 +137,10 @@ const UpdateAnnouncementModal = ({
       // Create the updated announcement data, ensuring no duplicate employee IDs
       const updatedData = {
         ...formData,
-        employeeId: uniqueEmployeeIds, // Only store unique employee IDs
+        employeeId:
+          uniqueEmployeeIds.length > 0
+            ? uniqueEmployeeIds
+            : existingEmployeeIds, // Only store unique employee IDs or retain existing ones
       };
 
       const response = await putAPI(

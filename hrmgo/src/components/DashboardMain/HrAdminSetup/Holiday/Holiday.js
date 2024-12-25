@@ -9,6 +9,7 @@ import getAPI from "../../../../api/getAPI";
 const Holiday = () => {
   const location = useLocation();
   const [holidays, setHolidays] = useState([]);
+  const [originalHolidays, setOriginalHolidays] = useState([]);
   const [selectedHoliday, setSelectedHoliday] = useState(null);
 
   useEffect(() => {
@@ -21,6 +22,7 @@ const Holiday = () => {
           Array.isArray(response.data.data)
         ) {
           setHolidays(response.data.data);
+          setOriginalHolidays(response.data.data);
         } else {
           console.error("Invalid response format or error in response");
         }
@@ -34,6 +36,9 @@ const Holiday = () => {
 
   const handleSearchResults = (searchedHolidays) => {
     setHolidays(searchedHolidays);
+  };
+  const resetSearch = () => {
+    setHolidays(originalHolidays); // Restore original holidays
   };
 
   const isCalendarRoute =
@@ -50,7 +55,10 @@ const Holiday = () => {
       ) : (
         <>
           <HolidayHeader />
-          <HolidaySearchForm onSearchResults={handleSearchResults} />
+          <HolidaySearchForm
+            onSearchResults={handleSearchResults}
+            resetSearch={resetSearch}
+          />
           <HolidayTable
             holidays={holidays}
             setHolidays={setHolidays}

@@ -5,7 +5,7 @@ import { TbRefresh } from "react-icons/tb";
 import { IoIosSearch } from "react-icons/io";
 import getAPI from "../../../../api/getAPI";
 
-const HolidaySearchForm = ({ onSearchResults }) => {
+const HolidaySearchForm = ({ onSearchResults, resetSearch }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -35,8 +35,15 @@ const HolidaySearchForm = ({ onSearchResults }) => {
 
       onSearchResults(responseData);
     } catch (error) {
-      console.error("Error fetching data:", error);
-      toast.error("Error fetching data. Please try again later.");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     }
   };
 
@@ -50,6 +57,15 @@ const HolidaySearchForm = ({ onSearchResults }) => {
       return;
     }
     fetchData(startDate, endDate);
+  };
+
+  const handleReset = () => {
+    const today = new Date();
+    const formattedDate = today.toISOString().slice(0, 10);
+    setStartDate(formattedDate);
+    setEndDate(formattedDate);
+
+    resetSearch();
   };
 
   return (
@@ -69,7 +85,7 @@ const HolidaySearchForm = ({ onSearchResults }) => {
                       <input
                         className="month-btn form-control current_date"
                         autoComplete="off"
-                        name="start_date"
+                        name="startDate"
                         type="date"
                         defaultValue=""
                         id="start_date"
@@ -86,7 +102,7 @@ const HolidaySearchForm = ({ onSearchResults }) => {
                       <input
                         className="month-btn form-control current_date"
                         autoComplete="off"
-                        name="end_date"
+                        name="endDate"
                         type="date"
                         defaultValue=""
                         id="end_date"
@@ -115,11 +131,7 @@ const HolidaySearchForm = ({ onSearchResults }) => {
                       data-bs-toggle="tooltip"
                       title=""
                       data-bs-original-title="Reset"
-                      onClick={() => {
-                        setStartDate("");
-                        setEndDate("");
-                        onSearchResults([]);
-                      }}
+                      onClick={handleReset}
                     >
                       <span className="btn-inner--icon">
                         <TbRefresh className="text-white-off " />
