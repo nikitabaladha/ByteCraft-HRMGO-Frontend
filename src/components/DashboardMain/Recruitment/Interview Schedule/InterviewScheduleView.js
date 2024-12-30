@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import InterviewAddToJobOnBoard from './InterviewAddToJobOnBoard';
 
-const formatDateForInput = (date) => {
-    if (!date) return ""; 
-    const parsedDate = new Date(date); 
-    const year = parsedDate.getFullYear();
-    const month = String(parsedDate.getMonth() + 1).padStart(2, '0'); 
-    const day = String(parsedDate.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, "0"); // Ensures 2 digits for the day
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Ensures 2 digits for the month
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+}
+
 
 const InterviewScheduleView = ({schedule, onClose}) => {
     const { id } = useParams();
@@ -62,7 +62,7 @@ const InterviewScheduleView = ({schedule, onClose}) => {
                     <dt className="col-sm-3 h6 text-sm">Job</dt>
                     <dd className="col-sm-9 text-sm">{schedule.applicatAppliedFor}</dd>
                     <dt className="col-sm-3 h6 text-sm">Interview On</dt>
-                    <dd className="col-sm-9 text-sm">{`${formatDateForInput(schedule.date)}`}, {schedule.time}</dd>
+                    <dd className="col-sm-9 text-sm">{`${formatDate(schedule.date)}`}, {schedule.time}</dd>
                     <dt className="col-sm-3 h6 text-sm">Assign Employee</dt>
                     <dd className="col-sm-9 text-sm">{schedule.interviewer}</dd>
                   </dl>

@@ -1,12 +1,12 @@
 import React from 'react'
 import SystemSettingHeader from './SystemSettingHeader'
-import SystemSettingMain from './SystemSettingMain'
+import Sidebar from './SystemSettingSidebar'
 
 const SystemSetting = () => {
   return (
     <div>
       <SystemSettingHeader/>
-      <SystemSettingMain/>
+      <Sidebar/>
     </div>
   )
 }

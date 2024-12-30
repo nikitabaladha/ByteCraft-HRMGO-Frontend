@@ -46,14 +46,14 @@ const InterviewScheduleTable = () => {
     setSchedules((prevApp) => prevApp.filter((schedule) => schedule._id !== _id));
   };
 
-  const formatDateForInput = (date) => {
-    if (!date) return ""; 
-    const parsedDate = new Date(date); 
-    const year = parsedDate.getFullYear();
-    const month = String(parsedDate.getMonth() + 1).padStart(2, '0'); 
-    const day = String(parsedDate.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0"); // Ensures 2 digits for the day
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Ensures 2 digits for the month
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+  
 
   return (
     <div>
@@ -72,7 +72,7 @@ const InterviewScheduleTable = () => {
                             <div className="col ml-n2 text-sm mb-0 fc-event-title-container">
                               <h5 className="card-text small text-primary">{schedule.candidate}</h5>
                               <div className="card-text small text-dark">{schedule.applicatAppliedFor}</div>
-                              <div className="card-text small text-dark">{`${formatDateForInput(schedule.date)}`}, {schedule.time}</div>
+                              <div className="card-text small text-dark">{`${formatDate(schedule.date)}`}, {schedule.time}</div>
                             </div>
                             <div className="col-auto text-right">
                               <div className="d-inline-flex mb-4">

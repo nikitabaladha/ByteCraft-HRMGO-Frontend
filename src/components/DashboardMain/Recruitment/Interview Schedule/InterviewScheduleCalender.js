@@ -1,15 +1,3 @@
-// import React from 'react'
-
-// const InterviewScheduleCalender = () => {
-//   return (
-//     <div>
-      
-//     </div>
-//   )
-// }
-
-// export default InterviewScheduleCalender
-
 import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";

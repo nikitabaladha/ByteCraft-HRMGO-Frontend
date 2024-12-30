@@ -65,6 +65,15 @@ const JobApplicationMainContent = () => {
     setApplications((prevApp) => prevApp.filter((app) => app._id !== _id));
   };
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0"); // Ensures 2 digits for the day
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Ensures 2 digits for the month
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+  
+
   return (
     <div>
       <div className="row">
@@ -252,9 +261,7 @@ const JobApplicationMainContent = () => {
                                     </li>
                                     <li className="list-inline-item">
                                       <AiOutlineClockCircle />
-                                      {new Date(
-                                        app.createdAt
-                                      ).toLocaleDateString()}
+                                      {`${formatDate(app.createdAt)}`}
                                     </li>
                                   </ul>
                                   <Link to="#" className="user-group">

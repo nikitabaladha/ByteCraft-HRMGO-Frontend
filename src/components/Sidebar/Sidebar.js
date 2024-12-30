@@ -30,6 +30,8 @@ import { LuMessagesSquare } from "react-icons/lu";
 import { GoBell } from "react-icons/go";
 import { FiTable } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
+import getAPI from "../../api/getAPI";
+import { toast } from "react-toastify";
 
 const menuConfig = [
   {
@@ -484,13 +486,15 @@ const menuConfig = [
     id: "systemSetting",
     label: "System Setting",
     iconClass: <IoSettingsOutline />,
-    link: "/dashboard/system-settings",
+    link: "/dashboard/system-setting",
   },
 ];
 
 const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
+  const [logoDark, setLogoDark] = useState(null);
+  const [titleText, setTitleText] = useState("HRMGo");
 
   const sidebarRef = useRef(null);
 
@@ -521,6 +525,25 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
   const toggleSubMenu = (subMenuId) => {
     setActiveSubMenu(activeSubMenu === subMenuId ? null : subMenuId);
   };
+
+  useEffect(() => {
+    const fetchBusinessSetting = async () => {
+      try {
+        const response = await getAPI("/get-business-setting");
+        const {
+          titleText,
+          logoDark,
+        } = response.data.data;
+        setTitleText(titleText)
+        setLogoDark(logoDark || "not found");
+      } catch (error) {
+        toast.error("Error fetching business settings");
+      }
+    };
+
+    fetchBusinessSetting();
+  }, []);
+
 
   const renderSubMenu = (subMenu) => (
     <ul className="dash-submenu">
@@ -582,13 +605,13 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
               className="b-brand"
             >
               <img
-                src="https://demo.workdo.io/hrmgo/storage/uploads/logo/logo-dark.png?1730091906"
-                alt="HRMGo"
+                src={`http://localhost:3001${logoDark}`}
+                alt={titleText}
                 className="logo logo-lg"
               />
               <img
-                src="https://demo.workdo.io/hrmgo/storage/uploads/logo/logo-dark.png"
-                alt="HRMGo"
+               src={`http://localhost:3001${logoDark}`}
+                alt={titleText}
                 className="logo logo-sm"
               />
             </Link>

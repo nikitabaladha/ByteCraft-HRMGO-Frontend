@@ -30,29 +30,28 @@ const EditJob = () => {
   const [jobCategory, setJobCategory] = useState([]);
   const [showTerms, setShowTerms] = useState(false);
 
-  const [inputValue, setInputValue] = useState(""); // For handling the current skill input
+  const [inputValue, setInputValue] = useState(""); 
 
-  // Handle input value change
+  
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
-  // Handle key press for creating new skills
+  
   const handleKeyPress = (e) => {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
-      const skill = inputValue.trim(); // Remove unnecessary spaces
+      const skill = inputValue.trim(); 
       if (skill && !formData.skill.includes(skill)) {
         setFormData((prevData) => ({
           ...prevData,
           skill: [...prevData.skill, skill],
         }));
       }
-      setInputValue(""); // Clear the input field
+      setInputValue(""); 
     }
   };
 
-  // Handle skill removal
   const handleRemoveSkill = (skillToRemove) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -61,7 +60,6 @@ const EditJob = () => {
   };
 
   useEffect(() => {
-    // Fetch the existing job details for pre-filling the form
     const fetchJobDetails = async () => {
       try {
         const response = await getAPI(`/get-all-jobs/${id}`, {}, true);
@@ -81,7 +79,7 @@ const EditJob = () => {
 
     const fetchBranches = async () => {
       try {
-        const response = await getAPI(`/branch-get-all`, {}, true); // Replace with your actual API endpoint
+        const response = await getAPI(`/branch-get-all`, {}, true); 
         if (response.data && response.data.data) {
           setBranches(response.data.data);
         } else {
@@ -95,7 +93,7 @@ const EditJob = () => {
 
     const fetchJobCategory = async () => {
       try {
-        const response = await getAPI(`/get-all-job-categories`, {}, true); // Replace with your actual API endpoint
+        const response = await getAPI(`/get-all-job-categories`, {}, true);
         if (response.data && response.data.data) {
           setJobCategory(response.data.data);
         } else {
@@ -124,7 +122,7 @@ const EditJob = () => {
           : list.filter((item) => item !== value),
       };
     });
-    setShowTerms(e.target.checked); // Toggle visibility
+    setShowTerms(e.target.checked); 
   };
 
 
@@ -132,8 +130,8 @@ const EditJob = () => {
     setFormData((prevData) => {
       const isChecked = e.target.checked;
       const updatedApplicant = isChecked
-        ? [...prevData.applicant, type] // Add if checked
-        : prevData.applicant.filter((item) => item !== type); // Remove if unchecked
+        ? [...prevData.applicant, type] 
+        : prevData.applicant.filter((item) => item !== type); 
       return { ...prevData, applicant: updatedApplicant };
     });
   };

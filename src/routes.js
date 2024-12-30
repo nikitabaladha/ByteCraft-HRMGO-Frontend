@@ -31,6 +31,7 @@ import InterviewScheldule from "./components/DashboardMain/Recruitment/Interview
 import RecruitmentCareer from "./components/DashboardMain/Recruitment/Career/RecruitmentCareer.js";
 import CareerJobView from "./components/DashboardMain/Recruitment/Career/CareerJobView.js";
 import CareerApplyJob from "./components/DashboardMain/Recruitment/Career/CareerApplyJob.js";
+import SystemSetting from "./components/DashboardMain/System Setting/SystemSetting.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -86,7 +87,9 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
             <Route path="/dashboard/recruitment/job-candidate" element={<JobCandidate/>}></Route>
             <Route path="/dashboard/recruitment/job-on-boarding" element={<JobOnBoarding/>}></Route>
             <Route path="/dashboard/recruitment/convert-to-emoloyee/:id" element={<ConvertToEmployee/>}></Route>
-            <Route path="/dashboard/recruitment/inrterview-schedule" element={<InterviewScheldule/>}></Route>
+            <Route path="/dashboard/recruitment/inrterview-schedule" element={<InterviewScheldule/>}
+            ></Route>
+            <Route path="/dashboard/system-setting" element={<SystemSetting/>}></Route>
           </Route>
 
           

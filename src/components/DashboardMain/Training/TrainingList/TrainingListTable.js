@@ -1,34 +1,51 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt, FaEye } from "react-icons/fa";
-// import { toast } from "react-toastify";
 import getAPI from "../../../../api/getAPI";
-// import deleteAPI from "../../../../api/deleteAPI";
 import TrainingListUpdateModel from "./TrainingListUpdateModel";
 import ConfirmationDialog from "../../ConfirmationDialog";
+import { toast } from "react-toastify";
 
 
 const TrainingListTable = () => {
   const [trainings, setTrainings] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false); 
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);// Modal visibility
-  const [selectedTraining, setSelectedTraining] = useState(null); // Data of the selected training
-  const navigate = useNavigate(); // React Router hook for navigation
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [selectedTraining, setSelectedTraining] = useState(null); 
+  const [siteCurrencySymbol, setCurrencySymbol] = useState("₹");
+  const navigate = useNavigate(); 
 
-  // Fetch training data from backend
   useEffect(() => {
     const fetchTrainings = async () => {
       try {
-        const response = await getAPI("/training-list-get-all"); // Replace with your actual API endpoint
+        const response = await getAPI("/training-list-get-all"); 
         setTrainings(response.data.data);
-        console.log("TrainingList", response.data.data); // Assuming the data is in the 'trainings' field
+        console.log("TrainingList", response.data.data); 
       } catch (error) {
         console.error("Error fetching trainings:", error);
       }
     };
+
+    const fetchSystemSettings = async () => {
+      try {
+        const response = await getAPI("/get-system-setting");
+        console.log("System settings", response.data.data);
+        const fetchedSymbol = response.data.data.siteCurrencySymbol || "₹";
+        setCurrencySymbol(fetchedSymbol); 
+      } catch (error) {
+        toast.error("Error fetching system settings: " + (error.response?.data?.message || error.message));
+      }
+    };
+
+    fetchSystemSettings();
     fetchTrainings();
   }, []);
+
+  const formatCost = (cost) => {
+    return `${siteCurrencySymbol}${new Intl.NumberFormat("en-IN").format(cost)}`;
+  };
+  
 
 const openDeleteDialog = (training) => { 
     console.log("Training form open delete function", training)
@@ -38,8 +55,7 @@ const openDeleteDialog = (training) => {
 
   const handleEdit = (training) => {
     setSelectedTraining(training);
-    // Set the selected training
-    setIsModalOpen(true); // Open the modal
+    setIsModalOpen(true); 
   };
 
   const handleDeleteCancel = () => {
@@ -50,8 +66,6 @@ const openDeleteDialog = (training) => {
   const handleView = (training) => {
     console.log("Navigating to view training:", training);
     navigate(`/dashboard/trainingList-View/${training._id}`, { state: training }); 
-    
-    // Navigate to TrainingListView
   };
 
  
@@ -99,15 +113,13 @@ const openDeleteDialog = (training) => {
 
   function formatDate(dateString) {
     const date = new Date(dateString);
-    const month = date.toLocaleString("default", { month: "short" });
-    const day = date.getDate();
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); 
     const year = date.getFullYear();
-    return `${month} ${day}, ${year}`;
+    return `${day}-${month}-${year}`;
   }
-
-  const formatCost = (cost) => {
-    return new Intl.NumberFormat("en-IN").format(cost);
-  };
+  
+  
 
   return (
     <>
@@ -178,7 +190,7 @@ const openDeleteDialog = (training) => {
                         <td>{`${formatDate(training.startDate)} to ${formatDate(
                           training.endDate
                         )}`}</td>
-                        <td>₹{formatCost(training.trainingCost)}</td>
+                        <td>{formatCost(training.trainingCost)}</td>
                         <td className="Action">
                           <ActionButtons training={training} />
                         </td>

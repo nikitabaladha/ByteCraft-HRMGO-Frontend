@@ -27,6 +27,15 @@ const JobCandidateTable = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0"); // Ensures 2 digits for the day
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Ensures 2 digits for the month
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+  
+
   return (
     <div>
       <div className="row">
@@ -92,7 +101,7 @@ const JobCandidateTable = () => {
                                         ))}
                                 </span>
                               </td>
-                              <td>{new Date(application.createdAt).toLocaleDateString()}</td>
+                              <td>{`${formatDate(application.createdAt)}`}</td>
                               <td>{application.resume ? <a href={application.resume} target="_blank" rel="noopener noreferrer">View Resume</a> : '-'}</td>
                               <td>
                                 <div className="dt-buttons">

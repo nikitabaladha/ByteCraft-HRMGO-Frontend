@@ -72,6 +72,15 @@ const JobOnBoardingTable = () => {
     });
   };
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0"); // Ensures 2 digits for the day
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Ensures 2 digits for the month
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+  
+
   return (
     <div className="row">
       <div className="col-xl-12">
@@ -122,12 +131,12 @@ const JobOnBoardingTable = () => {
                           <td>{row.applicatAppliedFor}</td>
                           <td>{row.jobBranch}</td>
                           <td>
-                            {new Date(
+                            {`${formatDate(
                               row.applicationCreatedAt
-                            ).toLocaleDateString()}
+                            )}`}
                           </td>
                           <td>
-                            {new Date(row.joining_date).toLocaleDateString()}
+                            {`${formatDate(row.joining_date)}`}
                           </td>
                           <td>
                             <span

@@ -1,12 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import putAPI from "../../../../api/putAPI";
 import { toast } from "react-toastify";
+import getAPI from "../../../../api/getAPI";
+
 
 const TrainingListView = () => {
   const location = useLocation();
+  const [siteCurrencySymbol, setCurrencySymbol] = useState("₹");
   //   const training = location.state?.training;
   const training = location.state?.training || location.state;
 
@@ -15,14 +18,30 @@ const TrainingListView = () => {
 
   function formatDate(dateString) {
     const date = new Date(dateString);
-    const month = date.toLocaleString("default", { month: "short" });
-    const day = date.getDate();
+    const day = String(date.getDate()).padStart(2, "0"); 
+    const month = String(date.getMonth() + 1).padStart(2, "0"); 
     const year = date.getFullYear();
-    return `${month} ${day}, ${year}`;
+    return `${day}-${month}-${year}`;
   }
+  
+
+  useEffect(() => {
+    const fetchSystemSettings = async () => {
+      try {
+        const response = await getAPI("/get-system-setting");
+        console.log("System settings", response.data.data);
+        const fetchedSymbol = response.data.data.siteCurrencySymbol || "₹";
+        setCurrencySymbol(fetchedSymbol); 
+      } catch (error) {
+        toast.error("Error fetching system settings: " + (error.response?.data?.message || error.message));
+      }
+    };
+
+    fetchSystemSettings();
+  }, []);
 
   const formatCost = (cost) => {
-    return new Intl.NumberFormat("en-IN").format(cost);
+    return `${siteCurrencySymbol}${new Intl.NumberFormat("en-IN").format(cost)}`;
   };
 
   const [formData, setFormData] = useState({
@@ -113,7 +132,7 @@ const TrainingListView = () => {
                     <tr>
                       <td>Training Cost</td>
                       <td className="text-right">
-                        ₹{formatCost(training.trainingCost)}
+                        {formatCost(training.trainingCost)}
                       </td>
                     </tr>
                     <tr>
@@ -130,7 +149,7 @@ const TrainingListView = () => {
                     </tr>
                     <tr>
                       <td>Date</td>
-                      <td className="text-right">May 8, 2020</td>
+                      <td className="text-right">08-10-2020</td>
                     </tr>
                   </tbody>
                 </table>
