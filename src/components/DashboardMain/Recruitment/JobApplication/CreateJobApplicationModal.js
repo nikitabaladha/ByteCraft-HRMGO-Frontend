@@ -4,7 +4,6 @@ import postAPI from "../../../../api/postAPI";
 import { toast } from "react-toastify";
 
 const CreateJobApplication = ({ onClose }) => {
-  
   const [formData, setFormData] = useState({
     job: "",
     name: "",
@@ -17,8 +16,6 @@ const CreateJobApplication = ({ onClose }) => {
     state: "",
     country: "",
     zipCode: "",
-    profile: null,
-    resume: null,
     dob: "",
     gender: "",
     address: "",
@@ -27,15 +24,54 @@ const CreateJobApplication = ({ onClose }) => {
 
   const [jobs, setJobs] = useState([]);
   const [selectedJobDetails, setSelectedJobDetails] = useState(null);
+  const [profile, setEmployeePhoto] = useState(null);
+  const [resume, setEmployeeResume] = useState(null);
+
+  const [imagePreview, setImagePreview] = useState("");
+  const [resumePreview, setResumePreview] = useState("");
+
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+
+    if (files.length > 0) {
+      const file = files[0];
+
+      if (name === "profile") {
+        setEmployeePhoto(file);
+
+        if (file.type.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setImagePreview(reader.result);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          setImagePreview("");
+        }
+      } else if (name === "resume") {
+        setEmployeeResume(file);
+        setResumePreview(file.name);
+        setImagePreview("");
+      }
+    } else {
+      if (name === "profile") {
+        setEmployeePhoto(null);
+        setImagePreview("");
+      } else if (name === "resume") {
+        setEmployeeResume(null);
+        setResumePreview("");
+      }
+    }
+  };
 
   useEffect(() => {
     // Fetch job titles on component mount
     const fetchJobs = async () => {
       try {
-        const response = await getAPI('/get-all-job');
+        const response = await getAPI("/get-all-job");
         setJobs(response.data.data);
       } catch (error) {
-        console.error('Error fetching jobs:', error);
+        console.error("Error fetching jobs:", error);
       }
     };
     fetchJobs();
@@ -43,28 +79,26 @@ const CreateJobApplication = ({ onClose }) => {
 
   const handleJobChange = async (e) => {
     const jobId = e.target.value;
-    const selectedJob = jobs.find((job) => job._id === jobId); 
-  
+    const selectedJob = jobs.find((job) => job._id === jobId);
+
     setFormData({
       ...formData,
-      job: jobId, 
-      jobTitle: selectedJob?.title || "", 
+      job: jobId,
+      jobTitle: selectedJob?.title || "",
       branch: selectedJob?.branch || "",
-      
     });
-  
+
     if (jobId) {
       try {
         const response = await getAPI(`/get-all-jobs/${jobId}`);
         setSelectedJobDetails(response.data.data);
       } catch (error) {
-        console.error('Error fetching job details:', error);
+        console.error("Error fetching job details:", error);
       }
     } else {
       setSelectedJobDetails(null);
     }
   };
-  
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
@@ -76,27 +110,34 @@ const CreateJobApplication = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const formDataToSend = new FormData();
-  
+
     // Append standard fields
     Object.keys(formData).forEach((key) => {
       if (formData[key]) {
         if (key === "customQuestions") {
           // Convert custom questions to JSON string if it's an array
           formDataToSend.append(key, JSON.stringify(formData[key]));
-        } else if (key === "profile" || key === "resume") {
-          // Append files directly
-          formDataToSend.append(key, formData[key]);
         } else {
           formDataToSend.append(key, formData[key]);
         }
       }
     });
-  
+
+    if (profile) formDataToSend.append("profile", profile);
+    if (resume) formDataToSend.append("resume", resume);
+
     try {
-      const response = await postAPI("/create-job-application", formDataToSend);
-  
+      const response = await postAPI(
+        "/create-job-application",
+        formDataToSend,
+        {
+          "Content-Type": "multipart/form-data",
+        },
+        true
+      );
+
       console.log("Job application created successfully:", response.data);
       toast("Job application created successfully");
       onClose(); // Close the modal after submission
@@ -105,7 +146,6 @@ const CreateJobApplication = ({ onClose }) => {
       toast("Failed to create job application. Please try again.");
     }
   };
-  
 
   return (
     <div className="modal show" style={{ display: "block" }} role="dialog">
@@ -186,142 +226,145 @@ const CreateJobApplication = ({ onClose }) => {
                 </div>
                 {/* Conditional Fields */}
                 {selectedJobDetails?.applicant.includes("Date of Birth") && (
-  <div className="form-group col-md-6">
-    <label htmlFor="dob">Date of Birth</label>
-    <input
-      type="date"
-      className="form-control"
-      name="dob"
-      value={formData.dob || ""}
-      onChange={handleInputChange}
-    />
-  </div>
-)}
+                  <div className="form-group col-md-6">
+                    <label htmlFor="dob">Date of Birth</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      name="dob"
+                      value={formData.dob || ""}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                )}
 
-{selectedJobDetails?.applicant.includes("Gender") && (
-  <div className="form-group col-md-6">
-    <label>Gender</label>
-    <div className="d-flex">
-      <label className="form-check-label">
-        <input
-          type="radio"
-          name="gender"
-          value="Male"
-          checked={formData.gender === "Male"}
-          onChange={handleInputChange}
-        />{" "}
-        Male
-      </label>
-      <label className="form-check-label ms-3">
-        <input
-          type="radio"
-          name="gender"
-          value="Female"
-          checked={formData.gender === "Female"}
-          onChange={handleInputChange}
-        />{" "}
-        Female
-      </label>
-    </div>
-  </div>
-)}
+                {selectedJobDetails?.applicant.includes("Gender") && (
+                  <div className="form-group col-md-6">
+                    <label>Gender</label>
+                    <div className="d-flex">
+                      <label className="form-check-label">
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="Male"
+                          checked={formData.gender === "Male"}
+                          onChange={handleInputChange}
+                        />{" "}
+                        Male
+                      </label>
+                      <label className="form-check-label ms-3">
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="Female"
+                          checked={formData.gender === "Female"}
+                          onChange={handleInputChange}
+                        />{" "}
+                        Female
+                      </label>
+                    </div>
+                  </div>
+                )}
 
-{selectedJobDetails?.applicant.includes("Address") && (
-  <div className="form-group col-md-12">
-    <label htmlFor="address">Address</label>
-    <textarea
-      className="form-control"
-      name="address"
-      rows="3"
-      value={formData.address || ""}
-      onChange={handleInputChange}
-      placeholder="Enter address"
-    ></textarea>
-  </div>
-)}
+                {selectedJobDetails?.applicant.includes("Address") && (
+                  <div className="form-group col-md-12">
+                    <label htmlFor="address">Address</label>
+                    <textarea
+                      className="form-control"
+                      name="address"
+                      rows="3"
+                      value={formData.address || ""}
+                      onChange={handleInputChange}
+                      placeholder="Enter address"
+                    ></textarea>
+                  </div>
+                )}
 
-<div className="row mt-3">
-      {["city", "state", "country", "zipCode"].map((field) => (
-        <div className="form-group col-md-6" key={field}>
-          <label htmlFor={field}>
-            {field.charAt(0).toUpperCase() + field.slice(1)}
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder={`Enter ${field}`}
-            name={field}
-            value={formData[field] || ""}
-            onChange={handleInputChange}
-          />
-        </div>
-      ))}
-    </div>
+                <div className="row mt-3">
+                  {["city", "state", "country", "zipCode"].map((field) => (
+                    <div className="form-group col-md-6" key={field}>
+                      <label htmlFor={field}>
+                        {field.charAt(0).toUpperCase() + field.slice(1)}
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder={`Enter ${field}`}
+                        name={field}
+                        value={formData[field] || ""}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  ))}
+                </div>
 
+                {/* Visibility fields */}
+                {selectedJobDetails?.visibility.includes("Profile") && (
+                  <div className="form-group col-md-6">
+                    <label htmlFor="profile">Profile</label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      name="profile"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                    />
+                  </div>
+                )}
 
-{/* Visibility fields */}
-{selectedJobDetails?.visibility.includes("Profile") && (
-  <div className="form-group col-md-6">
-    <label htmlFor="profile">Profile</label>
-    <input
-      type="file"
-      className="form-control"
-      name="profile"
-      onChange={handleInputChange}
-    />
-  </div>
-)}
+                {selectedJobDetails?.visibility.includes("Resume") && (
+                  <div className="form-group col-md-6">
+                    <label htmlFor="resume">Resume</label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      name="resume"
+                      accept=".pdf"
+                      onChange={handleFileChange}
+                    />
+                  </div>
+                )}
 
-{selectedJobDetails?.visibility.includes("Resume") && (
-  <div className="form-group col-md-6">
-    <label htmlFor="resume">Resume</label>
-    <input
-      type="file"
-      className="form-control"
-      name="resume"
-      onChange={handleInputChange}
-    />
-  </div>
-)}
+                {selectedJobDetails?.visibility.includes("Letter") && (
+                  <div className="form-group col-md-12">
+                    <label htmlFor="coverLetter">Cover Letter</label>
+                    <textarea
+                      className="form-control"
+                      name="coverLetter"
+                      rows="3"
+                      value={formData.coverLetter || ""}
+                      onChange={handleInputChange}
+                      placeholder="Enter your cover letter"
+                    ></textarea>
+                  </div>
+                )}
 
-{selectedJobDetails?.visibility.includes("Letter") && (
-  <div className="form-group col-md-12">
-    <label htmlFor="coverLetter">Cover Letter</label>
-    <textarea
-      className="form-control"
-      name="coverLetter"
-      rows="3"
-      value={formData.coverLetter || ""}
-      onChange={handleInputChange}
-      placeholder="Enter your cover letter"
-    ></textarea>
-  </div>
-)}
-
-{/* Custom Questions */}
-{selectedJobDetails?.customQuestions &&
-  selectedJobDetails.customQuestions.map((question, index) => (
-    <div className="form-group col-md-12 question" key={index}>
-      <label htmlFor={`customQuestion${index}`} className="form-label">
-        {question}
-      </label>
-      <span className="text-danger">*</span>
-      <input
-        type="text"
-        className="form-control"
-        name={`customQuestion${index}`}
-        value={formData[`customQuestion${index}`] || ""}
-        onChange={(e) =>
-          setFormData({
-            ...formData,
-            [`customQuestion${index}`]: e.target.value,
-          })
-        }
-        required
-      />
-    </div>
-  ))}
-
+                {/* Custom Questions */}
+                {selectedJobDetails?.customQuestions &&
+                  selectedJobDetails.customQuestions.map((question, index) => (
+                    <div className="form-group col-md-12 question" key={index}>
+                      <label
+                        htmlFor={`customQuestion${index}`}
+                        className="form-label"
+                      >
+                        {question}
+                      </label>
+                      <span className="text-danger">*</span>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name={`customQuestion${index}`}
+                        value={formData[`customQuestion${index}`] || ""}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            [`customQuestion${index}`]: e.target.value,
+                          })
+                        }
+                        required
+                      />
+                    </div>
+                  ))}
               </div>
             </div>
             <div className="modal-footer">
@@ -344,4 +387,3 @@ const CreateJobApplication = ({ onClose }) => {
 };
 
 export default CreateJobApplication;
-

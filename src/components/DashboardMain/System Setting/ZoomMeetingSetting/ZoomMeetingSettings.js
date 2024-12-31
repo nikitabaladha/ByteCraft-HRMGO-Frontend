@@ -1,7 +1,8 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from "react-toastify";
 import putAPI from '../../../../api/putAPI';
 import getAPI from '../../../../api/getAPI';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 const ZoomMeetingSettings = () => {
   const [zoomAccountId, setZoomAccountId] = useState('');
@@ -16,10 +17,9 @@ const ZoomMeetingSettings = () => {
   useEffect(() => {
     const fetchZoomSettings = async () => {
       try {
-        const response = await getAPI('/get-zoom-setting'); 
+        const response = await getAPI('/get-zoom-setting');
         const { zoom_account_id, zoom_client_id, zoom_client_secret } = response.data.data;
 
-        // Set fetched data into state
         setZoomAccountId(zoom_account_id);
         setZoomClientId(zoom_client_id);
         setZoomClientSecret(zoom_client_secret);
@@ -40,16 +40,12 @@ const ZoomMeetingSettings = () => {
         zoom_client_id: zoomClientId,
         zoom_client_secret: zoomClientSecret,
       });
-      toast("Zoom Setting Created Successfully")
+      toast("Zoom Setting Created Successfully");
       setMessage(response.data.message);
     } catch (error) {
       setMessage('Error saving Zoom settings');
-      toast('Error saving Zoom settings')
+      toast('Error saving Zoom settings');
     }
-  };
-
-  const toggleVisibility = (setter) => {
-    setter((prevState) => !prevState);
   };
 
   return (
@@ -61,56 +57,79 @@ const ZoomMeetingSettings = () => {
         <form onSubmit={handleSubmit}>
           <div className="card-body">
             <div className="row">
+              {/* Zoom Account ID */}
               <div className="col-lg-6 col-md-6 col-sm-12 form-group">
                 <label htmlFor="zoom_account_id" className="col-form-label">
                   Zoom Account ID
                 </label>
-                <input
-                  className="form-control"
-                  placeholder="Enter Zoom Account ID"
-                  name="zoom_account_id"
-                  type={showAccountId ? "text" : "password"}
-                  value={zoomAccountId}
-                  onChange={(e) => setZoomAccountId(e.target.value)}
-                  id="zoom_account_id"
-                />
-                <span
-                    className="input-icon"
-                    onClick={() => toggleVisibility(setShowAccountId)}
-                    style={{ cursor: 'pointer', position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}
+                <div className="input-group">
+                  <input
+                    className="form-control"
+                    placeholder="Enter Zoom Account ID"
+                    name="zoom_account_id"
+                    type={showAccountId ? "text" : "password"}
+                    value={zoomAccountId}
+                    onChange={(e) => setZoomAccountId(e.target.value)}
+                    id="zoom_account_id"
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    onClick={() => setShowAccountId(!showAccountId)}
                   >
-                    {showAccountId ? "🙈" : "👁️"}
-                  </span>
+                   {showAccountId ? <FiEyeOff /> : <FiEye />}
+                  </button>
+                </div>
               </div>
 
+              {/* Zoom Client ID */}
               <div className="col-lg-6 col-md-6 col-sm-12 form-group">
                 <label htmlFor="zoom_client_id" className="col-form-label">
                   Zoom Client ID
                 </label>
-                <input
-                  className="form-control"
-                  placeholder="Enter Zoom Client ID"
-                  name="zoom_client_id"
-                  type="password"
-                  value={zoomClientId}
-                  onChange={(e) => setZoomClientId(e.target.value)}
-                  id="zoom_client_id"
-                />
+                <div className="input-group">
+                  <input
+                    className="form-control"
+                    placeholder="Enter Zoom Client ID"
+                    name="zoom_client_id"
+                    type={showClientId ? "text" : "password"}
+                    value={zoomClientId}
+                    onChange={(e) => setZoomClientId(e.target.value)}
+                    id="zoom_client_id"
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    onClick={() => setShowClientId(!showClientId)}
+                  >
+                    {showClientId ? <FiEyeOff /> : <FiEye />}
+                  </button>
+                </div>
               </div>
 
+              {/* Zoom Client Secret */}
               <div className="col-lg-6 col-md-6 col-sm-12 form-group">
                 <label htmlFor="zoom_client_secret" className="col-form-label">
                   Zoom Client Secret Key
                 </label>
-                <input
-                  className="form-control"
-                  placeholder="Enter Zoom Client Secret Key"
-                  name="zoom_client_secret"
-                  type="password"
-                  value={zoomClientSecret}
-                  onChange={(e) => setZoomClientSecret(e.target.value)}
-                  id="zoom_client_secret"
-                />
+                <div className="input-group">
+                  <input
+                    className="form-control"
+                    placeholder="Enter Zoom Client Secret Key"
+                    name="zoom_client_secret"
+                    type={showClientSecret ? "text" : "password"}
+                    value={zoomClientSecret}
+                    onChange={(e) => setZoomClientSecret(e.target.value)}
+                    id="zoom_client_secret"
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    onClick={() => setShowClientSecret(!showClientSecret)}
+                  >
+                    {showClientSecret ? <FiEyeOff /> : <FiEye />}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

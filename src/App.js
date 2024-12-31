@@ -11,6 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
 import "bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js";
 import "react-perfect-scrollbar/dist/css/styles.css";
+import { ThemeProvider } from "./ThemeProvider";
 
 // import "./assets/css/customizer.css";
 // import "./assets/css/plugins/style.css";
@@ -38,10 +39,12 @@ const App = () => {
   };
 
   return (
+    <ThemeProvider>
     <BrowserRouter>
       <AppRoutes isAuthenticated={isAuthenticated} handleLogin={handleLogin} />
       <ToastContainer />
     </BrowserRouter>
+    </ThemeProvider>
   );
 };
 

@@ -23,7 +23,7 @@ const Footer = () => {
       <footer className="dash-footer">
         <div className="footer-wrapper">
           <div className="py-1">
-            <span className="text-muted">© {footerText}</span>
+            <span className="text-muted">©  {new Date().getFullYear()} {footerText}</span>
           </div>
         </div>
       </footer>
