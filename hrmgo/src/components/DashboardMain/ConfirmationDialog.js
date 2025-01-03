@@ -199,7 +199,58 @@ jobCategory: {
   successMessage: "Job Category successfully deleted!",
   errorMessage: "Failed to delete Job Category.",
   idKey: "jobCategoryId"
+},
+
+account: {
+  getEndpoint: (id) => `/delete-AccountList/${id}`,
+  successMessage : "Account successfully deleted!",
+  errorMessage : "Failed to delete account.",
+  idKey: "accountId"
+},
+
+deposit: {
+  getEndpoint: (id) => `/delete_deposit/${id}`,
+  successMessage: "Deposit successfully deleted!",
+  errorMessage: "Failed to delete deposit.",
+  idKey: "depositId"
+},
+expense: {
+  getEndpoint: (id) => `/delete_expense/${id}`,
+  successMessage: "Expense successfully deleted!",
+  errorMessage: "Failed to delete expense.",
+  idKey: "expenseId"
+},
+transferbalance: {
+  getEndpoint: (id) => `/delete_transferbalance/${id}`,
+  successMessage: "Transfer balance successfully deleted!",
+  errorMessage: "Failed to delete transfer balance.",
+  idKey: "transferBalanceId"
+},
+payer: {
+  getEndpoint: (id) => `/delete_Payer/${id}`,
+  successMessage: "Payer successfully deleted!",
+  errorMessage: "Failed to delete payer.",
+  idKey: "payerId"
+},
+payee: {
+  getEndpoint: (id) => `/delete_Payee/${id}`,
+  successMessage: "Payee successfully deleted!",
+  errorMessage: "Failed to delete payee.",
+  idKey: "payeeId"
+},
+meeting: {
+  getEndpoint: (id) => `/meetings_delete/${id}`,
+  successMessage: "Meeting successfully deleted!",
+  errorMessage: "Failed to delete meeting.",
+  idKey: "meetingId"
+},
+ticket: {
+  getEndpoint: (id) => `/ticket-delete/${id}`,
+  successMessage: "Ticket successfully deleted!",
+  errorMessage: "Failed to delete ticket.",
+  idKey: "ticketId"
 }
+
 
 
 

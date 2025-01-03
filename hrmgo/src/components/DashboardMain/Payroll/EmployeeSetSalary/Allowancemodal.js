@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { toast } from 'react-toastify';
 import postAPI from '../../../../api/postAPI';
+import getAPI from '../../../../api/getAPI';
 import { Link } from 'react-router-dom';
 
 const CreateAllowanceModal = ({ onClose, employee }) => {
@@ -8,8 +9,25 @@ const CreateAllowanceModal = ({ onClose, employee }) => {
     const [title, setTitle] = useState('');
     const [type, setType] = useState('Fixed');
     const [amount, setAmount] = useState('');
+    const [allowanceOptions, setAllowanceOptions] = useState([]);
     const baseAmount = 1000;
+    
+  useEffect(() => {
+    const fetchAllowanceOptions = async () => {
+      try {
+        const response = await getAPI("/allowance-option-get-all", true);
+        if (!response.hasError) {
+          setAllowanceOptions(response.data.data);
+        } else {
+          toast.error(`Failed to fetch allowance options: ${response.message}`);
+        }
+      } catch (error) {
+        toast.error("An error occurred while fetching allowance options.");
+      }
+    };
 
+    fetchAllowanceOptions();
+  }, []);
     const handleAmountChange = (e) => {
         setAmount(e.target.value);
     };
@@ -83,9 +101,12 @@ const CreateAllowanceModal = ({ onClose, employee }) => {
                                         value={allowanceOption}
                                         onChange={(e) => setAllowanceOption(e.target.value)}
                                     >
-                                        <option value="">Select Allowance Option</option>
-                                        <option value="Taxable">Taxable</option>
-                                        <option value="Non Taxable">Non Taxable</option>
+                                         <option value="">Select Allowance Option</option>
+                                        {allowanceOptions.map((option) => (
+                                            <option key={option._id} value={option.allowanceName}>
+                                                {option.allowanceName}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
 

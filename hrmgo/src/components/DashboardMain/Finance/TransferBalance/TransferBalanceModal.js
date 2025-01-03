@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
 import getAPI from "../../../../api/getAPI.js"; 
-import postAPI from "../../../../api/postAPI.js"; // Import the postAPI function
+import postAPI from "../../../../api/postAPI.js"; 
 
 const TransferBalanceModal = ({ isOpen, onClose }) => {
   const [accountNames, setAccountNames] = useState([]);
@@ -14,8 +14,26 @@ const TransferBalanceModal = ({ isOpen, onClose }) => {
   const [paymentTypeId, setPaymentTypeId] = useState('');
   const [referalId, setReferalId] = useState('');
   const [description, setDescription] = useState('');
+  const [paymentTypes, setPaymentTypes] = useState([]);
 
-  // Fetch account names
+  useEffect(() => {
+    const fetchPaymentTypes = async () => {
+      try {
+        const response = await getAPI("/payment-type-get-all", {}, true);
+        if (response.data && !response.data.hasError) {
+          setPaymentTypes(response.data.data);
+        } else {
+          toast.error(`Failed to fetch payment types: ${response.message}`);
+        }
+      } catch (error) {
+        console.error("Error fetching payment types:", error);
+        toast.error("An error occurred while fetching payment types.");
+      }
+    };
+
+    fetchPaymentTypes();
+  }, []);
+
   useEffect(() => {
     const fetchAccountNames = async () => {
       try {
@@ -34,7 +52,7 @@ const TransferBalanceModal = ({ isOpen, onClose }) => {
     fetchAccountNames();
   }, []);
 
-  // Set current date
+  
   useEffect(() => {
     const now = new Date();
     let month = now.getMonth() + 1;
@@ -50,7 +68,7 @@ const TransferBalanceModal = ({ isOpen, onClose }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
     
     const transferData = {
       fromAccountId,
@@ -63,10 +81,10 @@ const TransferBalanceModal = ({ isOpen, onClose }) => {
     };
 
     try {
-      const response = await postAPI('/create_transferbalance', transferData, true); // Adjust the endpoint accordingly
+      const response = await postAPI('/create_transferbalance', transferData, true); 
       if (!response.hasError) {
         toast.success("Transfer Balance Created Successfully");
-        onClose(); // Close the modal after successful submission
+        onClose(); 
       } else {
         toast.error(`Failed to create transfer balance: ${response.message}`);
       }
@@ -78,7 +96,7 @@ const TransferBalanceModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="modal fade show" id="commonModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-modal="true" style={{ display: 'block', paddingLeft: '0px', position: "fixed", top: 0, left: 0, width: "100%", height: "100%", backgroundColor: "rgba(0, 0, 0, 0.5)", zIndex: 1040 }}>
+    <div className="modal fade show modal-overlay" id="commonModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-modal="true">
       <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">
           <div className="modal-header">
@@ -92,6 +110,7 @@ const TransferBalanceModal = ({ isOpen, onClose }) => {
                   <div className="form-group">
                     <label htmlFor="from_account_id" className="col-form-label">From Account</label><span className="text-danger">*</span>
                     <select className="form-control" required id="from_account_id" name="fromAccountId" value={fromAccountId} onChange={(e) => setFromAccountId(e.target.value)}>
+                    <option value="">Choose From Account</option>
                       {accountNames.map((account) => (
                         <option key={account._id} value={account.account_name}>
                           {account.account_name}
@@ -104,6 +123,7 @@ const TransferBalanceModal = ({ isOpen, onClose }) => {
                   <div className="form-group">
                     <label htmlFor="to_account_id" className="col-form-label">To Account</label><span className="text-danger">*</span>
                     <select className="form-control" required id="to_account_id" name="toAccountId" value={toAccountId} onChange={(e) => setToAccountId(e.target.value)}>
+                    <option value="">Choose To Account</option>
                       {accountNames.map((account) => (
                         <option key={account._id} value={account.account_name}>
                           {account.account_name}
@@ -142,9 +162,12 @@ const TransferBalanceModal = ({ isOpen, onClose }) => {
                   <div className="form-group">
                     <label htmlFor="payment_type_id" className="col-form-label">Payment Method</label><span className="text-danger">*</span>
                     <select className="form-control" required id="payment_type_id" name="paymentTypeId" value={paymentTypeId} onChange={(e) => setPaymentTypeId(e.target.value)}>
-                      <option value="">Choose Payment Method</option>
-                      <option value="Cash">Cash</option>
-                      <option value="Bank">Bank</option>
+                    <option value="">Choose Payment Method</option>
+                        {paymentTypes.map((type) => (
+                          <option key={type._id} value={type.paymentName}>
+                            {type.paymentName}
+                          </option>
+                        ))}
                     </select>
                   </div>
                 </div>

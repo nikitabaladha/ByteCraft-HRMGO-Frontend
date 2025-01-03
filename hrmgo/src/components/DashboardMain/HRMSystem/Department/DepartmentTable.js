@@ -16,6 +16,31 @@ const DepartmentTable = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [departmentToDelete, setDepartmentToDelete] = useState(null);
 
+  const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleEntriesPerPageChange = (event) => {
+    setEntriesPerPage(Number(event.target.value));
+    setCurrentPage(1);
+  };
+
+  const filteredDepartments = departments.filter((department) => {
+    const searchTerm = searchQuery.toLowerCase();
+
+    return (
+      department.branchId.branchName.toLowerCase().includes(searchTerm) ||
+      department.departmentName.toLowerCase().includes(searchTerm)
+
+    );
+  });
+
+  const paginatedDepartments = filteredDepartments.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
+
+
   const openDeleteDialog = (departmentId) => {
     setDepartmentToDelete(departmentId);
     setIsDeleteDialogOpen(true);
@@ -66,6 +91,7 @@ const DepartmentTable = () => {
         <Sidebar />
       </div>
 
+
       <div className="col-9">
         <div className="card">
           <div className="card-body table-border-style">
@@ -74,11 +100,13 @@ const DepartmentTable = () => {
                 <div className="dataTable-top">
                   <div className="dataTable-dropdown">
                     <label>
-                      <select className="dataTable-selector">
+                      <select
+                        className="dataTable-selector"
+                        value={entriesPerPage}
+                        onChange={handleEntriesPerPageChange}
+                      >
                         <option value="5">5</option>
-                        <option value="10" selected="">
-                          10
-                        </option>
+                        <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
                         <option value="25">25</option>
@@ -91,6 +119,8 @@ const DepartmentTable = () => {
                       className="dataTable-input"
                       placeholder="Search..."
                       type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
                 </div>
@@ -104,9 +134,9 @@ const DepartmentTable = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {departments.map((department) => (
+                      {paginatedDepartments.map((department) => (
                         <tr key={department._id}>
-                               <td>{ department.branchId.branchName}</td>
+                          <td>{department.branchId.branchName}</td>
                           <td>{department.departmentName}</td>
                           <td className="Action">
                             <div className="dt-buttons">
@@ -159,12 +189,56 @@ const DepartmentTable = () => {
                 </div>
                 <div className="dataTable-bottom">
                   <div className="dataTable-info">
-                    Showing 1 to 8 of 8 entries
+                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, departments.length)}{" "}
+                    to {Math.min(currentPage * entriesPerPage, departments.length)}{" "}
+                    of {departments.length} entries
                   </div>
                   <nav className="dataTable-pagination">
-                    <ul className="dataTable-pagination-list"></ul>
+                    <ul className="dataTable-pagination-list">
+                      {currentPage > 1 && (
+                        <li className="page-item">
+                          <button
+                            className="page-link prev-button"
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                          >
+                            ‹
+                          </button>
+                        </li>
+                      )}
+
+                      {Array.from({ length: Math.ceil(departments.length / entriesPerPage) }, (_, index) => (
+                        <li
+                          key={index + 1}
+                          className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+                        >
+                          <button
+                            className="page-link"
+                            onClick={() => setCurrentPage(index + 1)}
+                            style={{
+                              backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
+                              color: '#6FD943',
+                            }}
+                          >
+                            {index + 1}
+                          </button>
+                        </li>
+                      ))}
+
+                      {currentPage < Math.ceil(departments.length / entriesPerPage) && (
+                        <li className="page-item">
+                          <button
+                            className="page-link next-button"
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                          >
+                            ›
+                          </button>
+                        </li>
+                      )}
+                    </ul>
                   </nav>
                 </div>
+
+
               </div>
             </div>
           </div>
@@ -177,10 +251,10 @@ const DepartmentTable = () => {
           closeModal={handleCloseModal}
         />
       )}
-            {isDeleteDialogOpen && (
+      {isDeleteDialogOpen && (
         <ConfirmationDialog
           onClose={closeDeleteDialog}
-          id={departmentToDelete}  
+          id={departmentToDelete}
           deleteType="department"
           onDeleted={handleDeleteSuccess}
         />

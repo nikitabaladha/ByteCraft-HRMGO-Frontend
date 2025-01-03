@@ -42,16 +42,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TiPlus } from "react-icons/ti";
-import CreatePayeeModal from "./CreatePayeeModal"; // Import the modal component
+import CreatePayeeModal from "./CreatePayeeModal"; 
 
 const PayeesHeader = () => {
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const [showModal, setShowModal] = useState(false); 
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
   return (
-    <div className="dash-content">
       <div className="page-header">
         <div className="page-block">
           <div className="row align-items-center">
@@ -72,7 +71,7 @@ const PayeesHeader = () => {
                   type="button"
                   className="btn btn-sm btn-primary"
                   title="Create"
-                  onClick={openModal} // Open modal on click
+                  onClick={openModal} 
                 >
                   <TiPlus />
                 </button>
@@ -80,11 +79,10 @@ const PayeesHeader = () => {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Render CreatePayeeModal when showModal is true */}
+   
       {showModal && (
-        <CreatePayeeModal closeModal={closeModal} /> // Pass closeModal as a prop
+        <CreatePayeeModal closeModal={closeModal} /> 
       )}
     </div>
   );

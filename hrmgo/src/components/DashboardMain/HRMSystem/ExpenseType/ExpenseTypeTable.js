@@ -15,6 +15,26 @@ const ExpenseTypeTable = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [expenseTypeToDelete, setExpenseTypeToDelete] = useState(null);
 
+  const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleEntriesPerPageChange = (event) => {
+    setEntriesPerPage(Number(event.target.value));
+    setCurrentPage(1);
+  };
+
+  const filteredExpenseTypes = expenseTypes.filter((expenseType) => {
+    const searchTerm = searchQuery.toLowerCase();
+    return expenseType.expenseName.toLowerCase().includes(searchTerm);
+  });
+
+  const paginatedExpenseTypes = filteredExpenseTypes.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
+
+
   const openDeleteDialog = (expenseTypeId) => {
     setExpenseTypeToDelete(expenseTypeId);
     setIsDeleteDialogOpen(true);
@@ -75,11 +95,13 @@ const ExpenseTypeTable = () => {
                 <div className="dataTable-top">
                   <div className="dataTable-dropdown">
                     <label>
-                      <select className="dataTable-selector">
+                      <select
+                        className="dataTable-selector"
+                        value={entriesPerPage}
+                        onChange={handleEntriesPerPageChange}
+                      >
                         <option value="5">5</option>
-                        <option value="10" selected="true">
-                          10
-                        </option>
+                        <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
                         <option value="25">25</option>
@@ -88,7 +110,13 @@ const ExpenseTypeTable = () => {
                     </label>
                   </div>
                   <div className="dataTable-search">
-                    <input className="dataTable-input" placeholder="Search..." type="text" />
+                    <input
+                      className="dataTable-input"
+                      placeholder="Search..."
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                   </div>
                 </div>
                 <div className="dataTable-container">
@@ -100,7 +128,7 @@ const ExpenseTypeTable = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {expenseTypes.map((expenseType) => (
+                      {paginatedExpenseTypes.map((expenseType) => (
                         <tr key={expenseType._id}>
                           <td>{expenseType.expenseName}</td>
                           <td className="Action">
@@ -145,10 +173,52 @@ const ExpenseTypeTable = () => {
                 </div>
                 <div className="dataTable-bottom">
                   <div className="dataTable-info">
-                    Showing 1 to {expenseTypes.length} of {expenseTypes.length} entries
+                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, filteredExpenseTypes.length)}{" "}
+                    to {Math.min(currentPage * entriesPerPage, filteredExpenseTypes.length)}{" "}
+                    of {filteredExpenseTypes.length} entries
                   </div>
                   <nav className="dataTable-pagination">
-                    <ul className="dataTable-pagination-list"></ul>
+                    <ul className="dataTable-pagination-list">
+                      {currentPage > 1 && (
+                        <li className="page-item">
+                          <button
+                            className="page-link prev-button"
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                          >
+                            ‹
+                          </button>
+                        </li>
+                      )}
+
+                      {Array.from({ length: Math.ceil(filteredExpenseTypes.length / entriesPerPage) }, (_, index) => (
+                        <li
+                          key={index + 1}
+                          className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+                        >
+                          <button
+                            className="page-link"
+                            onClick={() => setCurrentPage(index + 1)}
+                            style={{
+                              backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
+                              color: '#6FD943',
+                            }}
+                          >
+                            {index + 1}
+                          </button>
+                        </li>
+                      ))}
+
+                      {currentPage < Math.ceil(filteredExpenseTypes.length / entriesPerPage) && (
+                        <li className="page-item">
+                          <button
+                            className="page-link next-button"
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                          >
+                            ›
+                          </button>
+                        </li>
+                      )}
+                    </ul>
                   </nav>
                 </div>
               </div>

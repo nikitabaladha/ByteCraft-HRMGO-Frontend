@@ -36,7 +36,7 @@ const MeetingHeader = () => {
               <div className="float-end">
               <button
                   onClick={goToCalendar}  
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary me-2"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Calendar View"
                 >

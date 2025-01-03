@@ -1,23 +1,21 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
 
-const ManageAccountBalances = () => {
+const HRMSystemSettingHeader = () => {
   return (
       <div className="page-header">
         <div className="page-block">
           <div className="row align-items-center">
             <div className="col-auto">
               <div className="page-header-title">
-                <h4 className="m-b-10">Manage Account Balances</h4>
+                <h4 className="m-b-10">Setting</h4>
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <a href="https://demo.workdo.io/hrmgo/dashboard">Home</a>
+                  <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Account Balances</li>
+                <li className="breadcrumb-item">Setting</li>
               </ul>
-            </div>
-            <div className="col">
-              <div className="float-end"></div>
             </div>
           </div>
         </div>
@@ -25,4 +23,4 @@ const ManageAccountBalances = () => {
   );
 };
 
-export default ManageAccountBalances;
+export default HRMSystemSettingHeader;

@@ -4,15 +4,14 @@ import { toast } from "react-toastify";
 
 const EditPayerModal = ({ payer, closeModal }) => {
   const [formData, setFormData] = useState({
-    payer_name: "", // Updated to match the state key
+    payer_name: "", 
     contact_number: "",
   });
 
   useEffect(() => {
-    // Populate form data when payer changes
     console.log("Payer passed to modal:", payer);
     setFormData({
-      payer_name: payer?.payer_name || "", // Ensure key matches state
+      payer_name: payer?.payer_name || "", 
       contact_number: payer?.contact_number || "",
     });
   }, [payer]);
@@ -28,7 +27,7 @@ const EditPayerModal = ({ payer, closeModal }) => {
       const response = await putAPI(`/update_Payer/${payer._id}`, formData, true);
       if (!response.hasError) {
         toast.success("Payer updated successfully");
-        closeModal(); // Close modal on success
+        closeModal(); 
       } else {
         toast.error(`Failed to update Payer: ${response.message}`);
       }
@@ -39,19 +38,9 @@ const EditPayerModal = ({ payer, closeModal }) => {
 
   return (
     <div
-      className="modal fade show"
+      className="modal fade show modal-overlay"
       tabIndex="-1"
       aria-labelledby="exampleModalLabel"
-      style={{
-        display: "block",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        zIndex: 1040,
-      }}
       aria-modal="true"
       role="dialog"
     >
@@ -74,7 +63,7 @@ const EditPayerModal = ({ payer, closeModal }) => {
                 <label htmlFor="payer_name">Payer Name</label>
                 <input
                   className="form-control"
-                  name="payer_name" // Updated name attribute
+                  name="payer_name" 
                   type="text"
                   value={formData.payer_name}
                   onChange={handleInputChange}

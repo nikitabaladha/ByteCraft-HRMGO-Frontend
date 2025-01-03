@@ -14,8 +14,6 @@ import ConfirmationDialog from "./statusinactive.js";
 
 const PayslipTable = () => {
   const [payrollData, setPayrollData] = useState([]);
-  const [loading] = useState(false);
-  const [error] = useState("");
   const [isPayslipReceiptOpen, setPayslipReceiptOpen] = useState(false);
   const [selectedPayslipForReceipt, setSelectedPayslipForReceipt] = useState(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -364,11 +362,6 @@ const PayslipTable = () => {
           </div>
           <div className="card-body">
             <div className="table-responsive">
-              {loading ? (
-                <div>Loading...</div>
-              ) : error ? (
-                <div className="text-danger">{error}</div>
-              ) : (
                 <table className="table">
                   <thead>
                     <tr>
@@ -453,7 +446,6 @@ const PayslipTable = () => {
                       ))}
                   </tbody>
                 </table>
-              )}
             </div>
           </div>
         </div>

@@ -1,28 +1,68 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; 
+import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
-import postAPI from "../../../../api/postAPI.js"; 
-import getAPI from "../../../../api/getAPI.js"; 
+import postAPI from "../../../../api/postAPI.js";
+import getAPI from "../../../../api/getAPI.js";
 
 const ExpenseModal = ({ isOpen, onClose }) => {
-  const [currentDate, setCurrentDate] = useState(null);  
+  const [currentDate, setCurrentDate] = useState(null);
   const [accountId, setAccountId] = useState('');
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState('');
-  const [payeeId, setPayeeId] = useState(''); 
+  const [payeeId, setPayeeId] = useState('');
   const [paymentTypeId, setPaymentTypeId] = useState('');
   const [refId, setRefId] = useState('');
   const [description, setDescription] = useState('');
   const [accountNames, setAccountNames] = useState([]);
-  const [payeeNames, setPayeeNames] = useState([]); 
+  const [payeeNames, setPayeeNames] = useState([]);
+  const [paymentTypes, setPaymentTypes] = useState([]);
+  const [expenseTypes, setExpenseTypes] = useState([]);
+
+
+  useEffect(() => {
+    const fetchExpenseTypes = async () => {
+      try {
+        const response = await getAPI("/expense-type-get-all", {}, true);
+        if (response.data && !response.data.hasError) {
+          setExpenseTypes(response.data.data);
+        } else {
+          toast.error(`Failed to fetch expense types: ${response.message}`);
+        }
+      } catch (error) {
+        console.error("Error fetching expense types:", error);
+        toast.error("An error occurred while fetching expense types.");
+      }
+    };
+
+    fetchExpenseTypes();
+  }, []);
+
+
+  useEffect(() => {
+    const fetchPaymentTypes = async () => {
+      try {
+        const response = await getAPI("/payment-type-get-all", {}, true);
+        if (response.data && !response.data.hasError) {
+          setPaymentTypes(response.data.data);
+        } else {
+          toast.error(`Failed to fetch payment types: ${response.message}`);
+        }
+      } catch (error) {
+        console.error("Error fetching payment types:", error);
+        toast.error("An error occurred while fetching payment types.");
+      }
+    };
+
+    fetchPaymentTypes();
+  }, []);
 
   useEffect(() => {
     const fetchAccountNames = async () => {
       try {
-        const response = await getAPI('/AccountList-get-all',{}, true); 
+        const response = await getAPI('/AccountList-get-all', {}, true);
         if (response.data && !response.data.hasError) {
-          setAccountNames(response.data.data); 
+          setAccountNames(response.data.data);
         } else {
           toast.error("Failed to fetch account names.");
         }
@@ -38,9 +78,9 @@ const ExpenseModal = ({ isOpen, onClose }) => {
   useEffect(() => {
     const fetchPayeeNames = async () => {
       try {
-        const response = await getAPI('/getall_Payee',{}, true); 
+        const response = await getAPI('/getall_Payee', {}, true);
         if (response.data && !response.data.hasError) {
-          setPayeeNames(response.data.data); 
+          setPayeeNames(response.data.data);
         } else {
           toast.error("Failed to fetch payee names.");
         }
@@ -60,33 +100,33 @@ const ExpenseModal = ({ isOpen, onClose }) => {
     if (month < 10) month = "0" + month;
     if (day < 10) day = "0" + day;
     const today = now.getFullYear() + "-" + month + "-" + day;
-    setCurrentDate(today); 
+    setCurrentDate(today);
   }, []);
 
   const handleDateChange = (date) => {
-    setCurrentDate(date); 
+    setCurrentDate(date);
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     const expenseData = {
       account_name: accountId,
       amount: parseFloat(amount),
       date: currentDate,
       category: category,
-      payee_name: payeeId, 
+      payee_name: payeeId,
       payment_type: paymentTypeId,
       ref: refId,
       description: description,
     };
 
     try {
-   
-      const response = await postAPI('/create_expense', expenseData, true); 
+
+      const response = await postAPI('/create_expense', expenseData, true);
       if (!response.hasError) {
         toast.success("Expense Created Successfully");
-        onClose(); 
+        onClose();
       } else {
         toast.error(`Failed to create expense: ${response.message}`);
       }
@@ -99,7 +139,7 @@ const ExpenseModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="modal fade show" id="commonModal" tabIndex="-1" aria-labelledby="exampleModalLabel" style={{ display: 'block', paddingLeft: '0px', position: "fixed", top: 0, left: 0, width: "100%", height: "100%", backgroundColor: "rgba(0, 0, 0, 0.5)", zIndex: 1040 }} aria-modal="true" role="dialog">
+    <div className="modal fade show modal-overlay" id="commonModal" tabIndex="-1" aria-labelledby="exampleModalLabel"  aria-modal="true" role="dialog">
       <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">
           <div className="modal-header">
@@ -115,6 +155,7 @@ const ExpenseModal = ({ isOpen, onClose }) => {
                     <div className="form-group">
                       <label htmlFor="account_id" className="col-form-label">Account</label><span className="text-danger">*</span>
                       <select className="form-control" required id="account_id" name="account_id" onChange={(e) => setAccountId(e.target.value)}>
+                      <option value="">Select Account Name</option>
                         {accountNames.map((account) => (
                           <option key={account._id} value={account.account_name}>
                             {account.account_name}
@@ -137,17 +178,17 @@ const ExpenseModal = ({ isOpen, onClose }) => {
                     <div className="form-group">
                       <label htmlFor="date" className="col-form-label">Date</label><span className="text-danger">*</span>
                       <div>
-                        <DatePicker 
-                          className="form-control d_week current_date datepicker-input" 
+                        <DatePicker
+                          className="form-control d_week current_date datepicker-input"
                           selected={currentDate ? new Date(currentDate) : null} // Pass selected date
                           onChange={handleDateChange}  // Update state on date change
-                          dateFormat="yyyy-MM-dd"  
-                          required 
-                          autoComplete="off" 
-                          name="date" 
-                          type="text" 
-                          id="date" 
-                          value={currentDate} 
+                          dateFormat="yyyy-MM-dd"
+                          required
+                          autoComplete="off"
+                          name="date"
+                          type="text"
+                          id="date"
+                          value={currentDate}
                           style={{ width: '100%' }} // Apply width style here
                         />
                       </div>
@@ -160,9 +201,11 @@ const ExpenseModal = ({ isOpen, onClose }) => {
                       <label htmlFor="income_category_id" className="col-form-label">Category</label><span className="text-danger">*</span>
                       <select className="form-control" required id="income_category_id" name="income_category_id" onChange={(e) => setCategory(e.target.value)}>
                         <option value="">Choose a Category</option>
-                        <option value="Event">Event</option>
-                        <option value="Extra Expense">Extra Expense</option>
-                        <option value="Rent or Lease">Rent or Lease</option>
+                        {expenseTypes.map((expenseType) => (
+                          <option key={expenseType._id} value={expenseType.expenseName}>
+                            {expenseType.expenseName}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -172,6 +215,7 @@ const ExpenseModal = ({ isOpen, onClose }) => {
                     <div className="form-group">
                       <label htmlFor="payee_id" className="col-form-label">Payee</label>
                       <select className="form-control" id="payee_id" name="payee_id" onChange={(e) => setPayeeId(e.target.value)}>
+                      <option value="">Choose a payee</option>
                         {payeeNames.map((payee) => (
                           <option key={payee._id} value={payee.payee_name}>
                             {payee.payee_name}
@@ -187,8 +231,11 @@ const ExpenseModal = ({ isOpen, onClose }) => {
                       <label htmlFor="payment_type_id" className="col-form-label">Payment Method</label><span className="text-danger">*</span>
                       <select className="form-control" required id="payment_type_id" name="payment_type_id" onChange={(e) => setPaymentTypeId(e.target.value)}>
                         <option value="">Choose Payment Method</option>
-                        <option value="Cash">Cash</option>
-                        <option value="Bank">Bank</option>
+                        {paymentTypes.map((type) => (
+                          <option key={type._id} value={type.paymentName}>
+                            {type.paymentName}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>

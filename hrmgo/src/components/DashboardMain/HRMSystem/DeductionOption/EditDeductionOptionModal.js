@@ -42,7 +42,7 @@ const EditDeductionOptionModal = ({ closeModal, deductionOption }) => {
             <div className="modal-dialog modal-undefined" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">Edit Deduction Option</h5>
+                        <h5 className="modal-title" id="exampleModalLabel">Edit Tax Deduction Option</h5>
                         <button type="button" className="btn-close" onClick={closeModal} aria-label="Close"></button>
                     </div>
                     <div className="body">
@@ -56,7 +56,7 @@ const EditDeductionOptionModal = ({ closeModal, deductionOption }) => {
                                                 <input
                                                     className="form-control"
                                                     required
-                                                    placeholder="Enter Deduction Option Name"
+                                                    placeholder="Enter Tax Deduction Option Name"
                                                     name="name"
                                                     type="text"
                                                     id="name"

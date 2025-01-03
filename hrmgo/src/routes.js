@@ -50,18 +50,8 @@ import IncomeType from "./components/DashboardMain/HRMSystem/IncomeType/IncomeTy
 import PaymentType from "./components/DashboardMain/HRMSystem/PaymentType/PaymentType.js";
 import ContractType from "./components/DashboardMain/HRMSystem/ContractType/ContractType.js";
 import JobCategory from "./components/DashboardMain/HRMSystem/JobCategory/JobCategory.js";
-
-
-
-
-
-
-// Path to Dashboard component
-
-
-
-
 import Payslip from "./components/DashboardMain/Payroll/Payslip/Payslip.js";
+import HRMSystemSetting from "./components/DashboardMain/HRMSystemSetting/HRMSystemSetting.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -152,6 +142,8 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
             <Route path="hrm-system-paymenttype" element={<PaymentType/>} />
             <Route path="hrm-system-contract_type" element={<ContractType/>} />
             <Route path="hrm-system-job-category" element={<JobCategory/>} />
+
+            <Route path="system-settings" element={<HRMSystemSetting/>} />
 
         
 

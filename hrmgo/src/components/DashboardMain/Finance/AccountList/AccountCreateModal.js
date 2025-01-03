@@ -3,24 +3,23 @@ import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify"; 
 import getAPI from "../../../../api/getAPI.js"; 
 
-const AccountCreateModal = ({ isOpen, onClose, onSubmit }) => {
-  // Always call useState hooks at the beginning of the component
+const AccountCreateModal = ({ isOpen, onClose }) => {
   const [accountName, setAccountName] = useState('');
   const [initialBalance, setInitialBalance] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [branchCode, setBranchCode] = useState('');
   const [bankBranch, setBankBranch] = useState('');
-  const [loading, setLoading] = useState(false); // For handling loading state
-  const [errorMessage, setErrorMessage] = useState(''); // For handling error messages
+
+  const [errorMessage, setErrorMessage] = useState(''); 
   const [successMessage, setSuccessMessage] = useState('');
-  const [employeeNames, setEmployeeNames] = useState([]); // For handling success messages
+  const [employeeNames, setEmployeeNames] = useState([]); 
 
   useEffect(() => {
     const fetchEmployeeNames = async () => {
       try {
-        const response = await getAPI('/employee-get-all-name',{},true); // Adjust the endpoint path as needed
+        const response = await getAPI('/employee-get-all-name',{},true); 
         if (response.data && !response.data.hasError) {
-          setEmployeeNames(response.data.data); // Set employee names
+          setEmployeeNames(response.data.data); 
         } else {
           toast.error("Failed to fetch employee names.");
         }
@@ -35,7 +34,7 @@ const AccountCreateModal = ({ isOpen, onClose, onSubmit }) => {
 
   if (!isOpen) return null; 
 
-  // Handle form input changes
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "account_name") setAccountName(value);
@@ -45,14 +44,13 @@ const AccountCreateModal = ({ isOpen, onClose, onSubmit }) => {
     if (name === "bank_branch") setBankBranch(value);
   };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();  // Prevent the default form submit behavior
-    setLoading(true);
-    setErrorMessage(''); // Reset error message
-    setSuccessMessage(''); // Reset success message
 
-    // Prepare the data to be sent to the backend
+  const handleSubmit = async (e) => {
+    e.preventDefault(); 
+    setErrorMessage(''); 
+    setSuccessMessage(''); 
+
+    
     const accountData = {
       account_name: accountName,
       initial_balance: initialBalance,
@@ -62,13 +60,14 @@ const AccountCreateModal = ({ isOpen, onClose, onSubmit }) => {
     };
 
     try {
-      // Send a POST request to the backend API using postAPI
+     
       const response = await postAPI('/Create-AccountList', accountData, true);
 
       if (!response.hasError) {
         toast.success("Account Created Successfully");
+        onClose();
         
-        // Reset the form fields after success
+     
         setAccountName('');
         setInitialBalance('');
         setAccountNumber('');
@@ -80,9 +79,8 @@ const AccountCreateModal = ({ isOpen, onClose, onSubmit }) => {
       }
     } catch (error) {
       toast.error("An error occurred while creating account.");
-    } finally {
-      setLoading(false); // Stop loading spinner
-    }
+    } 
+      
   };
 
   return (

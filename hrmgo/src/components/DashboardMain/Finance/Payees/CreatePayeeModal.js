@@ -104,9 +104,9 @@
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";  // Import toast from react-toastify
-import postAPI from "../../../../api/postAPI";  // Import postAPI method
-import "react-toastify/dist/ReactToastify.css";  // Import Toastify CSS
+import { toast } from "react-toastify";  
+import postAPI from "../../../../api/postAPI"; 
+import "react-toastify/dist/ReactToastify.css";  
 
 const CreatePayeeModal = ({ closeModal }) => {
   const [payeeName, setPayeeName] = useState('');
@@ -122,10 +122,11 @@ const CreatePayeeModal = ({ closeModal }) => {
     };
 
     try {
-      // Call postAPI to send the data to the backend
+    
       const response = await postAPI('/create_Payee', payeeData ,true);
       if (!response.hasError) {
         toast.success("Payee Created Successfully");
+        closeModal();
 
         setPayeeName('');
         setContactNumber('');
@@ -171,7 +172,7 @@ const CreatePayeeModal = ({ closeModal }) => {
           </div>
           <div className="body">
             <form
-              onSubmit={handleSubmit}  // Use handleSubmit for form submission
+              onSubmit={handleSubmit}  
               method="POST"
               action="https://demo.workdo.io/hrmgo/payees"
               acceptCharset="UTF-8"

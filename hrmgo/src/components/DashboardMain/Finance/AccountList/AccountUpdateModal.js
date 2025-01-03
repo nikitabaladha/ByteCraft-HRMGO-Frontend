@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import putAPI from "../../../../api/putAPI.js"; // Assuming your postAPI.js file is in this path
-import { toast } from "react-toastify"; // Import toast
+import putAPI from "../../../../api/putAPI.js"; 
+import { toast } from "react-toastify"; 
 
 const AccountUpdateModal = ({ isOpen, onClose, accountData }) => {
   const [accountName, setAccountName] = useState('');
@@ -8,10 +8,10 @@ const AccountUpdateModal = ({ isOpen, onClose, accountData }) => {
   const [accountNumber, setAccountNumber] = useState('');
   const [branchCode, setBranchCode] = useState('');
   const [bankBranch, setBankBranch] = useState('');
-  const [loading, setLoading] = useState(false); // For handling loading state
-  const [errorMessage, setErrorMessage] = useState(''); // For handling error messages
+  const [loading, setLoading] = useState(false); 
+  const [errorMessage, setErrorMessage] = useState(''); 
 
-  // Ensure hooks are called unconditionally
+  
   useEffect(() => {
     if (accountData) {
       setAccountName(accountData.account_name);
@@ -34,7 +34,7 @@ const AccountUpdateModal = ({ isOpen, onClose, accountData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMessage(''); // Reset error message
+    setErrorMessage(''); 
 
     const accountDataToUpdate = {
       account_name: accountName,
@@ -49,18 +49,16 @@ const AccountUpdateModal = ({ isOpen, onClose, accountData }) => {
 
       if (!response.hasError) {
         toast.success("Account Updated Successfully");
-        onClose(); // Close modal on success
+        onClose(); 
       } else {
         toast.error(`Failed to update Account: ${response.message}`);
       }
     } catch (error) {
       toast.error("An error occurred while updating the account.");
-    } finally {
-      setLoading(false); // Stop loading spinner
-    }
+    } 
   };
 
-  // Don't render modal if it's not open
+
   if (!isOpen) return null;
 
   return (

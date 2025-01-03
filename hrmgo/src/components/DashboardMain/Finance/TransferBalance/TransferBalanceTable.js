@@ -1,18 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
-import EditTransferBalanceModal from "./EditTransferBalanceModal"; // Updated component name
-import getAPI from "../../../../api/getAPI"; // Ensure the path is correct
-import ConfirmationDialog from "./ConfirmationDialog";
+import EditTransferBalanceModal from "./EditTransferBalanceModal";
+import getAPI from "../../../../api/getAPI";
+import ConfirmationDialog from "../../ConfirmationDialog";
 
 const TransferBalanceTable = () => {
-  const [transferBalances, setTransferBalances] = useState([]); // Updated state
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [transferBalances, setTransferBalances] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [transferBalanceToDelete, setTransferBalanceToDelete] = useState(null);
   const [selectedTransferBalance, setSelectedTransferBalance] = useState(null);
+
+  const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleEntriesPerPageChange = (event) => {
+    setEntriesPerPage(Number(event.target.value));
+    setCurrentPage(1);
+  };
+
+  const filteredTransferBalances = transferBalances.filter((transferBalance) => {
+    const searchTerm = searchQuery.toLowerCase();
+    const formattedDate = new Date(transferBalance.date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }).toLowerCase();
+    return (
+      transferBalance.fromAccountId.toLowerCase().includes(searchTerm) ||
+      transferBalance.toAccountId.toLowerCase().includes(searchTerm) ||
+      transferBalance.paymentTypeId.toLowerCase().includes(searchTerm) ||
+      transferBalance.amount.toString().toLowerCase().includes(searchTerm) ||
+      transferBalance.referalId.toString().toLowerCase().includes(searchTerm) ||
+      formattedDate.includes(searchTerm)
+    );
+  });
+
+  const paginatedTransferBalances = filteredTransferBalances.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
+
 
   const openDeleteDialog = (transferBalanceId) => {
     setTransferBalanceToDelete(transferBalanceId);
@@ -43,87 +73,21 @@ const TransferBalanceTable = () => {
   useEffect(() => {
     const fetchTransferBalances = async () => {
       try {
-        const response = await getAPI("/getall_transferbalance", {}, true); // Updated API endpoint
+        const response = await getAPI("/getall_transferbalance", {}, true);
         setTransferBalances(response.data.data);
-        setLoading(false);
+        ;
       } catch (err) {
-        setError("Failed to fetch transfer balances");
-        setLoading(false);
+        console.log("Failed to fetch transfer balances");
+
       }
     };
 
     fetchTransferBalances();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
 
   return (
-    // <div className="dash-content">
-    //   <div className="row">
-    //     <div className="col-xl-12">
-    //       <div className="card">
-    //         <div className="card-header card-body table-border-style">
-    //           <div className="table-responsive">
-    //             <table className="table dataTable-table" id="pc-dt-simple">
-    //               <thead>
-    //                 <tr>
-    //                   <th>From Account</th>
-    //                   <th>To Account</th>
-    //                   <th>Date</th>
-    //                   <th>Amount</th>
-    //                   <th>Payment Method</th>
-    //                   <th>Ref#</th>
-    //                   <th width="200px">Action</th>
-    //                 </tr>
-    //               </thead>
-    //               <tbody>
-    //                 {transferBalances.map((transferBalance) => (
-    //                   <tr key={transferBalance._id}>
-    //                     <td>{transferBalance.fromAccountId}</td>
-    //                     <td>{transferBalance.toAccountId}</td>
-    //                     <td>
-    //                       {new Date(transferBalance.date).toLocaleDateString("en-US", {
-    //                         year: "numeric",
-    //                         month: "short",
-    //                         day: "numeric",
-    //                       })}
-    //                     </td>
-    //                     <td>{`₹${new Intl.NumberFormat("en-IN").format(transferBalance.amount)}`}</td>
-    //                     <td>{transferBalance.paymentTypeId}</td>
-    //                     <td>{transferBalance.referalId}</td>
-                       
-    //                     <td className="Action">
-    //                       <div className="dt-buttons">
-    //                         <button
-    //                           onClick={() => handleEdit(transferBalance)}
-    //                           className="btn btn-sm bg-info text-white me-2"
-    //                         >
-    //                           <HiOutlinePencil />
-    //                         </button>
-    //                         <button
-    //                           onClick={() => openDeleteDialog(transferBalance._id)}
-    //                           className="btn btn-sm bg-danger text-white"
-    //                         >
-    //                           <RiDeleteBinLine />
-    //                         </button>
-    //                       </div>
-    //                     </td>
-    //                   </tr>
-    //                 ))}
-    //               </tbody>
-    //             </table>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    <div className="dash-content">
     <div className="row">
       <div className="col-xl-12">
         <div className="card">
@@ -133,9 +97,13 @@ const TransferBalanceTable = () => {
                 <div className="dataTable-top">
                   <div className="dataTable-dropdown">
                     <label>
-                      <select className="dataTable-selector">
+                      <select
+                        className="dataTable-selector"
+                        value={entriesPerPage}
+                        onChange={handleEntriesPerPageChange}
+                      >
                         <option value="5">5</option>
-                        <option value="10" selected>10</option>
+                        <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
                         <option value="25">25</option>
@@ -144,43 +112,49 @@ const TransferBalanceTable = () => {
                     </label>
                   </div>
                   <div className="dataTable-search">
-                    <input className="dataTable-input" placeholder="Search..." type="text" />
+                    <input
+                      className="dataTable-input"
+                      placeholder="Search..."
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                   </div>
                 </div>
                 <div className="dataTable-container">
                   <table className="table dataTable-table" id="pc-dt-simple">
                     <thead>
                       <tr>
-                         <th>From Account</th>
-                         <th>To Account</th>
-                         <th>Date</th>
-                         <th>Amount</th>
-                         <th>Payment Method</th>
-                         <th>Ref#</th>
+                        <th>From Account</th>
+                        <th>To Account</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Payment Method</th>
+                        <th>Ref#</th>
                         <th width="200px">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                    {transferBalances.map((transferBalance) => (
-                      <tr key={transferBalance._id}>
-                        <td>{transferBalance.fromAccountId}</td>
-                        <td>{transferBalance.toAccountId}</td>
-                        <td>
-                          {new Date(transferBalance.date).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                          })}
-                        </td>
-                        <td>{`₹${new Intl.NumberFormat("en-IN").format(transferBalance.amount)}`}</td>
-                        <td>{transferBalance.paymentTypeId}</td>
-                        <td>{transferBalance.referalId}</td>
+                      {paginatedTransferBalances.map((transferBalance) => (
+                        <tr key={transferBalance._id}>
+                          <td>{transferBalance.fromAccountId}</td>
+                          <td>{transferBalance.toAccountId}</td>
+                          <td>
+                            {new Date(transferBalance.date).toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            })}
+                          </td>
+                          <td>{`₹${new Intl.NumberFormat("en-IN").format(transferBalance.amount)}`}</td>
+                          <td>{transferBalance.paymentTypeId}</td>
+                          <td>{transferBalance.referalId}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>
                                 <div className="action-btn bg-info me-2">
                                   <button
-                                    onClick={() => handleEdit(transferBalance)}  // Open modal on button click
+                                    onClick={() => handleEdit(transferBalance)}
                                     className="mx-3 btn btn-sm align-items-center"
                                   >
                                     <span className="text-white">
@@ -211,30 +185,74 @@ const TransferBalanceTable = () => {
                   </table>
                 </div>
                 <div className="dataTable-bottom">
-                  <div className="dataTable-info">Showing 1 to 5 of 5 entries</div>
+                  <div className="dataTable-info">
+                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, transferBalances.length)}{" "}
+                    to {Math.min(currentPage * entriesPerPage, transferBalances.length)}{" "}
+                    of {transferBalances.length} entries
+                  </div>
                   <nav className="dataTable-pagination">
-                    <ul className="dataTable-pagination-list"></ul>
+                    <ul className="dataTable-pagination-list">
+                      {currentPage > 1 && (
+                        <li className="page-item">
+                          <button
+                            className="page-link prev-button"
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                          >
+                            ‹
+                          </button>
+                        </li>
+                      )}
+
+                      {Array.from({ length: Math.ceil(transferBalances.length / entriesPerPage) }, (_, index) => (
+                        <li
+                          key={index + 1}
+                          className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+                        >
+                          <button
+                            className="page-link"
+                            onClick={() => setCurrentPage(index + 1)}
+                            style={{
+                              backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
+                              color: '#6FD943',
+                            }}
+                          >
+                            {index + 1}
+                          </button>
+                        </li>
+                      ))}
+
+                      {currentPage < Math.ceil(transferBalances.length / entriesPerPage) && (
+                        <li className="page-item">
+                          <button
+                            className="page-link next-button"
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                          >
+                            ›
+                          </button>
+                        </li>
+                      )}
+                    </ul>
                   </nav>
                 </div>
+
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
       {isModalOpen && (
         <EditTransferBalanceModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          selectedTransferBalance={selectedTransferBalance} // Updated prop
+          selectedTransferBalance={selectedTransferBalance}
         />
       )}
 
       {isDeleteDialogOpen && (
         <ConfirmationDialog
           onClose={closeDeleteDialog}
-          transferBalanceId={transferBalanceToDelete} // Updated prop
+          id={transferBalanceToDelete}
           deleteType="transferbalance"
           onDeleted={handleDeleteSuccess}
         />

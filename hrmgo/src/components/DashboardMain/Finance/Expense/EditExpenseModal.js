@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; 
+import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
-import putAPI from "../../../../api/putAPI.js"; 
+import putAPI from "../../../../api/putAPI.js";
 import getAPI from "../../../../api/getAPI.js";
 
 const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
@@ -10,12 +10,53 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
   const [accountname, setAccountId] = useState(selectedExpense?.account_name || '');
   const [amount, setAmount] = useState(selectedExpense?.amount || '');
   const [category, setCategory] = useState(selectedExpense?.category || '');
-  const [payeeName, setPayeeId] = useState(selectedExpense?.payee_name || '');  
+  const [payeeName, setPayeeId] = useState(selectedExpense?.payee_name || '');
   const [paymentType, setPaymentTypeId] = useState(selectedExpense?.payment_type || '');
   const [ref, setRefId] = useState(selectedExpense?.ref || '');
   const [description, setDescription] = useState(selectedExpense?.description || '');
   const [accountNames, setAccountNames] = useState([]);
-  const [payeeNames, setPayeeNames] = useState([]);  
+  const [payeeNames, setPayeeNames] = useState([]);
+  const [paymentTypes, setPaymentTypes] = useState([]);
+  const [expenseTypes, setExpenseTypes] = useState([]);
+
+
+  useEffect(() => {
+    const fetchExpenseTypes = async () => {
+      try {
+        const response = await getAPI("/expense-type-get-all", {}, true);
+        if (response.data && !response.data.hasError) {
+          setExpenseTypes(response.data.data);
+        } else {
+          toast.error(`Failed to fetch expense types: ${response.message}`);
+        }
+      } catch (error) {
+        console.error("Error fetching expense types:", error);
+        toast.error("An error occurred while fetching expense types.");
+      }
+    };
+
+    fetchExpenseTypes();
+  }, []);
+
+  useEffect(() => {
+    const fetchPaymentTypes = async () => {
+      try {
+        const response = await getAPI("/payment-type-get-all", {}, true);
+        if (response.data && !response.data.hasError) {
+          setPaymentTypes(response.data.data);
+        } else {
+          toast.error(`Failed to fetch payment types: ${response.message}`);
+        }
+      } catch (error) {
+        console.error("Error fetching payment types:", error);
+        toast.error("An error occurred while fetching payment types.");
+      }
+    };
+
+    fetchPaymentTypes();
+  }, []);
+
+
 
   useEffect(() => {
     const fetchAccountNames = async () => {
@@ -38,7 +79,7 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
   useEffect(() => {
     const fetchPayeeNames = async () => {
       try {
-        const response = await getAPI('/getall_Payee', {}, true);  
+        const response = await getAPI('/getall_Payee', {}, true);
         if (response.data && !response.data.hasError) {
           setPayeeNames(response.data.data);
         } else {
@@ -59,7 +100,7 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
       setAccountId(selectedExpense.account_name);
       setAmount(selectedExpense.amount);
       setCategory(selectedExpense.category);
-      setPayeeId(selectedExpense.payee_name);  
+      setPayeeId(selectedExpense.payee_name);
       setPaymentTypeId(selectedExpense.payment_type);
       setRefId(selectedExpense.ref);
       setDescription(selectedExpense.description);
@@ -78,7 +119,7 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
       amount: parseFloat(amount),
       date: currentDate,
       category: category,
-      payee_name: payeeName, 
+      payee_name: payeeName,
       payment_type: paymentType,
       ref: ref,
       description: description,
@@ -100,11 +141,11 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
   if (!isOpen || !selectedExpense) return null;
 
   return (
-    <div className="modal fade show" id="commonModal" tabIndex="-1" aria-labelledby="exampleModalLabel" style={{ display: 'block', paddingLeft: '0px', position: "fixed", top: 0, left: 0, width: "100%", height: "100%", backgroundColor: "rgba(0, 0, 0, 0.5)", zIndex: 1040 }} aria-modal="true" role="dialog">
+    <div className="modal fade show modal-overlay" id="commonModal" tabIndex="-1" aria-labelledby="exampleModalLabel"  aria-modal="true" role="dialog">
       <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">Edit Expense</h5> 
+            <h5 className="modal-title" id="exampleModalLabel">Edit Expense</h5>
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={onClose}></button>
           </div>
           <div className="body">
@@ -116,6 +157,7 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
                     <div className="form-group">
                       <label htmlFor="account_id" className="col-form-label">Account</label><span className="text-danger">*</span>
                       <select className="form-control" required id="account_id" value={accountname} name="account_id" onChange={(e) => setAccountId(e.target.value)}>
+                      <option value="">Select Account Name</option>
                         {accountNames.map((account) => (
                           <option key={account._id} value={account.account_name}>
                             {account.account_name}
@@ -142,7 +184,7 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
                           className="form-control d_week current_date datepicker-input"
                           selected={currentDate ? new Date(currentDate) : null} // Pass selected date
                           value={currentDate}
-                          onChange={handleDateChange}  // Update state on date change
+                          onChange={handleDateChange}
                           dateFormat="yyyy-MM-dd"
                           required
                           autoComplete="off"
@@ -160,10 +202,11 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
                     <div className="form-group">
                       <label htmlFor="income_category_id" className="col-form-label">Category</label><span className="text-danger">*</span>
                       <select className="form-control" required id="income_category_id" value={category} name="income_category_id" onChange={(e) => setCategory(e.target.value)}>
-                        <option value="">Choose a Category</option>
-                        <option value="Event">Event</option>
-                        <option value="Extra Expense">Extra Expense</option>
-                        <option value="Rent or Lease">Rent or Lease</option>
+                        {expenseTypes.map((expenseType) => (
+                          <option key={expenseType._id} value={expenseType.expenseName}>
+                            {expenseType.expenseName}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -171,7 +214,7 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
                   {/* Payee Field */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="payee_id" className="col-form-label">Payee</label>  {/* Changed from Payer to Payee */}
+                      <label htmlFor="payee_id" className="col-form-label">Payee</label>
                       <select className="form-control" id="payee_id" name="payee_id" value={payeeName} onChange={(e) => setPayeeId(e.target.value)}>
                         {payeeNames.map((payee) => (
                           <option key={payee._id} value={payee.payee_name}>
@@ -188,8 +231,11 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
                       <label htmlFor="payment_type_id" className="col-form-label">Payment Method</label><span className="text-danger">*</span>
                       <select className="form-control" required id="payment_type_id" value={paymentType} name="payment_type_id" onChange={(e) => setPaymentTypeId(e.target.value)}>
                         <option value="">Choose Payment Method</option>
-                        <option value="Cash">Cash</option>
-                        <option value="Bank">Bank</option>
+                        {paymentTypes.map((type) => (
+                          <option key={type._id} value={type.paymentName}>
+                            {type.paymentName}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>

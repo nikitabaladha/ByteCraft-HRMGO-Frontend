@@ -2,13 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import putAPI from '../../../../api/putAPI'; 
+import getAPI from '../../../../api/getAPI';
 
 const UpdateTaxModal = ({ onClose, employee, taxData}) => {
     const [taxes, setTaxes] = useState('');
     const [title, setTitle] = useState('');
     const [type, setType] = useState('Fixed');
     const [amount, setAmount] = useState('');
+    const [taxOptions, setTaxOptions] = useState([]);
     const baseAmount = 1000;
+
+    useEffect(() => {
+        const fetchTaxOptions = async () => {
+            try {
+                const response = await getAPI('/deduction-option-get-all',true); 
+                if (!response.hasError) {
+                    setTaxOptions(response.data.data); 
+                } else {
+                    toast.error(`Failed to fetch tax options: ${response.message}`);
+                }
+            } catch (error) {
+                toast.error("An error occurred while fetching tax options.");
+            }
+        };
+
+        fetchTaxOptions();
+    }, []);
 
     useEffect(() => {
         if (taxData) {
@@ -92,9 +111,9 @@ const UpdateTaxModal = ({ onClose, employee, taxData}) => {
                                         onChange={(e) => setTaxes(e.target.value)}
                                     >
                                         <option value="">Select Taxes</option>
-                                        <option value="IGST">IGST</option>
-                                        <option value="SGST">SGST</option>
-                                        <option value="GST">GST</option>
+                                        {taxOptions.map((taxOption) => (
+                                            <option key={taxOption._id} value={taxOption.deductionName}>{taxOption.deductionName}</option>  
+                                        ))}
                                     </select>
                                 </div>
 

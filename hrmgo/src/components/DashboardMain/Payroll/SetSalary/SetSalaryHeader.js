@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const SetSalaryHeader = () => {
   return (
-    <>
       <div className="page-header">
         <div className="page-block">
           <div className="row align-items-center">
@@ -24,7 +23,6 @@ const SetSalaryHeader = () => {
           </div>
         </div>
       </div>
-    </>
   );
 };
 

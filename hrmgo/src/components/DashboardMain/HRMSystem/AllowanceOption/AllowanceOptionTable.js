@@ -15,6 +15,26 @@ const AllowanceOptionTable = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [allowanceOptionToDelete, setAllowanceOptionToDelete] = useState(null);
 
+  const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleEntriesPerPageChange = (event) => {
+    setEntriesPerPage(Number(event.target.value));
+    setCurrentPage(1);
+  };
+
+  const filteredAllowanceOptions = allowanceOptions.filter((allowanceOption) => {
+    const searchTerm = searchQuery.toLowerCase();
+    return allowanceOption.allowanceName.toLowerCase().includes(searchTerm);
+  });
+
+  const paginatedAllowanceOptions = filteredAllowanceOptions.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
+
+
   const openDeleteDialog = (allowanceOptionId) => {
     console.log("Deleting allowance option with ID:", allowanceOptionId);
     setAllowanceOptionToDelete(allowanceOptionId);
@@ -68,6 +88,7 @@ const AllowanceOptionTable = () => {
         <Sidebar />
       </div>
 
+
       <div className="col-9">
         <div className="card">
           <div className="card-body table-border-style">
@@ -76,11 +97,13 @@ const AllowanceOptionTable = () => {
                 <div className="dataTable-top">
                   <div className="dataTable-dropdown">
                     <label>
-                      <select className="dataTable-selector">
+                      <select
+                        className="dataTable-selector"
+                        value={entriesPerPage}
+                        onChange={handleEntriesPerPageChange}
+                      >
                         <option value="5">5</option>
-                        <option value="10" selected="">
-                          10
-                        </option>
+                        <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
                         <option value="25">25</option>
@@ -89,7 +112,13 @@ const AllowanceOptionTable = () => {
                     </label>
                   </div>
                   <div className="dataTable-search">
-                    <input className="dataTable-input" placeholder="Search..." type="text" />
+                    <input
+                      className="dataTable-input"
+                      placeholder="Search..."
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                   </div>
                 </div>
                 <div className="dataTable-container">
@@ -101,7 +130,7 @@ const AllowanceOptionTable = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allowanceOptions.map((allowanceOption) => (
+                      {paginatedAllowanceOptions.map((allowanceOption) => (
                         <tr key={allowanceOption._id}>
                           <td>{allowanceOption.allowanceName}</td>
                           <td className="Action">
@@ -146,12 +175,55 @@ const AllowanceOptionTable = () => {
                 </div>
                 <div className="dataTable-bottom">
                   <div className="dataTable-info">
-                    Showing 1 to {allowanceOptions.length} of {allowanceOptions.length} entries
+                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, allowanceOptions.length)}{" "}
+                    to {Math.min(currentPage * entriesPerPage, allowanceOptions.length)}{" "}
+                    of {allowanceOptions.length} entries
                   </div>
                   <nav className="dataTable-pagination">
-                    <ul className="dataTable-pagination-list"></ul>
+                    <ul className="dataTable-pagination-list">
+                      {currentPage > 1 && (
+                        <li className="page-item">
+                          <button
+                            className="page-link prev-button"
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                          >
+                            ‹
+                          </button>
+                        </li>
+                      )}
+
+                      {Array.from({ length: Math.ceil(allowanceOptions.length / entriesPerPage) }, (_, index) => (
+                        <li
+                          key={index + 1}
+                          className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+                        >
+                          <button
+                            className="page-link"
+                            onClick={() => setCurrentPage(index + 1)}
+                            style={{
+                              backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
+                              color: '#6FD943',
+                            }}
+                          >
+                            {index + 1}
+                          </button>
+                        </li>
+                      ))}
+
+                      {currentPage < Math.ceil(allowanceOptions.length / entriesPerPage) && (
+                        <li className="page-item">
+                          <button
+                            className="page-link next-button"
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                          >
+                            ›
+                          </button>
+                        </li>
+                      )}
+                    </ul>
                   </nav>
                 </div>
+
               </div>
             </div>
           </div>

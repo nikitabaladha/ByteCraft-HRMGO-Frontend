@@ -16,10 +16,10 @@ function ConfirmationDialog({ onClose, transferBalanceId, onDeleted, deleteType 
       let successMessage = "";
       let errorMessage = "";
 
-      if (deleteType === "transferbalance") { // Updated deleteType to 'transferbalance'
-        endpoint = `/delete_transferbalance/${transferBalanceId}`; // Updated endpoint
+      if (deleteType === "transferbalance") { 
+        endpoint = `/delete_transferbalance/${transferBalanceId}`; 
         successMessage = "Transfer balance successfully deleted!";
-        errorMessage = "Failed to delete transfer balance."; // Updated error message
+        errorMessage = "Failed to delete transfer balance."; 
       } else {
         console.error("Invalid delete type.");
         toast.error("Invalid delete type.");
@@ -33,7 +33,7 @@ function ConfirmationDialog({ onClose, transferBalanceId, onDeleted, deleteType 
         toast.success(successMessage);
 
         if (typeof onDeleted === "function") {
-          onDeleted(transferBalanceId); // Updated to pass transferBalanceId
+          onDeleted(transferBalanceId); 
         }
 
         onClose();

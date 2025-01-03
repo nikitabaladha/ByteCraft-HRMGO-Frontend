@@ -107,15 +107,15 @@ import { toast } from "react-toastify";
 
 const EditPayeeModal = ({ payee, closeModal }) => {
   const [formData, setFormData] = useState({
-    payee_name: "", // Corrected to match the state key
+    payee_name: "",
     contact_number: "",
   });
 
   useEffect(() => {
-    // Populate form data when payee changes
+    
     console.log("Payee passed to modal:", payee);
     setFormData({
-      payee_name: payee?.payee_name || "", // Ensure key matches state
+      payee_name: payee?.payee_name || "", 
       contact_number: payee?.contact_number || "",
     });
   }, [payee]);
@@ -131,7 +131,7 @@ const EditPayeeModal = ({ payee, closeModal }) => {
       const response = await putAPI(`/update_Payee/${payee._id}`, formData, true);
       if (!response.hasError) {
         toast.success("Payee updated successfully");
-        closeModal(); // Close modal on success
+        closeModal(); 
       } else {
         toast.error(`Failed to update Payee: ${response.message}`);
       }
@@ -176,7 +176,7 @@ const EditPayeeModal = ({ payee, closeModal }) => {
                 <label htmlFor="payee_name">Payee Name</label>
                 <input
                   className="form-control"
-                  name="payee_name" // Corrected name attribute
+                  name="payee_name" 
                   type="text"
                   value={formData.payee_name}
                   onChange={handleInputChange}

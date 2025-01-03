@@ -15,6 +15,26 @@ const TrainingTypeTable = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [trainingTypeToDelete, setTrainingTypeToDelete] = useState(null);
 
+  const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleEntriesPerPageChange = (event) => {
+    setEntriesPerPage(Number(event.target.value));
+    setCurrentPage(1);
+  };
+
+  const filteredTrainingTypes = trainingTypes.filter((trainingType) => {
+    const searchTerm = searchQuery.toLowerCase();
+    return trainingType.trainingName.toLowerCase().includes(searchTerm);
+  });
+
+  const paginatedTrainingTypes = filteredTrainingTypes.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
+
+
   const openDeleteDialog = (trainingTypeId) => {
     setTrainingTypeToDelete(trainingTypeId);
     setIsDeleteDialogOpen(true);
@@ -72,11 +92,13 @@ const TrainingTypeTable = () => {
                 <div className="dataTable-top">
                   <div className="dataTable-dropdown">
                     <label>
-                      <select className="dataTable-selector">
+                      <select
+                        className="dataTable-selector"
+                        value={entriesPerPage}
+                        onChange={handleEntriesPerPageChange}
+                      >
                         <option value="5">5</option>
-                        <option value="10" selected="">
-                          10
-                        </option>
+                        <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
                         <option value="25">25</option>
@@ -85,7 +107,13 @@ const TrainingTypeTable = () => {
                     </label>
                   </div>
                   <div className="dataTable-search">
-                    <input className="dataTable-input" placeholder="Search..." type="text" />
+                    <input
+                      className="dataTable-input"
+                      placeholder="Search..."
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                   </div>
                 </div>
                 <div className="dataTable-container">
@@ -97,7 +125,7 @@ const TrainingTypeTable = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {trainingTypes.map((trainingType) => (
+                      {paginatedTrainingTypes.map((trainingType) => (
                         <tr key={trainingType._id}>
                           <td>{trainingType.trainingName}</td>
                           <td className="Action">
@@ -142,10 +170,52 @@ const TrainingTypeTable = () => {
                 </div>
                 <div className="dataTable-bottom">
                   <div className="dataTable-info">
-                    Showing 1 to {trainingTypes.length} of {trainingTypes.length} entries
+                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, trainingTypes.length)}{" "}
+                    to {Math.min(currentPage * entriesPerPage, trainingTypes.length)}{" "}
+                    of {trainingTypes.length} entries
                   </div>
                   <nav className="dataTable-pagination">
-                    <ul className="dataTable-pagination-list"></ul>
+                    <ul className="dataTable-pagination-list">
+                      {currentPage > 1 && (
+                        <li className="page-item">
+                          <button
+                            className="page-link prev-button"
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                          >
+                            ‹
+                          </button>
+                        </li>
+                      )}
+
+                      {Array.from({ length: Math.ceil(trainingTypes.length / entriesPerPage) }, (_, index) => (
+                        <li
+                          key={index + 1}
+                          className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+                        >
+                          <button
+                            className="page-link"
+                            onClick={() => setCurrentPage(index + 1)}
+                            style={{
+                              backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
+                              color: '#6FD943',
+                            }}
+                          >
+                            {index + 1}
+                          </button>
+                        </li>
+                      ))}
+
+                      {currentPage < Math.ceil(trainingTypes.length / entriesPerPage) && (
+                        <li className="page-item">
+                          <button
+                            className="page-link next-button"
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                          >
+                            ›
+                          </button>
+                        </li>
+                      )}
+                    </ul>
                   </nav>
                 </div>
               </div>

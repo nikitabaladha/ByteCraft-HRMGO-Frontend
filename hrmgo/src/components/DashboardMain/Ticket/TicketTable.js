@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import getAPI from "../../../api/getAPI";
-import ConfirmationDialog from "./ConfirmationDialog";
+import ConfirmationDialog from "../ConfirmationDialog";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { HiOutlineTicket } from "react-icons/hi";
 import { TbArrowBackUp } from "react-icons/tb";
@@ -126,21 +126,21 @@ const TicketDashboard = () => {
       month: 'short',
       day: 'numeric'
     }).toLowerCase();
-  
+
     const ticketCode = ticket.ticket_code.toString().padStart(4, '0');
-    
-    
+
+
     return (
       ticket.title.toLowerCase().includes(query) ||
-      ticketCode.toLowerCase().includes(query) ||  
+      ticketCode.toLowerCase().includes(query) ||
       ticket.employee_name.toLowerCase().includes(query) ||
       ticket.priority.toLowerCase().includes(query) ||
       ticket.status.toLowerCase().includes(query) ||
       ticket.created_by.toLowerCase().includes(query) ||
-      ticketDate.includes(query)  
+      ticketDate.includes(query)
     );
   });
-  
+
 
   const paginatedTicket = filteredTickets.slice(
     (currentPage - 1) * entriesPerPage,
@@ -158,8 +158,8 @@ const TicketDashboard = () => {
   const isNewTicket = (createdAt) => {
     const now = new Date();
     const createdDate = new Date(createdAt);
-    const diffInMilliseconds = now - createdDate; 
-    return diffInMilliseconds <= 60000; 
+    const diffInMilliseconds = now - createdDate;
+    return diffInMilliseconds <= 60000;
   };
 
 
@@ -289,7 +289,7 @@ const TicketDashboard = () => {
                         <tr key={ticket._id}>
                           <td>
                             {isNewTicket(ticket.created_at) && (
-                              <span style={{ color: 'green', fontSize: '20px' }}>•</span> // Green dot for new tickets
+                              <span style={{ color: 'green', fontSize: '20px' }}>•</span>
                             )}
                           </td>
 
@@ -391,99 +391,61 @@ const TicketDashboard = () => {
                     </tbody>
                   </table>
                 </div>
-                <div className="dataTable-bottom">
-                  <div className="dataTable-info">
-                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, filteredTickets.length)}{" "}
-                    to {Math.min(currentPage * entriesPerPage, filteredTickets.length)}{" "}
-                    of {filteredTickets.length} entries
-                  </div>
-                  <nav className="dataTable-pagination">
-                    <ul
-                      className="dataTable-pagination-list"
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        listStyleType: 'none',
-                        padding: 0,
-                        margin: 0,
-                      }}
-                    >
-                      {currentPage > 1 && (
-                        <li
-                          className="page-item"
-                          style={{
-                            margin: '0 5px',
-                          }}
-                        >
-                          <button
-                            className="page-link"
-                            onClick={() => setCurrentPage(currentPage - 1)}
-                            style={{
-                              cursor: 'pointer',
-                              padding: '8px 16px',
-                              borderRadius: '4px',
-                              backgroundColor: 'transparent',
-                              border: 'none',
-                              color: '#6FD943',
-                            }}
-                          >
-                            ‹
-                          </button>
-                        </li>
-                      )}
-
-                      {Array.from({ length: Math.ceil(filteredTickets.length / entriesPerPage) }, (_, index) => (
-                        <li
-                          key={index + 1}
-                          className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
-                          style={{
-                            margin: '0 5px',
-                          }}
-                        >
-                          <button
-                            className="page-link"
-                            onClick={() => setCurrentPage(index + 1)}
-                            style={{
-                              cursor: 'pointer',
-                              padding: '6px 12px',
-                              backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
-                              border: 'none',
-                              color: '#6FD943',
-                            }}
-                          >
-                            {index + 1}
-                          </button>
-                        </li>
-                      ))}
-
-                      {currentPage < Math.ceil(filteredTickets.length / entriesPerPage) && (
-                        <li
-                          className="page-item"
-                          style={{
-                            margin: '0 5px',
-                          }}
-                        >
-                          <button
-                            className="page-link"
-                            onClick={() => setCurrentPage(currentPage + 1)}
-                            style={{
-                              cursor: 'pointer',
-                              padding: '8px 16px',
-                              borderRadius: '4px',
-                              backgroundColor: 'transparent',
-                              border: 'none',
-                              color: '#6FD943',
-                            }}
-                          >
-                            ›
-                          </button>
-                        </li>
-                      )}
-                    </ul>
-                  </nav>
-                </div>
-
               </div>
+              <div className="dataTable-bottom">
+                <div className="dataTable-info">
+                  Showing {Math.min((currentPage - 1) * entriesPerPage + 1, tickets.length)}{" "}
+                  to {Math.min(currentPage * entriesPerPage, tickets.length)}{" "}
+                  of {tickets.length} entries
+                </div>
+                <nav className="dataTable-pagination">
+                  <ul className="dataTable-pagination-list">
+                    {currentPage > 1 && (
+                      <li className="page-item">
+                        <button
+                          className="page-link prev-button"
+                          onClick={() => setCurrentPage(currentPage - 1)}
+                        >
+                          ‹
+                        </button>
+                      </li>
+                    )}
+
+                    {Array.from({ length: Math.ceil(tickets.length / entriesPerPage) }, (_, index) => (
+                      <li
+                        key={index + 1}
+                        className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+                      >
+                        <button
+                          className="page-link"
+                          onClick={() => setCurrentPage(index + 1)}
+                          style={{
+                            backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
+                            color: '#6FD943',
+                          }}
+                        >
+                          {index + 1}
+                        </button>
+                      </li>
+                    ))}
+
+                    {currentPage < Math.ceil(tickets.length / entriesPerPage) && (
+                      <li className="page-item">
+                        <button
+                          className="page-link next-button"
+                          onClick={() => setCurrentPage(currentPage + 1)}
+                        >
+                          ›
+                        </button>
+                      </li>
+                    )}
+                  </ul>
+                </nav>
+              </div>
+
+
+
+
             </div>
           </div>
         </div>
@@ -491,8 +453,8 @@ const TicketDashboard = () => {
       {isDeleteDialogOpen && (
         <ConfirmationDialog
           onClose={closeDeleteDialog}
-          ticketId={ticketToDelete}  // Updated to use ticketId
-          deleteType="ticket"  // Updated to use 'ticket' instead of 'expense'
+          id={ticketToDelete}  
+          deleteType="ticket"  
           onDeleted={handleDeleteSuccess}
         />
       )}

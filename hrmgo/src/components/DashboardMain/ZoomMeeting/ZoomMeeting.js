@@ -2,7 +2,7 @@
 
 import React from "react";
 import ZoomMeetingHeader from "./ZoomMeetingHeader";
-import ZoomMeetingTable from "./ZoomMeetingTable";// 
+import ZoomMeetingTable from "./ZoomMeetingTable";
 
 const Meeting = () => {
   return (

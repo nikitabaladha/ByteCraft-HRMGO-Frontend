@@ -1,9 +1,9 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { toast } from 'react-toastify';
-import postAPI from "../../../api/postAPI"; 
-import getAPI from "../../../api/getAPI.js"; 
+import postAPI from "../../../api/postAPI";
+import getAPI from "../../../api/getAPI";
 
 const CreateTicketModal = ({ closeModal }) => {
   const [title, setTitle] = useState('');
@@ -18,7 +18,7 @@ const CreateTicketModal = ({ closeModal }) => {
   useEffect(() => {
     const fetchEmployeeNames = async () => {
       try {
-        const response = await getAPI('/employee-get-all-name',{},true); 
+        const response = await getAPI('/employee-get-all-name', {}, true); 
         if (response.data && !response.data.hasError) {
           setEmployeeNames(response.data.data); 
         } else {
@@ -33,16 +33,16 @@ const CreateTicketModal = ({ closeModal }) => {
     fetchEmployeeNames();
   }, []);
 
-  // Handle description change (for ReactQuill)
+
   const handleDescriptionChange = (value) => {
     setDescription(value);
   };
 
-  // Handle form submission
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(attachment);
 
-    // Prepare the ticket data (without ticket_code)
     const ticketData = new FormData();
     ticketData.append('title', title);
     ticketData.append('employee_name', employeeId);
@@ -56,7 +56,7 @@ const CreateTicketModal = ({ closeModal }) => {
     }
 
     try {
-      const response = await postAPI('/create_ticket', ticketData, true, {
+      const response = await postAPI('/create_Ticket', ticketData, true, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -64,7 +64,8 @@ const CreateTicketModal = ({ closeModal }) => {
 
       if (!response.hasError) {
         toast.success("Ticket created successfully!");
-        closeModal(); 
+        closeModal();
+        // Reset form state
         setTitle('');
         setEmployeeId('');
         setPriority('low');
@@ -76,19 +77,41 @@ const CreateTicketModal = ({ closeModal }) => {
         toast.error(`Failed to create ticket: ${response.message}`);
       }
     } catch (error) {
-      toast.error("An error occurred while creating ticket.");
+      toast.error("An error occurred while creating the ticket.");
     }
   };
 
-  
-
   return (
-    <div className="modal fade show" id="commonModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-modal="true" style={{ display: 'block', paddingLeft: '0px', position: "fixed", top: 0, left: 0, width: "100%", height: "100%", backgroundColor: "rgba(0, 0, 0, 0.5)", zIndex: 1040 }}>
+    <div
+      className="modal fade show"
+      id="commonModal"
+      tabIndex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-modal="true"
+      style={{
+        display: 'block',
+        paddingLeft: '0px',
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        zIndex: 1040
+      }}
+    >
       <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalLabel">Create New Ticket</h5>
-            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={closeModal}></button>
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              onClick={closeModal}
+            ></button>
           </div>
           <div className="body">
             <form method="POST" onSubmit={handleSubmit} encType="multipart/form-data" className="needs-validation" noValidate>
@@ -96,7 +119,10 @@ const CreateTicketModal = ({ closeModal }) => {
                 <div className="row">
                   {/* Ticket form fields */}
                   <div className="form-group col-md-6" style={{ marginBottom: '1.5rem' }}>
-                    <label htmlFor="title" className="col-form-label">Subject</label><span className="text-danger">*</span>
+                    <label htmlFor="title" className="col-form-label">
+                      Subject
+                    </label>
+                    <span className="text-danger">*</span>
                     <input
                       className="form-control"
                       required
@@ -109,7 +135,10 @@ const CreateTicketModal = ({ closeModal }) => {
                     />
                   </div>
                   <div className="form-group col-md-6" style={{ marginBottom: '1.5rem' }}>
-                    <label htmlFor="employee_id" className="col-form-label">Ticket for Employee</label><span className="text-danger">*</span>
+                    <label htmlFor="employee_id" className="col-form-label">
+                      Ticket for Employee
+                    </label>
+                    <span className="text-danger">*</span>
                     <select
                       className="form-control"
                       required
@@ -119,11 +148,11 @@ const CreateTicketModal = ({ closeModal }) => {
                       onChange={(e) => setEmployeeId(e.target.value)}
                     >
                       <option value="" disabled>Account Name</option>
-                        {employeeNames.map((employee) => (
-                          <option key={employee._id} value={employee.name}>
-                            {employee.name}
-                          </option>
-                        ))}
+                      {employeeNames.map((employee) => (
+                        <option key={employee._id} value={employee.name}>
+                          {employee.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                   {/* Priority and End Date */}
@@ -210,4 +239,3 @@ const CreateTicketModal = ({ closeModal }) => {
 };
 
 export default CreateTicketModal;
-

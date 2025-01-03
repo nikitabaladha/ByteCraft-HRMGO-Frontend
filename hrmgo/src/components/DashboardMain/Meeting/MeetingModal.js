@@ -16,9 +16,9 @@ const MeetingModal = ({ onClose }) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [note, setNote] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  // Fetch branches on component mount
+
+
   useEffect(() => {
     const fetchBranches = async () => {
       try {
@@ -112,7 +112,7 @@ const employeeOptions = [
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
 
     const meetingData = {
       title,
@@ -142,9 +142,7 @@ const employeeOptions = [
       }
     } catch (err) {
       toast.error("An error occurred while creating the meeting.");
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   return (
@@ -443,8 +441,7 @@ const employeeOptions = [
               <button type="button" className="btn btn-secondary" onClick={onClose}>
                 Close
               </button>
-              <button type="submit" className="btn btn-primary" disabled={loading}>
-                {loading ? "Saving..." : "Save"}
+              <button type="submit" className="btn btn-primary">
               </button>
             </div>
           </form>

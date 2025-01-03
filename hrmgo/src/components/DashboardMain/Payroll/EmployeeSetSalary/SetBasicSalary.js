@@ -91,14 +91,32 @@
 // };
 
 // export default Modal;
-import React, { useState, } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import postAPI from "../../../../api/postAPI";
-
+import getAPI from "../../../../api/getAPI";
 
 const Modal = ({ onClose, employee, grandTotal }) => {
   const [salaryType, setSalaryType] = useState("");
   const [salary, setSalary] = useState("");
+  const [payslipTypes, setPayslipTypes] = useState([]);
+
+  useEffect(() => {
+    const fetchPayslipTypes = async () => {
+      try {
+        const response = await getAPI("/payslip-type-get-all", true);
+        if (!response.hasError) {
+          setPayslipTypes(response.data.data);
+        } else {
+          toast.error(`Failed to fetch payslip types: ${response.message}`);
+        }
+      } catch (error) {
+        toast.error("An error occurred while fetching payslip types.");
+      }
+    };
+
+    fetchPayslipTypes();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -160,8 +178,11 @@ const Modal = ({ onClose, employee, grandTotal }) => {
                     onChange={(e) => setSalaryType(e.target.value)}
                   >
                     <option value="">Select Payslip Type</option>
-                    <option value="Monthly Payslip">Monthly Payslip</option>
-                    <option value="Hourly Payslip">Hourly Payslip</option>
+                    {payslipTypes.map((type) => (
+                      <option key={type._id} value={type.payslipType}>
+                        {type.payslipType}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="form-group">
@@ -200,6 +221,7 @@ const Modal = ({ onClose, employee, grandTotal }) => {
 };
 
 export default Modal;
+
 
 
 

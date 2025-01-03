@@ -15,6 +15,32 @@ const DesignationTable = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [designationToDelete, setDesignationToDelete] = useState(null);
 
+  const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleEntriesPerPageChange = (event) => {
+    setEntriesPerPage(Number(event.target.value));
+    setCurrentPage(1);
+  };
+
+  const filteredDesignations = designations.filter((designation) => {
+    const searchTerm = searchQuery.toLowerCase();
+    console.log(designation);
+    return (
+      designation.branchId.branchName.toLowerCase().includes(searchTerm) ||
+      designation.departmentId.departmentName.toLowerCase().includes(searchTerm) ||
+      designation.designationName.toLowerCase().includes(searchTerm)
+
+    );
+  });
+
+  const paginatedDesignations = filteredDesignations.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
+
+
   const openDeleteDialog = (designationId) => {
     setDesignationToDelete(designationId);
     setIsDeleteDialogOpen(true);
@@ -35,7 +61,7 @@ const DesignationTable = () => {
   useEffect(() => {
     const fetchDesignations = async () => {
       try {
-        const response = await getAPI("/designation-get-all", true); 
+        const response = await getAPI("/designation-get-all", true);
         if (!response.hasError) {
           setDesignations(response.data.data);
         } else {
@@ -45,10 +71,10 @@ const DesignationTable = () => {
         toast.error("An error occurred while fetching designations.");
       }
     };
-  
+
     fetchDesignations();
   }, []);
-  
+
 
 
 
@@ -76,11 +102,13 @@ const DesignationTable = () => {
                 <div className="dataTable-top">
                   <div className="dataTable-dropdown">
                     <label>
-                      <select className="dataTable-selector">
+                      <select
+                        className="dataTable-selector"
+                        value={entriesPerPage}
+                        onChange={handleEntriesPerPageChange}
+                      >
                         <option value="5">5</option>
-                        <option value="10" selected="">
-                          10
-                        </option>
+                        <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
                         <option value="25">25</option>
@@ -93,6 +121,8 @@ const DesignationTable = () => {
                       className="dataTable-input"
                       placeholder="Search..."
                       type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
                 </div>
@@ -107,7 +137,7 @@ const DesignationTable = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {designations.map((designation) => (
+                      {paginatedDesignations.map((designation) => (
                         <tr key={designation._id}>
                           <td>{designation.branchId.branchName}</td>
                           <td>{designation.departmentId.departmentName}</td>
@@ -163,10 +193,52 @@ const DesignationTable = () => {
                 </div>
                 <div className="dataTable-bottom">
                   <div className="dataTable-info">
-                    Showing 1 to 8 of 8 entries
+                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, designations.length)}{" "}
+                    to {Math.min(currentPage * entriesPerPage, designations.length)}{" "}
+                    of {designations.length} entries
                   </div>
                   <nav className="dataTable-pagination">
-                    <ul className="dataTable-pagination-list"></ul>
+                    <ul className="dataTable-pagination-list">
+                      {currentPage > 1 && (
+                        <li className="page-item">
+                          <button
+                            className="page-link prev-button"
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                          >
+                            ‹
+                          </button>
+                        </li>
+                      )}
+
+                      {Array.from({ length: Math.ceil(designations.length / entriesPerPage) }, (_, index) => (
+                        <li
+                          key={index + 1}
+                          className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+                        >
+                          <button
+                            className="page-link"
+                            onClick={() => setCurrentPage(index + 1)}
+                            style={{
+                              backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
+                              color: '#6FD943',
+                            }}
+                          >
+                            {index + 1}
+                          </button>
+                        </li>
+                      ))}
+
+                      {currentPage < Math.ceil(designations.length / entriesPerPage) && (
+                        <li className="page-item">
+                          <button
+                            className="page-link next-button"
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                          >
+                            ›
+                          </button>
+                        </li>
+                      )}
+                    </ul>
                   </nav>
                 </div>
               </div>
@@ -184,7 +256,7 @@ const DesignationTable = () => {
       {isDeleteDialogOpen && (
         <ConfirmationDialog
           onClose={closeDeleteDialog}
-          id={designationToDelete}  
+          id={designationToDelete}
           deleteType="designation"
           onDeleted={handleDeleteSuccess}
         />

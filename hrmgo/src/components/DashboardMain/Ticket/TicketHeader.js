@@ -8,7 +8,7 @@ import { FiPlus } from "react-icons/fi";
 import CreateTicketModal from "./CreateTicketModal"; 
 
 const TicketHeader = () => {
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const [showModal, setShowModal] = useState(false); 
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
@@ -46,7 +46,7 @@ const TicketHeader = () => {
           </div>
         </div>
         {showModal && (
-        <CreateTicketModal closeModal={closeModal} /> // Updated modal reference
+        <CreateTicketModal closeModal={closeModal} />
       )}
       </div>
     </>

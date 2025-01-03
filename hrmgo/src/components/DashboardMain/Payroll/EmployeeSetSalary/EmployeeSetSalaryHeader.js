@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 const EmployeeSetSalaryHeader = () => {
   return (
-    <>
       <div className="page-header">
         <div className="page-block">
           <div className="row align-items-center">
@@ -27,7 +26,6 @@ const EmployeeSetSalaryHeader = () => {
           </div>
         </div>
       </div>
-    </>
   );
 };
 

@@ -15,7 +15,7 @@ const Sidebar = () => {
         { path: '/dashboard/hrm-system-paysliptype', label: 'Payslip Type' },
         { path: '/dashboard/hrm-system-allowanceoption', label: 'Allowance Option' },
         { path: '/dashboard/hrm-system-loanoption', label: 'Loan Option' },
-        { path: '/dashboard/hrm-system-deductionoption', label: 'Deduction Option' },
+        { path: '/dashboard/hrm-system-deductionoption', label: 'Tax Deduction Option' },
         { path: '/dashboard/hrm-system-trainingtype', label: 'Training Type' },
         { path: '/dashboard/hrm-system-awardtype', label: 'Award Type' },
         { path: '/dashboard/hrm-system-terminationtype', label: 'Termination Type' },

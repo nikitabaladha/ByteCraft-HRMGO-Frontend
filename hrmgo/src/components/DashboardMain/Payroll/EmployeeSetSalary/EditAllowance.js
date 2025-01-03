@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import putAPI from '../../../../api/putAPI'; 
+import getAPI from '../../../../api/getAPI';
 import { Link } from 'react-router-dom';
 
 const UpdateAllowanceModal = ({ onClose, allowanceData, employee}) => {
@@ -8,7 +9,26 @@ const UpdateAllowanceModal = ({ onClose, allowanceData, employee}) => {
     const [title, setTitle] = useState('');
     const [type, setType] = useState('');
     const [amount, setAmount] = useState('');
+     const [allowanceOptions, setAllowanceOptions] = useState([]);
     const baseAmount = 1000;
+
+        
+  useEffect(() => {
+    const fetchAllowanceOptions = async () => {
+      try {
+        const response = await getAPI("/allowance-option-get-all", true);
+        if (!response.hasError) {
+          setAllowanceOptions(response.data.data);
+        } else {
+          toast.error(`Failed to fetch allowance options: ${response.message}`);
+        }
+      } catch (error) {
+        toast.error("An error occurred while fetching allowance options.");
+      }
+    };
+
+    fetchAllowanceOptions();
+  }, []);
     useEffect(() => {
         if (allowanceData) {
             console.log('New Allowance Data:', allowanceData);
@@ -91,9 +111,13 @@ const UpdateAllowanceModal = ({ onClose, allowanceData, employee}) => {
                                         value={allowanceOption}
                                         onChange={(e) => setAllowanceOption(e.target.value)}
                                     >
-                                        <option value="">Select Allowance Option</option>
-                                        <option value="Taxable">Taxable</option>
-                                        <option value="Non Taxable">Non Taxable</option>
+                                         <option value="">Select Allowance Option</option>
+                                        {allowanceOptions.map((option) => (
+                                            <option key={option._id} value={option.allowanceName}>
+                                                {option.allowanceName}
+                                            </option>
+                                        ))}
+                                       
                                     </select>
                                 </div>
 

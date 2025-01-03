@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import postAPI from '../../../../api/postAPI';
+import getAPI from '../../../../api/getAPI';
 
 const CreateLoanModal = ({ onClose, employee }) => {
     const [loanOption, setLoanOption] = useState('');
@@ -9,7 +10,25 @@ const CreateLoanModal = ({ onClose, employee }) => {
     const [type, setType] = useState('Fixed');
     const [amount, setAmount] = useState('');
     const [reason, setReason] = useState('');
+    const [loanOptions, setLoanOptions] = useState([]);
     const baseAmount = 1000;
+
+    useEffect(() => {
+        const fetchLoanOptions = async () => {
+            try {
+                const response = await getAPI('/loan-option-get-all', true);
+                if (!response.hasError) {
+                    setLoanOptions(response.data.data); 
+                } else {
+                    toast.error(`Failed to fetch loan options: ${response.message}`);
+                }
+            } catch (error) {
+                toast.error('An error occurred while fetching loan options.');
+            }
+        };
+
+        fetchLoanOptions();
+    }, []);
 
     const handleAmountChange = (e) => {
         setAmount(e.target.value);
@@ -100,10 +119,12 @@ const CreateLoanModal = ({ onClose, employee }) => {
                                         value={loanOption}
                                         onChange={(e) => setLoanOption(e.target.value)}
                                     >
-                                        <option value="">Select Loan Option</option>
-                                        <option value="Health Insurance">Health Insurance</option>
-                                        <option value="Other Insurance">Other Insurance</option>
-                                        <option value="Personal Loan">Personal Loan</option>
+                                             <option value="">Select Loan Option</option>
+                                           {loanOptions.map((option) => (
+                                            <option key={option._id} value={option.loanName}>
+                                                {option.loanName}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
 

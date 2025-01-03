@@ -1,12 +1,28 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import { Link } from "react-router-dom";
 import { TiPlus } from "react-icons/ti";
 import { TbFileExport } from "react-icons/tb";
 import ExpenseModal from "./ExpenseModal"; 
 import * as XLSX from "xlsx"; 
+import getAPI  from "../../../../api/getAPI"; 
 
-const ExpenseHeader = ({ expenses = [] }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const ExpenseHeader = () => {
+const [expenses, setExpenses] = useState([]);
+const [isModalOpen, setIsModalOpen] = useState(false);
+
+useEffect(() => {
+  const fetchExpenses = async () => {
+    try {
+      const response = await getAPI("/getall_expense", {}, true); 
+      setExpenses(response.data.data);  
+    } catch (err) {
+      console.error("Failed to fetch expenses", err); 
+    }
+  };
+
+  fetchExpenses();
+}, []);
+
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -22,19 +38,22 @@ const ExpenseHeader = ({ expenses = [] }) => {
       return;
     }
 
-    const formattedData = expenses.map((expense) => ({
-      Account: expense.account_name,
-      Payee: expense.payee_name,
+    const formattedData = expenses.map((expense, index) => ({
+      ID: index + 1,  
+      "Account Name": expense.account_name,
       Amount: expense.amount,
-      Category: expense.category,
-      Ref: expense.ref,
-      Payment: expense.payment_type,
       Date: new Date(expense.date).toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
       }),
+      "Expense Category": expense.category,  
+      Payee: expense.payee_name,
+      "Payment Type": expense.payment_type,
+      "Referral Id": expense.ref,
+      Description: expense.description,
     }));
+    
 
     const worksheet = XLSX.utils.json_to_sheet(formattedData);
     const workbook = XLSX.utils.book_new();
@@ -43,7 +62,6 @@ const ExpenseHeader = ({ expenses = [] }) => {
   };
 
   return (
-    <div className="dash-content">
       <div className="page-header">
         <div className="page-block">
           <div className="row align-items-center">
@@ -61,7 +79,7 @@ const ExpenseHeader = ({ expenses = [] }) => {
             <div className="col">
               <div className="float-end">
                 <button
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary me-2"
                   data-bs-toggle="tooltip"
                   title="Export"
                   onClick={handleExportToExcel}
@@ -81,7 +99,6 @@ const ExpenseHeader = ({ expenses = [] }) => {
             </div>
           </div>
         </div>
-      </div>
 
       {/* Render the Modal */}
       <ExpenseModal isOpen={isModalOpen} onClose={handleCloseModal} />

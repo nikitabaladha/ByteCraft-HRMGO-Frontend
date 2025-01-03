@@ -15,6 +15,30 @@ const PayslipTypeTable = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [payslipTypeToDelete, setPayslipTypeToDelete] = useState(null);
 
+  const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleEntriesPerPageChange = (event) => {
+    setEntriesPerPage(Number(event.target.value));
+    setCurrentPage(1);
+  };
+
+  const filteredPayslipTypes = payslipTypes.filter((payslipType) => {
+    const searchTerm = searchQuery.toLowerCase();
+    return (
+      payslipType.payslipType.toLowerCase().includes(searchTerm)
+    );
+  });
+
+  const paginatedPayslipTypes = filteredPayslipTypes.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
+
+
+
+
   const openDeleteDialog = (payslipTypeId) => {
     setPayslipTypeToDelete(payslipTypeId);
     setIsDeleteDialogOpen(true);
@@ -64,7 +88,6 @@ const PayslipTypeTable = () => {
       <div className="col-3">
         <Sidebar />
       </div>
-
       <div className="col-9">
         <div className="card">
           <div className="card-body table-border-style">
@@ -73,11 +96,13 @@ const PayslipTypeTable = () => {
                 <div className="dataTable-top">
                   <div className="dataTable-dropdown">
                     <label>
-                      <select className="dataTable-selector">
+                      <select
+                        className="dataTable-selector"
+                        value={entriesPerPage}
+                        onChange={handleEntriesPerPageChange}
+                      >
                         <option value="5">5</option>
-                        <option value="10" selected="">
-                          10
-                        </option>
+                        <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
                         <option value="25">25</option>
@@ -86,7 +111,13 @@ const PayslipTypeTable = () => {
                     </label>
                   </div>
                   <div className="dataTable-search">
-                    <input className="dataTable-input" placeholder="Search..." type="text" />
+                    <input
+                      className="dataTable-input"
+                      placeholder="Search..."
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                   </div>
                 </div>
                 <div className="dataTable-container">
@@ -98,7 +129,7 @@ const PayslipTypeTable = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {payslipTypes.map((payslipType) => (
+                      {paginatedPayslipTypes.map((payslipType) => (
                         <tr key={payslipType._id}>
                           <td>{payslipType.payslipType}</td>
                           <td className="Action">
@@ -122,10 +153,10 @@ const PayslipTypeTable = () => {
                                     <input name="_method" type="hidden" value="DELETE" />
                                     <input name="_token" type="hidden" value="OYzJQFXWqx1d9iWbHPH2ntDxxtmt4I8jLovG1Fuv" />
                                     <Link
-                                     onClick={() => openDeleteDialog(payslipType._id)}
-                                     className="mx-3 btn btn-sm align-items-center bs-pass-para"
-                                     data-bs-toggle="tooltip"
-                                     title="Delete">
+                                      onClick={() => openDeleteDialog(payslipType._id)}
+                                      className="mx-3 btn btn-sm align-items-center bs-pass-para"
+                                      data-bs-toggle="tooltip"
+                                      title="Delete">
                                       <span className="text-white">
                                         <RiDeleteBinLine />
                                       </span>
@@ -142,12 +173,56 @@ const PayslipTypeTable = () => {
                 </div>
                 <div className="dataTable-bottom">
                   <div className="dataTable-info">
-                    Showing 1 to {payslipTypes.length} of {payslipTypes.length} entries
+                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, payslipTypes.length)}{" "}
+                    to {Math.min(currentPage * entriesPerPage, payslipTypes.length)}{" "}
+                    of {payslipTypes.length} entries
                   </div>
                   <nav className="dataTable-pagination">
-                    <ul className="dataTable-pagination-list"></ul>
+                    <ul className="dataTable-pagination-list">
+                      {currentPage > 1 && (
+                        <li className="page-item">
+                          <button
+                            className="page-link prev-button"
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                          >
+                            ‹
+                          </button>
+                        </li>
+                      )}
+
+                      {Array.from({ length: Math.ceil(payslipTypes.length / entriesPerPage) }, (_, index) => (
+                        <li
+                          key={index + 1}
+                          className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+                        >
+                          <button
+                            className="page-link"
+                            onClick={() => setCurrentPage(index + 1)}
+                            style={{
+                              backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
+                              color: '#6FD943',
+                            }}
+                          >
+                            {index + 1}
+                          </button>
+                        </li>
+                      ))}
+
+                      {currentPage < Math.ceil(payslipTypes.length / entriesPerPage) && (
+                        <li className="page-item">
+                          <button
+                            className="page-link next-button"
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                          >
+                            ›
+                          </button>
+                        </li>
+                      )}
+                    </ul>
                   </nav>
                 </div>
+
+
               </div>
             </div>
           </div>
@@ -164,7 +239,7 @@ const PayslipTypeTable = () => {
       {isDeleteDialogOpen && (
         <ConfirmationDialog
           onClose={closeDeleteDialog}
-          id={payslipTypeToDelete}  
+          id={payslipTypeToDelete}
           deleteType="paysliptype"
           onDeleted={handleDeleteSuccess}
         />

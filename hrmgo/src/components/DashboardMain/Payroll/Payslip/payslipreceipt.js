@@ -12,7 +12,26 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
   const [basicsalarys, setBasicsalarys] = useState([]);
   const [overtimes, setOvertimes] = useState([]);
 
-  
+  const [companyDetails, setCompanyDetails] = useState(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      const fetchCompanyDetails = async () => {
+        try {
+          const response = await getAPI("/get-company-setting", {}, true);
+          setCompanyDetails(response.data.data);
+          console.log("Company Details:", companyDetails);
+
+        } catch (err) {
+          console.error("Failed to fetch company details", err);
+        }
+      };
+
+      fetchCompanyDetails();
+    }
+  }, [isOpen,companyDetails]);
+
+
   useEffect(() => {
     if (isOpen && payslip && payslip._id) {
       const fetchBasicsalary = async () => {
@@ -24,8 +43,8 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
             const BasicSalaryWithType = {
               amount: data?.salary.salary,
               name: 'Basicsalary',
-              designationId:data?.employee.designationId
-            
+              designationId: data?.employee.designationId
+
             };
 
             setBasicsalarys([BasicSalaryWithType]);
@@ -40,9 +59,9 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
 
       fetchBasicsalary();
     }
-  }, [payslip?._id, isOpen]);
+  }, [payslip?._id, isOpen,payslip]);
   console.log("Basicsalarys state:", basicsalarys);
-  
+
 
   useEffect(() => {
     if (isOpen && payslip && payslip._id) {
@@ -61,7 +80,7 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
       };
       fetchAllowanceData();
     }
-  }, [payslip?._id, isOpen]);
+  }, [payslip?._id, isOpen,payslip]);
 
 
 
@@ -85,7 +104,7 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
 
       fetchCommissionData();
     }
-  }, [payslip?._id, isOpen]);
+  }, [payslip?._id, isOpen,payslip]);
 
   useEffect(() => {
     if (isOpen && payslip && payslip._id) {
@@ -107,7 +126,7 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
 
       fetchOvertimeData();
     }
-  }, [payslip?._id, isOpen]);
+  }, [payslip?._id, isOpen,payslip]);
 
 
 
@@ -128,7 +147,7 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
       };
       fetchLoanData();
     }
-  }, [payslip?._id, isOpen]);
+  }, [payslip?._id, isOpen,payslip]);
 
   useEffect(() => {
     if (isOpen && payslip && payslip._id) {
@@ -147,7 +166,7 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
       };
       fetchOtherPaymentData();
     }
-  }, [payslip?._id, isOpen]);
+  }, [payslip?._id, isOpen,payslip]);
 
   useEffect(() => {
     if (isOpen && payslip && payslip._id) {
@@ -161,13 +180,13 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
           }));
           setTaxes(taxWithType);
         } catch (err) {
-          
+
           console.error(err);
         }
       };
       fetchTaxData();
     }
-  }, [payslip?._id, isOpen]);
+  }, [payslip?._id, isOpen,payslip]);
 
   const combinedData = [...basicsalarys, ...allowances, ...commissions, ...overtimes];
   const combinededuction = [...loans, ...taxes, ...otherPayments];
@@ -266,20 +285,20 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
                 >
                   <span className="fa fa-download"></span>
                 </Link>
-                <Link
+                {/* <Link
                   title="Mail Send"
                   href="https://demo.workdo.io/hrmgo/payslip/send/5/2024-10"
                   className="btn btn-sm btn-warning"
                 >
                   <span className="fa fa-paper-plane"></span>
-                </Link>
+                </Link> */}
               </div>
               <div className="invoice" id="printableArea">
                 <div className="row">
                   <div className="col-form-label">
                     <div className="invoice-number">
                       <img
-                        src="https://demo.workdo.io/hrmgo/storage/uploads/logo//logo-dark.png"
+                        alt="https://demo.workdo.io/hrmgo/storage/uploads/logo//logo-dark.png"
                         width="170px"
                       />
                     </div>
@@ -302,11 +321,11 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
                             </div>
                             <div className="col-md-6 text-end">
                               <address>
-                                <strong>HRMGo </strong>
+                                <strong>{companyDetails?.company_name}</strong>
                                 <br />
-                                Roshita Apartment , Borivali,
+                                {companyDetails?.company_address},{companyDetails?.company_city}
                                 <br />
-                                GUJARAT-395006
+                                {companyDetails?.company_state}-{companyDetails?.company_zipcode}
                                 <br />
                                 <strong>Salary Slip :</strong>{" "}
                                 {payslip?.payDate

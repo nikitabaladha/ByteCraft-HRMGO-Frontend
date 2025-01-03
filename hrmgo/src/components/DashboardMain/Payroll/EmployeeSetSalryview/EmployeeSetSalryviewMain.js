@@ -164,9 +164,7 @@ const EmployeeSetSalary = () => {
     };
 
     return (
-        <div className="dash-content">
         <div className="row">
-            {/* Employee Salary Section */}
             <div className="col-xl-6">
                 <div className="card set-card">
                     <div className="card-header">
@@ -448,7 +446,6 @@ const EmployeeSetSalary = () => {
             </div>
         </div>
     </div>
-</div>
     );
 };
 

@@ -6,15 +6,15 @@ import { toast } from 'react-toastify';
 const ZoomMeetingModal = ({ meeting, onClose }) => {
   const [ setMeetings] = useState([]); 
   if (!meeting) {
-    return null; // Don't render the modal if no meeting is selected
+    return null; 
   }
   const handleStartMeeting = async (meetingId) => {
     try {
-      // Send a PUT request to update the meeting status to "Starting"
+   
       const response = await putAPI(`/update_meeting_status/${meetingId}`, { status: "Starting" }, true);
 
       if (!response.hasError) {
-        // Update the local state if the request is successful
+  
         setMeetings((prevMeetings) =>
           prevMeetings.map((meeting) =>
             meeting._id === meetingId ? { ...meeting, status: "Starting" } : meeting
@@ -82,7 +82,7 @@ const ZoomMeetingModal = ({ meeting, onClose }) => {
                             <a
                               href={meeting.join_url}
                               className="text-secondary"
-                              onClick={() => handleStartMeeting(meeting._id)}  // Call handleStartMeeting here
+                              onClick={() => handleStartMeeting(meeting._id)}  
                             >
                               <p className="mb-0">
                                 <b>Start meeting</b> <HiExternalLink />

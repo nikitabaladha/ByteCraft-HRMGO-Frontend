@@ -51,9 +51,10 @@ const MeetingCalendar = () => {
     const events = meetings.map((meeting, index) => ({
         id: `meeting-${index}`,
         title: meeting.title,
-        start: meeting.start_date,
+        start: meeting.start_date,  
         extendedProps: { ...meeting },
     }));
+    console.log(events);
 
     const handleEventClick = (clickInfo) => {
         setSelectedMeeting(clickInfo.event.extendedProps);
@@ -132,7 +133,7 @@ const MeetingCalendar = () => {
                                         day: "Day",
                                     }}
                                     events={events} 
-                                    displayEventTime={false}
+                                    displayEventTime={true}
                                     eventClick={handleEventClick}
                                     eventContent={renderEventContent}
                                     datesSet={handleDateChange} 

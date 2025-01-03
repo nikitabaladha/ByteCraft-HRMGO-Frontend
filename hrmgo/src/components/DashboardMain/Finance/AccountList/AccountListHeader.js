@@ -48,7 +48,6 @@
 // export default AccountListHeader;
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { TiPlus } from "react-icons/ti";
 import AccountCreateModal from "./AccountCreateModal.js";
 
@@ -65,13 +64,11 @@ const AccountListHeader = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Add form submission logic here
     console.log("Form submitted!");
     setModalOpen(false);
   };
 
   return (
-    <div className="dash-content">
       <div className="page-header">
         <div className="page-block">
           <div className="row align-items-center">
@@ -100,9 +97,7 @@ const AccountListHeader = () => {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Modal Component */}
       <AccountCreateModal
         isOpen={isModalOpen}
         onClose={closeModal}

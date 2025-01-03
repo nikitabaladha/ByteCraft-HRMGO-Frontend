@@ -394,7 +394,6 @@ useEffect(() => {
 
 
     return (
-        <div className="dash-content">
             <div className="row">
                 <div className="col-xl-6">
                     <div className="card set-card">
@@ -1102,16 +1101,15 @@ useEffect(() => {
                             </div>
                         </div>
                     </div>
-                </div>
-                {isModalOpen && modalType === 'overtime' && selectedOvertime && (
+                    {isModalOpen && modalType === 'overtime' && selectedOvertime && (
                     <UpdateOvertimeModal
                         onClose={closeModal}
                         overtimeData={selectedOvertime}
                         employee={{ ...employee, id: employeeId, name: employeeName }}
                     />
                 )}
-            </div>
-            {isBasicSalaryModalOpen && (
+                </div>
+                {isBasicSalaryModalOpen && (
                 <SetBasicSalary
                     onClose={toggleBasicSalaryModal}
                     employee={{ ...employee, id: employeeId }}
@@ -1217,8 +1215,8 @@ useEffect(() => {
                     onDeleted={handleDeleteConfirmed}
                 />
             )}
-
-        </div>
+             
+            </div>
     );
 };
 

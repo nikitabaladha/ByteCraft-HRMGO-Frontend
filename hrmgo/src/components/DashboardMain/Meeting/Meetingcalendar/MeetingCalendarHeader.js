@@ -43,7 +43,7 @@ const TicketReplyHeader = () => {
                                     onClick={goTolist}
                                     data-bs-toggle="tooltip"
                                     title="List View"
-                                    className="btn btn-sm btn-primary"
+                                    className="btn btn-sm btn-primary me-2"
                                 >
                                     <GoListUnordered />
                                 </button>

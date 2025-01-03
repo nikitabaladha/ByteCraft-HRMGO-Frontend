@@ -3,22 +3,23 @@ import { Link } from 'react-router-dom';
 import { TiEyeOutline } from "react-icons/ti";
 import { RiDeleteBinLine } from "react-icons/ri";
 import ViewModal from "./Viewmodal";
-import getAPI from "../../../api/getAPI";  
+import getAPI from "../../../api/getAPI";
 import ConfirmationDialog from "../ConfirmationDialog";
-import dayjs from 'dayjs';  
+import dayjs from 'dayjs';
 import { HiExternalLink } from "react-icons/hi";
-import putAPI from "../../../api/putAPI"; 
-import { toast } from 'react-toastify'; 
+import putAPI from "../../../api/putAPI";
+import { toast } from 'react-toastify';
+import isBetween from 'dayjs/plugin/isBetween';
+dayjs.extend(isBetween);
+
 
 const ZoomMeetingTable = () => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [meetings, setMeetings] = useState([]); 
-  const [loading, setLoading] = useState(true); 
-  const [error, setError] = useState(""); 
+  const [meetings, setMeetings] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedMeeting, setSelectedMeeting] = useState(null);
 
-  const [entriesPerPage, setEntriesPerPage] = useState(10); 
+  const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -102,10 +103,8 @@ const ZoomMeetingTable = () => {
           status: meeting.status || "Waiting"
         }));
         setMeetings(updatedMeetings);
-        setLoading(false);
       } catch (err) {
-        setError("Failed to fetch Meetings");
-        setLoading(false);
+        console.Error("Failed to fetch Meetings");
       }
     };
 
@@ -126,16 +125,10 @@ const ZoomMeetingTable = () => {
     return now.isBetween(meetingStart, meetingEnd, null, '[)');
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
 
   return (
-    <div className="dash-content">
+    <div className="row">
+      <div className="col-xl-12">
       <div className="card">
         <div className="card-header card-body table-border-style">
           <div className="table-responsive">
@@ -208,13 +201,12 @@ const ZoomMeetingTable = () => {
                         </td>
                         <td>
                           <span
-                            className={`badge ${
-                              meeting.status === "Ended"
+                            className={`badge ${meeting.status === "Ended"
                                 ? "bg-danger"
                                 : meeting.status === "Starting"
-                                ? "bg-success"
-                                : "bg-info"
-                            } p-2 px-3`}
+                                  ? "bg-success"
+                                  : "bg-info"
+                              } p-2 px-3`}
                           >
                             {meeting.status === "Ended" ? "Ended" : meeting.status === "Starting" ? "Starting" : "Waiting"}
                           </span>
@@ -257,54 +249,33 @@ const ZoomMeetingTable = () => {
               </div>
               <div className="dataTable-bottom">
                 <div className="dataTable-info">
-                  Showing {Math.min((currentPage - 1) * entriesPerPage + 1, filteredMeetings.length)} to {Math.min(currentPage * entriesPerPage, filteredMeetings.length)} of {filteredMeetings.length} entries
+                  Showing {Math.min((currentPage - 1) * entriesPerPage + 1, meetings.length)}{" "}
+                  to {Math.min(currentPage * entriesPerPage, meetings.length)}{" "}
+                  of {meetings.length} entries
                 </div>
                 <nav className="dataTable-pagination">
-                  <ul
-                    className="dataTable-pagination-list"
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      listStyleType: 'none',
-                      padding: 0,
-                      margin: 0,
-                    }}
-                  >
+                  <ul className="dataTable-pagination-list">
                     {currentPage > 1 && (
-                      <li className="page-item" style={{ margin: '0 5px' }}>
+                      <li className="page-item">
                         <button
-                          className="page-link"
+                          className="page-link prev-button"
                           onClick={() => setCurrentPage(currentPage - 1)}
-                          style={{
-                            cursor: 'pointer',
-                            padding: '8px 16px',
-                            borderRadius: '4px',
-                            backgroundColor: 'transparent',
-                            border: 'none',
-                            color: '#6FD943',
-                          }}
                         >
                           ‹
                         </button>
                       </li>
                     )}
 
-                    {Array.from({ length: Math.ceil(filteredMeetings.length / entriesPerPage) }, (_, index) => (
+                    {Array.from({ length: Math.ceil(meetings.length / entriesPerPage) }, (_, index) => (
                       <li
                         key={index + 1}
                         className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
-                        style={{
-                          margin: '0 5px',
-                        }}
                       >
                         <button
                           className="page-link"
                           onClick={() => setCurrentPage(index + 1)}
                           style={{
-                            cursor: 'pointer',
-                            padding: '6px 12px',
                             backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
-                            border: 'none',
                             color: '#6FD943',
                           }}
                         >
@@ -313,24 +284,11 @@ const ZoomMeetingTable = () => {
                       </li>
                     ))}
 
-                    {currentPage < Math.ceil(filteredMeetings.length / entriesPerPage) && (
-                      <li
-                        className="page-item"
-                        style={{
-                          margin: '0 5px',
-                        }}
-                      >
+                    {currentPage < Math.ceil(meetings.length / entriesPerPage) && (
+                      <li className="page-item">
                         <button
-                          className="page-link"
+                          className="page-link next-button"
                           onClick={() => setCurrentPage(currentPage + 1)}
-                          style={{
-                            cursor: 'pointer',
-                            padding: '8px 16px',
-                            borderRadius: '4px',
-                            backgroundColor: 'transparent',
-                            border: 'none',
-                            color: '#6FD943',
-                          }}
                         >
                           ›
                         </button>
@@ -339,10 +297,12 @@ const ZoomMeetingTable = () => {
                   </ul>
                 </nav>
               </div>
+
             </div>
           </div>
         </div>
-      </div>
+        </div>
+        </div>
       {isDeleteDialogOpen && (
         <ConfirmationDialog
           onClose={handleDeleteCancel}
@@ -736,3 +696,5 @@ export default ZoomMeetingTable;
 // };
 
 // export default ZoomMeetingTable;
+
+
