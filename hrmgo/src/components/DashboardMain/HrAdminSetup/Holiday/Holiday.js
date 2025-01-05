@@ -8,9 +8,11 @@ import getAPI from "../../../../api/getAPI";
 
 const Holiday = () => {
   const location = useLocation();
+
   const [holidays, setHolidays] = useState([]);
-  const [originalHolidays, setOriginalHolidays] = useState([]);
   const [selectedHoliday, setSelectedHoliday] = useState(null);
+
+  const [originalHolidays, setOriginalHolidays] = useState([]);
 
   useEffect(() => {
     const fetchHolidayData = async () => {
@@ -34,11 +36,23 @@ const Holiday = () => {
     fetchHolidayData();
   }, []);
 
+  const addHoliday = (newHoliday) => {
+    setHolidays((prevHolidays) => [...prevHolidays, newHoliday]);
+  };
+
+  const updateHoliday = (newUpdatedHoliday) => {
+    setHolidays((prevHolidays) =>
+      prevHolidays.map((holiday) =>
+        holiday.id === newUpdatedHoliday.id ? newUpdatedHoliday : holiday
+      )
+    );
+  };
+
   const handleSearchResults = (searchedHolidays) => {
     setHolidays(searchedHolidays);
   };
   const resetSearch = () => {
-    setHolidays(originalHolidays); // Restore original holidays
+    setHolidays(originalHolidays);
   };
 
   const isCalendarRoute =
@@ -54,7 +68,7 @@ const Holiday = () => {
         />
       ) : (
         <>
-          <HolidayHeader />
+          <HolidayHeader holidays={holidays} addHoliday={addHoliday} />
           <HolidaySearchForm
             onSearchResults={handleSearchResults}
             resetSearch={resetSearch}
@@ -64,6 +78,7 @@ const Holiday = () => {
             setHolidays={setHolidays}
             selectedHoliday={selectedHoliday}
             setSelectedHoliday={setSelectedHoliday}
+            updateHoliday={updateHoliday}
           />
         </>
       )}

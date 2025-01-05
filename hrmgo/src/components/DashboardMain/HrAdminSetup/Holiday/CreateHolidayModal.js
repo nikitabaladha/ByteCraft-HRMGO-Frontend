@@ -3,19 +3,12 @@ import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const CreateHolidayModal = ({ onClose }) => {
+const CreateHolidayModal = ({ onClose, addHoliday }) => {
   const [formData, setFormData] = useState({
     occasion: "",
     startDate: new Date().toISOString().split("T")[0],
     endDate: new Date().toISOString().split("T")[0],
   });
-
-  const formatDateToISO = (date) => {
-    const utcDate = new Date(
-      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
-    );
-    return utcDate.toISOString();
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,21 +18,28 @@ const CreateHolidayModal = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const formattedStartDate = formatDateToISO(formData.startDate);
-      const formattedEndDate = formatDateToISO(formData.endDate);
-
       const response = await postAPI(
         "/holiday",
         {
           occasion: formData.occasion,
-          startDate: formattedStartDate,
-          endDate: formattedEndDate,
+          startDate: formData.startDate,
+          endDate: formData.endDate,
         },
         true
       );
 
       if (!response.hasError) {
         toast.success("Holiday created successfully!");
+
+        const newHoliday = {
+          id: response.data.data._id,
+          occasion: response.data.data.occasion,
+          startDate: response.data.data.startDate,
+          endDate: response.data.data.endDate,
+        };
+
+        addHoliday(newHoliday);
+
         setFormData({
           occasion: "",
           startDate: new Date().toISOString().split("T")[0],
@@ -142,14 +142,13 @@ const CreateHolidayModal = ({ onClose }) => {
 
                       <input
                         value={formData.startDate}
+                        required
                         onChange={handleChange}
                         dateFormat="yyyy-MM-dd"
-                        autoComplete="off"
                         className="form-control"
-                        required="required"
-                        name="startDate"
+                        autoComplete="off"
                         type="date"
-                        id="start_date"
+                        name="startDate"
                       />
                     </div>
                     <div className="form-group col-md-6">
@@ -160,14 +159,13 @@ const CreateHolidayModal = ({ onClose }) => {
 
                       <input
                         value={formData.endDate}
+                        required
                         onChange={handleChange}
                         dateFormat="yyyy-MM-dd"
-                        autoComplete="off"
                         className="form-control"
-                        required="required"
-                        name="endDate"
+                        autoComplete="off"
                         type="date"
-                        id="end_date"
+                        name="endDate"
                       />
                     </div>
                     <div className="form-group col-md-6">

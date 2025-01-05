@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import DatePicker from "react-datepicker";
 import putAPI from "../../../../api/putAPI.js";
 
-const UpdateHolidayModal = ({ holiday, onClose }) => {
+const UpdateHolidayModal = ({ holiday, onClose, updateHoliday }) => {
   const [startDate, setStartDate] = useState(
     holiday?.startDate ? new Date(holiday.startDate) : new Date()
   );
@@ -45,6 +45,16 @@ const UpdateHolidayModal = ({ holiday, onClose }) => {
       if (!response.hasError) {
         toast.success("Holiday updated successfully!");
         console.log("Holiday updated successfully!");
+
+        const newUpdatedHoliday = {
+          id: response.data.data._id,
+          occasion: response.data.data.occasion,
+          startDate: response.data.data.startDate,
+          endDate: response.data.data.endDate,
+        };
+
+        updateHoliday(newUpdatedHoliday);
+
         onClose();
       } else {
         toast.error("Failed to update Holiday.");
