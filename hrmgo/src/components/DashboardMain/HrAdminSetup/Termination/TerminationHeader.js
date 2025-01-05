@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import CreateTerminationModal from "./CreateTerminationModal";
 
-const TerminationHeader = () => {
+const TerminationHeader = ({ addTermination }) => {
   const [isCreateTerminationModalOpen, setIsCreateTerminationModalOpen] =
     useState(false);
 
@@ -52,7 +52,10 @@ const TerminationHeader = () => {
       </div>
 
       {isCreateTerminationModalOpen && (
-        <CreateTerminationModal onClose={closeModal} />
+        <CreateTerminationModal
+          onClose={closeModal}
+          addTermination={addTermination}
+        />
       )}
     </>
   );

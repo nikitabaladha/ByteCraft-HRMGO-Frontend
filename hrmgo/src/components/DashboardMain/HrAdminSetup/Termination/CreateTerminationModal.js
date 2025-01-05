@@ -4,7 +4,7 @@ import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const CreateTerminationModal = ({ onClose }) => {
+const CreateTerminationModal = ({ onClose, addTermination }) => {
   const [employees, setEmployees] = useState([]);
   const [formData, setFormData] = useState({
     employeeId: "",
@@ -52,6 +52,23 @@ const CreateTerminationModal = ({ onClose }) => {
 
       if (!response.hasError) {
         toast.success("Termination created successfully!");
+
+        const selectedEmployee = employees.find(
+          (emp) => emp._id === formData.employeeId
+        );
+        const employeeName = selectedEmployee ? selectedEmployee.name : "";
+
+        const newTermination = {
+          id: response.data.data._id,
+          employeeName,
+          terminationDate: response.data.data.terminationDate,
+          terminationType: response.data.data.terminationType,
+          noticeDate: response.data.data.noticeDate,
+          description: response.data.data.description,
+        };
+
+        addTermination(newTermination);
+
         setFormData({
           employeeId: "",
           terminationType: "",

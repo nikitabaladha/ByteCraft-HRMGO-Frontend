@@ -28,15 +28,34 @@ const Termination = () => {
 
     fetchTerminationData();
   }, []);
+
+  const addTermination = (newTermination) => {
+    setTerminations((prevTerminations) => [
+      ...prevTerminations,
+      newTermination,
+    ]);
+  };
+
+  const updateTermination = (newUpdatedTermination) => {
+    setTerminations((prevTerminations) =>
+      prevTerminations.map((termination) =>
+        termination.id === newUpdatedTermination.id
+          ? newUpdatedTermination
+          : termination
+      )
+    );
+  };
+
   return (
     <>
-      <TerminationHeader />
+      <TerminationHeader addTermination={addTermination} />
 
       <TerminationTable
         terminations={terminations}
         setTerminations={setTerminations}
         selectedTermination={selectedTermination}
         setSelectedTermination={setSelectedTermination}
+        updateTermination={updateTermination}
       />
     </>
   );

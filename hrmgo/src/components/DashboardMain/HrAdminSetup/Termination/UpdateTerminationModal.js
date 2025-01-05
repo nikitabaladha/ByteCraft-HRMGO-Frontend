@@ -3,7 +3,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import putAPI from "../../../../api/putAPI.js";
 
-const UpdateTerminationModal = ({ termination, onClose }) => {
+const UpdateTerminationModal = ({
+  termination,
+  onClose,
+  updateTermination,
+}) => {
   const [employeeName, setEmployeeName] = useState(
     termination?.employeeName || ""
   );
@@ -64,7 +68,18 @@ const UpdateTerminationModal = ({ termination, onClose }) => {
 
       if (!response.hasError) {
         toast.success("Termination updated successfully!");
-        console.log("Termination updated successfully!");
+
+        const newUpdatedTermination = {
+          id: response.data.data._id,
+          employeeName,
+          terminationDate: response.data.data.terminationDate,
+          terminationType: response.data.data.terminationType,
+          noticeDate: response.data.data.noticeDate,
+          description: response.data.data.description,
+        };
+
+        updateTermination(newUpdatedTermination);
+
         onClose();
       } else {
         toast.error("Failed to update Termination.");
