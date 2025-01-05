@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import putAPI from "../../../../api/putAPI.js";
 
-const UpdateAwardModal = ({ award, onClose }) => {
+const UpdateAwardModal = ({ award, onClose, updateAward }) => {
   const [employeeName, setEmployeeName] = useState(award?.employeeName || "");
   const [awardType, setAwardType] = useState(award?.awardType || "");
   const [date, setDate] = useState(
@@ -40,6 +40,18 @@ const UpdateAwardModal = ({ award, onClose }) => {
 
       if (!response.hasError) {
         toast.success("Award updated successfully!");
+
+        const newUpdatedAward = {
+          id: response.data.data._id,
+          employeeName: response.data.data.employeeId,
+          awardType: response.data.data.awardType,
+          date: response.data.data.date,
+          gift: response.data.data.gift,
+          description: response.data.data.description,
+          employeeId: response.data.data.employeeId,
+        };
+
+        updateAward(newUpdatedAward);
         onClose();
       } else {
         toast.error("Failed to update award.");

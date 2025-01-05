@@ -4,7 +4,7 @@ import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const CreateAwardModal = ({ onClose }) => {
+const CreateAwardModal = ({ onClose, addAward }) => {
   const [employees, setEmployees] = useState([]);
   const [formData, setFormData] = useState({
     employeeId: "",
@@ -52,6 +52,19 @@ const CreateAwardModal = ({ onClose }) => {
 
       if (!response.hasError) {
         toast.success("Award created successfully!");
+
+        const newAward = {
+          id: response.data.data._id,
+          employeeName: response.data.data.employeeName,
+          awardType: response.data.data.awardType,
+          date: response.data.data.date,
+          gift: response.data.data.gift,
+          description: response.data.data.description,
+          employeeId: response.data.data.employeeId,
+        };
+
+        addAward(newAward);
+
         setFormData({
           employeeId: "",
           awardType: "",

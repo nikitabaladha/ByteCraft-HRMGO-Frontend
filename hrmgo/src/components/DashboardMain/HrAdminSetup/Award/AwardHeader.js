@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import CreateAwardModal from "./CreateAwardModal";
 
-const AwardHeader = () => {
+const AwardHeader = ({ addAward }) => {
   const [isCreateAwardModalOpen, setIsCreateAwardModalOpen] = useState(false);
 
   const openModal = () => {
@@ -50,7 +50,9 @@ const AwardHeader = () => {
         </div>
       </div>
 
-      {isCreateAwardModalOpen && <CreateAwardModal onClose={closeModal} />}
+      {isCreateAwardModalOpen && (
+        <CreateAwardModal onClose={closeModal} addAward={addAward} />
+      )}
     </>
   );
 };

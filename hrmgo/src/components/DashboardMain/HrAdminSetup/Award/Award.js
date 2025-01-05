@@ -30,15 +30,28 @@ const Award = () => {
     fetchAwardData();
   }, []);
 
+  const addAward = (newAward) => {
+    setAwards((prevAwards) => [...prevAwards, newAward]);
+  };
+
+  const updateAward = (newUpdatedAward) => {
+    setAwards((prevAwards) =>
+      prevAwards.map((award) =>
+        award.id === newUpdatedAward.id ? newUpdatedAward : award
+      )
+    );
+  };
+
   return (
     <>
-      <AwardHeader />
+      <AwardHeader addAward={addAward} />
 
       <AwardTable
         awards={awards}
         setAwards={setAwards}
         selectedAward={selectedAward}
         setSelectedAward={setSelectedAward}
+        updateAward={updateAward}
       />
     </>
   );
