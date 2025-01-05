@@ -18,6 +18,8 @@ const Announcement = () => {
           Array.isArray(response.data.data)
         ) {
           setAnnouncements(response.data.data);
+
+          console.log("Announcement data from main page", response.data);
         } else {
           console.error("Invalid response format or error in response");
         }

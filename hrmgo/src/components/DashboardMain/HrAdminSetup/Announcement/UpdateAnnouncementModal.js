@@ -8,9 +8,10 @@ import getAPI from "../../../../api/getAPI.js";
 const UpdateAnnouncementModal = ({
   announcement,
   onClose,
-  UpdateAnnouncement,
+  updateAnnouncement,
 }) => {
   const today = new Date().toISOString().split("T")[0];
+  console.log("Announcement from update announcement modal:", announcement);
 
   const [formData, setFormData] = useState({
     title: announcement?.title || "",
@@ -122,27 +123,34 @@ const UpdateAnnouncementModal = ({
   const handleUpdate = async (e) => {
     e.preventDefault();
 
+    const updatedData = {
+      title: formData.title,
+      description: formData.description,
+      startDate: formData.startDate,
+      endDate: formData.endDate,
+      branchId: formData.branchId,
+      departmentId: formData.departmentId,
+      employeeId: formData.employeeId,
+    };
+
+    console.log("Updated Data to be sent:", updatedData);
     try {
-      // Get existing employee IDs from the announcement
-      const existingEmployeeIds = announcement.employeeId || [];
-
-      // Filter out duplicates and store unique employee IDs
-      const uniqueEmployeeIds = Array.from(
-        new Set([
-          ...existingEmployeeIds,
-          ...formData.employeeId, // New selections
-        ])
+      const response = await putAPI(
+        `/announcement/${announcement.id}`,
+        updatedData,
+        true
       );
+      console.log("Response from API:", response);
+    } catch (error) {
+      console.error("Error in handleUpdate:", error);
+      if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
+    }
 
-      // Create the updated announcement data, ensuring no duplicate employee IDs
-      const updatedData = {
-        ...formData,
-        employeeId:
-          uniqueEmployeeIds.length > 0
-            ? uniqueEmployeeIds
-            : existingEmployeeIds, // Only store unique employee IDs or retain existing ones
-      };
-
+    try {
       const response = await putAPI(
         `/announcement/${announcement.id}`,
         updatedData,
@@ -154,30 +162,40 @@ const UpdateAnnouncementModal = ({
       } else {
         toast.success("Announcement updated successfully!");
 
+        const branchName =
+          branches.find((branch) => branch._id === formData.branchId)
+            ?.branchName || "";
+        const departmentName =
+          departments.find(
+            (department) => department._id === formData.departmentId
+          )?.departmentName || "";
+
         const newUpdatedAnnouncement = {
           id: response.data.data._id,
           title: response.data.data.title,
           startDate: response.data.data.startDate,
           endDate: response.data.data.endDate,
           description: response.data.data.description,
+          branchName,
+          departmentName,
+          branchId: response.data.data.branchId,
+          departmentId: response.data.data.departmentId,
         };
 
-        UpdateAnnouncement(newUpdatedAnnouncement);
+        console.log("newUpdatedAnnouncement", newUpdatedAnnouncement);
+
+        updateAnnouncement(newUpdatedAnnouncement);
+
         onClose();
       }
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
+      if (error.response?.data?.message) {
         toast.error(error.response.data.message);
       } else {
         toast.error("An unexpected error occurred. Please try again.");
       }
     }
   };
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       const modalDialog = document.querySelector(".modal-dialog");

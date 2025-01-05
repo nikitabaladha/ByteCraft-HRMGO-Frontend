@@ -3,7 +3,6 @@ import getAPI from "../../../../api/getAPI.js";
 import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 
@@ -155,6 +154,8 @@ const CreateAnnouncementModal = ({ onClose, addAnnouncement }) => {
           description: response.data.data.description,
           branchName: branchName,
           departmentName: departmentName,
+          branchId: response.data.data.branchId,
+          departmentId: response.data.data.departmentId,
         };
 
         addAnnouncement(newAnnouncement);
