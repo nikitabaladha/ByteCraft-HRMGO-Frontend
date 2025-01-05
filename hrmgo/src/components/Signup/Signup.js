@@ -68,7 +68,6 @@ const Signup = () => {
 
   return (
     <div className="custom-login">
-      <ToastContainer />
       <div className="login-bg-img">
         <img src={background1} className="login-bg-1" alt="Background 1" />
         <img src={background2} className="login-bg-2" alt="Background 2" />

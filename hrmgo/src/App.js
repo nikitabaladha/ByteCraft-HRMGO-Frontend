@@ -7,7 +7,7 @@ import "cookieconsent/build/cookieconsent.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "choices.js/public/assets/styles/choices.css";
 
-import "choices.js/public/assets/styles/choices.min.css";
+// import "choices.js/public/assets/styles/choices.min.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
 import "bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js";
@@ -25,21 +25,9 @@ import { ToastContainer } from "react-toastify";
 import AppRoutes from "./routes";
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    // Check if there is a token in localStorage
-    const token = JSON.parse(localStorage.getItem("accessToken"));
-    setIsAuthenticated(!!token);
-  }, []);
-
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-  };
-
   return (
     <BrowserRouter>
-      <AppRoutes isAuthenticated={isAuthenticated} handleLogin={handleLogin} />
+      <AppRoutes />
       <ToastContainer />
     </BrowserRouter>
   );

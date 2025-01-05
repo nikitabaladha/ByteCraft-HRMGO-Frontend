@@ -9,7 +9,7 @@ import "../custom-login.css";
 import background1 from "../../uploads/svg/login-1.svg";
 import background2 from "../../uploads/svg/login-2.svg";
 
-const Login = ({ onLogin }) => {
+const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -44,7 +44,7 @@ const Login = ({ onLogin }) => {
         toast.success("Login successful!");
 
         setTimeout(() => {
-          onLogin();
+          navigate("/dashboard");
         }, 2000);
       } else {
         setGeneralError(response.data.message);
@@ -63,7 +63,6 @@ const Login = ({ onLogin }) => {
 
   return (
     <div className="custom-login">
-      <ToastContainer />
       <div className="login-bg-img">
         <img src={background1} className="login-bg-1" alt="Background 1" />
         <img src={background2} className="login-bg-2" alt="Background 2" />

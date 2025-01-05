@@ -23,7 +23,6 @@ const Header = ({ toggleSidebar, fullName }) => {
           <ul className="list-unstyled">
             <li className="dash-h-item mob-hamburger">
               <Link
-                to="#!"
                 className="dash-head-link"
                 id="mobile-collapse"
                 onClick={toggleSidebar}

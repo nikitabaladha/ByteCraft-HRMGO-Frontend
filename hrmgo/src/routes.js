@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
+
 import DashboardMain from "./components/DashboardMain/DashboardMain";
 
 import Overview from "./components/DashboardMain/Dashboard/Overview/Overview";
@@ -10,6 +11,7 @@ import IncomeVsExpense from "./components/DashboardMain/Dashboard/Report/IncomeV
 import MonthlyAttendance from "./components/DashboardMain/Dashboard/Report/MonthlyAttendance/MonthlyAttendance.js";
 import Leave from "./components/DashboardMain/Dashboard/Report/Leave/Leave";
 import AccountStatement from "./components/DashboardMain/Dashboard/Report/AccountStatement/AccountStatement.js";
+import Payroll from "./components/DashboardMain/Dashboard/Report/Payroll/Payroll";
 
 import Employee from "./components/DashboardMain/Employee/Employee.js";
 import CreateEmployee from "./components/DashboardMain/Employee/CreateEmployee/CreateEmployee.js";
@@ -36,84 +38,94 @@ import HolidayCalendarView from "./components/DashboardMain/HrAdminSetup/Holiday
 import Contract from "./components/DashboardMain/Contract/Contract.js";
 import ContractDetail from "./components/DashboardMain/Contract/ContractDetail/ContractDetail.js";
 import ContractPreview from "./components/DashboardMain/Contract/ContractDetail/ContractPreview.js";
-const AppRoutes = ({ isAuthenticated, handleLogin }) => {
+
+const PrivateRoute = ({ children }) => {
+  const isAuthenticated = localStorage.getItem("accessToken");
+  return isAuthenticated ? children : <Navigate to="/login" />;
+};
+
+const PublicRoute = ({ children }) => {
+  const isAuthenticated = !localStorage.getItem("accessToken");
+  return isAuthenticated ? children : <Navigate to="/" />;
+};
+
+const AppRoutes = () => {
   return (
     <Routes>
-      {!isAuthenticated ? (
-        <>
-          <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </>
-      ) : (
-        <>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        }
+      />
 
-          <Route path="/contract/preview/:id" element={<ContractPreview />} />
-          <Route path="/dashboard" element={<DashboardMain />}>
-            <Route index element={<Navigate to="overview" replace />} />
-            <Route path="overview" element={<Overview />} />
-            <Route
-              path="report/income-vs-expense"
-              element={<IncomeVsExpense />}
-            />
-            <Route
-              path="report/monthly-attendance"
-              element={<MonthlyAttendance />}
-            />
-            <Route path="report/leave" element={<Leave />} />
-            <Route
-              path="report/account-statement"
-              element={<AccountStatement />}
-            />
+      <Route
+        path="/signup"
+        element={
+          <PublicRoute>
+            <Signup />
+          </PublicRoute>
+        }
+      />
+      <Route path="/contract/preview/:id" element={<ContractPreview />} />
+      <Route
+        path="/dashboard"
+        element={
+          <PrivateRoute>
+            <DashboardMain />
+          </PrivateRoute>
+        }
+      >
+        <Route index element={<Overview />} />
 
-            <Route path="employee" element={<Employee />}>
-              <Route path="create" element={<CreateEmployee />} />
-              <Route path="update" element={<UpdateEmployee />} />
-            </Route>
+        <Route path="overview" element={<Overview />} />
+        <Route path="report/income-vs-expense" element={<IncomeVsExpense />} />
+        <Route
+          path="report/monthly-attendance"
+          element={<MonthlyAttendance />}
+        />
+        <Route path="report/leave" element={<Leave />} />
+        <Route path="report/account-statement" element={<AccountStatement />} />
+        <Route path="report/payroll" element={<Payroll />} />
 
-            <Route path="time-sheet/manage-leave" element={<ManageLeave />} />
-            <Route path="time-sheet/time-sheet" element={<TimeSheet />} />
-            <Route
-              path="time-sheet/attendance/marked-attendance"
-              element={<MarkedAttendance />}
-            />
-            <Route
-              path="time-sheet/attendance/bulk-attendance"
-              element={<BulkAttendance />}
-            />
+        <Route path="employee" element={<Employee />}>
+          <Route path="create" element={<CreateEmployee />} />
+          <Route path="update" element={<UpdateEmployee />} />
+        </Route>
 
-            <Route path="performance/indicator" element={<Indicator />} />
-            <Route path="performance/appraisal" element={<Appraisal />} />
+        <Route path="time-sheet/manage-leave" element={<ManageLeave />} />
+        <Route path="time-sheet/time-sheet" element={<TimeSheet />} />
+        <Route
+          path="time-sheet/attendance/marked-attendance"
+          element={<MarkedAttendance />}
+        />
+        <Route
+          path="time-sheet/attendance/bulk-attendance"
+          element={<BulkAttendance />}
+        />
 
-            <Route path="hr-admin-setup/award" element={<Award />} />
-            <Route
-              path="hr-admin-setup/resignation"
-              element={<Resignation />}
-            />
-            <Route path="hr-admin-setup/promotion" element={<Promotion />} />
-            <Route path="hr-admin-setup/complaint" element={<Complaint />} />
-            <Route path="hr-admin-setup/warning" element={<Warning />} />
-            <Route
-              path="hr-admin-setup/termination"
-              element={<Termination />}
-            />
-            <Route
-              path="hr-admin-setup/announcement"
-              element={<Announcement />}
-            />
+        <Route path="performance/indicator" element={<Indicator />} />
+        <Route path="performance/appraisal" element={<Appraisal />} />
 
-            <Route path="hr-admin-setup/holiday" element={<Holiday />}>
-              <Route path="calendar" element={<HolidayCalendarView />} />
-            </Route>
+        <Route path="hr-admin-setup/award" element={<Award />} />
+        <Route path="hr-admin-setup/resignation" element={<Resignation />} />
+        <Route path="hr-admin-setup/promotion" element={<Promotion />} />
+        <Route path="hr-admin-setup/complaint" element={<Complaint />} />
+        <Route path="hr-admin-setup/warning" element={<Warning />} />
+        <Route path="hr-admin-setup/termination" element={<Termination />} />
+        <Route path="hr-admin-setup/announcement" element={<Announcement />} />
 
-            <Route path="contract" element={<Contract />} />
-            <Route path="contract/:id" element={<ContractDetail />} />
-          </Route>
+        <Route path="hr-admin-setup/holiday" element={<Holiday />}>
+          <Route path="calendar" element={<HolidayCalendarView />} />
+        </Route>
 
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
-        </>
-      )}
+        <Route path="contract" element={<Contract />} />
+        <Route path="contract/:id" element={<ContractDetail />} />
+      </Route>
+
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
 };
