@@ -30,15 +30,28 @@ const Warning = () => {
     fetchWarningData();
   }, []);
 
+  const addWarning = (newWarning) => {
+    setWarnings((prevWarnings) => [...prevWarnings, newWarning]);
+  };
+
+  const updateWarning = (newUpdatedWarning) => {
+    setWarnings((prevWarnings) =>
+      prevWarnings.map((warning) =>
+        warning.id === newUpdatedWarning.id ? newUpdatedWarning : warning
+      )
+    );
+  };
+
   return (
     <>
-      <WarningHeader />
+      <WarningHeader addWarning={addWarning} />
 
       <WarningTable
         warnings={warnings}
         setWarnings={setWarnings}
         selectedWarning={selectedWarning}
         setSelectedWarning={setSelectedWarning}
+        updateWarning={updateWarning}
       />
     </>
   );

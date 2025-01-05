@@ -4,7 +4,7 @@ import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const CreateWarningModal = ({ onClose }) => {
+const CreateWarningModal = ({ onClose, addWarning }) => {
   const [employees, setEmployees] = useState([]);
   const [formData, setFormData] = useState({
     warningById: "",
@@ -60,6 +60,27 @@ const CreateWarningModal = ({ onClose }) => {
           warningDate: new Date().toISOString().split("T")[0],
           description: "",
         });
+
+        const warningBy = employees.find(
+          (emp) => emp._id === formData.warningById
+        )?.name;
+
+        const warningTo = employees.find(
+          (emp) => emp._id === formData.warningToId
+        )?.name;
+
+        // i want to pass warning By and warnig to name do it for me
+        const newWarning = {
+          id: response.data.data._id,
+          description: response.data.data.description,
+          warningBy: warningBy,
+          warningTo: warningTo,
+          subject: response.data.data.subject,
+          warningDate: response.data.data.warningDate,
+        };
+
+        addWarning(newWarning);
+
         onClose();
       } else {
         toast.error(response.message || "Failed to create Warning.");

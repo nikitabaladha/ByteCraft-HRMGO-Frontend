@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import putAPI from "../../../../api/putAPI.js";
 import getAPI from "../../../../api/getAPI.js";
 
-const UpdateWarningModal = ({ warning, onClose }) => {
+const UpdateWarningModal = ({ warning, onClose, updateWarning }) => {
   const [warningBy, setWarningBy] = useState(warning?.warningBy || "");
   const [warningTo, setWarningTo] = useState([]);
   const [warningToId, setWarningToId] = useState(warning?.warningToId || "");
@@ -66,6 +66,25 @@ const UpdateWarningModal = ({ warning, onClose }) => {
       );
       if (!response.hasError) {
         toast.success("Warning updated successfully!");
+
+        const selectedWarningTo = warningTo.find(
+          (emp) => emp._id === warningToId
+        );
+        const newWarningToName = selectedWarningTo
+          ? selectedWarningTo.name
+          : "";
+
+        const newUpdatedWarning = {
+          id: response.data.data._id,
+          description: response.data.data.description,
+          warningBy: warningBy,
+          warningTo: newWarningToName,
+          subject: response.data.data.subject,
+          warningDate: response.data.data.warningDate,
+        };
+
+        updateWarning(newUpdatedWarning);
+
         onClose();
       } else {
         toast.error("Failed to update warning.");

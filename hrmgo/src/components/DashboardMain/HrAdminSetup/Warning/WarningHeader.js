@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import CreateWarningModal from "./CreateWarningModal";
 
-const WarningHeader = () => {
+const WarningHeader = ({ addWarning }) => {
   const [isCreateWarningModalOpen, setIsCreateWarningModalOpen] =
     useState(false);
 
@@ -51,7 +51,9 @@ const WarningHeader = () => {
         </div>
       </div>
 
-      {isCreateWarningModalOpen && <CreateWarningModal onClose={closeModal} />}
+      {isCreateWarningModalOpen && (
+        <CreateWarningModal onClose={closeModal} addWarning={addWarning} />
+      )}
     </>
   );
 };
