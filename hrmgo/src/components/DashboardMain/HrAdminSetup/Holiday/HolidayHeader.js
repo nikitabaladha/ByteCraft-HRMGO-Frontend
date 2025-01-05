@@ -42,13 +42,13 @@ const HolidayHeader = ({ holidays, addHoliday }) => {
   const exportHolidayData = () => {
     const formattedHolidays = holidays.map((holiday) => {
       return {
-        occasion: holiday.occasion,
-        startDate: new Date(holiday.startDate).toLocaleDateString("en-US", {
+        Occasion: holiday.occasion,
+        "Start Date": new Date(holiday.startDate).toLocaleDateString("en-US", {
           year: "numeric",
           month: "short",
           day: "numeric",
         }),
-        endDate: new Date(holiday.endDate).toLocaleDateString("en-US", {
+        "End Date": new Date(holiday.endDate).toLocaleDateString("en-US", {
           year: "numeric",
           month: "short",
           day: "numeric",

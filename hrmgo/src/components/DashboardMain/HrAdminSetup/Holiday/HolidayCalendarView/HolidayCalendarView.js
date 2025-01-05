@@ -6,8 +6,8 @@ import HolidayCalendar from "./HolidayCalendar";
 import HolidayList from "./HolidayList";
 
 const HolidayCalendarView = () => {
-  const [allHolidays, setAllHolidays] = useState([]); // For Calendar
-  const [filteredHolidays, setFilteredHolidays] = useState([]); // For List
+  const [allHolidays, setAllHolidays] = useState([]);
+  const [filteredHolidays, setFilteredHolidays] = useState([]);
 
   useEffect(() => {
     const fetchHolidayData = async () => {
@@ -19,8 +19,8 @@ const HolidayCalendarView = () => {
           Array.isArray(response.data.data)
         ) {
           const holidays = response.data.data;
-          setAllHolidays(holidays); // Set data for Calendar
-          setFilteredHolidays(holidays); // Initialize List with all data
+          setAllHolidays(holidays);
+          setFilteredHolidays(holidays);
         } else {
           console.error("Invalid response format or error in response");
         }
@@ -33,7 +33,21 @@ const HolidayCalendarView = () => {
   }, []);
 
   const handleSearchResults = (searchedHolidays) => {
-    setFilteredHolidays(searchedHolidays); // Only update list data
+    setFilteredHolidays(searchedHolidays);
+  };
+
+  const updateHoliday = (newUpdatedHoliday) => {
+    setAllHolidays((prevHolidays) =>
+      prevHolidays.map((holiday) =>
+        holiday.id === newUpdatedHoliday.id ? newUpdatedHoliday : holiday
+      )
+    );
+
+    setFilteredHolidays((prevFilteredHolidays) =>
+      prevFilteredHolidays.map((holiday) =>
+        holiday.id === newUpdatedHoliday.id ? newUpdatedHoliday : holiday
+      )
+    );
   };
 
   return (
@@ -41,7 +55,7 @@ const HolidayCalendarView = () => {
       <HolidayCalendarHeader />
       <HolidayCalendarSearchForm onSearchResults={handleSearchResults} />
       <div className="row">
-        <HolidayCalendar holidays={allHolidays} />
+        <HolidayCalendar holidays={allHolidays} updateHoliday={updateHoliday} />
         <HolidayList holidays={filteredHolidays} />
       </div>
     </>

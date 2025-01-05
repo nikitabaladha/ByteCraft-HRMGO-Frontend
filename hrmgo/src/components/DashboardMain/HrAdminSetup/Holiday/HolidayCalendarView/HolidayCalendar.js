@@ -6,7 +6,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import UpdateHolidayModal from "./UpdateHolidayModal";
 
-const HolidayCalendar = ({ holidays }) => {
+const HolidayCalendar = ({ holidays, updateHoliday }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedHoliday, setSelectedHolidayState] = useState(null);
 
@@ -101,6 +101,7 @@ const HolidayCalendar = ({ holidays }) => {
         <UpdateHolidayModal
           holiday={selectedHoliday}
           onClose={() => setIsUpdateModalOpen(false)}
+          updateHoliday={updateHoliday}
         />
       )}
     </>
