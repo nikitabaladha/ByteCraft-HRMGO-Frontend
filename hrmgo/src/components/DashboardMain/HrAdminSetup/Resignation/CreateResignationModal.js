@@ -4,12 +4,12 @@ import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const CreateResignationModal = ({ onClose }) => {
+const CreateResignationModal = ({ onClose, addResignation }) => {
   const [employees, setEmployees] = useState([]);
   const [formData, setFormData] = useState({
     employeeId: "",
-    resignationDate: new Date().toISOString().split("T")[0], // Set the default resignation date to the current date
-    lastWorkingDay: new Date().toISOString().split("T")[0], // Set the default last working day to the current date
+    resignationDate: new Date().toISOString().split("T")[0],
+    lastWorkingDay: new Date().toISOString().split("T")[0],
     reason: "",
   });
 
@@ -57,6 +57,23 @@ const CreateResignationModal = ({ onClose }) => {
 
       if (!response.hasError) {
         toast.success("Resignation created successfully!");
+
+        const selectedEmployee = employees.find(
+          (emp) => emp._id === formData.employeeId
+        );
+        const employeeName = selectedEmployee ? selectedEmployee.name : "";
+
+        const newResignation = {
+          id: response.data.data._id,
+          employeeName,
+          employeeId: response.data.data.employeeId,
+          resignationDate: response.data.data.resignationDate,
+          lastWorkingDay: response.data.data.lastWorkingDay,
+          reason: response.data.data.reason,
+        };
+
+        addResignation(newResignation);
+
         setFormData({
           employeeId: "",
           resignationDate: new Date().toISOString().split("T")[0], // Reset to current date

@@ -3,7 +3,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import putAPI from "../../../../api/putAPI.js";
 
-const UpdateResignationModal = ({ resignation, onClose }) => {
+const UpdateResignationModal = ({
+  resignation,
+  onClose,
+  updateResignation,
+}) => {
   const [employeeName, setEmployeeName] = useState(
     resignation?.employeeName || ""
   );
@@ -55,6 +59,22 @@ const UpdateResignationModal = ({ resignation, onClose }) => {
       );
       if (!response.hasError) {
         toast.success("Resignation updated successfully!");
+
+        // here i want employee Name to be passed as what ever is displayed  in this   const [employeeName, setEmployeeName] = useState(
+        //   resignation?.employeeName || ""
+        // ); so tell me how to do it
+
+        const newUpdatedResignation = {
+          id: response.data.data._id,
+          employeeName: employeeName,
+          employeeId: response.data.data.employeeId,
+          resignationDate: response.data.data.resignationDate,
+          lastWorkingDay: response.data.data.lastWorkingDay,
+          reason: response.data.data.reason,
+        };
+
+        updateResignation(newUpdatedResignation);
+
         onClose();
       } else {
         toast.error("Failed to update Resignation.");
@@ -135,7 +155,7 @@ const UpdateResignationModal = ({ resignation, onClose }) => {
             >
               <div className="modal-body">
                 <div className="row">
-                  <div className="form-group col-md-6 col-lg-6 ">
+                  <div className="form-group col-md-12 col-lg-12 ">
                     <label htmlFor="employee_id" className="col-form-label">
                       Employee
                     </label>

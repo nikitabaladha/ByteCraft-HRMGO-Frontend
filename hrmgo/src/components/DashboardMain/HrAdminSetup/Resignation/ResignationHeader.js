@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import CreateResignationModal from "./CreateResignationModal";
 
-const ResignationHeader = () => {
+const ResignationHeader = ({ addResignation }) => {
   const [isCreateResignationModalOpen, setIsCreateResignationModalOpen] =
     useState(false);
 
@@ -52,7 +52,10 @@ const ResignationHeader = () => {
       </div>
 
       {isCreateResignationModalOpen && (
-        <CreateResignationModal onClose={closeModal} />
+        <CreateResignationModal
+          onClose={closeModal}
+          addResignation={addResignation}
+        />
       )}
     </>
   );

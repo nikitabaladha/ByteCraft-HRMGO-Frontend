@@ -36,7 +36,7 @@ const AwardTable = ({
       })
       .toLowerCase();
     return (
-      award.employeeName.toLowerCase().includes(searchTerm) ||
+      award?.employeeName?.toLowerCase().includes(searchTerm) ||
       award.awardType.toLowerCase().includes(searchTerm) ||
       award.gift.toLowerCase().includes(searchTerm) ||
       award.description.toLowerCase().includes(searchTerm) ||

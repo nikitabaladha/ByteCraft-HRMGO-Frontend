@@ -43,7 +43,7 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
 
         const newUpdatedAward = {
           id: response.data.data._id,
-          employeeName: response.data.data.employeeId,
+          employeeName: employeeName,
           awardType: response.data.data.awardType,
           date: response.data.data.date,
           gift: response.data.data.gift,

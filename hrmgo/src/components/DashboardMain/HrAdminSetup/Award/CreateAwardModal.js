@@ -53,9 +53,16 @@ const CreateAwardModal = ({ onClose, addAward }) => {
       if (!response.hasError) {
         toast.success("Award created successfully!");
 
+        console.log("Award created successfully", response.data);
+
+        const selectedEmployee = employees.find(
+          (emp) => emp._id === formData.employeeId
+        );
+        const employeeName = selectedEmployee ? selectedEmployee.name : "";
+
         const newAward = {
           id: response.data.data._id,
-          employeeName: response.data.data.employeeName,
+          employeeName,
           awardType: response.data.data.awardType,
           date: response.data.data.date,
           gift: response.data.data.gift,

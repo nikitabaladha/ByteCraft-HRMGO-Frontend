@@ -18,6 +18,7 @@ const Resignation = () => {
           Array.isArray(response.data.data)
         ) {
           setResignations(response.data.data);
+
           console.log(
             "Resignation Data fetched successfully",
             response.data.data
@@ -33,15 +34,33 @@ const Resignation = () => {
     fetchResignationData();
   }, []);
 
+  const addResignation = (newResignation) => {
+    setResignations((prevResignations) => [
+      ...prevResignations,
+      newResignation,
+    ]);
+  };
+
+  const updateResignation = (newUpdatedResignation) => {
+    setResignations((prevResignations) =>
+      prevResignations.map((resignation) =>
+        resignation.id === newUpdatedResignation.id
+          ? newUpdatedResignation
+          : resignation
+      )
+    );
+  };
+
   return (
     <>
-      <ResignationHeader />
+      <ResignationHeader addResignation={addResignation} />
 
       <ResignationTable
         resignations={resignations}
         setResignations={setResignations}
         selectedResignation={selectedResignation}
         setSelectedResignation={setSelectedResignation}
+        updateResignation={updateResignation}
       />
     </>
   );
