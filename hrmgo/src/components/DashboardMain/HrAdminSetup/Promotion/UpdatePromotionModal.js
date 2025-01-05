@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import getAPI from "../../../../api/getAPI.js";
-import postAPI from "../../../../api/postAPI.js";
+import putAPI from "../../../../api/putAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const UpdatePromotionModal = ({ promotion, onClose }) => {
+const UpdatePromotionModal = ({ promotion, onClose, updatePromotion }) => {
   const [employees, setEmployees] = useState([]);
   const [promotionTitle, setPromotionTitle] = useState(
     promotion?.promotionTitle || ""
@@ -80,13 +80,31 @@ const UpdatePromotionModal = ({ promotion, onClose }) => {
     };
 
     try {
-      const response = await postAPI(
+      const response = await putAPI(
         `/promotion/${promotion.id}`,
         updatedPromotion,
         true
       );
       if (!response.hasError) {
         toast.success("Promotion updated successfully!");
+
+        const selectedDesignation = designations.find(
+          (des) => des.id === designationId
+        );
+        const designationName = selectedDesignation
+          ? selectedDesignation.designationName
+          : promotion.designationName;
+        const newUpdatedPromotion = {
+          id: response.data.data._id,
+          employeeName: promotion.employeeName,
+          promotionTitle: response.data.data.promotionTitle,
+          promotionDate: response.data.data.promotionDate,
+          description: response.data.data.description,
+          designationName,
+        };
+
+        updatePromotion(newUpdatedPromotion);
+
         onClose();
       } else {
         toast.error("Failed to update Promotion.");

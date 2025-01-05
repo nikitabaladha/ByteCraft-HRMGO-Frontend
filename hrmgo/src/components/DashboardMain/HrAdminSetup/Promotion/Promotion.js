@@ -29,15 +29,30 @@ const Promotion = () => {
     fetchPromotionData();
   }, []);
 
+  const addPromotion = (newPromotion) => {
+    setPromotions((prevPromotions) => [...prevPromotions, newPromotion]);
+  };
+
+  const updatePromotion = (newUpdatedPromotion) => {
+    setPromotions((prevPromotions) =>
+      prevPromotions.map((promotion) =>
+        promotion.id === newUpdatedPromotion.id
+          ? newUpdatedPromotion
+          : promotion
+      )
+    );
+  };
+
   return (
     <>
-      <PromotionHeader />
+      <PromotionHeader addPromotion={addPromotion} />
 
       <PromotionTable
         promotions={promotions}
         setPromotions={setPromotions}
         selectedPromotion={selectedPromotion}
         setSelectedPromotion={setSelectedPromotion}
+        updatePromotion={updatePromotion}
       />
     </>
   );

@@ -4,14 +4,14 @@ import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const CreatePromotionModal = ({ onClose }) => {
+const CreatePromotionModal = ({ onClose, addPromotion }) => {
   const [employees, setEmployees] = useState([]);
   const [designations, setDesignations] = useState([]);
   const [formData, setFormData] = useState({
     employeeId: "",
     designationId: "",
     promotionTitle: "",
-    promotionDate: new Date().toISOString().split("T")[0], // Default to current date
+    promotionDate: new Date().toISOString().split("T")[0],
     description: "",
   });
 
@@ -74,6 +74,30 @@ const CreatePromotionModal = ({ onClose }) => {
 
       if (!response.hasError) {
         toast.success("Promotion created successfully!");
+
+        const selectedEmployee = employees.find(
+          (emp) => emp._id === formData.employeeId
+        );
+        const selectedDesignation = designations.find(
+          (des) => des.id === formData.designationId
+        );
+
+        const employeeName = selectedEmployee ? selectedEmployee.name : "";
+        const designationName = selectedDesignation
+          ? selectedDesignation.designationName
+          : "";
+
+        const newPromotion = {
+          id: response.data.data._id,
+          employeeName,
+          promotionTitle: response.data.data.promotionTitle,
+          promotionDate: response.data.data.promotionDate,
+          description: response.data.data.description,
+          designationName,
+        };
+
+        addPromotion(newPromotion);
+
         setFormData({
           employeeId: "",
           designationId: "",

@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import CreatePromotionModal from "./CreatePromotionModal";
 
-const PromotionHeader = () => {
+const PromotionHeader = ({ addPromotion }) => {
   const [isCreatePromotionModalOpen, setIsCreatePromotionModalOpen] =
     useState(false);
 
@@ -52,7 +52,10 @@ const PromotionHeader = () => {
       </div>
 
       {isCreatePromotionModalOpen && (
-        <CreatePromotionModal onClose={closeModal} />
+        <CreatePromotionModal
+          onClose={closeModal}
+          addPromotion={addPromotion}
+        />
       )}
     </>
   );
