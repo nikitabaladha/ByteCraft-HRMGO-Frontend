@@ -5,13 +5,13 @@ import { TbCopy, TbWritingSign } from "react-icons/tb";
 import { TiEyeOutline } from "react-icons/ti";
 import CopyContractModal from "../CopyContractModal";
 
-const ContractDetailHeader = ({ contractData }) => {
+const ContractDetailHeader = ({ contractData, copyContract }) => {
   const navigate = useNavigate();
   const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
+  const [copiedContract, setCopiedContract] = useState(null);
 
   const handleCopyContract = (event) => {
     event.preventDefault();
-
     setIsCopyModalOpen(true);
   };
 
@@ -112,6 +112,11 @@ const ContractDetailHeader = ({ contractData }) => {
         <CopyContractModal
           contracts={contractData}
           onClose={() => setIsCopyModalOpen(false)}
+          copyContract={copyContract}
+          onCopied={(newContract) => {
+            setCopiedContract(newContract);
+            setIsCopyModalOpen(false);
+          }}
         />
       )}
     </>

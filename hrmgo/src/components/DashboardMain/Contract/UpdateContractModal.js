@@ -4,30 +4,21 @@ import "react-toastify/dist/ReactToastify.css";
 import getAPI from "../../../api/getAPI";
 import putAPI from "../../../api/putAPI";
 
-const UpdateContractModal = ({ contracts, onClose, updateContract }) => {
+const UpdateContractModal = ({ contract, onClose, updateContract }) => {
   const [formData, setFormData] = useState({
-    employeeId: "",
-    subject: "",
-    value: "",
-    contractTypeId: "",
-    startDate: "",
-    endDate: "",
+    employeeId: contract?.employeeId || "",
+    subject: contract?.subject || "",
+    value: contract?.value || "",
+    startDate: contract?.startDate
+      ? new Date(contract.startDate).toISOString().split("T")[0]
+      : new Date().toISOString().split("T")[0],
+    endDate: contract?.endDate
+      ? new Date(contract.endDate).toISOString().split("T")[0]
+      : new Date().toISOString().split("T")[0],
   });
+
   const [employees, setEmployees] = useState([]);
   const [contractTypes, setContractTypes] = useState([]);
-
-  useEffect(() => {
-    if (contracts) {
-      setFormData({
-        employeeId: contracts.employeeId || "",
-        subject: contracts.subject || "",
-        value: contracts.value || "",
-        contractTypeId: contracts.contractTypeId || "",
-        startDate: contracts.startDate ? contracts.startDate.split("T")[0] : "",
-        endDate: contracts.endDate ? contracts.endDate.split("T")[0] : "",
-      });
-    }
-  }, [contracts]);
 
   useEffect(() => {
     const fetchEmployeeData = async () => {
@@ -61,6 +52,23 @@ const UpdateContractModal = ({ contracts, onClose, updateContract }) => {
     fetchContractTypeData();
   }, []);
 
+  useEffect(() => {
+    if (contract) {
+      setFormData({
+        employeeId: contract.employeeId || "",
+        subject: contract.subject || "",
+        value: contract.value || "",
+        contractTypeId: contract.contractTypeId || "",
+        startDate: contract.startDate
+          ? new Date(contract.startDate).toISOString().split("T")[0]
+          : new Date().toISOString().split("T")[0],
+        endDate: contract.endDate
+          ? new Date(contract.endDate).toISOString().split("T")[0]
+          : new Date().toISOString().split("T")[0],
+      });
+    }
+  }, [contract]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -75,7 +83,7 @@ const UpdateContractModal = ({ contracts, onClose, updateContract }) => {
 
     try {
       const response = await putAPI(
-        `/contract/${contracts.id}`,
+        `/contract/${contract.id}`,
         updatedContract,
         true
       );
@@ -83,28 +91,7 @@ const UpdateContractModal = ({ contracts, onClose, updateContract }) => {
       if (!response.hasError) {
         toast.success("Contract updated successfully!");
 
-        const employeeName = employees.find(
-          (emp) => emp._id === formData.employeeId
-        )?.name;
-
-        const contractType = contractTypes.find(
-          (con) => con._id === formData.contractTypeId
-        )?.contractName;
-
-        const newUpdatedContract = {
-          id: response.data.data._id,
-          contractId: response.data.data.id,
-          subject: response.data.data.subject,
-          value: response.data.data.value,
-          contractType: contractType,
-          startDate: response.data.data.startDate,
-          endDate: response.data.data.endDate,
-          status: response.data.data.status,
-          description: response.data.data.description,
-          employeeName: employeeName,
-        };
-
-        updateContract(newUpdatedContract);
+        updateContract({ ...response.data, contract: response.data.data });
 
         onClose();
       } else {

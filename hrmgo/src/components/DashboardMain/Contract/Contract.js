@@ -10,6 +10,7 @@ import ContractDetail from "./ContractDetail/ContractDetail";
 const Contract = () => {
   const { id } = useParams();
   const [contracts, setContracts] = useState([]);
+  const [selectedContract, setSelectedContract] = useState(null);
   const [totalValue, setTotalValue] = useState(0);
   const [totalValueOfThisMonth, setTotalValueOfThisMonth] = useState(0);
   const [totalValueOfThisWeek, setTotalValueOfThisWeek] = useState(0);
@@ -41,20 +42,28 @@ const Contract = () => {
   }, []);
 
   const addContract = (newContract) => {
-    setContracts((prevContracts) => [...prevContracts, newContract]);
+    if (newContract.contracts) setContracts(newContract.contracts);
+    setTotalValue(newContract.totalValue);
+    setTotalValueOfThisMonth(newContract.totalValueOfThisMonth);
+    setTotalValueOfThisWeek(newContract.totalValueOfThisWeek);
+    setLast30DaysValue(newContract.last30DaysValue);
+  };
+
+  const copyContract = (newContract) => {
+    if (newContract.contracts) setContracts(newContract.contracts);
+    setTotalValue(newContract.totalValue);
+    setTotalValueOfThisMonth(newContract.totalValueOfThisMonth);
+    setTotalValueOfThisWeek(newContract.totalValueOfThisWeek);
+    setLast30DaysValue(newContract.last30DaysValue);
   };
 
   const updateContract = (newUpdatedContract) => {
-    setContracts((prevContracts) =>
-      prevContracts.map((contract) =>
-        contract.id === newUpdatedContract.id ? newUpdatedContract : contract
-      )
-    );
+    if (newUpdatedContract.contract) setContracts(newUpdatedContract.contract);
+    setTotalValue(newUpdatedContract.totalValue);
+    setTotalValueOfThisMonth(newUpdatedContract.totalValueOfThisMonth);
+    setTotalValueOfThisWeek(newUpdatedContract.totalValueOfThisWeek);
+    setLast30DaysValue(newUpdatedContract.last30DaysValue);
   };
-
-  const selectedContract = id
-    ? contracts.find((contract) => contract.id === parseInt(id))
-    : null;
 
   return (
     <>
@@ -74,9 +83,12 @@ const Contract = () => {
                 />
                 <ContractTable
                   contracts={contracts}
-                  fetchContractData={fetchContractData}
+                  selectedContract={selectedContract}
+                  setSelectedContract={setSelectedContract}
                   setContracts={setContracts}
                   updateContract={updateContract}
+                  addContract={addContract}
+                  copyContract={copyContract}
                 />
               </div>
             </div>

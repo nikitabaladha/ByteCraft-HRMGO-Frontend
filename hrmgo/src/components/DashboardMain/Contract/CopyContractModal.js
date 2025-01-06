@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import getAPI from "../../../api/getAPI";
 import postAPI from "../../../api/postAPI";
 
-const CopyContractModal = ({ contracts, onClose }) => {
+const CopyContractModal = ({ contracts, onClose, copyContract }) => {
   const [formData, setFormData] = useState({
     employeeId: "",
     subject: "",
@@ -78,6 +78,8 @@ const CopyContractModal = ({ contracts, onClose }) => {
 
       if (!response.hasError) {
         toast.success("Contract Copied successfully!");
+
+        copyContract({ ...response.data, contracts: response.data.data });
         onClose();
       } else {
         toast.error("Failed to Copying Contract.");

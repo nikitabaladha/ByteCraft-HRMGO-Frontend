@@ -15,6 +15,11 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
   const { id: contractId } = useParams();
   const [selectedFile, setSelectedFile] = useState(null);
 
+  const openDeleteDialog = (attachment) => {
+    setSelectedAttachment(attachment);
+    setIsDeleteDialogOpen(true);
+  };
+
   const handleDeleteCancel = () => {
     setIsDeleteDialogOpen(false);
     setSelectedAttachment(null);
@@ -24,11 +29,6 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
     setAttachments((prevAttachments) =>
       prevAttachments.filter((attachment) => attachment.id !== id)
     );
-  };
-
-  const openDeleteDialog = (attachment) => {
-    setSelectedAttachment(attachment);
-    setIsDeleteDialogOpen(true);
   };
 
   const handleSubmit = async (e) => {
@@ -49,8 +49,9 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
       );
 
       if (!response.hasError) {
+        console.log("attechment create response", response);
         const newAttachment = {
-          id: response.data.data.id,
+          id: response.data.data._id,
           fileName: selectedFile.name,
           fileSize: response.data.data.fileSize,
           contractAttachmentUrl: response.data.data.contractAttachmentUrl,
@@ -58,6 +59,7 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
 
         setSelectedFile(null);
         setAttachments((prev) => [...prev, newAttachment]);
+        console.log("newAttachment", newAttachment);
 
         toast.success("Attachment added successfully!");
       } else {

@@ -20,6 +20,14 @@ const ContractDetail = ({ contract }) => {
   const [comments, setComments] = useState([]);
   const [notes, setNotes] = useState([]);
 
+  const [contracts, setContracts] = useState([]);
+
+  const [selectedContract, setSelectedContract] = useState(null);
+  const [totalValue, setTotalValue] = useState(0);
+  const [totalValueOfThisMonth, setTotalValueOfThisMonth] = useState(0);
+  const [totalValueOfThisWeek, setTotalValueOfThisWeek] = useState(0);
+  const [last30DaysValue, setLast30DaysValue] = useState(0);
+
   const fetchContractAttachmentData = async () => {
     try {
       const response = await getAPI(
@@ -93,13 +101,24 @@ const ContractDetail = ({ contract }) => {
     }
   };
 
+  const copyContract = (newContract) => {
+    if (newContract.contracts) setContracts(newContract.contracts);
+    setTotalValue(newContract.totalValue);
+    setTotalValueOfThisMonth(newContract.totalValueOfThisMonth);
+    setTotalValueOfThisWeek(newContract.totalValueOfThisWeek);
+    setLast30DaysValue(newContract.last30DaysValue);
+  };
+
   if (!contractData) {
     return <p>Loading contract details...</p>;
   }
 
   return (
     <>
-      <ContractDetailHeader contractData={contractData} />
+      <ContractDetailHeader
+        contractData={contractData}
+        copyContract={copyContract}
+      />
       <div className="row">
         <div className="col-xl-12">
           <div className="col-sm-12">

@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import getAPI from "../../../api/getAPI.js";
 import postAPI from "../../../api/postAPI.js";
 
-const CreateContractModal = ({ onClose, addContract }) => {
+const CreateContractModal = ({ contracts, onClose, addContract }) => {
   const [employees, setEmployees] = useState([]);
   const [contractTypes, setContractTypes] = useState([]);
 
@@ -16,6 +16,19 @@ const CreateContractModal = ({ onClose, addContract }) => {
     startDate: new Date().toISOString().split("T")[0],
     endDate: new Date().toISOString().split("T")[0],
   });
+
+  useEffect(() => {
+    if (contracts) {
+      setFormData({
+        employeeId: contracts.employeeId || "",
+        subject: contracts.subject || "",
+        value: contracts.value || "",
+        contractTypeId: contracts.contractTypeId || "",
+        startDate: contracts.startDate ? contracts.startDate.split("T")[0] : "",
+        endDate: contracts.endDate ? contracts.endDate.split("T")[0] : "",
+      });
+    }
+  }, [contracts]);
 
   useEffect(() => {
     const fetchEmployeeData = async () => {
@@ -69,33 +82,14 @@ const CreateContractModal = ({ onClose, addContract }) => {
           subject: formData.subject,
           value: formData.value,
         },
+
         true
       );
 
       if (!response.hasError) {
         toast.success("Contract created successfully!");
 
-        const employeeName = employees.find(
-          (emp) => emp._id === formData.employeeId
-        )?.name;
-
-        const contractType = contractTypes.find(
-          (con) => con._id === formData.contractTypeId
-        )?.contractName;
-
-        const newContract = {
-          id: response.data.data._id,
-          contractId: response.data.data.id,
-          startDate: response.data.data.startDate,
-          endDate: response.data.data.endDate,
-          subject: response.data.data.subject,
-          value: response.data.data.value,
-          employeeName: employeeName,
-          contractType: contractType,
-          status: response.data.data.status,
-        };
-
-        addContract(newContract);
+        addContract({ ...response.data, contracts: response.data.data });
 
         setFormData({
           employeeId: "",
