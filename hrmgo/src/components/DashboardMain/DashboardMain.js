@@ -8,7 +8,7 @@ import Footer from "../Footer/Footer";
 
 const DashboardMain = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
-  const [fullName, setFullName] = useState("");
+  const [name, setName] = useState("");
 
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
@@ -17,15 +17,15 @@ const DashboardMain = () => {
   useEffect(() => {
     const userDetails = JSON.parse(localStorage.getItem("userDetails"));
     if (userDetails) {
-      const userFullName = `${userDetails.firstName} ${userDetails.lastName}`;
-      setFullName(userFullName);
-      toast.success(`Welcome, ${userFullName}`);
+      const userName = userDetails.name;
+      setName(userName);
+      toast.success(`Welcome, ${userName}!`);
     }
   }, []);
 
   return (
     <>
-      <Header toggleSidebar={toggleSidebar} fullName={fullName} />
+      <Header toggleSidebar={toggleSidebar} name={name} />
       <Sidebar sidebarVisible={sidebarVisible} toggleSidebar={toggleSidebar} />
 
       <section className="dash-container">

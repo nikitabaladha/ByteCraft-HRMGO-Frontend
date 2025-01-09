@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CompetencyRating from "./CompetencyRating.js";
 
-const IndicatorCreateModal = ({ closeModal }) => {
+const IndicatorCreateModal = ({ onClose, addIndicator }) => {
   const [branches, setBranches] = useState([]);
   const [selectedBranch, setSelectedBranch] = useState("");
   const [departments, setDepartments] = useState([]);
@@ -133,15 +133,103 @@ const IndicatorCreateModal = ({ closeModal }) => {
       branchId: selectedBranch,
       departmentId: selectedDepartment,
       designationId: selectedDesignation,
-      addedById: "67334037a50a86ca6906b46a",
       competencies: groupedCompetencies,
     };
 
     try {
       const response = await postAPI("/indicator", data, true);
+
       if (!response.hasError) {
+        //   {
+        //     "branchId": "673343c5400c5058306d7e62",
+        //     "departmentId": "67690353b05607907cb2d039",
+        //     "designationId": "67690b5b304d327bda56c740",
+        //     "addedById": "677d3846bf06d6f358e7ed60",
+        //     "competencies": {
+        //         "organizational": [
+        //             {
+        //                 "name": "Leadership",
+        //                 "rating": 5
+        //             },
+        //             {
+        //                 "name": "Project Management",
+        //                 "rating": 5
+        //             }
+        //         ],
+        //         "technical": [
+        //             {
+        //                 "name": "Allocating Resources",
+        //                 "rating": 5
+        //             }
+        //         ],
+        //         "behavioural": [
+        //             {
+        //                 "name": "Business Process",
+        //                 "rating": 5
+        //             },
+        //             {
+        //                 "name": "Oral Communication",
+        //                 "rating": 5
+        //             }
+        //         ]
+        //     },
+        //     "overAllRating": 5,
+        //     "_id": "677f14e2fd17853a255adf2e",
+        //     "createdAt": "2025-01-09T00:00:00.000Z",
+        //     "updatedAt": "2025-01-09T00:00:00.000Z",
+        //     "__v": 0
+        // }
+
+        // const newIndicator = {
+        //   branchId,
+        //   departmentId,
+        //   designationId,
+        //   addById,
+        //   addedByName,
+        //   branchName,
+        //   departmentName,
+        //   designationName,
+        //   overAllRating,
+        // };
+
+        // i need this rating at time of update so can you do this thing to pass competency rating of all at time of create  so can directly use it when ever i need
+
+        const branchName =
+          branches.find((branch) => branch._id === selectedBranch)
+            ?.branchName || "";
+        const departmentName =
+          departments.find(
+            (department) => department._id === selectedDepartment
+          )?.departmentName || "";
+        const designationName =
+          designations.find(
+            (designation) => designation._id === selectedDesignation
+          )?.designationName || "";
+
+        const userDetails =
+          JSON.parse(localStorage.getItem("userDetails")) || {};
+        const addedByName = userDetails.name || "Unknown User";
+
+        const newIndicator = {
+          id: response.data.data._id,
+          branchId: response.data.data.branchId,
+          departmentId: response.data.data.departmentId,
+          designationId: response.data.data.designationId,
+          addedById: response.data.data.addedById,
+          overAllRating: response.data.data.overAllRating,
+          branch: branchName,
+          department: departmentName,
+          designation: designationName,
+          createdAt: response.data.data.createdAt,
+          addedBy: addedByName,
+          competencies: groupedCompetencies,
+        };
+
+        addIndicator(newIndicator);
+
+        console.log("newly added indicator", newIndicator);
         toast.success("Indicator created successfully!");
-        closeModal();
+        onClose();
       } else {
         toast.error("Error creating indicator: " + response.message);
       }
@@ -184,7 +272,7 @@ const IndicatorCreateModal = ({ closeModal }) => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                onClick={closeModal}
+                onClick={onClose}
               />
             </div>
             <div className="body ">
@@ -281,7 +369,7 @@ const IndicatorCreateModal = ({ closeModal }) => {
                     defaultValue="Cancel"
                     className="btn btn-secondary"
                     data-bs-dismiss="modal"
-                    onClick={closeModal}
+                    onClick={onClose}
                   >
                     Cancel
                   </button>

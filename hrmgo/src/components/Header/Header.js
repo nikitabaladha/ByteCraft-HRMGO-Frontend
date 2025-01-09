@@ -8,7 +8,7 @@ import { IoPower } from "react-icons/io5";
 import { FaRegCommentDots } from "react-icons/fa";
 import { TbMessage2 } from "react-icons/tb";
 
-const Header = ({ toggleSidebar, fullName }) => {
+const Header = ({ toggleSidebar, name }) => {
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userDetails");
@@ -53,7 +53,7 @@ const Header = ({ toggleSidebar, fullName }) => {
                   />
                 </span>
                 <span className="hide-mob ms-2">
-                  Hi, {fullName}
+                  Hi, {name}
                   <IoIosArrowDown className="drp-arrow nocolor hide-mob" />
                 </span>
               </Link>

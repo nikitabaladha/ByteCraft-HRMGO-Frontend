@@ -5,15 +5,16 @@ import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
 import IndicatorCreateModal from "./IndicatorCreateModal";
 
-const IndicatorHeader = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const IndicatorHeader = ({ addIndicator }) => {
+  const [isCreateIndicatorModalOpen, setIsCreateIndicatorModalOpen] =
+    useState(false);
 
   const openModal = () => {
-    setIsModalOpen(true);
+    setIsCreateIndicatorModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsCreateIndicatorModalOpen(false);
   };
   return (
     <>
@@ -53,7 +54,12 @@ const IndicatorHeader = () => {
         </div>
       </div>
 
-      {isModalOpen && <IndicatorCreateModal closeModal={closeModal} />}
+      {isCreateIndicatorModalOpen && (
+        <IndicatorCreateModal
+          onClose={closeModal}
+          addIndicator={addIndicator}
+        />
+      )}
     </>
   );
 };

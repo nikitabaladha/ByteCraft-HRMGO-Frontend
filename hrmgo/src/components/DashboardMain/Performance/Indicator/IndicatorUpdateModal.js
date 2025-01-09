@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import putAPI from "../../../../api/putAPI.js";
 
-const IndicatorUpdateModal = ({ closeModal, indicator, onUpdateSuccess }) => {
+const IndicatorUpdateModal = ({ onClose, indicator, updateIndicator }) => {
   const [ratings, setRatings] = useState({
     organizational: {},
     technical: {},
@@ -102,8 +102,25 @@ const IndicatorUpdateModal = ({ closeModal, indicator, onUpdateSuccess }) => {
 
       if (!response.hasError) {
         toast.success("Indicator updated successfully!");
-        onUpdateSuccess(response.data.data);
-        closeModal();
+
+        const newUpdatedIndicator = {
+          id: response.data.data._id,
+          branchId: indicator.branchId,
+          departmentId: indicator.departmentId,
+          designationId: indicator.designationId,
+          addedById: indicator.addedById,
+          overAllRating: response.data.data.overAllRating,
+          competencies: updatedCompetencies,
+          branch: indicator.branch,
+          department: indicator.department,
+          designation: indicator.designation,
+          createdAt: indicator.createdAt,
+          updatedAt: response.data.data.updatedAt,
+        };
+
+        updateIndicator(newUpdatedIndicator);
+
+        onClose();
       } else {
         toast.error("Failed to update indicator.");
       }
@@ -145,7 +162,7 @@ const IndicatorUpdateModal = ({ closeModal, indicator, onUpdateSuccess }) => {
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
-              onClick={closeModal}
+              onClick={onClose}
             />
           </div>
           <div className="body">
@@ -243,7 +260,7 @@ const IndicatorUpdateModal = ({ closeModal, indicator, onUpdateSuccess }) => {
                   defaultValue="Cancel"
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
-                  onClick={closeModal}
+                  onClick={onClose}
                 >
                   Cancel
                 </button>
