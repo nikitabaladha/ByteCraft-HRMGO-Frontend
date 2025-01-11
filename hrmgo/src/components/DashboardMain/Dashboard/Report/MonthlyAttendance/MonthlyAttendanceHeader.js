@@ -2,8 +2,48 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { TbFileExport } from "react-icons/tb";
+import * as XLSX from "xlsx";
 
-const MonthlyAttendanceHeader = () => {
+const MonthlyAttendanceHeader = ({ attendanceData, selectedMonthYear }) => {
+  if (!selectedMonthYear) {
+    return null;
+  }
+
+  const [year, month] = selectedMonthYear.split("-").map(Number);
+
+  const monthName = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
+    new Date(year, month - 1)
+  );
+
+  const totalDaysInMonth = new Date(year, month, 0).getDate();
+
+  const employees = Array.isArray(attendanceData)
+    ? attendanceData
+    : [attendanceData].filter(Boolean);
+
+  const handleExport = () => {
+    const headers = ["Employee Name", ...Array.from({ length: totalDaysInMonth }, (_, index) => `${monthName} ${String(index + 1).padStart(2, "0")}`)];
+
+    const formattedData = employees.map((employee) => {
+      const attendanceForDays = Array.from({ length: totalDaysInMonth }, (_, index) => {
+        const dateString = `${monthName} ${String(index + 1).padStart(2, "0")}, ${year}`;
+        const attendanceRecord = employee.attendance.find((record) => record.date === dateString);
+        return attendanceRecord ? (attendanceRecord.status === "Present" ? "P" : "A") : "-";
+      });
+
+
+      return [
+        employee.employeeName,
+        ...attendanceForDays,
+      ];
+    });
+
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...formattedData]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Attendance Report");
+    XLSX.writeFile(wb, `Attendance_Report_${monthName}_${year}.xlsx`);
+  };
+
   return (
     <>
       <div className="page-header">
@@ -37,11 +77,11 @@ const MonthlyAttendanceHeader = () => {
                   </span>
                 </Link>
                 <Link
-                  to="/report/attendance/2024-11/0/0/0"
                   className="btn btn-sm btn-primary"
                   data-bs-toggle="tooltip"
                   title=""
                   data-bs-original-title="Export"
+                  onClick={handleExport} 
                 >
                   <span className="btn-inner--icon">
                     <TbFileExport />

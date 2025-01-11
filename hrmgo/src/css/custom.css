@@ -860,3 +860,29 @@ a > i.ti-plus {
     width: 155% !important;
   }
 }
+
+/* search functionality */
+.dataTable-pagination-list {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  cursor: pointer;
+  padding: 6px 12px;
+  background-color: transparent;
+  border: none;
+  color: #6FD943;
+}
+
+.page-link:hover {
+  color: #6FD943; 
+  background-color: transparent; 
+}

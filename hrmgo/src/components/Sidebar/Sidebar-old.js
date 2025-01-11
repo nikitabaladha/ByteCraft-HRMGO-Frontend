@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import PerfectScrollbar from "react-perfect-scrollbar";
 
@@ -189,11 +189,11 @@ const menuConfig = [
         label: "Appraisal",
         link: "/dashboard/performance/appraisal",
       },
-      // {
-      //   id: "goalTracking",
-      //   label: "Goal Tracking",
-      //   link: "/dashboard/performance/goal-tracking",
-      // },
+      {
+        id: "goalTracking",
+        label: "Goal Tracking",
+        link: "/dashboard/performance/goal-tracking",
+      },
     ],
   },
 
@@ -492,7 +492,6 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
   const [activeSubMenu, setActiveSubMenu] = useState(null);
 
   const sidebarRef = useRef(null);
-  const location = useLocation();
 
   // Handle clicks outside of the sidebar
   useEffect(() => {
@@ -511,46 +510,6 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [sidebarVisible, toggleSidebar]);
-
-  // Set active menu and submenu based on the current path
-
-  useEffect(() => {
-    const currentPath = location.pathname;
-
-    // Find the active menu based on the current path
-
-    const activeMenuItem = menuConfig.find((menu) => {
-      if (menu.subMenu) {
-        return menu.subMenu.some((subMenu) => {
-          if (subMenu.subMenu) {
-            return subMenu.subMenu.some(
-              (subSubMenu) => subSubMenu.link === currentPath
-            );
-          }
-
-          return subMenu.link === currentPath;
-        });
-      }
-
-      return menu.link === currentPath;
-    });
-
-    if (activeMenuItem) {
-      setActiveMenu(activeMenuItem.id);
-
-      const activeSubMenuItem = activeMenuItem.subMenu?.find((subMenu) => {
-        if (subMenu.subMenu) {
-          return subMenu.subMenu.some(
-            (subSubMenu) => subSubMenu.link === currentPath
-          );
-        }
-
-        return subMenu.link === currentPath;
-      });
-
-      setActiveSubMenu(activeSubMenuItem ? activeSubMenuItem.id : null);
-    }
-  }, [location.pathname]);
 
   const toggleMenu = (menuId) => {
     setActiveMenu(activeMenu === menuId ? null : menuId);

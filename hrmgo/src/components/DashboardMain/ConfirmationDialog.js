@@ -88,6 +88,12 @@ const DELETE_CONFIG = {
     errorMessage: "Failed to delete Warning.",
     idKey: "warningId",
   },
+  employee: {
+    getEndpoint: (id) => `/employee/${id}`,
+    successMessage: "Employee successfully deleted!",
+    errorMessage: "Failed to delete Employee.",
+    idKey: "employeeId",
+  },
 };
 
 function ConfirmationDialog({ onClose, deleteType, id, onDeleted }) {
@@ -115,7 +121,7 @@ function ConfirmationDialog({ onClose, deleteType, id, onDeleted }) {
         toast.success(config.successMessage);
 
         if (typeof onDeleted === "function") {
-          onDeleted(id);
+          onDeleted(id, response.data);
         }
 
         onClose();

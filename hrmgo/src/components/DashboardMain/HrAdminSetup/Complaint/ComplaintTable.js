@@ -28,11 +28,13 @@ const ComplaintTable = ({
 
   const filteredComplaints = complaints.filter((complaint) => {
     const searchTerm = searchQuery.toLowerCase();
-    const formattedDate = new Date(complaint.complaintDate).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    }).toLowerCase();
+    const formattedDate = new Date(complaint.complaintDate)
+      .toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      })
+      .toLowerCase();
     return (
       complaint.complaintFrom.toLowerCase().includes(searchTerm) ||
       complaint.complaintAgainst.toLowerCase().includes(searchTerm) ||
@@ -46,9 +48,6 @@ const ComplaintTable = ({
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
-
-
-
 
   const handleUpdate = (complaint) => {
     setSelectedComplaint(complaint);
@@ -186,8 +185,16 @@ const ComplaintTable = ({
                   </div>
                   <div className="dataTable-bottom">
                     <div className="dataTable-info">
-                      Showing {Math.min((currentPage - 1) * entriesPerPage + 1, complaints.length)}{" "}
-                      to {Math.min(currentPage * entriesPerPage, complaints.length)}{" "}
+                      Showing{" "}
+                      {Math.min(
+                        (currentPage - 1) * entriesPerPage + 1,
+                        complaints.length
+                      )}{" "}
+                      to{" "}
+                      {Math.min(
+                        currentPage * entriesPerPage,
+                        complaints.length
+                      )}{" "}
                       of {complaints.length} entries
                     </div>
                     <nav className="dataTable-pagination">
@@ -203,25 +210,38 @@ const ComplaintTable = ({
                           </li>
                         )}
 
-                        {Array.from({ length: Math.ceil(complaints.length / entriesPerPage) }, (_, index) => (
-                          <li
-                            key={index + 1}
-                            className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
-                          >
-                            <button
-                              className="page-link"
-                              onClick={() => setCurrentPage(index + 1)}
-                              style={{
-                                backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
-                                color: '#6FD943',
-                              }}
+                        {Array.from(
+                          {
+                            length: Math.ceil(
+                              complaints.length / entriesPerPage
+                            ),
+                          },
+                          (_, index) => (
+                            <li
+                              key={index + 1}
+                              className={`page-item ${
+                                currentPage === index + 1 ? "active" : ""
+                              }`}
                             >
-                              {index + 1}
-                            </button>
-                          </li>
-                        ))}
+                              <button
+                                className="page-link"
+                                onClick={() => setCurrentPage(index + 1)}
+                                style={{
+                                  backgroundColor:
+                                    currentPage === index + 1
+                                      ? "#d9d9d9"
+                                      : "transparent",
+                                  color: "#6FD943",
+                                }}
+                              >
+                                {index + 1}
+                              </button>
+                            </li>
+                          )
+                        )}
 
-                        {currentPage < Math.ceil(complaints.length / entriesPerPage) && (
+                        {currentPage <
+                          Math.ceil(complaints.length / entriesPerPage) && (
                           <li className="page-item">
                             <button
                               className="page-link next-button"
@@ -234,7 +254,6 @@ const ComplaintTable = ({
                       </ul>
                     </nav>
                   </div>
-
                 </div>
               </div>
             </div>

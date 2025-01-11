@@ -15,7 +15,8 @@ const MonthlyAttendance = () => {
 
   return (
     <>
-      <MonthlyAttendanceHeader />
+      <MonthlyAttendanceHeader   attendanceData={attendanceData}
+          selectedMonthYear={selectedMonthYear}/>
       <div className="row">
         <MonthlyAttendanceSearchForm onDataFetched={handleDataFetched} />
         <AttendanceReport />

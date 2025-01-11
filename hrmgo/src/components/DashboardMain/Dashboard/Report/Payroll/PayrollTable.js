@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-const AccountStatementTable = ({ transactions }) => {
+const PayrollReportTable = ({ payrollData }) => {
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -10,29 +10,25 @@ const AccountStatementTable = ({ transactions }) => {
     setCurrentPage(1);
   };
 
-  const filteredTransactions = transactions
-    .map((account) => ({
-      ...account,
-      transactions: account.transactions.filter((transaction) => {
-        const searchTerm = searchQuery.toLowerCase();
-        const formattedDate = new Date(transaction.date).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        }).toLowerCase();
+  const filteredPayrollData = payrollData.filter((payroll) => {
+    const searchTerm = searchQuery.toLowerCase();
+    const formattedDate = new Date(payroll.Date).toLocaleDateString("en-CA");
+    const salary = payroll.salary.toString();
+    const grandTotal = payroll.grandTotal.toString();
+  
+    return (
+      payroll.employeeName.toLowerCase().includes(searchTerm) ||
+      salary.includes(searchTerm) ||
+      grandTotal.includes(searchTerm) ||
+      formattedDate.includes(searchTerm)
+    );
+  });
+  
 
-        return (
-          transaction.account_name.toLowerCase().includes(searchTerm) ||
-          transaction.amount.toString().includes(searchTerm) ||
-          formattedDate.includes(searchTerm)
-        );
-      }),
-    }))
-    .filter((account) => account.transactions.length > 0);
-
-  const paginatedTransactions = filteredTransactions
-    .flatMap((account) => account.transactions)
-    .slice((currentPage - 1) * entriesPerPage, currentPage * entriesPerPage);
+  const paginatedPayrollData = filteredPayrollData.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
 
   return (
     <div className="row">
@@ -69,20 +65,30 @@ const AccountStatementTable = ({ transactions }) => {
                   </div>
                 </div>
                 <div className="dataTable-container">
-                  <table className="table dataTable-table" id="pc-dt-simple">
+                  <table className="table datatable mb-0 dataTable-table" id="report-dataTable">
                     <thead>
                       <tr>
-                        <th>Account</th>
-                        <th>Date</th>
-                        <th>Amount</th>
+                        <th><span className="dataTable-sorter">Employee ID</span></th>
+                        <th><span className="dataTable-sorter">Employee</span></th>
+                        <th><span className="dataTable-sorter">Salary</span></th>
+                        <th><span className="dataTable-sorter">Net Salary</span></th>
+                        <th><span className="dataTable-sorter">Month</span></th>
+                        <th><span className="dataTable-sorter">Status</span></th>
                       </tr>
                     </thead>
                     <tbody>
-                      {paginatedTransactions.map((transaction, transactionIndex) => (
-                        <tr key={transactionIndex}>
-                          <td>{transaction.account_name}</td>
-                          <td>{new Date(transaction.date).toLocaleDateString("en-IN", { year: "numeric", month: "short", day: "numeric" })}</td>
-                          <td>{`₹${transaction.amount.toLocaleString("en-IN")}`}</td>
+                      {paginatedPayrollData.map((item) => (
+                        <tr key={item.employee_id}>
+                          <td><span className="btn btn-outline-primary">#{item.employeeId}</span></td>
+                          <td>{item.employeeName}</td>
+                          <td>{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(item.salary)}</td>
+                          <td>{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(item.grandTotal)}</td>
+                          <td>{new Date(item.Date).toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit' })}</td>
+                          <td>
+                            <div className={`badge ${item.status === 'unpaid' ? 'bg-danger' : 'bg-success'} p-2 px-3`} style={{ width: "69px" }}>
+                              <span className="text-white">{item.status}</span>
+                            </div>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -90,9 +96,9 @@ const AccountStatementTable = ({ transactions }) => {
                 </div>
                 <div className="dataTable-bottom">
                   <div className="dataTable-info">
-                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, filteredTransactions.length)}{" "}
-                    to {Math.min(currentPage * entriesPerPage, filteredTransactions.length)}{" "}
-                    of {filteredTransactions.length} entries
+                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, payrollData.length)}{" "}
+                    to {Math.min(currentPage * entriesPerPage, payrollData.length)}{" "}
+                    of {payrollData.length} entries
                   </div>
                   <nav className="dataTable-pagination">
                     <ul className="dataTable-pagination-list">
@@ -107,17 +113,17 @@ const AccountStatementTable = ({ transactions }) => {
                         </li>
                       )}
 
-                      {Array.from({ length: Math.ceil(filteredTransactions.length / entriesPerPage) }, (_, index) => (
+                      {Array.from({ length: Math.ceil(payrollData.length / entriesPerPage) }, (_, index) => (
                         <li
                           key={index + 1}
-                          className={`page-item ${currentPage === index + 1 ? "active" : ""}`}
+                          className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
                         >
                           <button
                             className="page-link"
                             onClick={() => setCurrentPage(index + 1)}
                             style={{
-                              backgroundColor: currentPage === index + 1 ? "#d9d9d9" : "transparent",
-                              color: "#6FD943",
+                              backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
+                              color: '#6FD943',
                             }}
                           >
                             {index + 1}
@@ -125,7 +131,7 @@ const AccountStatementTable = ({ transactions }) => {
                         </li>
                       ))}
 
-                      {currentPage < Math.ceil(filteredTransactions.length / entriesPerPage) && (
+                      {currentPage < Math.ceil(payrollData.length / entriesPerPage) && (
                         <li className="page-item">
                           <button
                             className="page-link next-button"
@@ -138,6 +144,7 @@ const AccountStatementTable = ({ transactions }) => {
                     </ul>
                   </nav>
                 </div>
+
               </div>
             </div>
           </div>
@@ -147,4 +154,4 @@ const AccountStatementTable = ({ transactions }) => {
   );
 };
 
-export default AccountStatementTable;
+export default PayrollReportTable;

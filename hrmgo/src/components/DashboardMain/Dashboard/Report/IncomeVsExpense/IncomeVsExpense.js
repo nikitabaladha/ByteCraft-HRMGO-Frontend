@@ -57,7 +57,10 @@ const IncomeVsExpense = () => {
   return (
     <>
       {/* First row */}
-      <IncomeVsExpenseHeader />
+      <IncomeVsExpenseHeader 
+       data={data}
+       startMonth={startMonth}
+       endMonth={endMonth} />
 
       {/* Second row */}
       <div className="row">

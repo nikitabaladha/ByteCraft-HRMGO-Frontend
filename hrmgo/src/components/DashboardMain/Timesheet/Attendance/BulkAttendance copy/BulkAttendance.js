@@ -64,10 +64,7 @@ const BulkAttendance = () => {
           setSelectedDate={setSelectedDate}
           onSearch={handleSearch}
         />
-        <BulkAttendanceTable
-          attendanceData={attendanceData}
-          date={selectedDate}
-        />
+        <BulkAttendanceTable attendanceData={attendanceData} />
       </div>
     </>
   );

@@ -11,7 +11,7 @@ import IncomeVsExpense from "./components/DashboardMain/Dashboard/Report/IncomeV
 import MonthlyAttendance from "./components/DashboardMain/Dashboard/Report/MonthlyAttendance/MonthlyAttendance.js";
 import Leave from "./components/DashboardMain/Dashboard/Report/Leave/Leave";
 import AccountStatement from "./components/DashboardMain/Dashboard/Report/AccountStatement/AccountStatement.js";
-// import Payroll from "./components/DashboardMain/Dashboard/Report/Payroll/Payroll";
+import Payroll from "./components/DashboardMain/Dashboard/Report/Payroll/Payroll";
 
 import Employee from "./components/DashboardMain/Employee/Employee.js";
 import CreateEmployee from "./components/DashboardMain/Employee/CreateEmployee/CreateEmployee.js";
@@ -88,7 +88,7 @@ const AppRoutes = () => {
         />
         <Route path="report/leave" element={<Leave />} />
         <Route path="report/account-statement" element={<AccountStatement />} />
-        {/* <Route path="report/payroll" element={<Payroll />} /> */}
+        <Route path="report/payroll" element={<Payroll />} />
 
         <Route path="employee" element={<Employee />}>
           <Route path="create" element={<CreateEmployee />} />

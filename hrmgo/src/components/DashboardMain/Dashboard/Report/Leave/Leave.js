@@ -13,7 +13,7 @@ const Leave = () => {
   };
   return (
     <>
-      <LeaveHeader />
+      <LeaveHeader  leaveData={leaveData}/>
       <div class="row">
         <LeaveSearchForm onDataFetched={handleDataFetched} />
         <LeaveReport />

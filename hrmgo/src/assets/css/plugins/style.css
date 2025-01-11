@@ -23666,6 +23666,32 @@ body .table thead th {
   padding: 25px 25px;
 }
 
+.dataTable-top,
+.dataTable-bottom {
+	padding: 8px 10px;
+}
+
+.dataTable-top > nav:first-child,
+.dataTable-top > div:first-child,
+.dataTable-bottom > nav:first-child,
+.dataTable-bottom > div:first-child {
+	float: left;
+}
+
+.dataTable-top > nav:last-child,
+.dataTable-top > div:last-child,
+.dataTable-bottom > nav:last-child,
+.dataTable-bottom > div:last-child {
+	float: right;
+}
+
+
+.dataTable-top::after, .dataTable-bottom::after {
+	clear: both;
+	content: " ";
+	display: table;
+}
+
 .card:not(.table-card) .table-responsive {
   margin: -25px -25px 0 -25px;
   width: calc(100% + 50px);
@@ -31313,5 +31339,9 @@ table.dataTable tbody > tr.selected th.select-checkbox:after {
 .ps__rail-y:hover > .ps__thumb-y {
   background: #a9b5e6;
 }
+
+/* src/styles/ConfirmationDialog.css */
+
+
 
 /**====== End Sidebar scroll css  ======**/

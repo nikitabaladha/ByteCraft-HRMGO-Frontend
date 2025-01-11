@@ -1,13 +1,50 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import { TbFileExport } from "react-icons/tb";
 import { CiCalendarDate } from "react-icons/ci";
 import { FiPlus } from "react-icons/fi";
 import CreateModal from "./CreateModal";
+import * as XLSX from "xlsx";
+import getAPI from "../../../../api/getAPI";
+
 
 const ManageLeaveHeader = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [leaveData, setLeaveData] = useState([]);
+
+  useEffect(() => {
+    const fetchMangeLeaveData = async () => {
+      try {
+        const response = await getAPI(`/manage-leave-get-all`, {}, true);
+        if (
+          !response.hasError &&
+          response.data &&
+          Array.isArray(response.data.data)
+        ) {
+  
+          const filteredData = response.data.data.map((item) => ({
+            employeeName: item.employeeName,
+            leaveType: item.leaveType,
+            appliedOn: item.appliedOn,
+            startDate: item.startDate,
+            endDate: item.endDate,
+            totalDays: item.totalDays,
+            reason: item.reason,
+            status: item.status,
+          }));
+          setLeaveData(filteredData);
+          console.log("Filtered Leave Data fetched successfully", filteredData);
+        } else {
+          console.error("Invalid response format or error in response");
+        }
+      } catch (err) {
+        console.error("Error fetching leave Data:", err);
+      }
+    };
+
+    fetchMangeLeaveData();
+  }, []);
 
   const openModal = () => {
     setIsCreateModalOpen(true);
@@ -16,6 +53,30 @@ const ManageLeaveHeader = () => {
   const closeModal = () => {
     setIsCreateModalOpen(false);
   };
+
+  const handleExport = () => {
+    if (leaveData.length === 0) {
+      console.error("No data to export");
+      return;
+    }
+
+    const formattedData = leaveData.map((item) => {
+      const formattedItem = {};
+      Object.keys(item).forEach((key) => {
+        const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
+        formattedItem[formattedKey] = item[key];
+      });
+      return formattedItem;
+    });
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(formattedData);
+
+    XLSX.utils.book_append_sheet(wb, ws, "Leave Data");
+
+    XLSX.writeFile(wb, "leave_data.xlsx");
+  };
+
   return (
     <>
       <div className="page-header">
@@ -35,7 +96,7 @@ const ManageLeaveHeader = () => {
             <div className="col">
               <div className="float-end ">
                 <Link
-                  to="/export/leave"
+                  onClick={handleExport}
                   className="btn btn-sm btn-primary"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Export"

@@ -1,9 +1,47 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { TbFileExport } from "react-icons/tb";
+import * as XLSX from "xlsx";
 
-const LeaveHeader = () => {
+
+const LeaveHeader = ({ leaveData }) => {
+  useEffect(() => {
+    console.log("Leave Data:", leaveData);
+  }, [leaveData]);
+
+  const exportData = () => {
+    const headers = ["Employee ID", "Employee Name", "Approved Leaves", "Pending Leaves", "Rejected Leaves"];
+
+    const formattedData = leaveData.map(employee => {
+      let approvedLeaves = 0;
+      let pendingLeaves = 0;
+      let rejectedLeaves = 0;
+
+  
+      employee.leaves.forEach(leave => {
+        if (leave.status === "Approved") approvedLeaves++;
+        if (leave.status === "Pending") pendingLeaves++;
+        if (leave.status === "Rejected") rejectedLeaves++;
+      });
+
+      return [
+        employee.employeeId,
+        employee.employeeName,
+        approvedLeaves,
+        pendingLeaves,
+        rejectedLeaves
+      ];
+    });
+
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...formattedData]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Leave Report");
+    const monthName = new Date().toLocaleString("default", { month: "long" });
+    const year = new Date().getFullYear();
+    XLSX.writeFile(wb, `Leave_Report_${monthName}_${year}.xlsx`);
+  };
+
   return (
     <>
       <div className="page-header">
@@ -24,7 +62,7 @@ const LeaveHeader = () => {
               <div className="float-end ">
                 <Link
                   to="/"
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary me-2"
                   onclick="saveAsPDF()"
                   data-bs-toggle="tooltip"
                   title="Download"
@@ -36,7 +74,7 @@ const LeaveHeader = () => {
                   </span>
                 </Link>
                 <Link
-                  to="/export/leave/report"
+                  onClick={exportData}
                   className="btn btn-sm btn-primary float-end"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Export"

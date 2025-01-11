@@ -10,7 +10,6 @@ import "react-toastify/dist/ReactToastify.css";
 const ManageLeave = () => {
   return (
     <>
-      <ToastContainer />
       <ManageLeaveHeader />
       <ManageLeaveTable />
     </>
