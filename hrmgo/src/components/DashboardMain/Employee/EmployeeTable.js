@@ -28,14 +28,12 @@ const EmployeeTable = ({
   const [deleteType, setDeleteType] = useState("");
 
   const openDeleteDialog = (employee) => {
-    debugger;
     setSelectedEmployeeData(employee);
     setIsDeleteDialogOpen(true);
     setDeleteType("employee");
   };
 
   const handleDeleteCancel = () => {
-    debugger;
     setIsDeleteDialogOpen(false);
     setSelectedEmployeeData(null);
   };

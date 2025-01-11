@@ -4,8 +4,41 @@ import { TbFileExport } from "react-icons/tb";
 import { CiFileOn } from "react-icons/ci";
 import { FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { exportToExcel } from "../../export-excel";
+import { formatDate } from "../../../Js/custom";
 
-const EmployeeHeader = () => {
+const EmployeeHeader = ({ employeeData }) => {
+  const handleExport = () => {
+    const filteredData = employeeData.map((employee) => ({
+      Id: employee._id,
+      EMPID: employee.id,
+      Name: employee.name,
+      Phone: employee.phone,
+      DateOfBirth: formatDate(employee.dateOfBirth),
+      Gender: employee.gender,
+      Address: employee.address,
+      BranchName: employee.branchName,
+      DepartmentName: employee.departmentName,
+      DesignationName: employee.designationName,
+      BranchId: employee.branchId,
+      DepartmentId: employee.departmentId,
+      DesignationId: employee.designationId,
+      DateOfJoining: formatDate(employee.dateOfJoining),
+      EmployeePhotoUrl: employee.employeePhotoUrl,
+      EmployeeCertificateUrl: employee.employeeCertificateUrl,
+      EmployeeResumeUrl: employee.employeeResumeUrl,
+      AccountHolderName: employee.accountHolderName,
+      AccountNumber: employee.accountNumber,
+      BankName: employee.bankName,
+      BankIdentifierCode: employee.bankIdentifierCode,
+      BranchLocation: employee.branchLocation,
+      TaxPayerId: employee.taxPayerId,
+      Email: employee.email,
+    }));
+
+    exportToExcel(filteredData, "Employees", "Employee Data");
+  };
+
   const navigate = useNavigate();
 
   const navigateToEmployeeCreate = (event) => {
@@ -36,6 +69,7 @@ const EmployeeHeader = () => {
                   data-bs-placement="top"
                   data-bs-original-title="Export"
                   className="btn btn-sm btn-primary me-2"
+                  onClick={handleExport}
                 >
                   <TbFileExport />
                 </Link>

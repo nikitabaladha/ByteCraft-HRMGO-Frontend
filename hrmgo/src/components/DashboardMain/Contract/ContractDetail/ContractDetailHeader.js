@@ -41,10 +41,10 @@ const ContractDetailHeader = ({ contractData, copyContract }) => {
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <Link to="dashboard">Home</Link>
+                  <Link to="/dashboard">Home</Link>
                 </li>
                 <li className="breadcrumb-item">
-                  <Link>Contract</Link>
+                  <Link to="/dashboard/contract">Contract</Link>
                 </li>
                 <li className="breadcrumb-item active">Contract Detail</li>
               </ul>

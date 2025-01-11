@@ -59,7 +59,7 @@ const Employee = () => {
         <UpdateEmployee updateEmployee={updateEmployee} />
       ) : (
         <>
-          <EmployeeHeader />
+          <EmployeeHeader employeeData={employeeData} />
           <EmployeeTable
             employeeData={employeeData}
             setEmployeeData={setEmployeeData}

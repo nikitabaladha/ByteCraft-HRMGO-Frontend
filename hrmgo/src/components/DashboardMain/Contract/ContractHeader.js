@@ -28,7 +28,7 @@ const ContractHeader = ({ addContract }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Contract </li>
+                <li className="breadcrumb-item">Contract</li>
               </ul>
             </div>
             <div className="col">
