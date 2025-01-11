@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import putAPI from "../../../../api/putAPI.js";
 
 const IndicatorUpdateModal = ({ onClose, indicator, updateIndicator }) => {
+  console.log("IndicatorUpdateModal Open", indicator);
   const [ratings, setRatings] = useState({
     organizational: {},
     technical: {},
@@ -116,6 +117,7 @@ const IndicatorUpdateModal = ({ onClose, indicator, updateIndicator }) => {
           designation: indicator.designation,
           createdAt: indicator.createdAt,
           updatedAt: response.data.data.updatedAt,
+          addedBy: indicator.addedBy,
         };
 
         updateIndicator(newUpdatedIndicator);

@@ -7,7 +7,7 @@ import CompetencyTag from "./CompetencyTag.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AppraisalCreateModal = ({ closeModal }) => {
+const AppraisalCreateModal = ({ closeModal, addAppraisal }) => {
   const [branches, setBranches] = useState([]);
   const [selectedBranch, setSelectedBranch] = useState("");
   const [employees, setEmployees] = useState([]);
@@ -103,6 +103,8 @@ const AppraisalCreateModal = ({ closeModal }) => {
         if (!response.hasError && response.data && response.data.data) {
           const indicatorData = response.data.data;
 
+          console.log("indicator data", indicatorData);
+
           setIndicatorData(indicatorData);
         } else {
           console.error("Unexpected response format or error in response");
@@ -118,10 +120,25 @@ const AppraisalCreateModal = ({ closeModal }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!selectedBranch || !selectedEmployee || !indicatorData) {
-      toast.error(
-        "Please select a branch, employee, and date before submitting."
-      );
+    e.preventDefault();
+
+    if (!selectedBranch) {
+      toast.error("Please select a branch before submitting.");
+      return;
+    }
+
+    if (!selectedEmployee) {
+      toast.error("Please select an employee before submitting.");
+      return;
+    }
+
+    if (!selectedDate) {
+      toast.error("Please select a date before submitting.");
+      return;
+    }
+
+    if (!indicatorData) {
+      toast.error("No Indicator data found for selected Month.");
       return;
     }
 
@@ -172,7 +189,30 @@ const AppraisalCreateModal = ({ closeModal }) => {
 
     try {
       const response = await postAPI("/appraisal", data, true);
+
+      console.log("newly created appraisal", response.data);
+
       if (!response.hasError) {
+        const newAppraisal = {
+          id: response.data.data._id,
+          branchId: response.data.data.branchId,
+          employeeId: response.data.data.employeeId,
+          createdAt: response.data.data.createdAt,
+          branch: branches.find((b) => b._id === selectedBranch)?.branchName,
+          employee: selectedEmployeeData?.name,
+          overAllRating: response.data.data.overAllRating,
+          remarks: response.data.data.remarks,
+          indicatorId: response.data.data.indicatorId,
+          appraisalCompetencies: response.data.data.appraisalCompetencies,
+          department: indicatorData?.departmentName || "",
+          designation: indicatorData?.designationName || "",
+          indicatorCompetencies: indicatorData?.competencies || {},
+          targetRating: indicatorData?.targetRating || 0,
+        };
+
+        console.log("new appraisal", newAppraisal);
+        addAppraisal(newAppraisal);
+
         toast.success("Appraisal created successfully!");
         closeModal();
       } else {

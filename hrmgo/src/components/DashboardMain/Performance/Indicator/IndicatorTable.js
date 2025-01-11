@@ -97,7 +97,6 @@ const IndicatorTable = ({
     setIsIndicatorUpdateModalOpen(true);
   };
 
-  // here in below function whatever the overAllrating of that perticular indicator is i want to convert it in stars
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 >= 0.5 ? 1 : 0;

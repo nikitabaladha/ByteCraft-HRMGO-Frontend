@@ -1,6 +1,7 @@
 import React from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import getAPI from "../../../../api/getAPI.js";
 import putAPI from "../../../../api/putAPI.js";
 import moment from "moment";
 
@@ -10,7 +11,9 @@ import { useState, useEffect } from "react";
 
 import "react-toastify/dist/ReactToastify.css";
 
-const AppraisalUpdateModal = ({ closeModal, appraisal, onUpdateSuccess }) => {
+const AppraisalUpdateModal = ({ closeModal, appraisal, updateAppraisal }) => {
+  console.log("Appraisal", appraisal);
+
   const [ratings, setRatings] = useState({
     organizational: {},
     technical: {},
@@ -107,10 +110,56 @@ const AppraisalUpdateModal = ({ closeModal, appraisal, onUpdateSuccess }) => {
         true
       );
 
+      console.log("Updated Appraisal", response.data.data);
+
       if (!response.hasError) {
-        toast.success("Appraisal updated successfully!");
-        onUpdateSuccess(response.data.data);
-        closeModal();
+        // Fetch indicator data by ID after a successful update
+        try {
+          const indicatorResponse = await getAPI(
+            `/indicator/${appraisal.indicatorId}`,
+            {},
+            true,
+            true
+          );
+
+          if (
+            !indicatorResponse.hasError &&
+            indicatorResponse.data &&
+            indicatorResponse.data.data
+          ) {
+            const indicatorData = indicatorResponse.data.data;
+            console.log("Indicator Data from get by id api :", indicatorData);
+
+            const newUpdatedAppraisal = {
+              id: response.data.data._id,
+              branchId: response.data.data.branchId,
+              employeeId: response.data.data.employeeId,
+              appraisalDate: response.data.data.appraisalDate,
+              remarks: response.data.data.remarks,
+              indicatorId: response.data.data.indicatorId,
+              appraisalCompetencies: response.data.data.appraisalCompetencies,
+              createdAt: response.data.data.createdAt,
+              indicator: indicatorData,
+              branch: indicatorData.branch,
+              department: indicatorData.department,
+              designation: indicatorData.designation,
+              indicatorCompetencies: indicatorData.competencies,
+              employee: indicatorData.addedBy,
+              overAllRating: response.data.data.overAllRating,
+              targetRating: indicatorData.overAllRating,
+            };
+
+            updateAppraisal(newUpdatedAppraisal);
+            toast.success("Appraisal updated successfully!");
+            closeModal();
+          } else {
+            console.error("Unexpected response format or error in response");
+            toast.error("Failed to fetch indicator data.");
+          }
+        } catch (err) {
+          console.error("Error fetching indicator data by ID:", err);
+          toast.error("Error fetching indicator data.");
+        }
       } else {
         toast.error("Failed to update Appraisal.");
       }

@@ -5,7 +5,7 @@ import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
 import AppraisalCreateModal from "./AppraisalCreateModal";
 
-const AppraisalHeader = () => {
+const AppraisalHeader = ({ addAppraisal }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -53,7 +53,12 @@ const AppraisalHeader = () => {
         </div>
       </div>
 
-      {isModalOpen && <AppraisalCreateModal closeModal={closeModal} />}
+      {isModalOpen && (
+        <AppraisalCreateModal
+          closeModal={closeModal}
+          addAppraisal={addAppraisal}
+        />
+      )}
     </>
   );
 };

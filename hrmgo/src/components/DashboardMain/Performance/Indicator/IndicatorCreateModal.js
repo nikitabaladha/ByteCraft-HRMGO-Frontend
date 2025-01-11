@@ -140,60 +140,6 @@ const IndicatorCreateModal = ({ onClose, addIndicator }) => {
       const response = await postAPI("/indicator", data, true);
 
       if (!response.hasError) {
-        //   {
-        //     "branchId": "673343c5400c5058306d7e62",
-        //     "departmentId": "67690353b05607907cb2d039",
-        //     "designationId": "67690b5b304d327bda56c740",
-        //     "addedById": "677d3846bf06d6f358e7ed60",
-        //     "competencies": {
-        //         "organizational": [
-        //             {
-        //                 "name": "Leadership",
-        //                 "rating": 5
-        //             },
-        //             {
-        //                 "name": "Project Management",
-        //                 "rating": 5
-        //             }
-        //         ],
-        //         "technical": [
-        //             {
-        //                 "name": "Allocating Resources",
-        //                 "rating": 5
-        //             }
-        //         ],
-        //         "behavioural": [
-        //             {
-        //                 "name": "Business Process",
-        //                 "rating": 5
-        //             },
-        //             {
-        //                 "name": "Oral Communication",
-        //                 "rating": 5
-        //             }
-        //         ]
-        //     },
-        //     "overAllRating": 5,
-        //     "_id": "677f14e2fd17853a255adf2e",
-        //     "createdAt": "2025-01-09T00:00:00.000Z",
-        //     "updatedAt": "2025-01-09T00:00:00.000Z",
-        //     "__v": 0
-        // }
-
-        // const newIndicator = {
-        //   branchId,
-        //   departmentId,
-        //   designationId,
-        //   addById,
-        //   addedByName,
-        //   branchName,
-        //   departmentName,
-        //   designationName,
-        //   overAllRating,
-        // };
-
-        // i need this rating at time of update so can you do this thing to pass competency rating of all at time of create  so can directly use it when ever i need
-
         const branchName =
           branches.find((branch) => branch._id === selectedBranch)
             ?.branchName || "";

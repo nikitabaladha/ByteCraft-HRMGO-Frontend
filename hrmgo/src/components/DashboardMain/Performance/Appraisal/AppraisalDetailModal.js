@@ -4,6 +4,8 @@ import ViewAppraisal from "./ViewAppraisal";
 import ViewIndicator from "./ViewIndicator";
 import CompetencyTag from "./CompetencyTag";
 
+import { formatDate } from "../../../../Js/custom.js";
+
 const AppraisalDetailModal = ({ appraisal, closeModal }) => {
   if (!appraisal) {
     return null;
@@ -46,13 +48,13 @@ const AppraisalDetailModal = ({ appraisal, closeModal }) => {
                   <div className="col-md-12 mt-3">
                     <div className="info text-sm font-style">
                       <strong>Employee : </strong>
-                      <span>{appraisal.name}</span>
+                      <span>{appraisal.employee}</span>
                     </div>
                   </div>
                   <div className="col-md-12 mt-3">
                     <div className="info text-sm font-style">
                       <strong>Appraisal Date : </strong>
-                      <span>{appraisal.appraisalDate}</span>
+                      <span>{formatDate(appraisal.appraisalDate)}</span>
                     </div>
                   </div>
 
