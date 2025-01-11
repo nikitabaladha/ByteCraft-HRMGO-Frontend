@@ -5,11 +5,11 @@ import getAPI from "../../../../api/getAPI";
 import putAPI from "../../../../api/putAPI";
 import { toast } from "react-toastify";
 
-const UpdateEmployee = () => {
+const UpdateEmployee = ({ updateEmployee }) => {
   const location = useLocation();
   const employee = location.state?.employee;
 
-  console.log("Updating employee", employee);
+  console.log("employee", employee);
 
   const [formData, setFormData] = useState({
     name: employee?.name || "",
@@ -172,21 +172,16 @@ const UpdateEmployee = () => {
 
     const formDataToSend = new FormData();
 
-    // Append form data
     for (const key in formData) {
-      formDataToSend.append(key, formData[key]);
+      if (formData[key] instanceof File) {
+        formDataToSend.append(key, formData[key]);
+      } else {
+        formDataToSend.append(key, formData[key] || "");
+      }
     }
 
-    // Append files if they exist
-    if (employeePhoto) {
-      formDataToSend.append("employeePhotoUrl", employeePhoto);
-    }
-    if (employeeCertificate) {
-      formDataToSend.append("employeeCertificateUrl", employeeCertificate);
-    }
-    if (employeeResume) {
-      formDataToSend.append("employeeResumeUrl", employeeResume);
-    }
+    console.log("FormData to send:", Array.from(formDataToSend));
+
     try {
       const response = await putAPI(
         `/employee/${employee._id}`,
@@ -197,7 +192,49 @@ const UpdateEmployee = () => {
         true
       );
 
+      const branchName = branches.find(
+        (br) => br._id === formData.branchId
+      )?.branchName;
+
+      const departmentName = departments.find(
+        (dep) => dep._id === formData.departmentId
+      )?.departmentName;
+
+      const designationName = designations.find(
+        (des) => des._id === formData.designationId
+      )?.designationName;
+
       if (!response.data.hasError) {
+        console.log("updated response", response.data);
+        const newUpdatedEmployee = {
+          _id: response.data.data._id,
+          id: response.data.data.id,
+          email: response.data.data.email,
+          name: response.data.data.name,
+          dateOfJoining: response.data.data.dateOfJoining,
+          phone: response.data.data.phone,
+          gender: response.data.data.gender,
+          address: response.data.data.address,
+          branchId: response.data.data.branchId,
+          departmentId: response.data.data.departmentId,
+          designationId: response.data.data.designationId,
+          employeePhotoUrl: response.data.data.employeePhotoUrl,
+          employeeCertificateUrl: response.data.data.employeeCertificateUrl,
+          employeeResumeUrl: response.data.data.employeeResumeUrl,
+          accountHolderName: response.data.data.accountHolderName,
+          accountNumber: response.data.data.accountNumber,
+          bankName: response.data.data.bankName,
+          bankIdentifierCode: response.data.data.bankIdentifierCode,
+          branchLocation: response.data.data.branchLocation,
+          taxPayerId: response.data.data.taxPayerId,
+          dateOfBirth: response.data.data.dateOfBirth,
+          designationName: designationName || formData.designationId,
+          departmentName: departmentName || formData.departmentId,
+          branchName: branchName || formData.branchId,
+        };
+
+        updateEmployee(newUpdatedEmployee);
+
         toast.success("Employee updated successfully!");
         console.log(response.data);
       } else {

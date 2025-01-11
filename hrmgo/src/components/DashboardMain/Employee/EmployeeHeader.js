@@ -35,7 +35,7 @@ const EmployeeHeader = () => {
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
                   data-bs-original-title="Export"
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary me-2"
                 >
                   <TbFileExport />
                 </Link>
@@ -44,7 +44,7 @@ const EmployeeHeader = () => {
                   data-title="Import  employee CSV file"
                   data-bs-toggle="tooltip"
                   title=""
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary me-2"
                   data-bs-original-title="Import"
                 >
                   <CiFileOn />

@@ -11,6 +11,9 @@ const Employee = () => {
   const location = useLocation();
 
   const [employeeData, setEmployeeData] = useState([]);
+
+  const [selectedEmployeeData, setSelectedEmployeeData] = useState(null);
+
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
@@ -20,6 +23,7 @@ const Employee = () => {
           response.data &&
           Array.isArray(response.data.data)
         ) {
+          console.log("employee data", response.data.data);
           setEmployeeData(response.data.data);
         } else {
           console.error("Invalid response format or error in response");
@@ -36,6 +40,14 @@ const Employee = () => {
     setEmployeeData((prevEmployees) => [...prevEmployees, newEmployee]);
   };
 
+  const updateEmployee = (newUpdatedEmployee) => {
+    setEmployeeData((prevEmployeeData) =>
+      prevEmployeeData.map((employee) =>
+        employee._id === newUpdatedEmployee._id ? newUpdatedEmployee : employee
+      )
+    );
+  };
+
   const isCreateRoute = location.pathname === "/dashboard/employee/create";
   const isUpdateRoute = location.pathname === "/dashboard/employee/update";
 
@@ -44,11 +56,16 @@ const Employee = () => {
       {isCreateRoute ? (
         <CreateEmployee addEmployee={addEmployee} />
       ) : isUpdateRoute ? (
-        <UpdateEmployee />
+        <UpdateEmployee updateEmployee={updateEmployee} />
       ) : (
         <>
           <EmployeeHeader />
-          <EmployeeTable employeeData={employeeData} />
+          <EmployeeTable
+            employeeData={employeeData}
+            setEmployeeData={setEmployeeData}
+            selectedEmployeeData={selectedEmployeeData}
+            setSelectedEmployeeData={setSelectedEmployeeData}
+          />
         </>
       )}
     </>

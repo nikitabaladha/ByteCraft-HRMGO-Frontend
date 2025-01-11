@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { TiEyeOutline } from "react-icons/ti";
 import { LuPencil } from "react-icons/lu";
 import { LuTrash2 } from "react-icons/lu";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import getAPI from "../../../../api/getAPI.js";
 import IndicatorDetailModal from "./IndicatorDetailModal.js";
 import IndicatorUpdateModal from "./IndicatorUpdateModal.js";

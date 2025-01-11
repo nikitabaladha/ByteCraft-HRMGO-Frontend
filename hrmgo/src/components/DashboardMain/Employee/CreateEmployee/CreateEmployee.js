@@ -193,6 +193,8 @@ const CreateEmployee = ({ addEmployee }) => {
         toast.success("Employee created successfully!");
         console.log("response.data", response.data);
 
+        console.log(response.data);
+
         const branchName = branches.find(
           (br) => br._id === formData.branchId
         )?.branchName;
@@ -206,6 +208,7 @@ const CreateEmployee = ({ addEmployee }) => {
         )?.designationName;
 
         const newEmployee = {
+          _id: response.data.data._id,
           id: response.data.data.id,
           email: response.data.data.email,
           name: response.data.data.name,
@@ -213,6 +216,22 @@ const CreateEmployee = ({ addEmployee }) => {
           designationName: branchName,
           departmentName: departmentName,
           branchName: designationName,
+          phone: response.data.data.phone,
+          gender: response.data.data.gender,
+          address: response.data.data.address,
+          branchId: response.data.data.branchId,
+          departmentId: response.data.data.departmentId,
+          designationId: response.data.data.designationId,
+          employeePhotoUrl: response.data.data.employeePhotoUrl,
+          employeeCertificateUrl: response.data.data.employeeCertificateUrl,
+          employeeResumeUrl: response.data.data.employeeResumeUrl,
+          accountHolderName: response.data.data.accountHolderName,
+          accountNumber: response.data.data.accountNumber,
+          bankName: response.data.data.bankName,
+          bankIdentifierCode: response.data.data.bankIdentifierCode,
+          branchLocation: response.data.data.branchLocation,
+          taxPayerId: response.data.data.taxPayerId,
+          dateOfBirth: response.data.data.dateOfBirth,
         };
 
         addEmployee(newEmployee);
