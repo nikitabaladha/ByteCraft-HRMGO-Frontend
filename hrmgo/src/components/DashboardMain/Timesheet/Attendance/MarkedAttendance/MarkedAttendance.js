@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 
 const MarkedAttendance = () => {
   const [attendanceData, setAttendanceData] = useState([]);
+  const [selectedAttendanceData, setSelectedAttendanceData] = useState(null);
+
   const [selectedBranch, setSelectedBranch] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
@@ -31,6 +33,11 @@ const MarkedAttendance = () => {
 
       if (!response.hasError && Array.isArray(response.data.data)) {
         setAttendanceData(response.data.data);
+
+        console.log(
+          "Attendance data fetched successfully:",
+          response.data.data
+        );
       } else {
         console.error("Invalid response format or error in response");
       }
@@ -78,7 +85,12 @@ const MarkedAttendance = () => {
           setSelectedMonth={setSelectedMonth}
           setSelectedDate={setSelectedDate}
         />
-        <MarkedAttendanceTable attendanceData={attendanceData} />
+        <MarkedAttendanceTable
+          attendanceData={attendanceData}
+          setAttendanceData={setAttendanceData}
+          selectedAttendanceData={selectedAttendanceData}
+          setSelectedAttendanceData={setSelectedAttendanceData}
+        />
       </div>
     </>
   );

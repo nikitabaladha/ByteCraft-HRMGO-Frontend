@@ -94,6 +94,12 @@ const DELETE_CONFIG = {
     errorMessage: "Failed to delete Employee.",
     idKey: "employeeId",
   },
+  attendance: {
+    getEndpoint: (id) => `/marked-attendance-delete/${id}`,
+    successMessage: "Attendance successfully deleted!",
+    errorMessage: "Failed to delete Attendance.",
+    idKey: "attendanceId",
+  },
 };
 
 function ConfirmationDialog({ onClose, deleteType, id, onDeleted }) {

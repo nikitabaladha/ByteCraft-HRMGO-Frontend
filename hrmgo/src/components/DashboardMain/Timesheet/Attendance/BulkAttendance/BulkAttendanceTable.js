@@ -65,6 +65,7 @@ const BulkAttendanceTable = ({ attendanceData, date }) => {
       const clockIn = event.target[`in-${employee.id}`]?.value || "09:00";
       const clockOut = event.target[`out-${employee.id}`]?.value || "18:00";
 
+      // Format clockIn and clockOut with the specified date
       const formattedClockIn = new Date(`${date}T${clockIn}:00Z`);
       const formattedClockOut = new Date(`${date}T${clockOut}:00Z`);
 
@@ -84,18 +85,34 @@ const BulkAttendanceTable = ({ attendanceData, date }) => {
         formattedAttendanceData,
         true
       );
-      toast.success("Employee attendance successfully created!");
-      const updatedData = localAttendanceData.map((e) => {
-        const attendanceData = response.data.data.find(
-          (a) => a.employeeId === e._id
+
+      // On successful response
+      if (response && response.data) {
+        const updatedData = localAttendanceData.map((e) => {
+          const attendanceData = response.data.data.find(
+            (a) => a.employeeId === e._id
+          );
+          e.attendance = attendanceData;
+          return e;
+        });
+
+        setLocalAttendanceData(updatedData);
+        toast.success("Employee attendance successfully created!");
+      } else {
+        toast.error(
+          "Error creating attendance: " + (response.message || "Unknown error")
         );
-        e.attendance = attendanceData;
-        return e;
-      });
-      setLocalAttendanceData(updatedData);
+      }
     } catch (error) {
-      console.error("Error saving attendance data:", error);
-      toast.error("Failed to save attendance data.");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     }
   };
 
