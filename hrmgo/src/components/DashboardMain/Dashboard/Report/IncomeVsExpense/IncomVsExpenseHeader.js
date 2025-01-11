@@ -1,8 +1,43 @@
+// ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Dashboard\Report\IncomeVsExpense\IncomVsExpenseHeader.js
 import React from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineFileDownload } from "react-icons/md";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 
 const IncomeVsExpenseHeader = () => {
+  const saveAsPDF = async () => {
+    const element = document.getElementById("printableArea");
+    if (!element) {
+      console.error("No element found with ID 'printableArea'.");
+      return;
+    }
+
+    try {
+      const canvas = await html2canvas(element, { scale: 2 });
+
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+
+      const imgData = canvas.toDataURL("image/png");
+
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "px",
+        format: [canvasWidth, canvasHeight],
+      });
+
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvasHeight * pdfWidth) / canvasWidth;
+
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+      pdf.save("IncomeVsExpenseReport.pdf");
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    }
+  };
+
   return (
     <>
       <div className="page-header">
@@ -24,8 +59,7 @@ const IncomeVsExpenseHeader = () => {
             <div className="col">
               <div className="float-end ">
                 <Link
-                  to="/"
-                  onclick="saveAsPDF()"
+                  onClick={saveAsPDF}
                   className="btn btn-sm btn-primary"
                   data-bs-toggle="tooltip"
                   title=""
@@ -33,6 +67,7 @@ const IncomeVsExpenseHeader = () => {
                 >
                   <span className="btn-inner--icon">
                     <MdOutlineFileDownload />
+                    {/* i want to use this button and download pdf  */}
                   </span>
                 </Link>
               </div>
