@@ -12,6 +12,7 @@ const Header = ({ toggleSidebar, name }) => {
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userDetails");
+    localStorage.removeItem("toastShown");
 
     window.location.href = "/login";
   };

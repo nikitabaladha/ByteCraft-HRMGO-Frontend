@@ -41,6 +41,7 @@ const Login = () => {
           "userDetails",
           JSON.stringify(response.data.userDetails)
         );
+        localStorage.setItem("toastShown", "false");
         toast.success("Login successful!");
 
         setTimeout(() => {

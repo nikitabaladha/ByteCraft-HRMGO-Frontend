@@ -16,10 +16,14 @@ const DashboardMain = () => {
 
   useEffect(() => {
     const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+    const toastShown = localStorage.getItem("toastShown");
     if (userDetails) {
       const userName = userDetails.name;
       setName(userName);
-      toast.success(`Welcome, ${userName}!`);
+      if (toastShown !== "true") {
+        toast.success(`Welcome, ${userName}!`);
+        localStorage.setItem("toastShown", "true");
+      }
     }
   }, []);
 
@@ -30,7 +34,6 @@ const DashboardMain = () => {
 
       <section className="dash-container">
         <div className="dash-content">
-          {/* The Outlet component will render the matched child route */}
           <Outlet />
         </div>
       </section>
