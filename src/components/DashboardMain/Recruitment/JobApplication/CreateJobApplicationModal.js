@@ -25,7 +25,7 @@ const CreateJobApplication = ({ onClose }) => {
   const [jobs, setJobs] = useState([]);
   const [selectedJobDetails, setSelectedJobDetails] = useState(null);
   const [profile, setEmployeePhoto] = useState(null);
-  const [resume, setEmployeeResume] = useState(null);
+  const [resume, setEmployeeResume] = useState(null)
 
   const [imagePreview, setImagePreview] = useState("");
   const [resumePreview, setResumePreview] = useState("");

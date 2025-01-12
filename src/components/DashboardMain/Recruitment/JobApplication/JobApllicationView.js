@@ -8,6 +8,8 @@ import AddToJobOnboard from "./AddToJobOnboard";
 import CreateNewInterviewSchedule from "./CreateNewInterviewSchedule";
 import putAPI from "../../../../api/putAPI";
 import { toast } from "react-toastify";
+import { FaCrosshairs } from "react-icons/fa";
+import { FiDownload } from "react-icons/fi";
 
 const JobApplicationView = () => {
   const { id } = useParams();
@@ -487,7 +489,7 @@ const JobApplicationView = () => {
                             download=""
                           >
                             <span className="text-white">
-                              <i className="ti ti-download "></i>
+                            <FiDownload />
                             </span>
                           </Link>
                         </span>
@@ -498,11 +500,7 @@ const JobApplicationView = () => {
                             target="_blank"
                           >
                             <span className="text-white">
-                              <i
-                                className="ti ti-crosshair "
-                                data-bs-toggle="tooltip"
-                                data-bs-original-title="Preview"
-                              ></i>
+                            <FaCrosshairs />
                             </span>
                           </Link>
                         </div>

@@ -4,6 +4,7 @@ import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt, FaEye } from "react-icons/fa";
 import getAPI from "../../../../api/getAPI";
 import ConfirmationDialog from "../../ConfirmationDialog";
+import { HiOutlineBriefcase } from "react-icons/hi";
 
 
 const JobTable = () => {
@@ -12,11 +13,39 @@ const JobTable = () => {
   const [error, setError] = useState("");
   const [selectedTraining, setSelectedTraining] = useState(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleEntriesPerPageChange = (event) => {
+    setEntriesPerPage(Number(event.target.value));
+    setCurrentPage(1);
+  };
+
+  const filteredTrainers = jobs.filter((job) => {
+    const searchTerm = searchQuery.toLowerCase();
+    const formattedStartDate = formatDate(job.startDate).toLowerCase();
+  const formattedEndDate = formatDate(job.endDate).toLowerCase();
+  const formattedCreatedAt = formatDate(job.createdAt).toLowerCase();
+    return (
+      job.branch.toLowerCase().includes(searchTerm) || 
+    job.title.toLowerCase().includes(searchTerm) || 
+    formattedStartDate.includes(searchTerm) ||
+    formattedEndDate.includes(searchTerm) ||
+    job.status.toLowerCase().includes(searchTerm) || 
+    formattedCreatedAt.includes(searchTerm)
+    );
+  });
+
+  const paginatedTrainers = filteredTrainers.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await getAPI("/get-all-job"); // Replace with your API endpoint
+        const response = await getAPI("/get-all-job");
         setJobs(response.data.data);
         setLoading(false);
       } catch (err) {
@@ -38,11 +67,13 @@ const JobTable = () => {
 
   function formatDate(dateString) {
     const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, "0"); 
-    const month = String(date.getMonth() + 1).padStart(2, "0"); 
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
   }
+  
   
 
   const openDeleteDialog = (job) => { 
@@ -62,7 +93,7 @@ const handleDeleteCancel = () => {
 
 
   return (
-    <div>
+    <>
       <div className="row">
         <div className="col-lg-4 col-md-6">
           <div className="card">
@@ -71,7 +102,7 @@ const handleDeleteCancel = () => {
                 <div className="col-auto mb-3 mb-sm-0">
                   <div className="d-flex align-items-center">
                     <div className="badge theme-avtar bg-primary">
-                      <i className="ti ti-briefcase"></i>
+                    <HiOutlineBriefcase />
                     </div>
                     <div className="ms-3">
                       <small className="text-muted">Total</small>
@@ -170,15 +201,17 @@ const handleDeleteCancel = () => {
           <div className="card">
             <div className="card-header card-body table-border-style">
               <div className="table-responsive">
-              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                  <div className="dataTable-top d-flex justify-content-between align-items-center">
+                <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                  <div className="dataTable-top">
                     <div className="dataTable-dropdown">
                       <label>
-                        <select className="dataTable-selector">
+                        <select
+                          className="dataTable-selector"
+                          value={entriesPerPage}
+                          onChange={handleEntriesPerPageChange}
+                        >
                           <option value="5">5</option>
-                          <option value="10" selected>
-                            10
-                          </option>
+                          <option value="10">10</option>
                           <option value="15">15</option>
                           <option value="20">20</option>
                           <option value="25">25</option>
@@ -191,11 +224,13 @@ const handleDeleteCancel = () => {
                         className="dataTable-input"
                         placeholder="Search..."
                         type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                       />
                     </div>
                   </div>
                   <div className="dataTable-container">
-                <table className="table dataTable-table" id="pc-dt-simple">
+                    <table className="table dataTable-table" id="pc-dt-simple">
                   <thead>
                     <tr>
                       <th>Branch</th>
@@ -208,7 +243,8 @@ const handleDeleteCancel = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {jobs.map((job) => (
+                  {paginatedTrainers.length > 0 ? (
+                    paginatedTrainers.map((job) => (
                       <tr key={job._id}>
                         <td>{job.branch}</td>
                         <td>{job.title}</td>
@@ -225,7 +261,7 @@ const handleDeleteCancel = () => {
                             {job.status}
                           </span>
                         </td>
-                        <td>{new Date(job.createdAt).toLocaleDateString()}</td>
+                        <td>{`${formatDate(job.createdAt)}`}</td>
                         <td>
                           <div className="d-flex">
                             <Link
@@ -255,14 +291,86 @@ const handleDeleteCancel = () => {
                           </div>
                         </td>
                       </tr>
-                    ))}
+                    )) ) : (
+                      <tr>
+                        <td colSpan="5" className="text-center">
+                          No trainers available.
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
-                <div className="dataTable-bottom d-flex justify-content-between align-items-center">
-                  <div className="dataTable-info">
-                    Showing 1 to {jobs.length} of {jobs.length} entries
-                  </div>
-                </div>
+                <div className="dataTable-bottom">
+                      <div className="dataTable-info">
+                        Showing{" "}
+                        {Math.min(
+                          (currentPage - 1) * entriesPerPage + 1,
+                          jobs.length
+                        )}{" "}
+                        to{" "}
+                        {Math.min(
+                          currentPage * entriesPerPage,
+                          jobs.length
+                        )}{" "}
+                        of {jobs.length} entries
+                      </div>
+                      <nav className="dataTable-pagination">
+                        <ul className="dataTable-pagination-list">
+                          {currentPage > 1 && (
+                            <li className="page-item">
+                              <button
+                                className="page-link prev-button"
+                                onClick={() => setCurrentPage(currentPage - 1)}
+                              >
+                                ‹
+                              </button>
+                            </li>
+                          )}
+
+                          {Array.from(
+                            {
+                              length: Math.ceil(
+                                jobs.length / entriesPerPage
+                              ),
+                            },
+                            (_, index) => (
+                              <li
+                                key={index + 1}
+                                className={`page-item ${
+                                  currentPage === index + 1 ? "active" : ""
+                                }`}
+                              >
+                                <button
+                                  className="page-link"
+                                  onClick={() => setCurrentPage(index + 1)}
+                                  style={{
+                                    backgroundColor:
+                                      currentPage === index + 1
+                                        ? "#d9d9d9"
+                                        : "transparent",
+                                    color: "#6FD943",
+                                  }}
+                                >
+                                  {index + 1}
+                                </button>
+                              </li>
+                            )
+                          )}
+
+                          {currentPage <
+                            Math.ceil(jobs.length / entriesPerPage) && (
+                            <li className="page-item">
+                              <button
+                                className="page-link next-button"
+                                onClick={() => setCurrentPage(currentPage + 1)}
+                              >
+                                ›
+                              </button>
+                            </li>
+                          )}
+                        </ul>
+                      </nav>
+                    </div>
               </div>
             </div>
           </div>
@@ -278,7 +386,7 @@ const handleDeleteCancel = () => {
           onDeleted={handleDeleteConfirmed}
         />
       )}
-    </div>
+    </>
     
   );
 };

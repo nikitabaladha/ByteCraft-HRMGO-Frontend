@@ -24,7 +24,7 @@ const TrainingListCreateModel = ({ onClose }) => {
   useEffect(() => {
     const fetchBranches = async () => {
       try {
-        const response = await getAPI(`/branch-get-all`, {}, true); // Replace with your actual API endpoint
+        const response = await getAPI(`/branch-get-all`, {}, true); 
         if (response.data && response.data.data) {
           setBranches(response.data.data);
         } else {

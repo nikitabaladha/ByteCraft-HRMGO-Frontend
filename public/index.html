@@ -38,31 +38,6 @@
     HRMGo - Dashboard - Nikita Testing
   </title>
 
-   <script>
-    // Function to fetch the business settings
-    async function fetchBusinessSettings() {
-      try {
-        // Replace with your actual API endpoint
-        const response = await fetch('/get-business-setting');
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch business settings');
-        }
-
-        const { data } = await response.json();
-
-        // Update the document's title dynamically
-        if (data && data.titleText) {
-          document.title = data.titleText; // Use the titleText from the API
-        }
-      } catch (error) {
-        console.error('Error fetching business settings:', error.message);
-      }
-    }
-
-    // Call the function on page load
-    fetchBusinessSettings();
-  </script>
 
   <!-- SEO META -->
   <meta name="title" content="HRMGo">

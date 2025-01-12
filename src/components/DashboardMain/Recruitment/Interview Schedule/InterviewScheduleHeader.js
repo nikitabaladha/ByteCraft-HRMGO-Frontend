@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 
 const InterviewScheduleHeader = () => {
   return (
-    <div>
+    <>
       <div className="page-header">
         <div className="page-block">
           <div className="row align-items-center">
@@ -19,7 +19,7 @@ const InterviewScheduleHeader = () => {
                 <li className="breadcrumb-item">Interview Schedule</li>
               </ul>
             </div>
-            <div className="col">
+            {/* <div className="col">
               <div className="float-end ">
                 <Link
                   to="#"
@@ -30,15 +30,15 @@ const InterviewScheduleHeader = () => {
                   title=""
                   className="btn btn-sm btn-primary"
                   data-bs-original-title="Create"
-                >
-                  <FiPlus/>
-                </Link>
+                > */}
+                  {/* <FiPlus/> */}
+                {/* </Link>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

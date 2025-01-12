@@ -18,7 +18,6 @@ const TrainerHeader = () => {
     setShowModal(false); // Hide the modal
   };
   return (
-    <div>
       <div className="page-header">
         <div className="page-block">
           <div className="row align-items-center">
@@ -40,7 +39,7 @@ const TrainerHeader = () => {
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
                   data-bs-original-title="Export"
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary me-1"
                 >
                   <TbFileExport />
                 </Link>
@@ -52,7 +51,7 @@ const TrainerHeader = () => {
                   data-title="Import  employee CSV file"
                   data-bs-toggle="tooltip"
                   title=""
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary me-1"
                   data-bs-original-title="Import"
                 >
                   <CiFileOn />
@@ -72,11 +71,11 @@ const TrainerHeader = () => {
             </div>
           </div>
         </div>
-      </div>
-      {showModal && (
+        {showModal && (
         <TrainerEditModal onClose={handleCloseModal} />
       )}
-    </div>
+      </div>
+      
   );
 };
 

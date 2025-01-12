@@ -32,6 +32,10 @@ import RecruitmentCareer from "./components/DashboardMain/Recruitment/Career/Rec
 import CareerJobView from "./components/DashboardMain/Recruitment/Career/CareerJobView.js";
 import CareerApplyJob from "./components/DashboardMain/Recruitment/Career/CareerApplyJob.js";
 import SystemSetting from "./components/DashboardMain/System Setting/SystemSetting.js";
+import User from "./components/DashboardMain/Staff/User/User.js";
+import MyProfile from "./components/Header/My Profile/MyProfile.js";
+import StaffRole from "./components/DashboardMain/Staff/Role/StaffRole.js";
+import EmployeeProfile from "./components/DashboardMain/Staff/Employee Profile/EmployeeProfile.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -90,6 +94,10 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
             <Route path="/dashboard/recruitment/inrterview-schedule" element={<InterviewScheldule/>}
             ></Route>
             <Route path="/dashboard/system-setting" element={<SystemSetting/>}></Route>
+            <Route path="/dashboard/staff/user" element={<User/>}></Route>
+            <Route path="/dashboard/account-setting" element={<MyProfile/>}></Route>
+            <Route path="/dashboard/staff/role" element={<StaffRole/>}></Route>
+            <Route path="/dashboard/staff/employee-profile" element={<EmployeeProfile/>}></Route>
           </Route>
 
           

@@ -41,6 +41,7 @@ const Login = ({ onLogin }) => {
           "userDetails",
           JSON.stringify(response.data.userDetails)
         );
+        
         toast.success("Login successful!");
 
         setTimeout(() => {

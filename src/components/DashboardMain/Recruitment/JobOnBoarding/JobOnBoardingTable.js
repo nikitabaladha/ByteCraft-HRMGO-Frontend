@@ -15,7 +15,34 @@ const JobOnBoardingTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [appToDelete, setAppToDelete] = useState(null);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  
+  const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleEntriesPerPageChange = (event) => {
+    setEntriesPerPage(Number(event.target.value));
+    setCurrentPage(1);
+  };
+
+  const filteredTrainers = data.filter((row) => {
+    const searchTerm = searchQuery.toLowerCase();
+    
+    return (
+      row.applicantName.toLowerCase().includes(searchTerm) ||
+      row.applicatAppliedFor.toLowerCase().includes(searchTerm) ||
+      row.jobBranch.toLowerCase().includes(searchTerm) ||
+      formatDate(row.applicationCreatedAt).toLowerCase().includes(searchTerm) ||
+      (row.joining_date && formatDate(row.joining_date).toLowerCase().includes(searchTerm)) ||
+      row.status.toLowerCase().includes(searchTerm)
+    );
+  });
+
+  const paginatedTrainers = filteredTrainers.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
 
   useEffect(() => {
     const fetchJobOnboardingData = async () => {
@@ -74,45 +101,51 @@ const JobOnBoardingTable = () => {
 
   function formatDate(dateString) {
     const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, "0"); // Ensures 2 digits for the day
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Ensures 2 digits for the month
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
   }
+  
   
 
   return (
     <div className="row">
-      <div className="col-xl-12">
-        <div className="card">
-          <div className="card-body table-border-style">
-            <div className="table-responsive">
-              <div className="dataTable-wrapper">
-                <div className="dataTable-top d-flex justify-content-between align-items-center">
-                  <div className="dataTable-dropdown">
-                    <label>
-                      <select className="dataTable-selector">
-                        <option value="5">5</option>
-                        <option value="10" selected>
-                          10
-                        </option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                        <option value="25">25</option>
-                      </select>{" "}
-                      entries per page
-                    </label>
-                  </div>
-                  <div className="dataTable-search">
-                    <input
-                      className="dataTable-input"
-                      placeholder="Search..."
-                      type="text"
-                    />
-                  </div>
+    <div className="col-xl-12">
+      <div className="card">
+        <div className="card-header card-body table-border-style">
+          <div className="table-responsive">
+            <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+              <div className="dataTable-top">
+                <div className="dataTable-dropdown">
+                  <label>
+                    <select
+                      className="dataTable-selector"
+                      value={entriesPerPage}
+                      onChange={handleEntriesPerPageChange}
+                    >
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="15">15</option>
+                      <option value="20">20</option>
+                      <option value="25">25</option>
+                    </select>{" "}
+                    entries per page
+                  </label>
                 </div>
-                <div className="dataTable-container">
-                  <table className="table dataTable-table" id="pc-dt-simple">
+                <div className="dataTable-search">
+                  <input
+                    className="dataTable-input"
+                    placeholder="Search..."
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="dataTable-container">
+                <table className="table dataTable-table" id="pc-dt-simple">
                     <thead>
                       <tr>
                         <th>Name</th>
@@ -125,7 +158,8 @@ const JobOnBoardingTable = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.map((row) => (
+                    {paginatedTrainers.length > 0 ? (
+                    paginatedTrainers.map((row) => (
                         <tr key={row._id}>
                           <td>{row.applicantName}</td>
                           <td>{row.applicatAppliedFor}</td>
@@ -204,9 +238,87 @@ const JobOnBoardingTable = () => {
                             </div>
                           </td>
                         </tr>
-                      ))}
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="6" className="text-center">
+                          No archived job applications found
+                        </td>
+                      </tr>
+                    )}
                     </tbody>
                   </table>
+                  <div className="dataTable-bottom">
+                      <div className="dataTable-info">
+                        Showing{" "}
+                        {Math.min(
+                          (currentPage - 1) * entriesPerPage + 1,
+                          data.length
+                        )}{" "}
+                        to{" "}
+                        {Math.min(
+                          currentPage * entriesPerPage,
+                          data.length
+                        )}{" "}
+                        of {data.length} entries
+                      </div>
+                      <nav className="dataTable-pagination">
+                        <ul className="dataTable-pagination-list">
+                          {currentPage > 1 && (
+                            <li className="page-item">
+                              <button
+                                className="page-link prev-button"
+                                onClick={() => setCurrentPage(currentPage - 1)}
+                              >
+                                ‹
+                              </button>
+                            </li>
+                          )}
+
+                          {Array.from(
+                            {
+                              length: Math.ceil(
+                                data.length / entriesPerPage
+                              ),
+                            },
+                            (_, index) => (
+                              <li
+                                key={index + 1}
+                                className={`page-item ${
+                                  currentPage === index + 1 ? "active" : ""
+                                }`}
+                              >
+                                <button
+                                  className="page-link"
+                                  onClick={() => setCurrentPage(index + 1)}
+                                  style={{
+                                    backgroundColor:
+                                      currentPage === index + 1
+                                        ? "#d9d9d9"
+                                        : "transparent",
+                                    color: "#6FD943",
+                                  }}
+                                >
+                                  {index + 1}
+                                </button>
+                              </li>
+                            )
+                          )}
+
+                          {currentPage <
+                            Math.ceil(data.length / entriesPerPage) && (
+                            <li className="page-item">
+                              <button
+                                className="page-link next-button"
+                                onClick={() => setCurrentPage(currentPage + 1)}
+                              >
+                                ›
+                              </button>
+                            </li>
+                          )}
+                        </ul>
+                      </nav>
+                    </div>
                 </div>
               </div>
             </div>

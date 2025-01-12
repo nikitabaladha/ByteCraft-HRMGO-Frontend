@@ -13,8 +13,7 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     password: "",
     role: "",
@@ -49,8 +48,7 @@ const Signup = () => {
         }, 2000);
 
         setFormData({
-          firstName: "",
-          lastName: "",
+          name: "",
           email: "",
           password: "",
           role: "",
@@ -83,26 +81,14 @@ const Signup = () => {
                 <div className="custom-login-form">
                   <form onSubmit={handleSubmit}>
                     <div className="form-group mb-3">
-                      <label className="form-label">First Name</label>
+                      <label className="form-label">Name</label>
                       <input
                         type="text"
                         className="form-control"
-                        name="firstName"
-                        value={formData.firstName}
+                        name="name"
+                        value={formData.name}
                         onChange={handleChange}
-                        placeholder="Enter your first name"
-                        required=""
-                      />
-                    </div>
-                    <div className="form-group mb-3 pss-field">
-                      <label className="form-label">Last Name</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleChange}
-                        placeholder="Enter your last name"
+                        placeholder="Enter your name"
                         required=""
                       />
                     </div>

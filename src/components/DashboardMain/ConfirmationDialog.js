@@ -124,6 +124,18 @@ const DELETE_CONFIG = {
     errorMessage: "Failed to delete Training.",
     idKey: "jobId",
   },
+  role: {
+    getEndpoint: (id) => `/delete-role/${id}`,
+    successMessage: "Role successfully deleted!",
+    errorMessage: "Failed to delete Role.",
+    idKey: "roleId",
+  },
+  user: {
+    getEndpoint: (id) => `/delete-user/${id}`,
+    successMessage: "User successfully deleted!",
+    errorMessage: "Failed to delete User.",
+    idKey: "userId",
+  },
 };
 
 function ConfirmationDialog({ onClose, deleteType, id, onDeleted }) {

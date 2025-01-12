@@ -16,7 +16,7 @@ const TrainingListHeader = () => {
   };
 
   return (
-    <div>
+    <>
       <div className="page-header">
         <div className="page-block">
           <div className="row align-items-center">
@@ -35,7 +35,7 @@ const TrainingListHeader = () => {
               <div className="float-end">
                 <a
                   href="https://demo.workdo.io/hrmgo/export/training"
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary me-1"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Export"
                 >
@@ -44,7 +44,7 @@ const TrainingListHeader = () => {
 
                 <button
                   onClick={handleModalOpen}
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary "
                   data-bs-toggle="tooltip"
                   title="Create New Training"
                 >
@@ -57,7 +57,7 @@ const TrainingListHeader = () => {
       </div>
 
       {isModalOpen && <TrainingListCreateModel onClose={handleModalClose} />}
-    </div>
+    </>
   );
 };
 

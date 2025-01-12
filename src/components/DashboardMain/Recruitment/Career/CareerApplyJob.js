@@ -21,17 +21,53 @@ const CareerApplyJob = () => {
     state: "",
     country: "",
     zipCode: "",
-    profile: null,
-    resume: null,
+    // profile: null,
+    // resume: null,
     dob: "",
     gender: "",
     address: "",
     coverLetter: "",
   });
-  const [profilePreview, setProfilePreview] = useState(null);
-  const [resumePreview, setResumePreview] = useState(null);
+  const [profile, setEmployeePhoto] = useState(null);
+  const [resume, setEmployeeResume] = useState(null);
+
+  const [imagePreview, setImagePreview] = useState("");
+  const [resumePreview, setResumePreview] = useState("");
   const { id } = useParams();
 
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+
+    if (files.length > 0) {
+      const file = files[0];
+
+      if (name === "profile") {
+        setEmployeePhoto(file);
+
+        if (file.type.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setImagePreview(reader.result);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          setImagePreview("");
+        }
+      } else if (name === "resume") {
+        setEmployeeResume(file);
+        setResumePreview(file.name);
+        setImagePreview("");
+      }
+    } else {
+      if (name === "profile") {
+        setEmployeePhoto(null);
+        setImagePreview("");
+      } else if (name === "resume") {
+        setEmployeeResume(null);
+        setResumePreview("");
+      }
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
@@ -54,25 +90,31 @@ const CareerApplyJob = () => {
   
     // Create a new FormData object for submission
     const formDataToSend = new FormData();
-  
+
+    // Append standard fields
     Object.keys(formData).forEach((key) => {
       if (formData[key]) {
         if (key === "customQuestions") {
+          // Convert custom questions to JSON string if it's an array
           formDataToSend.append(key, JSON.stringify(formData[key]));
-        } else if (key === "profile" || key === "resume") {
-          formDataToSend.append(key, formData[key]);
         } else {
           formDataToSend.append(key, formData[key]);
         }
       }
     });
+
+    if (profile) formDataToSend.append("profile", profile);
+    if (resume) formDataToSend.append("resume", resume);
   
     // Append the job title explicitly if needed
     formDataToSend.append("jobTitle", jobDetails.title);
     formDataToSend.append("branch", jobDetails.branch);
   
     try {
-      const response = await postAPI("/create-job-application", formDataToSend);
+      const response = await postAPI("/create-job-application", formDataToSend, {
+        "Content-Type": "multipart/form-data",
+      },
+      true);
   
       console.log("Job application created successfully:", response.data);
       toast("Job application created successfully");
@@ -109,16 +151,6 @@ const CareerApplyJob = () => {
   if (!jobDetails) {
     return <div>No job details found.</div>;
   }
-
-  const handleProfileChange = (event) => {
-    const file = event.target.files[0];
-    setProfilePreview(file ? URL.createObjectURL(file) : null);
-  };
-
-  const handleResumeChange = (event) => {
-    const file = event.target.files[0];
-    setResumePreview(file ? URL.createObjectURL(file) : null);
-  };
 
   return (
     <div>
@@ -308,12 +340,12 @@ const CareerApplyJob = () => {
                       type="file"
                       className="form-control"
                       name="profile"
-                      id="profile"
-                      onChange={handleProfileChange}
+                      accept="image/*"
+                      onChange={handleFileChange}
                     />
-                    {profilePreview && (
+                    {imagePreview && (
                       <img
-                        src={profilePreview}
+                        src={imagePreview}
                         alt="Profile Preview"
                         className="mt-3"
                         width="25%"
@@ -330,7 +362,7 @@ const CareerApplyJob = () => {
                       className="form-control"
                       name="resume"
                       id="resume"
-                      onChange={handleResumeChange}
+                      onChange={handleFileChange}
                       required
                     />
                     {resumePreview && (

@@ -347,9 +347,9 @@
   min-height: 506px !important;
 }
 
-.job-card {
-  /* height: 567px !important; */
-}
+/* .job-card {
+   height: 567px !important; 
+}*/ 
 
 .job2-card {
   height: 509px !important;
@@ -826,4 +826,30 @@ a > i.ti-plus {
   background-color: transparent !important;
   border-color: transparent !important;
   color: inherit !important;
+}
+
+/* search functionality */
+.dataTable-pagination-list {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  cursor: pointer;
+  padding: 6px 12px;
+  background-color: transparent;
+  border: none;
+  color: #6FD943;
+}
+
+.page-link:hover {
+  color: #6FD943; 
+  background-color: transparent; 
 }

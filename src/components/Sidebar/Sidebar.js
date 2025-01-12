@@ -99,7 +99,7 @@ const menuConfig = [
       {
         id: "roles",
         label: "Role",
-        link: "/dashboard/staff/roles",
+        link: "/dashboard/staff/role",
       },
       {
         id: "employeeProfile",

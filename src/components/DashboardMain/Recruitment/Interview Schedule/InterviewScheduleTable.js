@@ -56,7 +56,7 @@ const InterviewScheduleTable = () => {
   
 
   return (
-    <div>
+    <>
       <div className="col-lg-4">
         <div className="card">
           <div className="card-body">
@@ -139,7 +139,7 @@ const InterviewScheduleTable = () => {
           onDeleted={handleDeleteConfirmed}
         />
       )}
-    </div>
+    </>
   );
 };
 

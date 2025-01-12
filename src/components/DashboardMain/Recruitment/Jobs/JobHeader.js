@@ -4,7 +4,6 @@ import { FiPlus } from "react-icons/fi";
 
 const JobHeader = () => {
   return (
-    <div>
       <div class="page-header">
         <div class="page-block">
           <div class="row align-items-center">
@@ -38,7 +37,6 @@ const JobHeader = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
