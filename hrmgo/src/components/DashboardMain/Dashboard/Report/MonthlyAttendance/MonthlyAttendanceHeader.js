@@ -22,20 +22,34 @@ const MonthlyAttendanceHeader = ({ attendanceData, selectedMonthYear }) => {
     : [attendanceData].filter(Boolean);
 
   const handleExport = () => {
-    const headers = ["Employee Name", ...Array.from({ length: totalDaysInMonth }, (_, index) => `${monthName} ${String(index + 1).padStart(2, "0")}`)];
+    const headers = [
+      "Employee Name",
+      ...Array.from(
+        { length: totalDaysInMonth },
+        (_, index) => `${monthName} ${String(index + 1).padStart(2, "0")}`
+      ),
+    ];
 
     const formattedData = employees.map((employee) => {
-      const attendanceForDays = Array.from({ length: totalDaysInMonth }, (_, index) => {
-        const dateString = `${monthName} ${String(index + 1).padStart(2, "0")}, ${year}`;
-        const attendanceRecord = employee.attendance.find((record) => record.date === dateString);
-        return attendanceRecord ? (attendanceRecord.status === "Present" ? "P" : "A") : "-";
-      });
+      const attendanceForDays = Array.from(
+        { length: totalDaysInMonth },
+        (_, index) => {
+          const dateString = `${monthName} ${String(index + 1).padStart(
+            2,
+            "0"
+          )}, ${year}`;
+          const attendanceRecord = employee.attendance.find(
+            (record) => record.date === dateString
+          );
+          return attendanceRecord
+            ? attendanceRecord.status === "Present"
+              ? "P"
+              : "A"
+            : "-";
+        }
+      );
 
-
-      return [
-        employee.employeeName,
-        ...attendanceForDays,
-      ];
+      return [employee.employeeName, ...attendanceForDays];
     });
 
     const ws = XLSX.utils.aoa_to_sheet([headers, ...formattedData]);
@@ -81,7 +95,7 @@ const MonthlyAttendanceHeader = ({ attendanceData, selectedMonthYear }) => {
                   data-bs-toggle="tooltip"
                   title=""
                   data-bs-original-title="Export"
-                  onClick={handleExport} 
+                  onClick={handleExport}
                 >
                   <span className="btn-inner--icon">
                     <TbFileExport />

@@ -5,19 +5,26 @@ import { IoIosSearch } from "react-icons/io";
 import { TbRefresh } from "react-icons/tb";
 import Select from "react-select";
 
-const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
+const MonthlyAttendanceSearchForm = ({
+  selectedMonthYear,
+  setSelectedMonthYear,
+  selectedBranch,
+  setSelectedBranch,
+  selectedDepartment,
+  setSelectedDepartment,
+  selectedEmployees,
+  setSelectedEmployees,
+  onSearch,
+  onRefresh,
+}) => {
   const [branches, setBranches] = useState([]);
-  const [selectedBranch, setSelectedBranch] = useState("");
   const [departments, setDepartments] = useState([]);
-  const [selectedDepartment, setSelectedDepartment] = useState("");
   const [employees, setEmployees] = useState([]);
-  const [selectedEmployees, setSelectedEmployees] = useState([]);
-  const [selectedMonthYear, setSelectedMonthYear] = useState("");
 
   useEffect(() => {
     const fetchBranchData = async () => {
       try {
-        const response = await getAPI(`/branch-get-all`, {}, true);
+        const response = await getAPI("/branch-get-all", {}, true);
         if (!response.hasError && Array.isArray(response.data.data)) {
           setBranches(response.data.data);
         } else {
@@ -84,38 +91,7 @@ const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    try {
-      const queryParams = new URLSearchParams({
-        branch: selectedBranch || "",
-        department: selectedDepartment || "",
-        month: selectedMonthYear || "",
-      });
-
-      if (Array.isArray(selectedEmployees) && selectedEmployees.length > 0) {
-        selectedEmployees.forEach((employeeId) => {
-          queryParams.append("employee", employeeId);
-        });
-      } else if (selectedEmployees) {
-        queryParams.append("employee", selectedEmployees);
-      }
-
-      const response = await getAPI(
-        `/employee-get-filter-by-month?${queryParams.toString()}`,
-        {},
-        true,
-        true
-      );
-
-      if (!response.hasError && response.data && response.data.data) {
-        const employeesData = response.data.data;
-
-        onDataFetched(employeesData, selectedMonthYear);
-      } else {
-        console.error("Error fetching attendance data:", response);
-      }
-    } catch (err) {
-      console.error("Error in handleSearch:", err);
-    }
+    await onSearch();
   };
 
   const employeeOptions = employees.map((employee) => ({
@@ -238,6 +214,7 @@ const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
                         className="btn btn-sm btn-danger"
                         data-bs-toggle="tooltip"
                         title="Reset"
+                        onClick={onRefresh}
                       >
                         <span className="btn-inner--icon">
                           <TbRefresh />
