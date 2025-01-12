@@ -19,7 +19,7 @@ const MonthlyAttendance = () => {
       currentDate.getMonth() + 1
     ).padStart(2, "0")}`;
     setSelectedMonthYear(currentMonthYear);
-    fetchAttendanceData(currentMonthYear, "", "", ""); // Fetch data for the current month
+    fetchAttendanceData(currentMonthYear, "", "", "");
   }, []);
 
   const fetchAttendanceData = async (
@@ -52,6 +52,7 @@ const MonthlyAttendance = () => {
 
       if (!response.hasError && response.data && response.data.data) {
         const employeesData = response.data.data;
+
         setAttendanceData(employeesData);
       } else {
         console.error("Error fetching attendance data:", response);
@@ -59,6 +60,39 @@ const MonthlyAttendance = () => {
     } catch (err) {
       console.error("Error in fetchAttendanceData:", err);
     }
+  };
+
+  // Function to calculate attendance counts
+
+  // can i directly pass duration in this calculateAttendance Countscript function
+  const calculateAttendanceCounts = () => {
+    const counts = {
+      present: 0,
+      absent: 0,
+      overtime: 0,
+      earlyLeave: 0,
+      late: 0,
+    };
+
+    attendanceData.forEach((employee) => {
+      employee.attendance.forEach((record) => {
+        switch (record.status) {
+          case "Present":
+            counts.present += 1;
+            counts.overtime += record.overtime !== "00:00:00" ? 1 : 0;
+            counts.late += record.late !== "00:00:00" ? 1 : 0;
+            counts.earlyLeave += record.earlyLeaving !== "00:00:00" ? 1 : 0;
+            break;
+          case "Absent":
+            counts.absent += 1;
+            break;
+          default:
+            break;
+        }
+      });
+    });
+
+    return counts;
   };
 
   const handleDataFetched = (data, monthYear) => {
@@ -84,6 +118,8 @@ const MonthlyAttendance = () => {
     await fetchAttendanceData(currentMonthYear, "", "", "");
   };
 
+  const attendanceCounts = calculateAttendanceCounts();
+
   return (
     <>
       <MonthlyAttendanceHeader
@@ -104,7 +140,10 @@ const MonthlyAttendance = () => {
           onSearch={handleSearch}
           onRefresh={handleRefresh}
         />
-        <AttendanceReport />
+        <AttendanceReport
+          counts={attendanceCounts}
+          duration={selectedMonthYear}
+        />
         <AttendanceTable
           attendanceData={attendanceData}
           selectedMonthYear={selectedMonthYear}

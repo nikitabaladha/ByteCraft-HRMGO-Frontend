@@ -1,5 +1,16 @@
 // ByteCraft-HRMGO-Frontend\hrmgo\src\Js\custom.js
 
+// Convert the duration to Month-Year format
+export function formatDuration(duration) {
+  if (!duration) return "";
+
+  const [year, month] = duration.split("-");
+  const date = new Date(year, month - 1);
+  const options = { month: "long", year: "numeric" };
+
+  return date.toLocaleDateString("en-US", options);
+}
+
 export function formatDate(dateString) {
   const date = new Date(dateString);
   const month = date.toLocaleString("default", { month: "short" });

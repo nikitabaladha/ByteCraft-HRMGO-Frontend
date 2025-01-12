@@ -7,47 +7,51 @@ import { FaRegClock } from "react-icons/fa";
 import { BsInfoCircle } from "react-icons/bs";
 import { IoMdAlarm } from "react-icons/io";
 
-const cardData = [
-  {
-    icon: <TbReport />,
-    bgColor: "bg-primary",
-    title: "Report",
-    subtitle: "Attendance Summary",
-    hiddenValue: "All Branch Nov-2024 Attendance Report of All Department",
-  },
-  {
-    icon: <TbSum />,
-    bgColor: "bg-secondary",
-    title: "Duration",
-    subtitle: "Nov-2024",
-  },
-  {
-    icon: <TbFileReport />,
-    bgColor: "bg-primary",
-    title: "Attendance",
-    content: ["Total present: 0", "Total leave: 0"],
-  },
-  {
-    icon: <FaRegClock />,
-    bgColor: "bg-secondary",
-    title: "Overtime",
-    content: ["Total overtime in hours: 0.00"],
-  },
-  {
-    icon: <BsInfoCircle />,
-    bgColor: "bg-primary",
-    title: "Early leave",
-    content: ["Total early leave in hours: 0.00"],
-  },
-  {
-    icon: <IoMdAlarm />,
-    bgColor: "bg-secondary",
-    title: "Employee late",
-    content: ["Total late in hours: 0.00"],
-  },
-];
+import { formatDuration } from "../../../../../Js/custom";
 
-const AttendanceReport = () => {
+const AttendanceReport = ({ counts, duration }) => {
+  const cardData = [
+    {
+      icon: <TbReport />,
+      bgColor: "bg-primary",
+      title: "Report",
+      subtitle: "Attendance Summary",
+      hiddenValue: "All Branch Nov-2024 Attendance Report of All Department",
+    },
+    {
+      icon: <TbSum />,
+      bgColor: "bg-secondary",
+      title: "Duration",
+      subtitle: formatDuration(duration),
+    },
+    {
+      icon: <TbFileReport />,
+      bgColor: "bg-primary",
+      title: "Attendance",
+      content: [
+        `Total present: ${counts.present}`,
+        `Total absent: ${counts.absent}`,
+      ],
+    },
+    {
+      icon: <FaRegClock />,
+      bgColor: "bg-secondary",
+      title: "Overtime",
+      content: [`Total overtime: ${counts.overtime}`],
+    },
+    {
+      icon: <BsInfoCircle />,
+      bgColor: "bg-primary",
+      title: "Early leave",
+      content: [`Total early leave: ${counts.earlyLeave}`],
+    },
+    {
+      icon: <IoMdAlarm />,
+      bgColor: "bg-secondary",
+      title: "Employee late",
+      content: [`Total late: ${counts.late}`],
+    },
+  ];
   return (
     <div id="printableArea">
       {/* First row */}
