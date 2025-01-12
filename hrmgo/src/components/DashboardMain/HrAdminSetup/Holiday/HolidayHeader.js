@@ -73,9 +73,9 @@ const HolidayHeader = ({ holidays, addHoliday }) => {
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <Link to="/hrmgo/dashboard">Home</Link>
+                  <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Holiday List</li>
+                <li className="breadcrumb-item">Holidays List</li>
               </ul>
             </div>
             <div className="col">

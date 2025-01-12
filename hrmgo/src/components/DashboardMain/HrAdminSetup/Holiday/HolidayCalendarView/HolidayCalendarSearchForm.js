@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TbRefresh } from "react-icons/tb";
 import { IoIosSearch } from "react-icons/io";
@@ -62,7 +62,6 @@ const HolidayCalendarSearchForm = ({ onSearchResults }) => {
 
   return (
     <>
-      <ToastContainer autoClose={3000} />
       <div className="row">
         <div className="col-sm-12 col-lg-12 col-xl-12 col-md-12">
           <div className="card">

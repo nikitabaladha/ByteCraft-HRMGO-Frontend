@@ -61,11 +61,7 @@ const Holiday = () => {
   return (
     <>
       {isCalendarRoute ? (
-        <HolidayCalendarView
-          holidays={holidays}
-          selectedHoliday={selectedHoliday}
-          setSelectedHoliday={setSelectedHoliday}
-        />
+        <HolidayCalendarView />
       ) : (
         <>
           <HolidayHeader holidays={holidays} addHoliday={addHoliday} />

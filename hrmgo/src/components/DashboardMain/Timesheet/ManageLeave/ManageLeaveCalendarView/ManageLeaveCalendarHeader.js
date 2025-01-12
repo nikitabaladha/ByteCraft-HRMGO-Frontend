@@ -2,28 +2,27 @@ import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import CreateHolidayModal from "../CreateHolidayModal";
+import CreateModal from "../CreateModal";
 
 import { FaPlus } from "react-icons/fa";
 import { TbListCheck } from "react-icons/tb";
 
-const HolidayCalendarHeader = ({ holidays, addHoliday }) => {
-  const [isCreateHolidayModalOpen, setIsCreateHolidayModalOpen] =
-    useState(false);
+const ManageLeaveCalendarHeader = ({ addLeave }) => {
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
   const openModal = () => {
-    setIsCreateHolidayModalOpen(true);
+    setIsCreateModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsCreateHolidayModalOpen(false);
+    setIsCreateModalOpen(false);
   };
 
-  const navigateToHoliday = (event) => {
+  const navigateToManageLeave = (event) => {
     event.preventDefault();
-    navigate("/dashboard/hr-admin-setup/holiday");
+    navigate("/dashboard/time-sheet/manage-leave");
   };
 
   return (
@@ -33,13 +32,13 @@ const HolidayCalendarHeader = ({ holidays, addHoliday }) => {
           <div className="row align-items-center">
             <div className="col-auto">
               <div className="page-header-title">
-                <h4 className="m-b-10">Manage Holiday</h4>
+                <h4 className="m-b-10">Leave Calender</h4>
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Holidays List</li>
+                <li className="breadcrumb-item">Leave</li>
               </ul>
             </div>
             <div className="col">
@@ -48,7 +47,7 @@ const HolidayCalendarHeader = ({ holidays, addHoliday }) => {
                   className="btn btn-sm btn-primary"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="List View"
-                  onClick={navigateToHoliday}
+                  onClick={navigateToManageLeave}
                 >
                   <TbListCheck />
                 </Link>
@@ -71,11 +70,11 @@ const HolidayCalendarHeader = ({ holidays, addHoliday }) => {
 
       <div className="mb-4"></div>
 
-      {isCreateHolidayModalOpen && (
-        <CreateHolidayModal onClose={closeModal} addHoliday={addHoliday} />
+      {isCreateModalOpen && (
+        <CreateModal onClose={closeModal} addLeave={addLeave} />
       )}
     </>
   );
 };
 
-export default HolidayCalendarHeader;
+export default ManageLeaveCalendarHeader;

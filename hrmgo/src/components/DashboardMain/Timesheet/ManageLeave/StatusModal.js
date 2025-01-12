@@ -1,10 +1,14 @@
+// ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Timesheet\ManageLeave\StatusModal.js
+
 import React from "react";
 import { useEffect } from "react";
 import putAPI from "../../../../api/putAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const StatusModal = ({ leave, onClose, onStatusUpdate }) => {
+  const navigate = useNavigate();
   const handleUpdateStatus = async (status) => {
     try {
       const response = await putAPI(
@@ -18,9 +22,11 @@ const StatusModal = ({ leave, onClose, onStatusUpdate }) => {
 
       if (!response.hasError) {
         console.log(`Leave status updated to ${status}:`, response.data);
-        onStatusUpdate(leave.leaveId, status);
+        onStatusUpdate(leave.id, status);
         onClose();
         toast.success(`Leave status successfully updated to ${status}`);
+
+        navigate("/dashboard/time-sheet/manage-leave");
       } else {
         console.error("Error updating leave status:", response.message);
         toast.error(`Failed to update status: ${response.message}`);

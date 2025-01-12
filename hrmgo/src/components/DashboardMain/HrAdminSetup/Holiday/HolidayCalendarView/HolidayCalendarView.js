@@ -50,9 +50,17 @@ const HolidayCalendarView = () => {
     );
   };
 
+  const addHoliday = (newHoliday) => {
+    setAllHolidays((prevHolidays) => [...prevHolidays, newHoliday]);
+    setFilteredHolidays((prevFilteredHolidays) => [
+      ...prevFilteredHolidays,
+      newHoliday,
+    ]);
+  };
+
   return (
     <>
-      <HolidayCalendarHeader />
+      <HolidayCalendarHeader holidays={allHolidays} addHoliday={addHoliday} />
       <HolidayCalendarSearchForm onSearchResults={handleSearchResults} />
       <div className="row">
         <HolidayCalendar holidays={allHolidays} updateHoliday={updateHoliday} />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { TbRefresh } from "react-icons/tb";
@@ -28,7 +28,6 @@ const IncomeVsExpenseSearchForm = ({ onSearch }) => {
   };
   return (
     <>
-      <ToastContainer autoClose={3000} />
       <div className="col-sm-12">
         <div className="mt-2" id="multiCollapseExample1">
           <div className="card">

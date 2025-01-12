@@ -1,3 +1,5 @@
+// ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Timesheet\ManageLeave\ManageLeaveTable.js
+
 import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
@@ -72,7 +74,7 @@ const ManageLeaveTable = ({
   const handleStatusUpdate = (leaveId, newStatus) => {
     setLeaveData((prevData) =>
       prevData.map((leave) =>
-        leave.leaveId === leaveId ? { ...leave, status: newStatus } : leave
+        leave.id === leaveId ? { ...leave, status: newStatus } : leave
       )
     );
   };

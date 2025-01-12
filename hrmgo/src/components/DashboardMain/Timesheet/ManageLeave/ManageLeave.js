@@ -2,13 +2,17 @@
 
 import React from "react";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import getAPI from "../../../../api/getAPI";
+import ManageLeaveCalendarView from "./ManageLeaveCalendarView/ManageLeaveCalendarView";
 
 import ManageLeaveHeader from "./ManageLeaveHeader";
 import ManageLeaveTable from "./ManageLeaveTable";
 import "react-toastify/dist/ReactToastify.css";
 
 const ManageLeave = () => {
+  const location = useLocation();
+
   const [leaveData, setLeaveData] = useState([]);
   const [selectedLeave, setSelectedLeave] = useState(null);
 
@@ -46,16 +50,25 @@ const ManageLeave = () => {
     );
   };
 
+  const isCalendarRoute =
+    location.pathname === "/dashboard/time-sheet/manage-leave/calendar";
+
   return (
     <>
-      <ManageLeaveHeader addLeave={addLeave} />
-      <ManageLeaveTable
-        leaveData={leaveData}
-        setLeaveData={setLeaveData}
-        selectedLeave={selectedLeave}
-        setSelectedLeave={setSelectedLeave}
-        updateLeave={updateLeave}
-      />
+      {isCalendarRoute ? (
+        <ManageLeaveCalendarView />
+      ) : (
+        <>
+          <ManageLeaveHeader addLeave={addLeave} />
+          <ManageLeaveTable
+            leaveData={leaveData}
+            setLeaveData={setLeaveData}
+            selectedLeave={selectedLeave}
+            setSelectedLeave={setSelectedLeave}
+            updateLeave={updateLeave}
+          />
+        </>
+      )}
     </>
   );
 };

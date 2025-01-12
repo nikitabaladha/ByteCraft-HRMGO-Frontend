@@ -20,6 +20,7 @@ import UpdateEmployee from "./components/DashboardMain/Employee/UpdateEmployee/U
 import ManageLeave from "./components/DashboardMain/Timesheet/ManageLeave/ManageLeave.js";
 import MarkedAttendance from "./components/DashboardMain/Timesheet/Attendance/MarkedAttendance/MarkedAttendance.js";
 import BulkAttendance from "./components/DashboardMain/Timesheet/Attendance/BulkAttendance/BulkAttendance.js";
+import ManageLeaveCalendarView from "./components/DashboardMain/Timesheet/ManageLeave/ManageLeaveCalendarView/ManageLeaveCalendarView.js";
 
 import Indicator from "./components/DashboardMain/Performance/Indicator/Indicator.js";
 import Appraisal from "./components/DashboardMain/Performance/Appraisal/Appraisal.js";
@@ -94,7 +95,9 @@ const AppRoutes = () => {
           <Route path="update" element={<UpdateEmployee />} />
         </Route>
 
-        <Route path="time-sheet/manage-leave" element={<ManageLeave />} />
+        <Route path="time-sheet/manage-leave" element={<ManageLeave />}>
+          <Route path="calendar" element={<ManageLeaveCalendarView />} />
+        </Route>
 
         <Route
           path="time-sheet/attendance/marked-attendance"

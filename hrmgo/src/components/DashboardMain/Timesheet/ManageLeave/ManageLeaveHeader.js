@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
 import { TbFileExport } from "react-icons/tb";
 import { CiCalendarDate } from "react-icons/ci";
 import { FiPlus } from "react-icons/fi";
@@ -11,6 +12,13 @@ import getAPI from "../../../../api/getAPI";
 const ManageLeaveHeader = ({ addLeave }) => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [leaveData, setLeaveData] = useState([]);
+
+  const navigate = useNavigate();
+
+  const navigateToCalendar = (event) => {
+    event.preventDefault();
+    navigate("/dashboard/time-sheet/manage-leave/calendar");
+  };
 
   useEffect(() => {
     const fetchMangeLeaveData = async () => {
@@ -102,10 +110,10 @@ const ManageLeaveHeader = ({ addLeave }) => {
                   <TbFileExport />
                 </Link>
                 <Link
-                  to="/calender/leave"
                   className="btn btn-sm btn-primary"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Calendar View"
+                  onClick={navigateToCalendar}
                 >
                   <CiCalendarDate />
                 </Link>

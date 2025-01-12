@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
 import putAPI from "../../../../../api/putAPI.js";
 
 const UpdateHolidayModal = ({ holiday, onClose, updateHoliday }) => {
@@ -42,9 +41,6 @@ const UpdateHolidayModal = ({ holiday, onClose, updateHoliday }) => {
       );
 
       if (!response.hasError) {
-        toast.success("Holiday updated successfully!");
-        console.log("Holiday updated successfully!");
-
         const newUpdatedHoliday = {
           id: response.data.data._id,
           occasion: response.data.data.occasion,
@@ -53,7 +49,7 @@ const UpdateHolidayModal = ({ holiday, onClose, updateHoliday }) => {
         };
 
         updateHoliday(newUpdatedHoliday);
-
+        toast.success("Holiday updated successfully!");
         onClose();
       } else {
         toast.error("Failed to update Holiday.");
