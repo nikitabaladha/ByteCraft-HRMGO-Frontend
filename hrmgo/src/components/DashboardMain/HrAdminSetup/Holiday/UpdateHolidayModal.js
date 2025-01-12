@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DatePicker from "react-datepicker";
 import putAPI from "../../../../api/putAPI.js";
 
 const UpdateHolidayModal = ({ holiday, onClose, updateHoliday }) => {
@@ -70,14 +69,6 @@ const UpdateHolidayModal = ({ holiday, onClose, updateHoliday }) => {
         toast.error("An unexpected error occurred. Please try again.");
       }
     }
-  };
-
-  const handleStartDateChange = (date) => {
-    setStartDate(date);
-  };
-
-  const handleEndDateChange = (date) => {
-    setEndDate(date);
   };
 
   useEffect(() => {
@@ -161,19 +152,16 @@ const UpdateHolidayModal = ({ holiday, onClose, updateHoliday }) => {
                         </label>
                         <span className="text-danger">*</span>
                         <div>
-                          <DatePicker
-                            selected={startDate}
-                            onChange={handleStartDateChange}
-                            dateFormat="yyyy-MM-dd"
-                            className="form-control d_week current_date datepicker-input"
-                            autoComplete="off"
-                            required="required"
+                          <input
+                            value={startDate.toISOString().split("T")[0]}
+                            onChange={(e) =>
+                              setStartDate(new Date(e.target.value))
+                            }
+                            className="form-control"
+                            dateFormat="yyyy/MM/dd"
+                            required
+                            type="date"
                             name="startDate"
-                            type="text"
-                            id="startDate"
-                            style={{
-                              width: "100%",
-                            }}
                           />
                         </div>
                       </div>
@@ -183,19 +171,16 @@ const UpdateHolidayModal = ({ holiday, onClose, updateHoliday }) => {
                         </label>
                         <span className="text-danger">*</span>
                         <div>
-                          <DatePicker
-                            selected={endDate}
-                            onChange={handleEndDateChange}
-                            dateFormat="yyyy-MM-dd"
-                            className="form-control d_week current_date datepicker-input"
-                            autoComplete="off"
-                            required="required"
+                          <input
+                            value={endDate.toISOString().split("T")[0]}
+                            onChange={(e) =>
+                              setEndDate(new Date(e.target.value))
+                            }
+                            className="form-control"
+                            dateFormat="yyyy/MM/dd"
+                            required
+                            type="date"
                             name="endDate"
-                            type="text"
-                            id="endDate"
-                            style={{
-                              width: "100%",
-                            }}
                           />
                         </div>
                       </div>

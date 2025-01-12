@@ -71,14 +71,6 @@ const UpdateHolidayModal = ({ holiday, onClose, updateHoliday }) => {
     }
   };
 
-  const handleStartDateChange = (date) => {
-    setStartDate(date);
-  };
-
-  const handleEndDateChange = (date) => {
-    setEndDate(date);
-  };
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       const modalDialog = document.querySelector(".modal-dialog");
@@ -153,6 +145,7 @@ const UpdateHolidayModal = ({ holiday, onClose, updateHoliday }) => {
                         onChange={(e) => setOccasion(e.target.value)}
                       />
                     </div>
+
                     <div className="row col-md-12">
                       <div className="form-group col-md-6">
                         <label htmlFor="start_date" className="col-form-label">
@@ -160,19 +153,16 @@ const UpdateHolidayModal = ({ holiday, onClose, updateHoliday }) => {
                         </label>
                         <span className="text-danger">*</span>
                         <div>
-                          <DatePicker
-                            selected={startDate}
-                            onChange={handleStartDateChange}
-                            dateFormat="yyyy-MM-dd"
-                            className="form-control d_week current_date datepicker-input"
-                            autoComplete="off"
-                            required="required"
+                          <input
+                            value={startDate.toISOString().split("T")[0]}
+                            onChange={(e) =>
+                              setStartDate(new Date(e.target.value))
+                            }
+                            className="form-control"
+                            dateFormat="yyyy/MM/dd"
+                            required
+                            type="date"
                             name="startDate"
-                            type="text"
-                            id="startDate"
-                            style={{
-                              width: "100%",
-                            }}
                           />
                         </div>
                       </div>
@@ -182,19 +172,16 @@ const UpdateHolidayModal = ({ holiday, onClose, updateHoliday }) => {
                         </label>
                         <span className="text-danger">*</span>
                         <div>
-                          <DatePicker
-                            selected={endDate}
-                            onChange={handleEndDateChange}
-                            dateFormat="yyyy-MM-dd"
-                            className="form-control d_week current_date datepicker-input"
-                            autoComplete="off"
-                            required="required"
+                          <input
+                            value={endDate.toISOString().split("T")[0]}
+                            onChange={(e) =>
+                              setEndDate(new Date(e.target.value))
+                            }
+                            className="form-control"
+                            dateFormat="yyyy/MM/dd"
+                            required
+                            type="date"
                             name="endDate"
-                            type="text"
-                            id="endDate"
-                            style={{
-                              width: "100%",
-                            }}
                           />
                         </div>
                       </div>

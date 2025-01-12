@@ -60,10 +60,6 @@ const UpdateResignationModal = ({
       if (!response.hasError) {
         toast.success("Resignation updated successfully!");
 
-        // here i want employee Name to be passed as what ever is displayed  in this   const [employeeName, setEmployeeName] = useState(
-        //   resignation?.employeeName || ""
-        // ); so tell me how to do it
-
         const newUpdatedResignation = {
           id: response.data.data._id,
           employeeName: employeeName,
@@ -184,9 +180,6 @@ const UpdateResignationModal = ({
                       name="resignationDate"
                       type="date"
                       id="resignationDate"
-                      style={{
-                        width: "100%",
-                      }}
                     />
                   </div>
 
@@ -203,9 +196,6 @@ const UpdateResignationModal = ({
                       name="lastWorkingDay"
                       type="date"
                       id="lastWorkingDay"
-                      style={{
-                        width: "100%",
-                      }}
                     />
                   </div>
 
