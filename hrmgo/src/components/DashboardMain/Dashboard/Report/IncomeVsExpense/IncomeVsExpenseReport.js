@@ -5,6 +5,7 @@ import { FaRegFileAlt } from "react-icons/fa";
 import { TbCalendarClock } from "react-icons/tb";
 import { LuWallet } from "react-icons/lu";
 import { TbReportMoney } from "react-icons/tb";
+import { formatCost } from "../../../../../Js/custom";
 
 const IncomeVsExpenseReport = ({ data, startMonth, endMonth }) => {
   const formatMonthYear = (monthYear) => {
@@ -40,13 +41,13 @@ const IncomeVsExpenseReport = ({ data, startMonth, endMonth }) => {
     },
     {
       title: "Total Income",
-      subtitle: `₹ ${totalIncome.toFixed(2)}`,
+      subtitle: `${formatCost(totalIncome)}`,
       icon: <LuWallet />,
       bgClass: "bg-primary",
     },
     {
       title: "Total Expense",
-      subtitle: `₹ ${totalExpense.toFixed(2)}`,
+      subtitle: `${formatCost(totalExpense)}`,
       icon: <TbReportMoney />,
       bgClass: "bg-secondary",
     },

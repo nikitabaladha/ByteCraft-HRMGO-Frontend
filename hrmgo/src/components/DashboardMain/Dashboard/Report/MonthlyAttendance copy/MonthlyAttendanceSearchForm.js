@@ -100,7 +100,7 @@ const MonthlyAttendanceSearchForm = ({ onDataFetched }) => {
       }
 
       const response = await getAPI(
-        `/employee-get-filter-by-month?${queryParams.toString()}`,
+        `/marked-attendance-get-all-by-query?${queryParams.toString()}`,
         {},
         true,
         true

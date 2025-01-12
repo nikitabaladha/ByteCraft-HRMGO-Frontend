@@ -40,16 +40,8 @@ const AttendanceTable = ({ attendanceData, selectedMonthYear }) => {
                         index + 1
                       ).padStart(2, "0")}, ${year}`;
 
-                      // Convert the date string to the same format as the attendance date
-                      const formattedDateString = `${year}-${String(
-                        month
-                      ).padStart(2, "0")}-${String(index + 1).padStart(
-                        2,
-                        "0"
-                      )}`;
-
                       const attendanceRecord = employee.attendance.find(
-                        (record) => record.date.includes(formattedDateString) // Use includes to handle the date format
+                        (record) => record.date === dateString
                       );
 
                       return (

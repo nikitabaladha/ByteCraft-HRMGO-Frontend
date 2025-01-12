@@ -1,4 +1,3 @@
-// hrmgo\src\components\DashboardMain\Dashboard\Report\MonthlyAttendance\MonthlyAttendance.js
 import React, { useState } from "react";
 import MonthlyAttendanceHeader from "./MonthlyAttendanceHeader";
 import MonthlyAttendanceSearchForm from "./MonthlyAttendanceSearchForm";
@@ -16,10 +15,8 @@ const MonthlyAttendance = () => {
 
   return (
     <>
-      <MonthlyAttendanceHeader
-        attendanceData={attendanceData}
-        selectedMonthYear={selectedMonthYear}
-      />
+      <MonthlyAttendanceHeader   attendanceData={attendanceData}
+          selectedMonthYear={selectedMonthYear}/>
       <div className="row">
         <MonthlyAttendanceSearchForm onDataFetched={handleDataFetched} />
         <AttendanceReport />
