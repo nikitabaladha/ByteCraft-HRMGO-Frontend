@@ -18,7 +18,6 @@ import CreateEmployee from "./components/DashboardMain/Employee/CreateEmployee/C
 import UpdateEmployee from "./components/DashboardMain/Employee/UpdateEmployee/UpdateEmployee.js";
 
 import ManageLeave from "./components/DashboardMain/Timesheet/ManageLeave/ManageLeave.js";
-import TimeSheet from "./components/DashboardMain/Timesheet/TimeSheet/TimeSheet.js";
 import MarkedAttendance from "./components/DashboardMain/Timesheet/Attendance/MarkedAttendance/MarkedAttendance.js";
 import BulkAttendance from "./components/DashboardMain/Timesheet/Attendance/BulkAttendance/BulkAttendance.js";
 
@@ -96,7 +95,7 @@ const AppRoutes = () => {
         </Route>
 
         <Route path="time-sheet/manage-leave" element={<ManageLeave />} />
-        <Route path="time-sheet/time-sheet" element={<TimeSheet />} />
+
         <Route
           path="time-sheet/attendance/marked-attendance"
           element={<MarkedAttendance />}

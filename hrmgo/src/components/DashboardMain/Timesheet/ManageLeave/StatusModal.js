@@ -8,7 +8,7 @@ const StatusModal = ({ leave, onClose, onStatusUpdate }) => {
   const handleUpdateStatus = async (status) => {
     try {
       const response = await putAPI(
-        `/manage-leave-update-status/${leave.leaveId}`,
+        `/manage-leave-update-status/${leave.id}`,
         {
           status,
         },

@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from "react";
-import getAPI from "../../../../api/getAPI.js";
+import React, { useState } from "react";
+
 import { Link } from "react-router-dom";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { TbPencil, TbCaretRight } from "react-icons/tb";
 import StatusModal from "./StatusModal";
-import StatusChangeConfirmationDialog from "./StatusChangeConfirmationDialog";
+
 import UpdateModal from "./UpdateModal.js";
+import ConfirmationDialog from "../../ConfirmationDialog.js";
 
-const ManageLeaveTable = () => {
-  const [leaveData, setLeaveData] = useState([]);
-  const [selectedLeave, setSelectedLeave] = useState(null);
-  const [leaveId, setLeaveId] = useState(null);
-
+const ManageLeaveTable = ({
+  leaveData,
+  setLeaveData,
+  selectedLeave,
+  setSelectedLeave,
+  updateLeave,
+}) => {
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
@@ -27,21 +31,27 @@ const ManageLeaveTable = () => {
 
   const filteredLeaves = leaveData.filter((leave) => {
     const searchTerm = searchQuery.toLowerCase();
-    const formattedDate = new Date(leave.startDate).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    }).toLowerCase();
-    const endDate = new Date(leave.endDate).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    }).toLowerCase();
-    const applicationon = new Date(leave.appliedOn).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    }).toLowerCase();
+    const formattedDate = new Date(leave.startDate)
+      .toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      })
+      .toLowerCase();
+    const endDate = new Date(leave.endDate)
+      .toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      })
+      .toLowerCase();
+    const applicationon = new Date(leave.appliedOn)
+      .toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      })
+      .toLowerCase();
     return (
       leave.employeeName.toLowerCase().includes(searchTerm) ||
       leave.leaveType.toLowerCase().includes(searchTerm) ||
@@ -53,34 +63,11 @@ const ManageLeaveTable = () => {
     );
   });
 
-
   const statusColor = [
     { status: "Reject", statusColor: "danger" },
     { status: "Approved", statusColor: "success" },
     { status: "Pending", statusColor: "warning" },
   ];
-
-  useEffect(() => {
-    const fetchMangeLeaveData = async () => {
-      try {
-        const response = await getAPI(`/manage-leave-get-all`, {}, true);
-        if (
-          !response.hasError &&
-          response.data &&
-          Array.isArray(response.data.data)
-        ) {
-          setLeaveData(response.data.data);
-          console.log("Leave Data fetched successfully", response.data.data);
-        } else {
-          console.error("Invalid response format or error in response");
-        }
-      } catch (err) {
-        console.error("Error fetching leave Data:", err);
-      }
-    };
-
-    fetchMangeLeaveData();
-  }, []);
 
   const handleStatusUpdate = (leaveId, newStatus) => {
     setLeaveData((prevData) =>
@@ -101,40 +88,25 @@ const ManageLeaveTable = () => {
     return statusObj ? statusObj.statusColor : "secondary";
   }
 
-  const handleUpdateConfirmation = (leave) => {
+  const handleUpdate = (leave) => {
     setSelectedLeave(leave);
     setIsUpdateModalOpen(true);
-    setIsStatusModalOpen(false);
-    setIsDeleteDialogOpen(false);
   };
 
-  const handleUpdateSuccess = (updatedLeave) => {
-    setLeaveData((prevData) =>
-      prevData.map((leave) =>
-        leave.leaveId === updatedLeave.leaveId
-          ? { ...leave, ...updatedLeave }
-          : leave
-      )
-    );
-  };
-
-  const handleLeaveDeleted = (deletedLeaveId) => {
-    setLeaveData((prevData) =>
-      prevData.filter((leave) => leave.leaveId !== deletedLeaveId)
-    );
-    setIsDeleteDialogOpen(false);
-  };
-
-  const handleCancelDelete = () => {
-    setIsDeleteDialogOpen(false);
-  };
-
-  // Handle delete confirmation
-  const handleDeleteConfirmation = ({ leaveId }) => {
-    setLeaveId(leaveId);
+  const openDeleteDialog = (leave) => {
+    setSelectedLeave(leave);
     setIsDeleteDialogOpen(true);
-    setIsStatusModalOpen(false);
-    setIsUpdateModalOpen(false);
+  };
+
+  const handleDeleteCancel = () => {
+    setIsDeleteDialogOpen(false);
+    setSelectedLeave(null);
+  };
+
+  const handleDeleteConfirmed = (id) => {
+    setLeaveData((prevLeaveData) =>
+      prevLeaveData.filter((leaveData) => leaveData.id !== id)
+    );
   };
 
   return (
@@ -188,7 +160,7 @@ const ManageLeaveTable = () => {
                     </thead>
                     <tbody>
                       {filteredLeaves.map((leave) => (
-                        <tr key={leave.leaveId}>
+                        <tr key={leave.id}>
                           <td>{leave.employeeName}</td>
                           <td>{leave.leaveType}</td>
                           <td>{formatDate(leave.appliedOn)}</td>
@@ -229,7 +201,7 @@ const ManageLeaveTable = () => {
                                   data-ajax-popup="true"
                                   data-bs-toggle="tooltip"
                                   title="Edit Leave"
-                                  onClick={() => handleUpdateConfirmation(leave)}
+                                  onClick={() => handleUpdate(leave)}
                                 >
                                   <TbPencil className="text-white" />
                                 </Link>
@@ -237,6 +209,7 @@ const ManageLeaveTable = () => {
                               <div className="action-btn bg-danger ms-2">
                                 <form
                                   method="POST"
+                                  onSubmit={(e) => e.preventDefault()}
                                   action={`/leave/${leave.id}`}
                                   acceptCharset="UTF-8"
                                   id={`delete-form-${leave.id}`}
@@ -248,11 +221,10 @@ const ManageLeaveTable = () => {
                                   />
                                   <input name="_token" type="hidden" />
                                   <Link
-                                    onClick={() =>
-                                      handleDeleteConfirmation({
-                                        leaveId: leave.leaveId,
-                                      })
-                                    }
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      openDeleteDialog(leave);
+                                    }}
                                     className="mx-3 btn btn-sm align-items-center bs-pass-para"
                                     data-bs-toggle="tooltip"
                                     title="Delete"
@@ -271,8 +243,13 @@ const ManageLeaveTable = () => {
                 </div>
                 <div className="dataTable-bottom">
                   <div className="dataTable-info">
-                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, leaveData.length)}{" "}
-                    to {Math.min(currentPage * entriesPerPage, leaveData.length)}{" "}
+                    Showing{" "}
+                    {Math.min(
+                      (currentPage - 1) * entriesPerPage + 1,
+                      leaveData.length
+                    )}{" "}
+                    to{" "}
+                    {Math.min(currentPage * entriesPerPage, leaveData.length)}{" "}
                     of {leaveData.length} entries
                   </div>
                   <nav className="dataTable-pagination">
@@ -288,25 +265,36 @@ const ManageLeaveTable = () => {
                         </li>
                       )}
 
-                      {Array.from({ length: Math.ceil(leaveData.length / entriesPerPage) }, (_, index) => (
-                        <li
-                          key={index + 1}
-                          className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
-                        >
-                          <button
-                            className="page-link"
-                            onClick={() => setCurrentPage(index + 1)}
-                            style={{
-                              backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
-                              color: '#6FD943',
-                            }}
+                      {Array.from(
+                        {
+                          length: Math.ceil(leaveData.length / entriesPerPage),
+                        },
+                        (_, index) => (
+                          <li
+                            key={index + 1}
+                            className={`page-item ${
+                              currentPage === index + 1 ? "active" : ""
+                            }`}
                           >
-                            {index + 1}
-                          </button>
-                        </li>
-                      ))}
+                            <button
+                              className="page-link"
+                              onClick={() => setCurrentPage(index + 1)}
+                              style={{
+                                backgroundColor:
+                                  currentPage === index + 1
+                                    ? "#d9d9d9"
+                                    : "transparent",
+                                color: "#6FD943",
+                              }}
+                            >
+                              {index + 1}
+                            </button>
+                          </li>
+                        )
+                      )}
 
-                      {currentPage < Math.ceil(leaveData.length / entriesPerPage) && (
+                      {currentPage <
+                        Math.ceil(leaveData.length / entriesPerPage) && (
                         <li className="page-item">
                           <button
                             className="page-link next-button"
@@ -319,7 +307,6 @@ const ManageLeaveTable = () => {
                     </ul>
                   </nav>
                 </div>
-
               </div>
             </div>
           </div>
@@ -341,20 +328,22 @@ const ManageLeaveTable = () => {
       )}
 
       {/* Confirmation Dialog */}
-      {isDeleteDialogOpen && (
-        <StatusChangeConfirmationDialog
-          onCancel={handleCancelDelete}
-          leaveId={leaveId}
-          onLeaveDeleted={handleLeaveDeleted}
+
+      {isDeleteDialogOpen && selectedLeave && (
+        <ConfirmationDialog
+          onClose={handleDeleteCancel}
+          deleteType="leave"
+          id={selectedLeave.id}
+          onDeleted={handleDeleteConfirmed}
         />
       )}
 
       {/* Update Modal */}
-      {isUpdateModalOpen && selectedLeave && (
+      {isUpdateModalOpen && setSelectedLeave && (
         <UpdateModal
           leave={selectedLeave}
           onClose={() => setIsUpdateModalOpen(false)}
-          onUpdateSuccess={handleUpdateSuccess}
+          updateLeave={updateLeave}
         />
       )}
     </div>

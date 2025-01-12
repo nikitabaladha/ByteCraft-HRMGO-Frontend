@@ -1,5 +1,5 @@
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { TbFileExport } from "react-icons/tb";
 import { CiCalendarDate } from "react-icons/ci";
@@ -8,8 +8,7 @@ import CreateModal from "./CreateModal";
 import * as XLSX from "xlsx";
 import getAPI from "../../../../api/getAPI";
 
-
-const ManageLeaveHeader = () => {
+const ManageLeaveHeader = ({ addLeave }) => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [leaveData, setLeaveData] = useState([]);
 
@@ -22,7 +21,6 @@ const ManageLeaveHeader = () => {
           response.data &&
           Array.isArray(response.data.data)
         ) {
-  
           const filteredData = response.data.data.map((item) => ({
             employeeName: item.employeeName,
             leaveType: item.leaveType,
@@ -129,7 +127,9 @@ const ManageLeaveHeader = () => {
         </div>
       </div>
 
-      {isCreateModalOpen && <CreateModal onClose={closeModal} />}
+      {isCreateModalOpen && (
+        <CreateModal onClose={closeModal} addLeave={addLeave} />
+      )}
     </>
   );
 };

@@ -100,6 +100,12 @@ const DELETE_CONFIG = {
     errorMessage: "Failed to delete Attendance.",
     idKey: "attendanceId",
   },
+  leave: {
+    getEndpoint: (id) => `/manage-leave-delete-by-id/${id}`,
+    successMessage: "Leave successfully deleted!",
+    errorMessage: "Failed to delete Leave.",
+    idKey: "leaveId",
+  },
 };
 
 function ConfirmationDialog({ onClose, deleteType, id, onDeleted }) {

@@ -4,7 +4,7 @@ import getAPI from "../../../../api/getAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const CreateModal = ({ onClose }) => {
+const CreateModal = ({ onClose, addLeave }) => {
   const [employees, setEmployees] = useState([]);
   const [formData, setFormData] = useState({
     employeeId: "",
@@ -62,6 +62,26 @@ const CreateModal = ({ onClose }) => {
       );
 
       if (!response.hasError) {
+        const selectedEmployee = employees.find(
+          (emp) => emp._id === formData.employeeId
+        );
+        const employeeName = selectedEmployee ? selectedEmployee.name : "";
+
+        const newLeave = {
+          id: response.data.data._id,
+          employeeName,
+          startDate: response.data.data.startDate,
+          endDate: response.data.data.endDate,
+          reason: response.data.data.reason,
+          employeeId: response.data.data.employeeId,
+          leaveType: response.data.data.leaveType,
+          status: response.data.data.status,
+          totalDays: response.data.data.totalDays,
+          appliedOn: response.data.data.appliedOn,
+        };
+
+        addLeave(newLeave);
+
         toast.success("Leave created successfully!");
 
         setFormData({

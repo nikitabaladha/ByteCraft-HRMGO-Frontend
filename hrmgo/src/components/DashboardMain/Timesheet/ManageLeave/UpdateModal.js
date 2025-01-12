@@ -3,7 +3,7 @@ import putAPI from "../../../../api/putAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const UpdateModal = ({ leave, onClose, onUpdateSuccess }) => {
+const UpdateModal = ({ leave, onClose, updateLeave }) => {
   const [leaveType, setLeaveType] = useState(leave?.leaveType || "");
   const [startDate, setStartDate] = useState(
     leave?.startDate ? leave.startDate.split("T")[0] : ""
@@ -34,14 +34,29 @@ const UpdateModal = ({ leave, onClose, onUpdateSuccess }) => {
 
     try {
       const response = await putAPI(
-        `/manage-leave-update/${leave.leaveId}`,
+        `/manage-leave-update/${leave.id}`,
         updatedLeave,
         true
       );
 
       if (!response.hasError) {
         toast.success("Leave updated successfully!");
-        onUpdateSuccess(response.data);
+        const newUpdatedLeave = {
+          id: response.data.data._id,
+          employeeName: leave.employeeName,
+          startDate: response.data.data.startDate,
+          endDate: response.data.data.endDate,
+          reason: response.data.data.reason,
+          employeeId: response.data.data.employeeId,
+          leaveType: response.data.data.leaveType,
+          status: response.data.data.status,
+          totalDays: response.data.data.totalDays,
+          appliedOn: response.data.data.appliedOn,
+        };
+
+        updateLeave(newUpdatedLeave);
+
+        onClose();
       } else {
         toast.error("Failed to update leave.");
       }
