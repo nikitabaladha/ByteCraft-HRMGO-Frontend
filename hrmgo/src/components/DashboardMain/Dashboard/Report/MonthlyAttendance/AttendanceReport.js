@@ -16,7 +16,7 @@ const AttendanceReport = ({ counts, duration }) => {
       bgColor: "bg-primary",
       title: "Report",
       subtitle: "Attendance Summary",
-      hiddenValue: "All Branch Nov-2024 Attendance Report of All Department",
+      hiddenValue: "",
     },
     {
       icon: <TbSum />,
@@ -37,19 +37,19 @@ const AttendanceReport = ({ counts, duration }) => {
       icon: <FaRegClock />,
       bgColor: "bg-secondary",
       title: "Overtime",
-      content: [`Total overtime: ${counts.overtime}`],
+      content: [`Total overtime in hours : ${counts.overtime}`],
     },
     {
       icon: <BsInfoCircle />,
       bgColor: "bg-primary",
       title: "Early leave",
-      content: [`Total early leave: ${counts.earlyLeave}`],
+      content: [`Total early leave in hours : ${counts.earlyLeave}`],
     },
     {
       icon: <IoMdAlarm />,
       bgColor: "bg-secondary",
       title: "Employee late",
-      content: [`Total late: ${counts.late}`],
+      content: [`Total late in hours : ${counts.late}`],
     },
   ];
   return (

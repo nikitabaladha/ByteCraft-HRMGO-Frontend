@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { TbFileExport } from "react-icons/tb";
 import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 
 const MonthlyAttendanceHeader = ({ attendanceData, selectedMonthYear }) => {
   if (!selectedMonthYear) {
@@ -34,13 +36,14 @@ const MonthlyAttendanceHeader = ({ attendanceData, selectedMonthYear }) => {
       const attendanceForDays = Array.from(
         { length: totalDaysInMonth },
         (_, index) => {
-          const dateString = `${monthName} ${String(index + 1).padStart(
-            2,
-            "0"
-          )}, ${year}`;
+          const date = new Date(year, month - 1, index + 1);
+          const dateString = date.toISOString().split("T")[0];
+
+          // Match with attendance records
           const attendanceRecord = employee.attendance.find(
-            (record) => record.date === dateString
+            (record) => record.date.split("T")[0] === dateString
           );
+
           return attendanceRecord
             ? attendanceRecord.status === "Present"
               ? "P"
@@ -58,6 +61,41 @@ const MonthlyAttendanceHeader = ({ attendanceData, selectedMonthYear }) => {
     XLSX.writeFile(wb, `Attendance_Report_${monthName}_${year}.xlsx`);
   };
 
+  const saveAsPDF = async () => {
+    const input = document.getElementById("printableArea");
+    const canvas = await html2canvas(input);
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF();
+    const imgWidth = 190;
+    const pageHeight = pdf.internal.pageSize.height;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    let heightLeft = imgHeight;
+
+    let position = 0;
+
+    pdf.setFontSize(18);
+    pdf.setFont("helvetica", "bold");
+
+    pdf.text(`Attendance Report - ${monthName} ${year}`, 10, 10);
+
+    // Add the image to the PDF
+    pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    while (heightLeft >= 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    pdf.save(`Attendance_Report_${monthName}_${year}.pdf`);
+  };
+
+  if (!attendanceData) {
+    return <div>No data available</div>;
+  }
+
   return (
     <>
       <div className="page-header">
@@ -69,7 +107,7 @@ const MonthlyAttendanceHeader = ({ attendanceData, selectedMonthYear }) => {
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <Link href="/dashboard">Home</Link>
+                  <Link to="/dashboard">Home</Link>
                 </li>
                 <li className="breadcrumb-item">
                   Manage Monthly Attendance Report
@@ -79,9 +117,8 @@ const MonthlyAttendanceHeader = ({ attendanceData, selectedMonthYear }) => {
             <div className="col">
               <div className="float-end ">
                 <Link
-                  to=""
                   className="btn btn-sm btn-primary"
-                  onclick="saveAsPDF()"
+                  onClick={saveAsPDF}
                   data-bs-toggle="tooltip"
                   title="Download"
                   data-original-title="Download"

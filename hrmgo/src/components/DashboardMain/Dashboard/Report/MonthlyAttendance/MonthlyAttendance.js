@@ -11,8 +11,9 @@ const MonthlyAttendance = () => {
   const [selectedBranch, setSelectedBranch] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [selectedEmployees, setSelectedEmployees] = useState([]);
+  const [branchName, setBranchName] = useState("");
+  const [departmentName, setDepartmentName] = useState("");
 
-  // Set the default month to the current month
   useEffect(() => {
     const currentDate = new Date();
     const currentMonthYear = `${currentDate.getFullYear()}-${String(
@@ -62,9 +63,6 @@ const MonthlyAttendance = () => {
     }
   };
 
-  // Function to calculate attendance counts
-
-  // can i directly pass duration in this calculateAttendance Countscript function
   const calculateAttendanceCounts = () => {
     const counts = {
       present: 0,
@@ -75,21 +73,24 @@ const MonthlyAttendance = () => {
     };
 
     attendanceData.forEach((employee) => {
-      employee.attendance.forEach((record) => {
-        switch (record.status) {
-          case "Present":
-            counts.present += 1;
-            counts.overtime += record.overtime !== "00:00:00" ? 1 : 0;
-            counts.late += record.late !== "00:00:00" ? 1 : 0;
-            counts.earlyLeave += record.earlyLeaving !== "00:00:00" ? 1 : 0;
-            break;
-          case "Absent":
-            counts.absent += 1;
-            break;
-          default:
-            break;
-        }
-      });
+      // Check if attendance exists for the employee
+      if (employee.attendance && Array.isArray(employee.attendance)) {
+        employee.attendance.forEach((record) => {
+          switch (record.status) {
+            case "Present":
+              counts.present += 1;
+              counts.overtime += record.overtime !== "00:00:00" ? 1 : 0;
+              counts.late += record.late !== "00:00:00" ? 1 : 0;
+              counts.earlyLeave += record.earlyLeaving !== "00:00:00" ? 1 : 0;
+              break;
+            case "Absent":
+              counts.absent += 1;
+              break;
+            default:
+              break;
+          }
+        });
+      }
     });
 
     return counts;
@@ -100,11 +101,13 @@ const MonthlyAttendance = () => {
     setSelectedMonthYear(monthYear);
   };
 
-  const handleSearch = async () => {
+  const handleSearch = async (branch, department) => {
+    setBranchName(branch);
+    setDepartmentName(department);
     await fetchAttendanceData(
       selectedMonthYear,
-      selectedBranch,
-      selectedDepartment,
+      branch,
+      department,
       selectedEmployees
     );
   };
@@ -115,6 +118,9 @@ const MonthlyAttendance = () => {
       currentDate.getMonth() + 1
     ).padStart(2, "0")}`;
     setSelectedMonthYear(currentMonthYear);
+    setSelectedBranch("");
+    setSelectedDepartment("");
+    setSelectedEmployees([]);
     await fetchAttendanceData(currentMonthYear, "", "", "");
   };
 
@@ -140,10 +146,15 @@ const MonthlyAttendance = () => {
           onSearch={handleSearch}
           onRefresh={handleRefresh}
         />
-        <AttendanceReport
-          counts={attendanceCounts}
-          duration={selectedMonthYear}
-        />
+        <div id="printableArea">
+          <AttendanceReport
+            counts={attendanceCounts}
+            duration={selectedMonthYear}
+            branchName={branchName}
+            departmentName={departmentName}
+          />
+        </div>
+
         <AttendanceTable
           attendanceData={attendanceData}
           selectedMonthYear={selectedMonthYear}

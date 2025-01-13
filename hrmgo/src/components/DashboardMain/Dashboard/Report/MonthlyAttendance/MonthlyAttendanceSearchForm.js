@@ -91,7 +91,9 @@ const MonthlyAttendanceSearchForm = ({
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    await onSearch();
+    const month = selectedMonthYear;
+
+    await onSearch(selectedBranch, selectedDepartment, month);
   };
 
   const employeeOptions = employees.map((employee) => ({
