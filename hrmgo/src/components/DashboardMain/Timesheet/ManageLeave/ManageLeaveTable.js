@@ -66,7 +66,7 @@ const ManageLeaveTable = ({
   });
 
   const statusColor = [
-    { status: "Reject", statusColor: "danger" },
+    { status: "Rejected", statusColor: "danger" },
     { status: "Approved", statusColor: "success" },
     { status: "Pending", statusColor: "warning" },
   ];

@@ -1,17 +1,26 @@
+// ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Dashboard\Report\Leave\LeaveSearchForm.js
+
 import React, { useEffect, useState } from "react";
 import getAPI from "../../../../../api/getAPI.js";
-import { Link } from "react-router-dom";
-import { TbTrashOff } from "react-icons/tb";
+import { TbRefresh } from "react-icons/tb";
 import { IoMdSearch } from "react-icons/io";
 
-const LeaveSearchForm = ({ onDataFetched }) => {
+const LeaveSearchForm = ({
+  onDataFetched,
+  onReset,
+  selectedBranch,
+  selectedDepartment,
+  selectedMonth,
+  selectedYear,
+  searchType,
+  setSelectedBranch,
+  setSelectedDepartment,
+  setSearchType,
+  setSelectedMonth,
+  setSelectedYear,
+}) => {
   const [branches, setBranches] = useState([]);
-  const [selectedBranch, setSelectedBranch] = useState("");
   const [departments, setDepartments] = useState([]);
-  const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [searchType, setSearchType] = useState("monthly");
-  const [selectedMonth, setSelectedMonth] = useState("2024-11");
-  const [selectedYear, setSelectedYear] = useState("2024");
 
   const handleBranchChange = (e) => {
     const branchId = e.target.value;
@@ -88,6 +97,15 @@ const LeaveSearchForm = ({ onDataFetched }) => {
     }
   };
 
+  const handleTypeChange = (type) => {
+    setSearchType(type);
+
+    if (type === "yearly") {
+      const currentYear = new Date().getFullYear();
+      setSelectedYear(currentYear.toString());
+    }
+  };
+
   return (
     <div className="col-sm-12">
       <div className="mt-2" id="multiCollapseExample1">
@@ -121,7 +139,7 @@ const LeaveSearchForm = ({ onDataFetched }) => {
                           name="type"
                           className="form-check-input"
                           checked={searchType === "yearly"}
-                          onChange={() => setSearchType("yearly")}
+                          onChange={() => handleTypeChange("yearly")}
                         />
                         <label className="form-check-label" htmlFor="yearly">
                           Yearly
@@ -214,16 +232,17 @@ const LeaveSearchForm = ({ onDataFetched }) => {
                           <IoMdSearch />
                         </span>
                       </button>
-                      <Link
-                        to="/attendanceemployee"
+                      <button
+                        type="button"
                         className="btn btn-sm btn-danger"
                         data-bs-toggle="tooltip"
                         title="Reset"
+                        onClick={onReset}
                       >
                         <span className="btn-inner--icon">
-                          <TbTrashOff className="text-white-off" />
+                          <TbRefresh className="text-white-off" />
                         </span>
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 </div>

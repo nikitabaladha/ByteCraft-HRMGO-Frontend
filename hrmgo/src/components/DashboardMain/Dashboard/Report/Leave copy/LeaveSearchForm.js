@@ -1,48 +1,19 @@
+// ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Dashboard\Report\Leave\LeaveSearchForm.js
+
 import React, { useEffect, useState } from "react";
 import getAPI from "../../../../../api/getAPI.js";
-import { toast } from "react-toastify";
-import { TbRefresh } from "react-icons/tb";
+import { Link } from "react-router-dom";
+import { TbTrashOff } from "react-icons/tb";
 import { IoMdSearch } from "react-icons/io";
 
-const PayrollSearchForm = ({
-  onDataFetched,
-  onReset,
-  selectedBranch,
-  selectedDepartment,
-  selectedMonth,
-  selectedDate,
-  searchType,
-  setSelectedBranch,
-  setSelectedDepartment,
-  setSearchType,
-  setSelectedMonth,
-  setSelectedDate,
-  setBranchName,
-}) => {
+const LeaveSearchForm = ({ onDataFetched }) => {
   const [branches, setBranches] = useState([]);
+  const [selectedBranch, setSelectedBranch] = useState("");
   const [departments, setDepartments] = useState([]);
-  const [years, setYears] = useState([]);
-
-  useEffect(() => {
-    const currentDate = new Date();
-    const month = currentDate.getMonth() + 1;
-    const monthFormatted = `${currentDate.getFullYear()}-${month
-      .toString()
-      .padStart(2, "0")}`;
-    setSelectedMonth(monthFormatted);
-
-    const formattedDate = currentDate.toISOString().split("T")[0];
-    setSelectedDate(formattedDate);
-
-    const currentYear = currentDate.getFullYear();
-    const yearOptions = [];
-    for (let i = currentYear - 5; i <= currentYear + 5; i++) {
-      yearOptions.push(i);
-    }
-    setYears(yearOptions);
-
-    setSelectedDate(currentYear.toString());
-  }, [setSelectedDate, setSelectedMonth]);
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [searchType, setSearchType] = useState("monthly");
+  const [selectedMonth, setSelectedMonth] = useState("2024-11");
+  const [selectedYear, setSelectedYear] = useState("2024");
 
   const handleBranchChange = (e) => {
     const branchId = e.target.value;
@@ -60,11 +31,6 @@ const PayrollSearchForm = ({
 
           if (!response.hasError && Array.isArray(response.data.data)) {
             setDepartments(response.data.data);
-            setBranchName(
-              response.data.data.find(
-                (department) => department._id === branchId
-              )?.branchName || ""
-            );
           } else {
             console.error("Invalid response format or error in response");
           }
@@ -96,16 +62,19 @@ const PayrollSearchForm = ({
 
   const handleSearch = async (e) => {
     e.preventDefault();
+
+    let date = "";
+    if (searchType === "monthly") {
+      const [year, month] = selectedMonth.split("-");
+      date = `${month}-${year}`;
+      console.log("date", date);
+    } else {
+      date = selectedYear;
+    }
+
     try {
-      const date = searchType === "yearly" ? selectedDate : selectedMonth;
-
-      if (!date) {
-        toast.error("Date must be selected to view payroll data");
-        return;
-      }
-
       const response = await getAPI(
-        `/payroll-get-all?branch=${selectedBranch}&department=${selectedDepartment}&date=${date}&type=${searchType}`,
+        `/manage-leave-get-all-by-query?branch=${selectedBranch}&department=${selectedDepartment}&date=${date}&type=${searchType}`,
         {},
         true,
         true
@@ -113,12 +82,11 @@ const PayrollSearchForm = ({
 
       if (!response.hasError && Array.isArray(response.data.data)) {
         onDataFetched(response.data.data);
-        console.log("Search Data", response.data);
       } else {
         console.error("Invalid response format or error in response");
       }
     } catch (err) {
-      console.error("Error fetching payroll data:", err);
+      console.error("Error fetching manage leave data:", err);
     }
   };
 
@@ -164,31 +132,24 @@ const PayrollSearchForm = ({
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box">
-                        <label htmlFor="year" className="form-label">
+                        <label htmlFor="month" className="form-label">
                           {searchType === "monthly" ? "Month" : "Year"}
                         </label>
-                        {searchType === "yearly" ? (
-                          <select
-                            className="form-control"
-                            name="year"
-                            value={selectedDate}
-                            onChange={(e) => setSelectedDate(e.target.value)}
-                          >
-                            {years.map((year) => (
-                              <option key={year} value={year}>
-                                {year}
-                              </option>
-                            ))}
-                          </select>
-                        ) : (
-                          <input
-                            className="month-btn form-control"
-                            name="month"
-                            type="month"
-                            value={selectedMonth}
-                            onChange={(e) => setSelectedMonth(e.target.value)}
-                          />
-                        )}
+                        <input
+                          className="month-btn form-control"
+                          name="month"
+                          type={searchType === "yearly" ? "text" : "month"}
+                          value={
+                            searchType === "monthly"
+                              ? selectedMonth
+                              : selectedYear
+                          }
+                          onChange={(e) =>
+                            searchType === "monthly"
+                              ? setSelectedMonth(e.target.value)
+                              : setSelectedYear(e.target.value)
+                          }
+                        />
                       </div>
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
@@ -247,7 +208,7 @@ const PayrollSearchForm = ({
                     <div className="col-auto">
                       <button
                         type="submit"
-                        className="btn btn-sm btn-primary me-2"
+                        className="btn btn-sm btn-primary"
                         data-bs-toggle="tooltip"
                         title="Apply"
                       >
@@ -255,17 +216,16 @@ const PayrollSearchForm = ({
                           <IoMdSearch />
                         </span>
                       </button>
-                      <button
-                        type="button"
+                      <Link
+                        to="/attendanceemployee"
                         className="btn btn-sm btn-danger"
                         data-bs-toggle="tooltip"
                         title="Reset"
-                        onClick={onReset}
                       >
                         <span className="btn-inner--icon">
-                          <TbRefresh className="text-white-off" />
+                          <TbTrashOff className="text-white-off" />
                         </span>
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -278,4 +238,4 @@ const PayrollSearchForm = ({
   );
 };
 
-export default PayrollSearchForm;
+export default LeaveSearchForm;

@@ -120,7 +120,7 @@ const StatusModal = ({ leave, onClose, onStatusUpdate }) => {
               </button>
               <button
                 className="btn btn-danger rounded"
-                onClick={() => handleUpdateStatus("Reject")}
+                onClick={() => handleUpdateStatus("Rejected")}
               >
                 Rejected
               </button>

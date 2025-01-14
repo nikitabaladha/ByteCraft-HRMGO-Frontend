@@ -7,49 +7,6 @@ import {
 } from "react-icons/tb";
 import { CiCalendarDate } from "react-icons/ci";
 
-const cardData = [
-  {
-    id: 1,
-    icon: <TbReport />,
-    backgroundColor: "bg-primary",
-    title: "Report",
-    subtitle: "Monthly Leave Summary",
-    isLarge: true,
-  },
-  {
-    id: 2,
-    icon: <CiCalendarDate />,
-    backgroundColor: "bg-secondary",
-    title: "Duration",
-    subtitle: "Nov-2024",
-    isLarge: true,
-  },
-  {
-    id: 3,
-    icon: <TbCircleCheck />,
-    backgroundColor: "bg-primary",
-    title: "Approved Leaves",
-    subtitle: "3",
-    isLarge: false,
-  },
-  {
-    id: 4,
-    icon: <TbCircleX />,
-    backgroundColor: "bg-secondary",
-    title: "Rejected Leave",
-    subtitle: "4",
-    isLarge: false,
-  },
-  {
-    id: 5,
-    icon: <TbCircleMinus />,
-    backgroundColor: "bg-primary",
-    title: "Pending Leaves",
-    subtitle: "5",
-    isLarge: false,
-  },
-];
-
 const Card = ({ icon, backgroundColor, title, subtitle, isLarge }) => (
   <div className={`col-md-${isLarge ? 6 : 4} col-lg-${isLarge ? 6 : 4}`}>
     <div className="card">
@@ -68,7 +25,74 @@ const Card = ({ icon, backgroundColor, title, subtitle, isLarge }) => (
   </div>
 );
 
-const LeaveReport = () => {
+const LeaveReport = ({ leaveData }) => {
+  console.log("leave report ", leaveData);
+  const earliestStartDate = leaveData
+    .flatMap((employee) =>
+      employee.leaves.map((leave) => new Date(leave.startDate))
+    )
+    .sort((a, b) => a - b)[0];
+
+  // Calculate counts
+  const leaveCounts = leaveData.reduce(
+    (acc, employee) => {
+      employee.leaves.forEach((leave) => {
+        acc[leave.status] = (acc[leave.status] || 0) + 1;
+      });
+      return acc;
+    },
+    { Approved: 0, Rejected: 0, Pending: 0 }
+  );
+
+  // Prepare card data
+  const cardData = [
+    {
+      id: 1,
+      icon: <TbReport />,
+      backgroundColor: "bg-primary",
+      title: "Report",
+      subtitle: "Monthly Leave Summary",
+      isLarge: true,
+    },
+    {
+      id: 2,
+      icon: <CiCalendarDate />,
+      backgroundColor: "bg-secondary",
+      title: "Duration",
+      subtitle: earliestStartDate
+        ? earliestStartDate.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+          })
+        : "",
+      isLarge: true,
+    },
+    {
+      id: 3,
+      icon: <TbCircleCheck />,
+      backgroundColor: "bg-primary",
+      title: "Approved Leaves",
+      subtitle: leaveCounts.Approved.toString(),
+      isLarge: false,
+    },
+    {
+      id: 4,
+      icon: <TbCircleX />,
+      backgroundColor: "bg-secondary",
+      title: "Rejected Leave",
+      subtitle: leaveCounts.Rejected.toString(),
+      isLarge: false,
+    },
+    {
+      id: 5,
+      icon: <TbCircleMinus />,
+      backgroundColor: "bg-primary",
+      title: "Pending Leaves",
+      subtitle: leaveCounts.Pending.toString(),
+      isLarge: false,
+    },
+  ];
+
   return (
     <div id="printableArea">
       <div className="row">

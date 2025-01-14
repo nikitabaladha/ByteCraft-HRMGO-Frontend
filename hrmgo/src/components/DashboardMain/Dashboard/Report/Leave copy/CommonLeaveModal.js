@@ -10,11 +10,9 @@ const CommonLeaveModal = ({ employee, onClose }) => {
   const leaveTitle =
     leaveStatus === "Approved"
       ? "Approved Leave Detail"
-      : leaveStatus === "Rejected"
+      : leaveStatus === "Reject"
       ? "Rejected Leave Detail"
-      : leaveStatus === "Pending"
-      ? "Pending Leave Detail"
-      : "Invalid Leave Detail";
+      : "Pending Leave Detail";
 
   useEffect(() => {
     const handleClickOutside = (event) => {
