@@ -50,7 +50,7 @@ const AccountUpdateModal = ({ isOpen, onClose, accountData ,fetchAccounts }) => 
       if (!response.hasError) {
         toast.success("Account Updated Successfully");
         onClose(); 
-        fetchAccounts(); 
+        fetchAccounts();
       } else {
         toast.error(`Failed to update Account: ${response.message}`);
       }
