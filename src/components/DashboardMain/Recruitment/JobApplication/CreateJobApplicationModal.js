@@ -3,7 +3,7 @@ import getAPI from "../../../../api/getAPI";
 import postAPI from "../../../../api/postAPI";
 import { toast } from "react-toastify";
 
-const CreateJobApplication = ({ onClose }) => {
+const CreateJobApplication = ({ onClose, fetchApplications, }) => {
   const [formData, setFormData] = useState({
     job: "",
     name: "",
@@ -137,7 +137,8 @@ const CreateJobApplication = ({ onClose }) => {
 
       console.log("Job application created successfully:", response.data);
       toast("Job application created successfully");
-      onClose(); // Close the modal after submission
+      onClose()
+      fetchApplications()
     } catch (error) {
       console.error("Error submitting job application:", error);
       toast("Failed to create job application. Please try again.");

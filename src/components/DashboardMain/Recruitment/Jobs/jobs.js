@@ -18,6 +18,7 @@ const RecruitmentJobs = () => {
   useEffect(() => {   
   fetchJobs();
 }, []);
+
   return (
     <div>
       <JobHeader fetchJobs={fetchJobs}/>

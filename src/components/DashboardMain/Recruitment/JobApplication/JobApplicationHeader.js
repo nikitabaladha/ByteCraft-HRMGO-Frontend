@@ -4,17 +4,21 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreateJobApplication from "./CreateJobApplicationModal";
 
-const JobApplicationHeader = () => {
+const JobApplicationHeader = ({fetchApplications}) => {
     const [showModal, setShowModal] = useState(false);
 
-    
-
-  const handleCreateClick = () => {
+    const handleCreateClick = () => {
     setShowModal(true); // Show the modal
   };
 
   const handleCloseModal = () => {
     setShowModal(false); // Hide the modal
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetchApplications();
+    setShowModal(false);
   };
   return (
     <div>
@@ -48,7 +52,7 @@ const JobApplicationHeader = () => {
           </div>
         </div>
         {showModal && (
-        <CreateJobApplication onClose={handleCloseModal} />
+        <CreateJobApplication onClose={handleCloseModal} onSubmit={handleSubmit} fetchApplications={fetchApplications} />
       )}
       </div>
      

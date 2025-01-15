@@ -9,41 +9,24 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import getAPI from "../../../../api/getAPI";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const JobApplicationMainContent = () => {
-  const [applications, setApplications] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+const JobApplicationMainContent = ({
+  applications,
+  setApplications,
+}) => {
   const [jobs, setJobs] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [appToDelete, setAppToDelete] = useState(null);
-  
 
   useEffect(() => {
-    const fetchApplications = async () => {
-      try {
-        setLoading(true);
-        const response = await getAPI("/get-all-job-application"); 
-        setApplications(response.data.applications || []);
-        setError(""); 
-      } catch (err) {
-        console.error(err);
-        setError("Failed to fetch job applications");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     const fetchJobs = async () => {
       try {
-        const response = await getAPI('/get-all-job');
+        const response = await getAPI("/get-all-job");
         setJobs(response.data.data);
       } catch (error) {
-        console.error('Error fetching jobs:', error);
+        console.error("Error fetching jobs:", error);
       }
     };
     fetchJobs();
-
-    fetchApplications();
   }, []);
 
   const handleFormSubmit = (e) => {
@@ -72,7 +55,6 @@ const JobApplicationMainContent = () => {
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
   }
-  
 
   return (
     <div>
@@ -130,10 +112,10 @@ const JobApplicationMainContent = () => {
                             All
                           </option>
                           {jobs.map((job) => (
-                      <option key={job._id} value={job._id}>
-                        {job.title}
-                      </option>
-                    ))}
+                            <option key={job._id} value={job._id}>
+                              {job.title}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -164,129 +146,127 @@ const JobApplicationMainContent = () => {
 
         <div className="card overflow-hidden mt-0">
           <div className="container-kanban">
-            {loading && <p>Loading applications...</p>}
-            {error && <p className="text-danger">{error}</p>}
-            {!loading && !error && (
-              <div
-                className="row kanban-wrapper horizontal-scroll-cards"
-                data-plugin="dragula"
-                data-containers='["kanban-blacklist-1","kanban-blacklist-2","kanban-blacklist-3","kanban-blacklist-4","kanban-blacklist-5"]'
-              >
-                {[
-                  "Applied",
-                  "Phone Screen",
-                  "Interview",
-                  "Hired",
-                  "Rejected",
-                ].map((status, index) => (
-                  <div className="col" key={index}>
-                    <div className="card">
-                      <div className="card-header">
-                        <div className="float-end">
-                          <span className="btn btn-sm btn-primary btn-icon count">
-                            {
-                              applications.filter(
-                                (app) => (app.status || "Applied") === status
-                              ).length
-                            }
-                          </span>
-                        </div>
-                        <h4 className="mb-0">{status}</h4>
+            <div
+              className="row kanban-wrapper horizontal-scroll-cards"
+              data-plugin="dragula"
+              data-containers='["kanban-blacklist-1","kanban-blacklist-2","kanban-blacklist-3","kanban-blacklist-4","kanban-blacklist-5"]'
+            >
+              {[
+                "Applied",
+                "Phone Screen",
+                "Interview",
+                "Hired",
+                "Rejected",
+              ].map((status, index) => (
+                <div className="col" key={index}>
+                  <div className="card">
+                    <div className="card-header">
+                      <div className="float-end">
+                        <span className="btn btn-sm btn-primary btn-icon count">
+                          {
+                            applications.filter(
+                              (app) => (app.status || "Applied") === status
+                            ).length
+                          }
+                        </span>
                       </div>
-                      <div
-                        className="card-body kanban-box"
-                        id={`kanban-blacklist-${index + 1}`}
-                        data-id={index + 1}
-                      >
-                        {applications
-                          .filter((app) => (app.status || "Applied") === status)
-                          .map((app) => (
-                            <div className="card" key={app._id}>
-                              <div className="pt-3 ps-3"></div>
-                              <div className="card-header border-0 pb-0 position-relative">
-                                <h5>
-                                  <Link to="#">{app.name}</Link>
-                                </h5>
-                                <div className="card-header-right">
-                                  <div className="btn-group card-option">
-                                    <button
-                                      type="button"
-                                      className="btn dropdown-toggle"
-                                      data-bs-toggle="dropdown"
-                                      aria-haspopup="true"
-                                      aria-expanded="false"
+                      <h4 className="mb-0">{status}</h4>
+                    </div>
+                    <div
+                      className="card-body kanban-box"
+                      id={`kanban-blacklist-${index + 1}`}
+                      data-id={index + 1}
+                    >
+                      {applications
+                        .filter((app) => (app.status || "Applied") === status)
+                        .map((app) => (
+                          <div className="card" key={app._id}>
+                            <div className="pt-3 ps-3"></div>
+                            <div className="card-header border-0 pb-0 position-relative">
+                              <h5>
+                                <Link to="#">{app.name}</Link>
+                              </h5>
+                              <div className="card-header-right">
+                                <div className="btn-group card-option">
+                                  <button
+                                    type="button"
+                                    className="btn dropdown-toggle"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                  >
+                                    <PiDotsThreeOutlineVerticalThin />
+                                  </button>
+                                  <div className="dropdown-menu dropdown-menu-end">
+                                    <Link
+                                      to={`/dashboard/recruitment/job-application-view/${app._id}`}
+                                      className="dropdown-item"
                                     >
-                                      <PiDotsThreeOutlineVerticalThin />
-                                    </button>
-                                    <div className="dropdown-menu dropdown-menu-end">
-                                      <Link
-                                        to={`/dashboard/recruitment/job-application-view/${app._id}`}
-                                        className="dropdown-item"
-                                      >
-                                        <TbPencil />
-                                        <span className="ms-2">Edit</span>
-                                      </Link>
-                                      <Link to="#" className="dropdown-item"
-                                       onClick={(e) => {
+                                      <TbPencil />
+                                      <span className="ms-2">Edit</span>
+                                    </Link>
+                                    <Link
+                                      to="#"
+                                      className="dropdown-item"
+                                      onClick={(e) => {
                                         e.preventDefault();
                                         openDeleteDialog(app);
-                                      }}>
-                                     
-                                        <FaRegTrashAlt />
-                                        <span className="ms-2">Delete</span>
-                                      </Link>
-                                    </div>
+                                      }}
+                                    >
+                                      <FaRegTrashAlt />
+                                      <span className="ms-2">Delete</span>
+                                    </Link>
                                   </div>
                                 </div>
                               </div>
-                              <div className="card-body">
-                                <div className="d-flex align-items-center justify-content-between">
-                                  <ul className="list-inline mb-0 mt-0">
-                                    <li className="list-inline-item">
-                                      <span className="static-rating static-rating-sm d-block">
-                                        {/* Loop through 5 to render star icons based on the rating */}
-                                        {[...Array(5)].map((_, index) => (
-                                          <i
-                                            key={index}
-                                            className={`star fas fa-star ${
-                                              index < app.rating ? "voted" : ""
-                                            }`}
-                                          ></i>
-                                        ))}
-                                      </span>
-                                    </li>
+                            </div>
+                            <div className="card-body">
+                              <div className="d-flex align-items-center justify-content-between">
+                                <ul className="list-inline mb-0 mt-0">
+                                  <li className="list-inline-item">
+                                    <span className="static-rating static-rating-sm d-block">
+                                      {/* Loop through 5 to render star icons based on the rating */}
+                                      {[...Array(5)].map((_, index) => (
+                                        <i
+                                          key={index}
+                                          className={`star fas fa-star ${
+                                            index < app.rating ? "voted" : ""
+                                          }`}
+                                        ></i>
+                                      ))}
+                                    </span>
+                                  </li>
 
-                                    <li className="list-inline-item text-md ">
-                                      {app.jobTitle}
-                                    </li>
-                                    <li className="list-inline-item">
-                                      <AiOutlineClockCircle />
-                                      {`${formatDate(app.createdAt)}`}
-                                    </li>
-                                  </ul>
-                                  <Link to="#" className="user-group">
-                                    <img
-                                      src="https://demo.workdo.io/hrmgo/storage/uploads/avatar/avatar.png"
-                                      alt="Avatar"
-                                      className="img-fluid rounded border-2 border border-primary"
-                                      width="30px"
-                                      style={{ height: "30px" }}
-                                    />
-                                  </Link>
-                                </div>
+                                  <li className="list-inline-item text-md ">
+                                    {app.jobTitle}
+                                  </li>
+                                  <li className="list-inline-item">
+                                    <AiOutlineClockCircle />
+                                    {`${formatDate(app.createdAt)}`}
+                                  </li>
+                                </ul>
+                                <Link to="#" className="user-group">
+                                  <img
+                                    src="https://demo.workdo.io/hrmgo/storage/uploads/avatar/avatar.png"
+                                    alt="Avatar"
+                                    className="img-fluid rounded border-2 border border-primary"
+                                    width="30px"
+                                    style={{ height: "30px" }}
+                                  />
+                                </Link>
                               </div>
                             </div>
-                          ))}
-                      </div>
-                      <span
-                        className="empty-container"
-                        data-placeholder="Empty"
-                      ></span>
+                          </div>
+                        ))}
                     </div>
+                    <span
+                      className="empty-container"
+                      data-placeholder="Empty"
+                    ></span>
                   </div>
-                ))}
-              </div>
-            )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
