@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt, FaEye } from "react-icons/fa";
-import getAPI from "../../../../api/getAPI";
 import ConfirmationDialog from "../../ConfirmationDialog";
 import { HiOutlineBriefcase } from "react-icons/hi";
 
 
-const JobTable = () => {
-  const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+const JobTable = ({jobs, setJobs, fetchJobs}) => {
   const [selectedTraining, setSelectedTraining] = useState(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [entriesPerPage, setEntriesPerPage] = useState(10);
@@ -42,28 +38,6 @@ const JobTable = () => {
     currentPage * entriesPerPage
   );
 
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await getAPI("/get-all-job");
-        setJobs(response.data.data);
-        setLoading(false);
-      } catch (err) {
-        setError("Failed to load jobs. Please try again.");
-        setLoading(false);
-      }
-    };
-
-    fetchJobs();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="text-danger">{error}</div>;
-  }
 
   function formatDate(dateString) {
     const date = new Date(dateString);

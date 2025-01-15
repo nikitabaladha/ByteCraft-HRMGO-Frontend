@@ -3,7 +3,7 @@ import putAPI from "../../../../api/putAPI";
 import { toast } from "react-toastify";
 import { useMemo } from "react";
 
-const EditRole = ({ role, onClose }) => {
+const EditRole = ({ role, onClose, fetchRoles }) => {
   const modules = useMemo(() => [
     {
       name: "User",
@@ -703,6 +703,7 @@ const EditRole = ({ role, onClose }) => {
 
       toast(response.data.message || "Role updated successfully!");
       onClose();
+      fetchRoles();
     } catch (error) {
       console.error("Error updating Role:", error);
       toast(error.response?.data?.message || "Failed to update Role");

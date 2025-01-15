@@ -18,6 +18,7 @@ const Trainer = () => {
   useEffect(() => {   
   fetchTrainers();
 }, []);
+
   return (
     <div>
       <TrainerHeader fetchTrainers={fetchTrainers}/>

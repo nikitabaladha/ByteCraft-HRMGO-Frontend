@@ -18,7 +18,6 @@ const CreateJobForm = () => {
     skill: [],
     applicant: [],
     visibility: [],
-    customQuestions: [],
     description: "",
     requirement: "",
     terms: "",
@@ -89,7 +88,7 @@ const CreateJobForm = () => {
           : list.filter((item) => item !== value),
       };
     });
-    setShowTerms(e.target.checked); // Toggle visibility
+    setShowTerms(e.target.checked);
   };
 
   const handleCheckboxChange = (e) => {
@@ -122,7 +121,7 @@ const CreateJobForm = () => {
           skill: [...prevData.skill, skill],
         }));
       }
-      setInputValue(""); // Clear the input field
+      setInputValue(""); 
     }
   }; 
 
@@ -134,9 +133,9 @@ const CreateJobForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault(); 
     try {
-      const response = await postAPI("/create-job", formData); // Replace with your API endpoint
+      const response = await postAPI("/create-job", formData);
       if (response.data.success) {
         console.log("Job created successfully:", response.data);
         toast("Job created successfully!");
@@ -310,7 +309,6 @@ const CreateJobForm = () => {
           gap: "8px",
         }}
       >
-        {/* Render skill badges */}
         {formData.skill.map((skill, index) => (
           <span
             key={index}
@@ -331,7 +329,6 @@ const CreateJobForm = () => {
           </span>
         ))}
 
-        {/* Input field for typing new skills */}
         <input
           type="text"
           className="border-0 flex-grow-1"
@@ -347,7 +344,6 @@ const CreateJobForm = () => {
                 </div>
               </div>
             </div>
-            {/* Remaining Form Sections */}
             <div className="col-md-6">
               <div
                 className="card card-fluid job-card"
@@ -478,62 +474,6 @@ const CreateJobForm = () => {
                               Terms And Conditions
                             </label>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="form-group col-md-12">
-                      <h6>Custom Questions</h6>
-                      <div className="my-4">
-                        <div className="form-check custom-checkbox">
-                          <label
-                            className="form-check-label"
-                            htmlFor="custom_question_1"
-                          >
-                            <input
-                              type="checkbox"
-                              className="form-check-input"
-                              name="customQuestions"
-                              value="What Do You Know About This Job?"
-                              required
-                              id="custom_question_1"
-                              onChange={handleCheckboxChange}
-                            />
-                            What Do You Know About This Job?
-                          </label>
-                        </div>
-                        <div className="form-check custom-checkbox">
-                          <label
-                            className="form-check-label"
-                            htmlFor="custom_question_1"
-                          >
-                            <input
-                              type="checkbox"
-                              className="form-check-input"
-                              name="customQuestions"
-                              value="Why do you want this job?"
-                              required
-                              id="custom_question_1"
-                              onChange={handleCheckboxChange}
-                            />
-                            Why do you want this job?
-                          </label>
-                        </div>
-                        <div className="form-check custom-checkbox">
-                          <label
-                            className="form-check-label"
-                            htmlFor="custom_question_1"
-                          >
-                            <input
-                              type="checkbox"
-                              className="form-check-input"
-                              name="customQuestions"
-                              value="Why do you want to work this company?"
-                              required
-                              id="customQuestion"
-                              onChange={handleCheckboxChange}
-                            />
-                            Why do you want to work this company?
-                          </label>
                         </div>
                       </div>
                     </div>

@@ -9,9 +9,6 @@ const CreateJobApplication = ({ onClose }) => {
     name: "",
     email: "",
     phone: "",
-    // applicant: [],
-    // visibility: [],
-    // customQuestions: [],
     city: "",
     state: "",
     country: "",
@@ -339,32 +336,6 @@ const CreateJobApplication = ({ onClose }) => {
                   </div>
                 )}
 
-                {/* Custom Questions */}
-                {selectedJobDetails?.customQuestions &&
-                  selectedJobDetails.customQuestions.map((question, index) => (
-                    <div className="form-group col-md-12 question" key={index}>
-                      <label
-                        htmlFor={`customQuestion${index}`}
-                        className="form-label"
-                      >
-                        {question}
-                      </label>
-                      <span className="text-danger">*</span>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name={`customQuestion${index}`}
-                        value={formData[`customQuestion${index}`] || ""}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            [`customQuestion${index}`]: e.target.value,
-                          })
-                        }
-                        required
-                      />
-                    </div>
-                  ))}
               </div>
             </div>
             <div className="modal-footer">

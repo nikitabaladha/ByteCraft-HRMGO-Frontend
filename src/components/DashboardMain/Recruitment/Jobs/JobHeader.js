@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 
-const JobHeader = () => {
+const JobHeader = ({fetchJobs}) => {
   return (
       <div class="page-header">
         <div class="page-block">

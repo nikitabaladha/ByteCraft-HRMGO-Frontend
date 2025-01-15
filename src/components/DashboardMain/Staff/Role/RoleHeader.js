@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { FiPlus } from "react-icons/fi";
 import CreateRole from './CreateRole';
 
-const RoleHeader = () => {
+const RoleHeader = ({fetchRoles}) => {
     const [showModal, setShowModal] = useState(false);
 
   const handleCreateClick = () => {
@@ -13,6 +13,12 @@ const RoleHeader = () => {
 
   const handleCloseModal = () => {
     setShowModal(false); // Hide the modal
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetchRoles();
+    setShowModal(false);
   };
   return (
     <>
@@ -51,7 +57,7 @@ const RoleHeader = () => {
       </div>
     </div>
     {showModal && (
-        <CreateRole onClose={handleCloseModal} />
+        <CreateRole onClose={handleCloseModal} onSubmit={handleSubmit} fetchRoles={fetchRoles}  />
       )}
     </>
   );

@@ -40,20 +40,23 @@ const JobView = () => {
 
   function formatDate(dateString) {
     const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, "0"); 
-    const month = String(date.getMonth() + 1).padStart(2, "0"); 
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
   }
-  
 
   const removeHtmlTags = (text) => {
-    return text.replace(/<[^>]*>/g, ''); 
-};
+    return text.replace(/<[^>]*>/g, "");
+  };
 
-const descriptionWithoutHtml = jobDetails ? removeHtmlTags(jobDetails.description) : '';
-const recuitmentWithoutHtml = jobDetails ? removeHtmlTags(jobDetails.requirement) : '';
-const termsWithoutHtml = jobDetails ? removeHtmlTags(jobDetails.terms) : '';
+  const descriptionWithoutHtml = jobDetails
+    ? removeHtmlTags(jobDetails.description)
+    : "";
+  const recuitmentWithoutHtml = jobDetails
+    ? removeHtmlTags(jobDetails.requirement)
+    : "";
+  const termsWithoutHtml = jobDetails ? removeHtmlTags(jobDetails.terms) : "";
 
   return (
     <div className="dash-content">
@@ -78,8 +81,8 @@ const termsWithoutHtml = jobDetails ? removeHtmlTags(jobDetails.terms) : '';
                 className="btn btn-sm btn-info"
                 title="Edit"
               >
-              <TbPencil />
-             </Link> 
+                <TbPencil />
+              </Link>
             </div>
           </div>
         </div>
@@ -163,10 +166,10 @@ const termsWithoutHtml = jobDetails ? removeHtmlTags(jobDetails.terms) : '';
                   <div className="col-6">
                     <h6>Need to ask ?</h6>
                     <ul className="">
-                    {jobDetails.applicant.map((applicants, index) => (
+                      {jobDetails.applicant.map((applicants, index) => (
                         <li
                           key={index}
-                        //   className="p-2 px-3 badge bg-primary"
+                          //   className="p-2 px-3 badge bg-primary"
                         >
                           {applicants}
                         </li>
@@ -177,30 +180,15 @@ const termsWithoutHtml = jobDetails ? removeHtmlTags(jobDetails.terms) : '';
                   <div className="col-6">
                     <h6>Need to show option ?</h6>
                     <ul className="">
-                    {jobDetails.visibility.map((visibilities, index) => (
+                      {jobDetails.visibility.map((visibilities, index) => (
                         <li
                           key={index}
-                        //   className="p-2 px-3 badge bg-primary"
+                          //   className="p-2 px-3 badge bg-primary"
                         >
                           {visibilities}
                         </li>
                       ))}
                       {/* <li>{jobDetails.visibility}</li> */}
-                    </ul>
-                  </div>
-
-                  <div className="col-12">
-                    <h6>Custom Questions</h6>
-                    <ul className="">
-                    {jobDetails.customQuestions.map((customquestion, index) => (
-                        <li
-                          key={index}
-                        //   className="p-2 px-3 badge bg-primary"
-                        >
-                          {customquestion}
-                        </li>
-                      ))}
-                      {/* <li>{jobDetails.customQuestions}</li> */}
                     </ul>
                   </div>
                 </div>

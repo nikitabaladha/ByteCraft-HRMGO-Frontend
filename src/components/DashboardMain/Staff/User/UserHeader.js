@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { FiPlus } from "react-icons/fi";
 import UserCreate from './UserCreate';
 
-const UserHeader = () => {
+const UserHeader = ({fetchUsers}) => {
     const [showModal, setShowModal] = useState(false);
 
 const handleCreateClick = () => {
@@ -14,6 +14,12 @@ const handleCreateClick = () => {
 
 const handleCloseModal = () => {
   setShowModal(false); // Hide the modal
+};
+
+const handleSubmit = (event) => {
+  event.preventDefault();
+  fetchUsers();
+  setShowModal(false);
 };
   return (
       <div className="page-header">
@@ -32,16 +38,6 @@ const handleCloseModal = () => {
             </div>
             <div className="col">
               <div className="float-end">
-                {/* <a
-                  href="https://demo.workdo.io/hrmgo/lastlogin"
-                  className="btn btn-primary btn-sm"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="User Logs History"
-                >
-                 <FiUserCheck />
-                </a> */}
-
                 <Link
                   href="#"
                   onClick={handleCreateClick}
@@ -58,7 +54,7 @@ const handleCloseModal = () => {
           </div>
         </div>
         {showModal && (
-        <UserCreate onClose={handleCloseModal} />
+        <UserCreate onClose={handleCloseModal} onSubmit={handleSubmit} fetchUsers={fetchUsers} />
       )}
       </div>   
   );

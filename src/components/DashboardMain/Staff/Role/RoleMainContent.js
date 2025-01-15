@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
-import getAPI from "../../../../api/getAPI";
 import ConfirmationDialog from "../../ConfirmationDialog";
 import EditRole from "./EditRole";
 
-const RoleMainContent = () => {
-  const [roles, setRoles] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+const RoleMainContent = ({roles, setRoles, fetchRoles}) => {
   const [selectedTrainee, setSelectedTrainee] = useState(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,12 +19,12 @@ const RoleMainContent = () => {
     setCurrentPage(1);
   };
 
-  const filteredTrainers = roles.filter((role) => {
+  const filteredTrainers = roles?.filter((role) => {
     const searchTerm = searchQuery.toLowerCase();
     return role.name.toLowerCase().includes(searchTerm);
   });
 
-  const paginatedTrainers = filteredTrainers.slice(
+  const paginatedTrainers = filteredTrainers?.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
@@ -46,31 +42,6 @@ const RoleMainContent = () => {
   const handleDeleteConfirmed = (_id) => {
     setRoles((prevApp) => prevApp.filter((role) => role._id !== _id));
   };
-
-  useEffect(() => {
-    // Fetch roles from the API
-    const fetchRoles = async () => {
-      try {
-        const response = await getAPI("/get-all-roles");
-        setRoles(response.data.roles);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching roles:", err);
-        setError("Failed to load roles.");
-        setLoading(false);
-      }
-    };
-
-    fetchRoles();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="text-danger">{error}</div>;
-  }
 
   const handleEdit = (role) => {
     setSelectedTrainee(role);
@@ -281,6 +252,7 @@ const RoleMainContent = () => {
         <EditRole
           role={selectedTrainee}
           onClose={() => setIsModalOpen(false)} 
+          fetchRoles={fetchRoles}
         />
       )}
     </div>

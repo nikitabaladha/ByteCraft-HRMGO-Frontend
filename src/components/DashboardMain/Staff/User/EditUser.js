@@ -3,7 +3,7 @@ import getAPI from "../../../../api/getAPI";
 import { toast } from "react-toastify";
 import putAPI from "../../../../api/putAPI";
 
-const EditUser = ({ user, onClose }) => {
+const EditUser = ({ user, onClose, fetchUsers }) => {
   const [formData, setFormData] = useState({
     name: user.name || "",
     email: user.email || "",
@@ -44,6 +44,7 @@ const EditUser = ({ user, onClose }) => {
       const response = await putAPI(`/update-user/${user._id}`, formData);
       toast(response.data.message || "User updated successfully!");
       onClose();
+      fetchUsers();
     } catch (error) {
       console.error("Error updating User:", error);
       toast(error.response?.data?.message || "Failed to update User");

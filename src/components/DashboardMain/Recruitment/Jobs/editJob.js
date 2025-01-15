@@ -21,7 +21,6 @@ const EditJob = () => {
     skill: [],
     applicant: [],
     visibility: [],
-    customQuestions: [],
     description: "",
     applicantDetails: [],
   });
@@ -560,82 +559,6 @@ const EditJob = () => {
                             </label>
                           ))}
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group col-md-12">
-                    <h6>Custom Questions</h6>
-                    <div class="my-4">
-                      <div class="form-check custom-checkbox">
-                        {["What Do You Know About This Job?"].map((type) => (
-                          <label
-                            key={type}
-                            class="form-check-label"
-                            for="custom_question_1"
-                          >
-                            <input
-                              type="checkbox"
-                              class="form-check-input"
-                              name="customQuestions"
-                              value={type}
-                              required=""
-                                id={`check-${type}`}
-                              checked={
-                                Array.isArray(formData.customQuestions) &&
-                                formData.customQuestions.includes(type)
-                              }
-                              onChange={(e) => handleCheckboxChanged(e, type)}
-                            />
-                            {type}
-                            <span class="text-danger">*</span>
-                          </label>
-                        ))}
-                      </div>
-                      <div class="form-check custom-checkbox">
-                        {["Why do you want this job?"].map((type) => (
-                          <label
-                            key={type}
-                            class="form-check-label"
-                            for="custom_question_2"
-                          >
-                            <input
-                              type="checkbox"
-                              class="form-check-input"
-                              name="customQuestions"
-                              value={type}
-                              id={`check-${type}`}
-                              checked={
-                                Array.isArray(formData.customQuestions) &&
-                                formData.customQuestions.includes(type)
-                              }
-                              onChange={(e) => handleCheckboxChanged(e, type)}
-                            />
-                            {type}
-                          </label>
-                        ))}
-                      </div>
-                      <div class="form-check custom-checkbox">
-                        {["Why do you want to work this company?"].map((type) => (
-                          <label
-                            key={type}
-                            class="form-check-label"
-                            for="custom_question_3"
-                          >
-                            <input
-                              type="checkbox"
-                              class="form-check-input"
-                              name="customQuestions"
-                              value={type}
-                                 id={`check-${type}`}
-                              checked={
-                                Array.isArray(formData.customQuestions) &&
-                                formData.customQuestions.includes(type)
-                              }
-                              onChange={(e) => handleCheckboxChanged(e, type)}
-                            />
-                            {type}
-                          </label>
-                        ))}
                       </div>
                     </div>
                   </div>

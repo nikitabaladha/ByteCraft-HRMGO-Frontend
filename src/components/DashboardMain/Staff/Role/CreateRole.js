@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import postAPI from "../../../../api/postAPI";
 import { toast } from "react-toastify";
 
-const CreateRole = ({ onClose }) => {
+const CreateRole = ({ onClose, fetchRoles,  }) => {
   const [roleName, setRoleName] = useState("");
   const [permissions, setPermissions] = useState({});
   const [selectAll, setSelectAll] = useState(false);
@@ -719,6 +719,8 @@ const CreateRole = ({ onClose }) => {
       setRoleName("");
       setPermissions({});
       setSelectAll(false);
+      onClose()
+      fetchRoles()
     } catch (error) {
       console.error("Error creating role:", error);
       alert("Failed to create role. Please try again.");

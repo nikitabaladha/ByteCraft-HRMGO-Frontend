@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { FaRegEdit } from "react-icons/fa";
 import { TfiKey } from "react-icons/tfi";
@@ -14,8 +12,8 @@ import EditUser from "./EditUser";
 import UserCreatePassword from "./UserCreatePassword";
 import UserResetPassword from "./UserResetPassword";
 
-const UserMainContent = () => {
-  const [users, setUsers] = useState([]);
+const UserMainContent = ({users, setUsers, fetchUsers}) => {
+  
   const [showModal, setShowModal] = useState(false);
   const [selectedTrainee, setSelectedTrainee] = useState(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -30,25 +28,6 @@ const handleCreateClick = () => {
 const handleCloseModal = () => {
   setShowModal(false); // Hide the modal
 };
-
-  useEffect(() => {
-    const fetchAllUsers = async () => {
-      try {
-        const response = await getAPI("/get-all-users", {}, true);
-        if (response.data && response.data.data) {
-          setUsers(response.data.data);
-          console.log("data", response.data.data)
-        } else {
-          toast.error("Failed to fetch users.");
-        }
-      } catch (error) {
-        console.error("Error fetching users:", error);
-        toast.error("An error occurred while fetching users.");
-      }
-    };
-
-    fetchAllUsers();
-  }, []);
 
   const openDeleteDialog = (user) => {
     setSelectedTrainee(user);
@@ -214,7 +193,8 @@ const handleCloseModal = () => {
       )}
 
     {showModal && (
-        <UserCreate onClose={handleCloseModal} />
+        <UserCreate onClose={handleCloseModal}   fetchUsers={fetchUsers}/>
+      
       )}
 
 {openModel && (
@@ -235,6 +215,7 @@ const handleCloseModal = () => {
         <EditUser
           user={selectedTrainee}
           onClose={() => setIsModalOpen(false)} 
+          fetchUsers={fetchUsers}
         />
       )}
     </>

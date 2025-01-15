@@ -3,7 +3,7 @@ import postAPI from "../../../../api/postAPI";
 import getAPI from "../../../../api/getAPI";
 import { toast } from "react-toastify";
 
-const UserCreate = ({ onClose }) => {
+const UserCreate = ({ onClose, fetchUsers }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -13,22 +13,17 @@ const UserCreate = ({ onClose }) => {
   });
   const [roles, setRoles] = useState([]); 
 
-  useEffect(() => {
-    const fetchRoles = async () => {
-      try {
-        const response = await getAPI("/get-all-roles"); 
-        if (response && !response.hasError) {
-          setRoles(response.data.roles || []); 
-        } else {
-          toast.error(`Failed to fetch roles: ${response.message}`);
-        }
-      } catch (error) {
-        console.error("Error fetching roles:", error);
-        toast.error("An error occurred while fetching roles.");
-      }
-    };
-    fetchRoles();
-  }, []);
+  const fetchRoles = async () => {
+    try {
+      const response = await getAPI(`/get-all-roles`, {}, true);
+      setRoles(response.data.data);
+    } catch (error) {
+      console.error("Failed to fetch Trainers.", error);
+    }
+  };
+  useEffect(() => {   
+  fetchRoles();
+}, []);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -52,6 +47,7 @@ const UserCreate = ({ onClose }) => {
       if (!response.hasError) {
         toast.success("User Created Successfully");
         onClose();
+        fetchUsers();
       } else {
         toast.error(`Failed to create User: ${response.message}`);
       }
