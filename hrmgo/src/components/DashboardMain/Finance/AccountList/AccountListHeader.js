@@ -51,7 +51,7 @@ import React, { useState } from "react";
 import { TiPlus } from "react-icons/ti";
 import AccountCreateModal from "./AccountCreateModal.js";
 
-const AccountListHeader = () => {
+const AccountListHeader = ({ fetchAccounts }) => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -64,7 +64,7 @@ const AccountListHeader = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Form submitted!");
+    fetchAccounts();
     setModalOpen(false);
   };
 
@@ -102,6 +102,7 @@ const AccountListHeader = () => {
         isOpen={isModalOpen}
         onClose={closeModal}
         onSubmit={handleSubmit}
+        fetchAccounts={fetchAccounts}
       />
     </div>
   );

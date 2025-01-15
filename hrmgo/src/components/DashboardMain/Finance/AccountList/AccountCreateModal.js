@@ -3,7 +3,7 @@ import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify"; 
 import getAPI from "../../../../api/getAPI.js"; 
 
-const AccountCreateModal = ({ isOpen, onClose }) => {
+const AccountCreateModal = ({ isOpen, onClose,fetchAccounts}) => {
   const [accountName, setAccountName] = useState('');
   const [initialBalance, setInitialBalance] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
@@ -31,6 +31,18 @@ const AccountCreateModal = ({ isOpen, onClose }) => {
 
     fetchEmployeeNames();
   }, []); 
+
+  useEffect(() => {
+    if (!isOpen) {
+      setAccountName('');
+      setInitialBalance('');
+      setAccountNumber('');
+      setBranchCode('');
+      setBankBranch('');
+      setErrorMessage('');
+      setSuccessMessage('');
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null; 
 
@@ -66,13 +78,7 @@ const AccountCreateModal = ({ isOpen, onClose }) => {
       if (!response.hasError) {
         toast.success("Account Created Successfully");
         onClose();
-        
-     
-        setAccountName('');
-        setInitialBalance('');
-        setAccountNumber('');
-        setBranchCode('');
-        setBankBranch('');
+        fetchAccounts(); 
         
       } else {
         toast.error(`Failed to create Account: ${response.message}`);

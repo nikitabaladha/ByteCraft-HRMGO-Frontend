@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import putAPI from "../../../../api/putAPI.js"; 
 import { toast } from "react-toastify"; 
 
-const AccountUpdateModal = ({ isOpen, onClose, accountData }) => {
+const AccountUpdateModal = ({ isOpen, onClose, accountData ,fetchAccounts }) => {
   const [accountName, setAccountName] = useState('');
   const [initialBalance, setInitialBalance] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
@@ -33,7 +33,7 @@ const AccountUpdateModal = ({ isOpen, onClose, accountData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading(false);
     setErrorMessage(''); 
 
     const accountDataToUpdate = {
@@ -50,6 +50,7 @@ const AccountUpdateModal = ({ isOpen, onClose, accountData }) => {
       if (!response.hasError) {
         toast.success("Account Updated Successfully");
         onClose(); 
+        fetchAccounts(); 
       } else {
         toast.error(`Failed to update Account: ${response.message}`);
       }

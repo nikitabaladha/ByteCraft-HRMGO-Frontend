@@ -44,7 +44,7 @@ import { Link } from "react-router-dom";
 import { TiPlus } from "react-icons/ti";
 import CreatePayeeModal from "./CreatePayeeModal"; 
 
-const PayeesHeader = () => {
+const PayeesHeader = ({fetchPayees}) => {
   const [showModal, setShowModal] = useState(false); 
 
   const openModal = () => setShowModal(true);
@@ -82,7 +82,7 @@ const PayeesHeader = () => {
 
    
       {showModal && (
-        <CreatePayeeModal closeModal={closeModal} /> 
+        <CreatePayeeModal closeModal={closeModal}    fetchPayees={fetchPayees} /> 
       )}
     </div>
   );

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import EditPayeeModal from "./EditPayeeModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
-import getAPI from "../../../../api/getAPI";
+// import getAPI from "../../../../api/getAPI";
 import { ToastContainer } from "react-toastify";
 
-const PayeesTable = () => {
-  const [payees, setPayees] = useState([]);
+const PayeesTable = ({payees,setPayees,fetchPayees}) => {
+  // const [payees, setPayees] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPayee, setSelectedPayee] = useState(null);
 
@@ -39,21 +39,22 @@ const PayeesTable = () => {
   );
 
 
-  useEffect(() => {
-    const fetchPayees = async () => {
-      try {
-        const response = await getAPI(`/getall_Payee`, {}, true);
-        setPayees(response.data.data);
-      } catch (err) {
-        console.log("Failed to fetch payees");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchPayees = async () => {
+  //     try {
+  //       const response = await getAPI(`/getall_Payee`, {}, true);
+  //       setPayees(response.data.data);
+  //     } catch (err) {
+  //       console.log("Failed to fetch payees");
+  //     }
+  //   };
 
-    fetchPayees();
-  }, []);
+  //   fetchPayees();
+  // }, []);
 
   const openModal = (payee) => {
     setSelectedPayee(payee);
+    fetchPayees();
     setIsModalOpen(true);
   };
 
@@ -224,7 +225,7 @@ const PayeesTable = () => {
         </div>
       </div>
       {isModalOpen && (
-        <EditPayeeModal payee={selectedPayee} closeModal={closeModal} />
+        <EditPayeeModal payee={selectedPayee} closeModal={closeModal}   fetchPayees={fetchPayees} />
       )}
 
       {isDeleteDialogOpen && (

@@ -151,18 +151,18 @@
 
 // export default ManageAccount;
 
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ConfirmationDialog from "../../ConfirmationDialog.js";
 // import { Link } from "react-router-dom";
-import getAPI from "../../../../api/getAPI.js";
+// import getAPI from "../../../../api/getAPI.js";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import AccountUpdateModal from "./AccountUpdateModal.js";
 
-const ManageAccount = () => {
-  const [accounts, setAccounts] = useState([]);
+const ManageAccount = ({accounts,setAccounts,fetchAccounts}) => {
+  // const [accounts, setAccounts] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -196,9 +196,6 @@ const ManageAccount = () => {
     currentPage * entriesPerPage
   );
 
-
-
-
   const openDeleteDialog = (accountId) => {
     setAccountToDelete(accountId);
     setIsDeleteDialogOpen(true);
@@ -217,31 +214,13 @@ const ManageAccount = () => {
   };
 
 
-
-  useEffect(() => {
-    const fetchAccounts = async () => {
-      try {
-        const response = await getAPI(`/AccountList-get-all`, {}, true);
-        setAccounts(response.data.data);
-      } catch (err) {
-        console.error(err);
-        console.log("Failed to fetch accounts.");
-
-      }
-    };
-
-    fetchAccounts();
-  }, []);
-
-
-
-
   const handleEdit = (account) => {
     setSelectedAccount(account);
+    fetchAccounts();
     setIsModalOpen(true);
   };
 
-  // Handle modal close
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -397,6 +376,7 @@ const ManageAccount = () => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         accountData={selectedAccount}
+        fetchAccounts={fetchAccounts}
       />
 
       {isDeleteDialogOpen && (

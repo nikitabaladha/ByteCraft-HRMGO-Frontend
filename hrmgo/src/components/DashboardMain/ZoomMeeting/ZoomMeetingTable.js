@@ -22,6 +22,8 @@ const ZoomMeetingTable = () => {
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [dateQuery, setDateQuery] = useState(""); // Add state for date filter
+  const [statusQuery, setStatusQuery] = useState("");
 
   const handleEntriesPerPageChange = (event) => {
     setEntriesPerPage(Number(event.target.value));
@@ -29,7 +31,8 @@ const ZoomMeetingTable = () => {
   };
 
   const filteredMeetings = meetings.filter((meeting) =>
-    meeting.title.toLowerCase().includes(searchQuery.toLowerCase())
+    meeting.title.toLowerCase().includes(searchQuery.toLowerCase())||
+    meeting.status.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const paginatedMeetings = filteredMeetings.slice(

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import getAPI from "../../../../api/getAPI";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify';
 import postAPI from "../../../../api/postAPI";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -18,16 +18,14 @@ const TicketReply = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const removeHtmlTags = (text) => {
-        return text.replace(/<[^>]*>/g, ''); // Removes all HTML tags
+        return text.replace(/<[^>]*>/g, '');
     };
 
     const descriptionWithoutHtml = ticket ? removeHtmlTags(ticket.description) : '';
 
-    // Fetch ticket details
     useEffect(() => {
         const fetchTicket = async () => {
             try {
-                // Fetch ticket details
                 const response = await getAPI(`/ticket-get/${ticketId}`, {}, true);
                 if (response.data.ticket) {
                     setTicket(response.data.ticket);
@@ -37,22 +35,20 @@ const TicketReply = () => {
             } catch (error) {
                 toast.error("Failed to fetch ticket data");
             } finally {
-                setIsLoading(false); // Once data is fetched, stop loading
+                setIsLoading(false);
             }
         };
         fetchTicket();
     }, [ticketId]);
 
-    // Fetch ticket replies
     useEffect(() => {
         const fetchTicketReplies = async () => {
             try {
-                // Fetch ticket replies
                 const repliesResponse = await getAPI(`/ticket-reply/${ticketId}`, {}, true);
                 const fetchedReplies = repliesResponse.data.replies || [];
                 setReplies(fetchedReplies);
             } catch (error) {
-                // toast.error("Failed to fetch replies");
+                toast.error("Failed to fetch replies");
             }
         };
 
@@ -60,7 +56,10 @@ const TicketReply = () => {
     }, [ticketId]);
 
     const handleFileChange = (event) => {
-        setAttachment(URL.createObjectURL(event.target.files[0]));
+        const file = event.target.files[0];
+        if (file) {
+            setAttachment(file);
+        }
     };
 
     const handleSubmit = async (event) => {
@@ -71,15 +70,13 @@ const TicketReply = () => {
         ticketData.append('description', description);
 
         if (attachment) {
-            ticketData.append('attachment', attachment);
+            ticketData.append('attachment', attachment, attachment.name);
         }
 
         try {
-            const response = await postAPI('/create_TicketReply', ticketData, true, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+            const response = await postAPI('/create_TicketReply', ticketData, {
+                'Content-Type': 'multipart/form-data',
+            }, true);
 
             if (!response.hasError) {
                 toast.success("Reply sent successfully!");
@@ -122,13 +119,12 @@ const TicketReply = () => {
                                                         </div>
                                                         <div className="d-flex justify-content-between align-items-center">
                                                             <h5>{ticket.title}</h5>
-                                                            <span className={`badge bg-${
-                                                                ticket.status === "open"
-                                                                    ? "light-primary"
-                                                                    : ticket.status === "onhold"
-                                                                        ? "light-warning"
-                                                                        : "light-danger"
-                                                            } p-2 f-w-600`}>
+                                                            <span className={`badge bg-${ticket.status === "open"
+                                                                ? "light-primary"
+                                                                : ticket.status === "onhold"
+                                                                    ? "light-warning"
+                                                                    : "light-danger"
+                                                                } p-2 f-w-600`}>
                                                                 {ticket.status}
                                                             </span>
                                                         </div>
@@ -153,50 +149,52 @@ const TicketReply = () => {
                                     )
                                 )}
                             </div>
+
                             {ticket && ticket.status !== 'close' && ticket.status !== 'onhold' && (
                                 <div className="row">
                                     <div className="card">
                                         <div className="card-body">
-                                            {/* <div className="text-end">
-                                                <Link to="/grammar-check" className="btn btn-primary btn-icon btn-sm" data-bs-placement="top" data-title="Grammar check with AI">
-                                                    <i className="ti ti-rotate"></i> <span>Grammar check with AI</span>
-                                                </Link>
-                                            </div> */}
                                             <h5 className="mb-3">Comments</h5>
                                             <form method="POST" onSubmit={handleSubmit} acceptCharset="UTF-8" encType="multipart/form-data">
-                                                {/* <input name="_token" type="hidden" value="inB3Cg5pU2aEjCwEYXdLIlhYvHvmeIHyLxStzhaZ" />
-                                                <input type="hidden" value="1" name="ticket_id" /> */}
-                                                {/* <div className="note-editor note-frame card"> */}
-                                                    <ReactQuill
-                                                        value={description}
-                                                        onChange={setDescription}
-                                                        theme="snow"
-                                                        placeholder="Enter the ticket description here"
-                                                        style={{ height: '220px', maxHeight: '270px', minHeight: '200px', marginBottom: '3.0rem' }}
-                                                    />
-                                                {/* </div> */}
+                                                <ReactQuill
+                                                    value={description}
+                                                    onChange={setDescription}
+                                                    theme="snow"
+                                                    placeholder="Enter the ticket description here"
+                                                    style={{ height: '220px', maxHeight: '270px', minHeight: '200px', marginBottom: '3.0rem' }}
+                                                />
 
                                                 <div className="row">
-                                                    <div className="form-group col-md-6">
-                                                        <label className="form-label">Attachments</label>
-                                                        <div className="choose-file form-group">
-                                                            <label htmlFor="file" className="form-label">
-                                                                <input
-                                                                    type="file"
-                                                                    name="attachment"
-                                                                    id="attachment"
-                                                                    className="form-control"
-                                                                    onChange={handleFileChange}
-                                                                    data-filename="attachments"
-                                                                />
-                                                            </label>
-                                                            <p className="attachments"></p>
+                                                    <div className="form-group col-md-6" style={{ marginBottom: '1.5rem' }}>
+                                                        <label htmlFor="attachment" className="form-label">Attachments</label>
+                                                        <div class="col-sm-12 col-md-12">
+                                                            <div class="form-group col-lg-12 col-md-12">
+                                                                <div class="choose-file form-group">
+                                                                    <label for="file" class="form-label">
+                                                                        <input
+                                                                            type="file"
+                                                                            name="attachment"
+                                                                            id="attachment"
+                                                                            className="form-control"
+                                                                            onChange={handleFileChange}
+                                                                        />
+                                                                        <div class="invalid-feedback">
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div className="form-group col-md-4">
-                                                        {attachment && <img src={attachment} alt="Attachment Preview" width="60%" />}
+                                                    <div class="form-group col-md-4">
+                                                        <label class="form-label"></label>
+                                                        <div class="col-sm-12 col-md-12">
+                                                            <div class="form-group col-lg-12 col-md-12">
+                                                                {attachment && <img src={URL.createObjectURL(attachment)} alt="Attachment Preview" id="blah" width="60%" />}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
+
                                                 <div className="text-end">
                                                     <button type="submit" className="btn btn-sm bg-primary w-100" style={{ color: 'white' }}>
                                                         <i className="ti ti-circle-plus me-1 mb-0"></i> Send
@@ -232,6 +230,14 @@ const TicketReply = () => {
 
                                                 <div className="p-4">
                                                     <p>{reply.description ? removeHtmlTags(reply.description) : 'No description available'}</p>
+
+                                                    {/* {reply.attachment && (
+                                                        <div className="mt-3">
+                                                            <img src={`http://localhost:3001${reply.attachment}`}
+                                                                alt="Reply Attachment"
+                                                                width="30%" />
+                                                        </div>
+                                                    )} */}
                                                 </div>
                                             </div>
                                         ))

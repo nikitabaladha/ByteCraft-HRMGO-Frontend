@@ -15,12 +15,13 @@ const CreateTicketModal = ({ closeModal }) => {
   const [endDate, setEndDate] = useState('2024-12-02');
   const [employeeNames, setEmployeeNames] = useState([]);
 
+
   useEffect(() => {
     const fetchEmployeeNames = async () => {
       try {
-        const response = await getAPI('/employee-get-all-name', {}, true); 
+        const response = await getAPI('/employee-get-all-name', {}, true);
         if (response.data && !response.data.hasError) {
-          setEmployeeNames(response.data.data); 
+          setEmployeeNames(response.data.data);
         } else {
           toast.error("Failed to fetch employee names.");
         }
@@ -39,6 +40,38 @@ const CreateTicketModal = ({ closeModal }) => {
   };
 
 
+  // const handleFileChange = (e) => {
+  //   const { name, files } = e.target;
+
+  //   if (files.length > 0) {
+  //     const file = files[0];
+
+  //     if (name === "attachment") {
+  //       setAttachment(file);
+
+  //       if (file.type.startsWith("image/")) {
+  //         const reader = new FileReader();
+  //         reader.onloadend = () => {
+  //           setImagePreview(reader.result);
+  //         };
+  //         reader.readAsDataURL(file);
+  //       }
+  //     }
+  //   } else {
+  //     if (name === "attachment") {
+  //       setAttachment(null);
+  //       setImagePreview(null);
+  //     }
+  //   }
+  // };
+
+    const handleFileChange = (event) => {
+      const file = event.target.files[0];
+      if (file) {
+          setAttachment(file);
+      }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(attachment);
@@ -51,28 +84,28 @@ const CreateTicketModal = ({ closeModal }) => {
     ticketData.append('status', status);
     ticketData.append('end_date', endDate);
 
+
     if (attachment) {
-      ticketData.append('attachment', attachment);  
+      ticketData.append('attachment', attachment, attachment.name);
+    } else {
+      console.warn("No attachment selected.");
     }
 
+    for (let [key, value] of ticketData.entries()) {
+      console.log(key, value);
+    }
+
+
     try {
-      const response = await postAPI('/create_Ticket', ticketData, true, {
-        headers: {
+      const response = await postAPI('/create_Ticket', ticketData,
+        {
           'Content-Type': 'multipart/form-data',
-        },
-      });
+        }, true
+      );
 
       if (!response.hasError) {
         toast.success("Ticket created successfully!");
         closeModal();
-        // Reset form state
-        setTitle('');
-        setEmployeeId('');
-        setPriority('low');
-        setDescription('');
-        setAttachment(null);
-        setStatus('close');
-        setEndDate('2024-12-02');
       } else {
         toast.error(`Failed to create ticket: ${response.message}`);
       }
@@ -198,15 +231,46 @@ const CreateTicketModal = ({ closeModal }) => {
                 <div className="row">
                   <div className="form-group col-md-6" style={{ marginBottom: '1.5rem' }}>
                     <label htmlFor="attachment" className="form-label">Attachments</label>
-                    <input
-                      type="file"
-                      name="attachment"
-                      id="attachment"
-                      className="form-control"
-                      onChange={(e) => setAttachment(e.target.files[0])}
-                    />
+                    <div class="col-sm-12 col-md-12">
+                      <div class="form-group col-lg-12 col-md-12">
+                        <div class="choose-file form-group">
+                          <label for="file" class="form-label">
+                            <input
+                              type="file"
+                              name="attachment"
+                              id="attachment"
+                              className="form-control"
+                              onChange={handleFileChange}
+                            />
+                            {/* {imagePreview && (
+                        <img
+                          src={imagePreview}
+                          alt="Preview"
+                          id="blah"
+                          style={{ width: '60%', height: '60%', marginTop: '10px' }}
+                        />
+                      )} */}
+                            <div class="invalid-feedback">
+                            </div>
+                          </label>
+                          <p className="attachment_selection">
+                            {attachment ? attachment.name : 'No file chosen'}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label class="form-label"></label>
+                    <div class="col-sm-12 col-md-12">
+                      <div class="form-group col-lg-12 col-md-12">
+                        {attachment && <img src={URL.createObjectURL(attachment)} alt="Attachment Preview" id="blah" width="60%" />}
+                      </div>
+                    </div>
                   </div>
                 </div>
+
+
                 {/* Status */}
                 <div className="form-group" style={{ marginBottom: '1.5rem' }}>
                   <label htmlFor="status" className="col-form-label">Status</label>
@@ -239,3 +303,4 @@ const CreateTicketModal = ({ closeModal }) => {
 };
 
 export default CreateTicketModal;
+

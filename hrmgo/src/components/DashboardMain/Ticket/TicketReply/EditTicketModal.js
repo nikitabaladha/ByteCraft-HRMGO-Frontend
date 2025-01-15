@@ -12,11 +12,10 @@ const EditTicketModal = ({ closeModal, ticketId }) => {
   const [description, setDescription] = useState('');
   const [attachment, setAttachment] = useState(null);
   const [status, setStatus] = useState('close');
-//   const [endDate, setEndDate] = useState('2024-12-02');
   const [employeeNames, setEmployeeNames] = useState([]);
   const [endDate, setEndDate] = useState('');
+  const [existingImage, setExistingImage] = useState(null);  
 
-  // Fetch the employee names on mount
   useEffect(() => {
     const fetchEmployeeNames = async () => {
       try {
@@ -35,7 +34,7 @@ const EditTicketModal = ({ closeModal, ticketId }) => {
     fetchEmployeeNames();
   }, []);
 
-  // Fetch ticket data based on ticketId when modal is opened
+
   useEffect(() => {
     if (ticketId) {
       const fetchTicketData = async () => {
@@ -49,10 +48,10 @@ const EditTicketModal = ({ closeModal, ticketId }) => {
             setDescription(ticket.description);
             setStatus(ticket.status);
             setEndDate(ticket.end_date);  
-
+            setExistingImage(ticket.attachment); 
             const formattedEndDate = new Date(ticket.end_date).toISOString().split('T')[0];
             setEndDate(formattedEndDate); 
-            // Any other ticket-specific logic
+         
           } else {
             toast.error("Failed to fetch ticket data.");
           }
@@ -64,14 +63,19 @@ const EditTicketModal = ({ closeModal, ticketId }) => {
 
       fetchTicketData();
     }
-  }, [ticketId]); // Only run when ticketId changes
+  }, [ticketId]);
 
-  // Handle description change (for ReactQuill)
   const handleDescriptionChange = (value) => {
     setDescription(value);
   };
 
-  // Handle form submission for PUT request
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        setAttachment(file);
+    }
+};
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -84,27 +88,22 @@ const EditTicketModal = ({ closeModal, ticketId }) => {
     ticketData.append('end_date', endDate);
 
     if (attachment) {
-      ticketData.append('attachment', attachment); // Append the file if exists
+      ticketData.append('attachment', attachment, attachment.name);
+    } else {
+      console.warn("No attachment selected.");
     }
 
     try {
-      const response = await putAPI(`/ticket-update/${ticketId}`, ticketData, true, {
-        headers: {
+      const response = await putAPI(`/ticket-update/${ticketId}`, ticketData, 
+       {
           'Content-Type': 'multipart/form-data',
-        },
-      });
+        },true
+      );
 
       if (!response.hasError) {
         toast.success("Ticket updated successfully!");
         closeModal();
-        // Reset form fields if needed
-        setTitle('');
-        setEmployeeId('');
-        setPriority('low');
-        setDescription('');
-        setAttachment(null);
-        setStatus('close');
-        setEndDate('2024-12-02');
+    
       } else {
         toast.error(`Failed to update ticket: ${response.message}`);
       }
@@ -114,7 +113,6 @@ const EditTicketModal = ({ closeModal, ticketId }) => {
   };
 
   const handleEndDateChange = (e) => {
-    // Ensure the end date is in the correct format (yyyy-mm-dd)
     const formattedDate = new Date(e.target.value).toISOString().split('T')[0];
     setEndDate(formattedDate);
   };
@@ -208,15 +206,44 @@ const EditTicketModal = ({ closeModal, ticketId }) => {
                 <div className="row">
                   <div className="form-group col-md-6" style={{ marginBottom: '1.5rem' }}>
                     <label htmlFor="attachment" className="form-label">Attachments</label>
-                    <input
-                      type="file"
-                      name="attachment"
-                      id="attachment"
-                      className="form-control"
-                      onChange={(e) => setAttachment(e.target.files[0])}
-                    />
+                    <div class="col-sm-12 col-md-12">
+                      <div class="form-group col-lg-12 col-md-12">
+                        <div class="choose-file form-group">
+                          <label for="file" class="form-label">
+                            <input
+                              type="file"
+                              name="attachment"
+                              id="attachment"
+                              className="form-control"
+                              onChange={handleFileChange}
+                            />
+                            <div class="invalid-feedback">
+                            </div>
+                          </label>
+                          <p className="attachment_selection">
+                          <p>{attachment ? attachment.name : existingImage ? existingImage.split('/').pop() : 'No file chosen'}</p>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label class="form-label"></label>
+                    <div class="col-sm-12 col-md-12">
+                      <div class="form-group col-lg-12 col-md-12">
+                        {attachment && <img src={URL.createObjectURL(attachment)} alt="Attachment Preview" id="blah" width="60%" />}
+                        {!attachment && existingImage &&  (
+                          <img 
+                            src={`http://localhost:3001${existingImage}`} 
+                            alt="Existing Attachment" 
+                            width="60%" 
+                          />
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
+
                 {/* Status */}
                 <div className="form-group" style={{ marginBottom: '1.5rem' }}>
                   <label htmlFor="status" className="col-form-label">Status</label>

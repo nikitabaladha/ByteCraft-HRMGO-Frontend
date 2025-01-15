@@ -24,7 +24,7 @@ const TicketDashboard = () => {
 
 
 
-  const [chartSeries, setChartSeries] = useState([0, 0, 0]); // Open, On Hold, Closed
+  const [chartSeries, setChartSeries] = useState([0, 0, 0]); 
   const [chartOptions, setChartOptions] = useState({
     chart: {
       type: "donut", // Change from 'pie' to 'donut'
@@ -83,18 +83,18 @@ const TicketDashboard = () => {
     // Fetch ticket data on component mount
     const fetchTickets = async () => {
       try {
-        const response = await getAPI("/ticket-getall", {}, true); // Adjust endpoint as needed
-        setTickets(response.data.tickets); // Set the fetched tickets to state
-        setLoading(false); // Set loading to false after data is fetched
+        const response = await getAPI("/ticket-getall", {}, true); 
+        setTickets(response.data.tickets); 
+        setLoading(false); 
         updateChartData(response.data.tickets);
       } catch (err) {
-        setError("Failed to fetch tickets"); // Set error message if API call fails
+        setError("Failed to fetch tickets"); 
         setLoading(false);
       }
     };
 
-    fetchTickets(); // Call the fetchTickets function when the component mounts
-  }, []); // Empty dependency array means this runs only once on mount
+    fetchTickets(); 
+  }, []); 
 
   const updateChartData = (tickets) => {
     const open = tickets.filter((ticket) => ticket.status === "open").length;
@@ -102,10 +102,10 @@ const TicketDashboard = () => {
     const close = tickets.filter((ticket) => ticket.status === "close").length;
     setChartSeries([open, onHold, close]);
 
-    // Optionally update chart options (e.g., colors or labels) dynamically
+   
     setChartOptions(prevOptions => ({
       ...prevOptions,
-      labels: ["open", "onhold", "close"], // Updating labels dynamically if necessary
+      labels: ["open", "onhold", "close"], 
     }));
   };
 

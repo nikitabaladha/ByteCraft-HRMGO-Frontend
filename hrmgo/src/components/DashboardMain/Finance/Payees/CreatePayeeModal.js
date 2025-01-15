@@ -108,14 +108,14 @@ import { toast } from "react-toastify";
 import postAPI from "../../../../api/postAPI"; 
 import "react-toastify/dist/ReactToastify.css";  
 
-const CreatePayeeModal = ({ closeModal }) => {
+const CreatePayeeModal = ({ closeModal, fetchPayees }) => {
   const [payeeName, setPayeeName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
 
-  // Handle form submission
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    fetchPayees();
     const payeeData = {
       payee_name: payeeName,
       contact_number: contactNumber,
@@ -127,6 +127,7 @@ const CreatePayeeModal = ({ closeModal }) => {
       if (!response.hasError) {
         toast.success("Payee Created Successfully");
         closeModal();
+        fetchPayees();
 
         setPayeeName('');
         setContactNumber('');
