@@ -6,10 +6,11 @@ import getAPI from "../../../../api/getAPI";
 import TrainingListUpdateModel from "./TrainingListUpdateModel";
 import ConfirmationDialog from "../../ConfirmationDialog";
 import { toast } from "react-toastify";
+import { formatDate } from "../../../../js/custom";
 
 
-const TrainingListTable = () => {
-  const [trainings, setTrainings] = useState([]);
+const TrainingListTable = ({trainings, setTrainings, fetchTrainings}) => {
+  // const [trainings, setTrainings] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState(null); 
@@ -46,15 +47,6 @@ const TrainingListTable = () => {
   );
 
   useEffect(() => {
-    const fetchTrainings = async () => {
-      try {
-        const response = await getAPI("/training-list-get-all"); 
-        setTrainings(response.data.data);
-        console.log("TrainingList", response.data.data); 
-      } catch (error) {
-        console.error("Error fetching trainings:", error);
-      }
-    };
 
     const fetchSystemSettings = async () => {
       try {
@@ -68,7 +60,6 @@ const TrainingListTable = () => {
     };
 
     fetchSystemSettings();
-    fetchTrainings();
   }, []);
 
   const formatCost = (cost) => {
@@ -139,16 +130,6 @@ const openDeleteDialog = (training) => {
       </div>
     </div>
   );
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0"); 
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-  }
-  
-  
 
   return (
     <>
@@ -331,7 +312,8 @@ const openDeleteDialog = (training) => {
       {isModalOpen && selectedTraining && (
         <TrainingListUpdateModel
           training={selectedTraining}
-          onClose={() => setIsModalOpen(false)} // Close the modal
+          onClose={() => setIsModalOpen(false)}
+          fetchTrainings={fetchTrainings()} 
         />
       )}
     </>

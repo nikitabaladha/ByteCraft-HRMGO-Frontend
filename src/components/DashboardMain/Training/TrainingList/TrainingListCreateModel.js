@@ -3,7 +3,7 @@ import postAPI from "../../../../api/postAPI";
 import getAPI from "../../../../api/getAPI";
 import { toast } from "react-toastify";
 
-const TrainingListCreateModel = ({ onClose }) => {
+const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
   const [formData, setFormData] = useState({
     branch: "",
     trainerOption: "0",
@@ -86,12 +86,13 @@ const TrainingListCreateModel = ({ onClose }) => {
     
     try {
       const response = await postAPI(
-        'training-list', // Update with your API endpoint
+        'training-list', 
         formData
       );
       console.log("Form Submitted", response.data);
-      // Add any other logic after successful submission (like closing the modal)
       onClose();
+      fetchTrainings();
+      toast("Training created successfully!")
     } catch (error) {
       console.error("Error submitting form", error);
     }
@@ -166,6 +167,7 @@ const TrainingListCreateModel = ({ onClose }) => {
                         value={formData.trainerOption}
                         onChange={handleChange}
                       >
+                        <option value="">Select Trainer Option</option>
                         <option value="Internal">Internal</option>
                         <option value="External">External</option>
                       </select>
@@ -187,6 +189,7 @@ const TrainingListCreateModel = ({ onClose }) => {
                         value={formData.trainingType}
                         onChange={handleChange}
                       >
+                        <option value="">Select Training Type</option>
                         <option value="Job Training">Job Training</option>
                         <option value="Management Training">Management Training</option>
                       </select>
@@ -208,6 +211,7 @@ const TrainingListCreateModel = ({ onClose }) => {
                         value={formData.trainer}
                         onChange={handleChange}
                       >
+                        <option value="">Select Trainer</option>
                         {trainers.map((trainer) => (
                           <option key={trainer.value} value={trainer.firstName}>
                             {trainer.firstName}

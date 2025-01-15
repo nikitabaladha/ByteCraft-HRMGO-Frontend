@@ -30,8 +30,8 @@ import { LuMessagesSquare } from "react-icons/lu";
 import { GoBell } from "react-icons/go";
 import { FiTable } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
-import getAPI from "../../api/getAPI";
-import { toast } from "react-toastify";
+import { ThemeContext } from "../../ThemeProvider";
+import { useContext } from "react";
 
 const menuConfig = [
   {
@@ -264,7 +264,6 @@ const menuConfig = [
     ],
   },
 
-  
   // hr admin setup
   {
     id: "hrAdminSetup",
@@ -493,10 +492,11 @@ const menuConfig = [
 const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
-  const [logoDark, setLogoDark] = useState(null);
-  const [titleText, setTitleText] = useState("HRMGo");
+  // const [logoDark, setLogoDark] = useState(null);
+  // const [titleText, setTitleText] = useState("HRMGo");
 
   const sidebarRef = useRef(null);
+  const { isDarkLayout } = useContext(ThemeContext);
 
   // Handle clicks outside of the sidebar
   useEffect(() => {
@@ -526,24 +526,23 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
     setActiveSubMenu(activeSubMenu === subMenuId ? null : subMenuId);
   };
 
-  useEffect(() => {
-    const fetchBusinessSetting = async () => {
-      try {
-        const response = await getAPI("/get-business-setting");
-        const {
-          titleText,
-          logoDark,
-        } = response.data.data;
-        setTitleText(titleText)
-        setLogoDark(logoDark || "not found");
-      } catch (error) {
-        toast.error("Error fetching business settings");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchBusinessSetting = async () => {
+  //     try {
+  //       const response = await getAPI("/get-business-setting");
+  //       const {
+  //         titleText,
+  //         logoDark,
+  //       } = response.data.data;
+  //       setTitleText(titleText)
+  //       setLogoDark(logoDark || "not found");
+  //     } catch (error) {
+  //       toast.error("Error fetching business settings");
+  //     }
+  //   };
 
-    fetchBusinessSetting();
-  }, []);
-
+  //   fetchBusinessSetting();
+  // }, []);
 
   const renderSubMenu = (subMenu) => (
     <ul className="dash-submenu">
@@ -600,19 +599,31 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
       >
         <div className="navbar-wrapper" style={{ display: "block" }}>
           <div className="m-header main-logo">
-            <Link
-              to="https://demo.workdo.io/hrmgo/dashboard"
-              className="b-brand"
-            >
-              <img
-                src={`http://localhost:3001${logoDark}`}
-                alt={titleText}
+            <Link to="/dashboard" className="b-brand">
+              {/* <img
+                src="/storage/uploads/logo/Black-Logo.png"
+                alt="HRMSync"
                 className="logo logo-lg"
+                style={{height: '87px', width:'300px'}}
               />
               <img
-               src={`http://localhost:3001${logoDark}`}
-                alt={titleText}
+               src="/storage/uploads/logo/White-Logo (1).png"
+                alt="HRMSync"
                 className="logo logo-sm"
+                style={{height: '40px', width:'147px'}}
+              /> */}
+              <img
+                src={
+                  isDarkLayout
+                    ? "/storage/uploads/logo/White-Logo (2).png"
+                    : "/storage/uploads/logo/Black-Logo (1).png"
+                }
+                alt="HRMSync"
+                className="logo"
+                style={{
+                  height: isDarkLayout ? "77px" : "77px",
+                  width: isDarkLayout ? "200px" : "200px",
+                }}
               />
             </Link>
           </div>

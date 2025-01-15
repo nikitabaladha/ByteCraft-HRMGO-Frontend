@@ -1,4 +1,3 @@
-// HRMGO\hrmgo\src\components\DashboardMain\Indicator\Indicator\IndicatorHeader.js
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";

@@ -2,23 +2,20 @@ import React from "react";
 
 import Meeting from "./Meeting";
 import Attendance from "./Attendance";
-import Calender from "./Calender";
+// import Calender from "./Calender";
 
 const MeetingClockCalender = () => {
   return (
     <>
       <div className="col-xxl-12">
         <div className="row">
-          <div className="col-xl-5">
-            {/* Meeting schedule */}
+          {/* Meeting and Attendance in one row */}
+          <div className="col-md-6">
             <Meeting />
-
-            {/* Today Not Clock In */}
+          </div>
+          <div className="col-md-6">
             <Attendance />
           </div>
-
-          {/* Calender */}
-          <Calender />
         </div>
       </div>
     </>

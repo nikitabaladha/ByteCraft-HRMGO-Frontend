@@ -11,6 +11,8 @@ import { FiPlus } from "react-icons/fi";
 import UserCreate from './UserCreate';
 import ConfirmationDialog from "../../ConfirmationDialog";
 import EditUser from "./EditUser";
+import UserCreatePassword from "./UserCreatePassword";
+import UserResetPassword from "./UserResetPassword";
 
 const UserMainContent = () => {
   const [users, setUsers] = useState([]);
@@ -18,6 +20,8 @@ const UserMainContent = () => {
   const [selectedTrainee, setSelectedTrainee] = useState(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [openModel, setOpenModel] = useState(false);
+  const [resetModel, setResetModel] = useState(false);
 
 const handleCreateClick = () => {
   setShowModal(true); // Show the modal
@@ -65,6 +69,16 @@ const handleCloseModal = () => {
     setIsModalOpen(true);
   };
 
+  const handleCreatePassword = (user) => {
+    setSelectedTrainee(user)
+    setOpenModel(true)
+  }
+
+  const handleResetPassword = (user) => {
+    setSelectedTrainee(user)
+    setResetModel(true)
+  }
+
   return (
     <>
     <div className="row">
@@ -106,6 +120,7 @@ const handleCloseModal = () => {
                       data-ajax-popup="true"
                       data-title="Change Password"
                       data-url={`/user-reset-password/${user.id}`}
+                      onClick={() => handleResetPassword(user)}
                     >
                       <TfiKey />
                       <span className="ms-1">Reset Password</span>
@@ -113,9 +128,10 @@ const handleCloseModal = () => {
                     <Link
                       href={`/user-login/${user.id}`}
                       className="dropdown-item"
+                      onClick={() => handleCreatePassword(user)}
                     >
                       <TbRoadSign />
-                      <span className="text-danger"> Login Disable</span>
+                      <span className="text-success"> Login Enable</span>
                     </Link>
                     <form
                       method="POST"
@@ -199,6 +215,20 @@ const handleCloseModal = () => {
 
     {showModal && (
         <UserCreate onClose={handleCloseModal} />
+      )}
+
+{openModel && (
+        <UserCreatePassword
+          user={selectedTrainee}
+          onClose={() => setOpenModel(false)} 
+        />
+      )}
+
+{resetModel && (
+        <UserResetPassword
+          user={selectedTrainee}
+          onClose={() => setResetModel(false)} 
+        />
       )}
 
 {isModalOpen && selectedTrainee && (

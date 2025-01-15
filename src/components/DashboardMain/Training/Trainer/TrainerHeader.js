@@ -6,7 +6,7 @@ import { CiFileOn } from "react-icons/ci";
 import { FiPlus } from "react-icons/fi";
 import TrainerEditModal from './TrainerEditModel';
 
-const TrainerHeader = () => {
+const TrainerHeader = ({fetchTrainers}) => {
 
   const [showModal, setShowModal] = useState(false);
 
@@ -16,6 +16,12 @@ const TrainerHeader = () => {
 
   const handleCloseModal = () => {
     setShowModal(false); // Hide the modal
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetchTrainers();
+    setShowModal(false);
   };
   return (
       <div className="page-header">
@@ -72,7 +78,8 @@ const TrainerHeader = () => {
           </div>
         </div>
         {showModal && (
-        <TrainerEditModal onClose={handleCloseModal} />
+        <TrainerEditModal onClose={handleCloseModal}  onSubmit={handleSubmit}
+        fetchTrainers={fetchTrainers} />
       )}
       </div>
       

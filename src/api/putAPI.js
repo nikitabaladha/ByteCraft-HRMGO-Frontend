@@ -1,5 +1,3 @@
-// HRMGO\hrmgo\src\api\putAPI.js
-
 import axiosInstance from "./axiosConfig";
 
 async function putAPI(url, payload, headers = {}, isPrivate = true) {

@@ -4,7 +4,7 @@ import { TbFileExport } from "react-icons/tb";
 import { FiPlus } from "react-icons/fi";
 import TrainingListCreateModel from "./TrainingListCreateModel";
 
-const TrainingListHeader = () => {
+const TrainingListHeader = ({ fetchTrainings }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalOpen = () => {
@@ -12,6 +12,12 @@ const TrainingListHeader = () => {
   };
 
   const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetchTrainings();
     setIsModalOpen(false);
   };
 
@@ -56,7 +62,14 @@ const TrainingListHeader = () => {
         </div>
       </div>
 
-      {isModalOpen && <TrainingListCreateModel onClose={handleModalClose} />}
+      {isModalOpen && (
+        <TrainingListCreateModel
+        isOpen={isModalOpen}
+          onClose={handleModalClose}
+          onSubmit={handleSubmit}
+          fetchTrainings={fetchTrainings}
+        />
+      )}
     </>
   );
 };

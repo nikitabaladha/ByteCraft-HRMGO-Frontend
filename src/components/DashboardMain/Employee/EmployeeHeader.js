@@ -1,12 +1,51 @@
-//components/DashboardMain/Report/Employee/EmployeeHeader.js
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { TbFileExport } from "react-icons/tb";
 import { CiFileOn } from "react-icons/ci";
 import { FiPlus } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import { exportToExcel } from "../../Signup/export-excel";
+import { formatDate } from "../../../js/custom";
 
-const EmployeeHeader = () => {
+const EmployeeHeader = ({ employeeData }) => {
+  const handleExport = () => {
+    const filteredData = employeeData.map((employee) => ({
+      Id: employee._id,
+      EMPID: employee.id,
+      Name: employee.name,
+      Phone: employee.phone,
+      DateOfBirth: formatDate(employee.dateOfBirth),
+      Gender: employee.gender,
+      Address: employee.address,
+      BranchName: employee.branchName,
+      DepartmentName: employee.departmentName,
+      DesignationName: employee.designationName,
+      BranchId: employee.branchId,
+      DepartmentId: employee.departmentId,
+      DesignationId: employee.designationId,
+      DateOfJoining: formatDate(employee.dateOfJoining),
+      EmployeePhotoUrl: employee.employeePhotoUrl,
+      EmployeeCertificateUrl: employee.employeeCertificateUrl,
+      EmployeeResumeUrl: employee.employeeResumeUrl,
+      AccountHolderName: employee.accountHolderName,
+      AccountNumber: employee.accountNumber,
+      BankName: employee.bankName,
+      BankIdentifierCode: employee.bankIdentifierCode,
+      BranchLocation: employee.branchLocation,
+      TaxPayerId: employee.taxPayerId,
+      Email: employee.email,
+    }));
+
+    exportToExcel(filteredData, "Employees", "Employee Data");
+  };
+
+  const navigate = useNavigate();
+
+  const navigateToEmployeeCreate = (event) => {
+    event.preventDefault();
+    navigate(`/dashboard/employee/create`);
+  };
+
   return (
     <>
       <div className="page-header">
@@ -26,33 +65,31 @@ const EmployeeHeader = () => {
             <div className="col">
               <div className="float-end ">
                 <Link
-                  to="/export/employee"
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
                   data-bs-original-title="Export"
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary me-2"
+                  onClick={handleExport}
                 >
                   <TbFileExport />
                 </Link>
                 <Link
-                  to="/"
-                  data-url="/import/employee/file"
                   data-ajax-popup="true"
                   data-title="Import  employee CSV file"
                   data-bs-toggle="tooltip"
                   title=""
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary me-2"
                   data-bs-original-title="Import"
                 >
                   <CiFileOn />
                 </Link>
                 <Link
-                  to="/employee/create"
                   data-title="Create New Employee"
                   data-bs-toggle="tooltip"
                   title=""
                   className="btn btn-sm btn-primary"
                   data-bs-original-title="Create"
+                  onClick={(event) => navigateToEmployeeCreate(event)}
                 >
                   <FiPlus />
                 </Link>

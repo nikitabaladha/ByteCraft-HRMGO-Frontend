@@ -9,6 +9,8 @@ import MonthlyAttendance from "./components/DashboardMain/Dashboard/Report/Month
 import Leave from "./components/DashboardMain/Dashboard/Report/Leave/Leave";
 import AccountStatement from "./components/DashboardMain/Dashboard/Report/AccountStatement/AccountStatement.js";
 import Employee from "./components/DashboardMain/Employee/Employee.js";
+import CreateEmployee from "./components/DashboardMain/Employee/CreateEmployee.js";
+import UpdateEmployee from "./components/DashboardMain/Staff/Employee Profile/UpdateEmployee.js";
 import ManageLeave from "./components/DashboardMain/Timesheet/ManageLeave/ManageLeave.js";
 import TimeSheet from "./components/DashboardMain/Timesheet/TimeSheet/TimeSheet.js";
 import MarkedAttendance from "./components/DashboardMain/Timesheet/Attendance/MarkedAttendance/MarkedAttendance.js";
@@ -65,7 +67,10 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
               path="report/account-statement"
               element={<AccountStatement />}
             />
-            <Route path="employee" element={<Employee />} />
+             <Route path="employee" element={<Employee />}>
+          <Route path="create" element={<CreateEmployee />} />
+          <Route path="update" element={<UpdateEmployee />} />
+        </Route>
 
             <Route path="time-sheet/manage-leave" element={<ManageLeave />} />
             <Route path="time-sheet/time-sheet" element={<TimeSheet />} />

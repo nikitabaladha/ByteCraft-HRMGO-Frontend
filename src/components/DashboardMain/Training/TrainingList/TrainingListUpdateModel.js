@@ -4,7 +4,14 @@ import putAPI from "../../../../api/putAPI";
 import { toast } from "react-toastify";
 
 const TrainingListUpdateModel = ({ onClose, training, _id }) => {
-  // Initialize state with the provided training data
+  const formatDateForInput = (date) => {
+    if (!date) return ""; 
+    const parsedDate = new Date(date); 
+    const year = parsedDate.getFullYear();
+    const month = String(parsedDate.getMonth() + 1).padStart(2, '0'); 
+    const day = String(parsedDate.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
   console.log("trainingList from update mode", training)
   const [formData, setFormData] = useState({
     branch: training.branch || "",
@@ -13,8 +20,8 @@ const TrainingListUpdateModel = ({ onClose, training, _id }) => {
     trainer: training.trainer || "",
     trainingCost: training.trainingCost || "",
     employee: training.employee || "",
-    startDate: training.startDate || "",
-    endDate: training.endDate || "",
+    startDate: formatDateForInput(training.startDate) || "",
+    endDate: formatDateForInput(training.endDate) || "",
     description: training.description || "",
   });
 
@@ -85,20 +92,18 @@ const TrainingListUpdateModel = ({ onClose, training, _id }) => {
     }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await putAPI(
-        // `/training-list-update/${_id}`
         `/training-list-update/${training._id}`,
         formData
         
 
       );
       toast(response.data.message || "Training updated successfully!");
-      onClose(); // Close the modal after successful submission
+      onClose(); 
     } catch (error) {
       console.error("Error updating training:", error);
       toast(error.response?.data?.message || "Failed to update training");
@@ -169,6 +174,7 @@ const TrainingListUpdateModel = ({ onClose, training, _id }) => {
                         onChange={handleChange}
                         required
                       >
+                        <option value="">Select Trainer Option</option>
                         <option value="Internal">Internal</option>
                         <option value="External">External</option>
                       </select>
@@ -189,6 +195,7 @@ const TrainingListUpdateModel = ({ onClose, training, _id }) => {
                         value={formData.trainingType}
                         onChange={handleChange}
                       >
+                        <option value="">Select Training Type</option>
                         <option value="Job Training">Job Training</option>
                         <option value="Management Training">Management Training</option>
                       </select>
@@ -209,6 +216,7 @@ const TrainingListUpdateModel = ({ onClose, training, _id }) => {
                         value={formData.trainer}
                         onChange={handleChange}
                       >
+                        <option value="">Select Trainer</option>
                       {trainers.map((trainer) => (
                           <option key={trainer._id} value={trainer.firstName}>
                             {trainer.firstName}
@@ -298,7 +306,6 @@ const TrainingListUpdateModel = ({ onClose, training, _id }) => {
                     </div>
                   </div>
 
-                  {/* Description */}
                   <div className="form-group col-lg-12">
                     <label htmlFor="description" className="col-form-label">
                       Description

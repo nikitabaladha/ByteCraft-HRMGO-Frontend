@@ -3,7 +3,7 @@ import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
 import getAPI from "../../../../api/getAPI.js";
 
-const TrainerEditModal = ({ onClose }
+const TrainerEditModal = ({ onClose, fetchTrainers }
 ) => {
   // State for branches
   const [branches, setBranches] = useState([]);
@@ -55,6 +55,8 @@ const TrainerEditModal = ({ onClose }
       const response = await postAPI("/trainee", formData, true);
       if (!response.hasError) {
         toast.success("Trainer Created Successfully");
+        onClose()
+        fetchTrainers()
       } else {
         toast.error(`Failed to create Trainer: ${response.message}`);
       }

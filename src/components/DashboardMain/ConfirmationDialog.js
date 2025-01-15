@@ -136,6 +136,12 @@ const DELETE_CONFIG = {
     errorMessage: "Failed to delete User.",
     idKey: "userId",
   },
+  employee: {
+    getEndpoint: (id) => `/employee/${id}`,
+    successMessage: "Employee successfully deleted!",
+    errorMessage: "Failed to delete Employee.",
+    idKey: "employeeId",
+  },
 };
 
 function ConfirmationDialog({ onClose, deleteType, id, onDeleted }) {

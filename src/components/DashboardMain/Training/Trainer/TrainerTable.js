@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt, FaEye } from "react-icons/fa";
 import getAPI from "../../../../api/getAPI";
@@ -9,8 +9,7 @@ import TraineeUpdateDataModel from "./TraineeUpdateDataModel";
 import putAPI from "../../../../api/putAPI";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const TrainerTable = () => {
-  const [trainers, setTrainers] = useState([]);
+const TrainerTable = ({trainers, setTrainers, fetchTrainers}) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedTrainee, setSelectedTrainee] = useState(null);
   const [showUpdateModal, setShowUpdateModal] = useState(false); // State for update modal
@@ -41,26 +40,6 @@ const TrainerTable = () => {
     currentPage * entriesPerPage
   );
 
-  // Fetch trainers data from API
-  useEffect(() => {
-    const fetchTrainers = async () => {
-      try {
-        const response = await getAPI("/trainee-get-all", {}, true);
-        if (response.data && response.data.data) {
-          setTrainers(response.data.data);
-        } else {
-          toast.error("Failed to fetch trainers.");
-        }
-      } catch (error) {
-        console.error("Error fetching trainers:", error);
-        toast.error("An error occurred while fetching trainers.");
-      }
-    };
-
-    fetchTrainers();
-  }, []);
-
-  // Handle view trainee
   const handleViewTrainee = async (id) => {
     try {
       const response = await getAPI(`/trainee-get-all/${id}`, {}, true);
@@ -76,12 +55,9 @@ const TrainerTable = () => {
     }
   };
 
-  // Delete Trainer Handler
-
-  // Handle Edit Trainer
   const handleEditTrainee = (trainee) => {
     setSelectedTrainee(trainee);
-    setShowUpdateModal(true); // Open update modal
+    setShowUpdateModal(true); 
   };
 
   const openDeleteDialog = (trainer) => {
@@ -99,10 +75,8 @@ const TrainerTable = () => {
     setTrainers((prevApp) => prevApp.filter((trainer) => trainer.id !== id));
   };
 
-  // Handle Update Trainer
   const handleUpdateTrainee = async (updatedData) => {
     try {
-      // Construct the payload to send to the backend
       const payload = {
         branch: updatedData.branch,
         firstName: updatedData.firstName,
@@ -120,9 +94,8 @@ const TrainerTable = () => {
       );
 
       if (response.data && response.data.success) {
-        toast.success(response.data.message); // Show success message
-        setShowUpdateModal(false); // Close the modal after updating
-        // Update the local trainers list with the updated trainee data
+        toast.success(response.data.message);
+        setShowUpdateModal(false); 
         setTrainers((prevTrainers) =>
           prevTrainers.map((trainer) =>
             trainer.id === selectedTrainee.id
@@ -130,6 +103,7 @@ const TrainerTable = () => {
               : trainer
           )
         );
+        fetchTrainers()
       } else {
         toast.error(response.data.error || "Failed to update trainee.");
       }
