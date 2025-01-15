@@ -82,14 +82,17 @@ const Leave = () => {
           setSelectedMonth={setSelectedMonth}
           setSelectedYear={setSelectedYear}
         />
-        <LeaveReport
-          leaveData={leaveData}
-          branch={selectedBranch}
-          department={selectedDepartment}
-          searchType={searchType}
-          month={selectedMonth}
-          selectedYear={selectedYear}
-        />
+        <div id="printableArea">
+          <LeaveReport
+            leaveData={leaveData}
+            branch={selectedBranch}
+            department={selectedDepartment}
+            searchType={searchType}
+            month={selectedMonth}
+            selectedYear={selectedYear}
+          />
+        </div>
+
         <LeaveTable
           leaveData={leaveData}
           setLeaveData={setLeaveData}

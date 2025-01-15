@@ -94,7 +94,7 @@ const LeaveReport = ({ leaveData }) => {
   ];
 
   return (
-    <div id="printableArea">
+    <>
       <div className="row">
         {cardData.map((card) => (
           <Card
@@ -107,7 +107,7 @@ const LeaveReport = ({ leaveData }) => {
           />
         ))}
       </div>
-    </div>
+    </>
   );
 };
 

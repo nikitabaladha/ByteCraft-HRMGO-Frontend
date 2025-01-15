@@ -11,65 +11,7 @@ const LeaveTable = ({
   setSelectedLeaveData,
 }) => {
   console.log("Leave Table", leaveData);
-  // see this is the leave data in leaves there will be status like "Approved", "Rejected", "Pending" so can you count all the things for example in below data the Approved count is 2 , And Rejected count is 2 and pending count is 1 so want to count all the things and pass it to the leave report page
-  //   [
-  //     {
-  //         "employeeId": "EMP0000002",
-  //         "employeeName": "Akash Balodi",
-  //         "branchName": "Canada",
-  //         "departmentName": "IT",
-  //         "leaves": [
-  //             {
-  //                 "startDate": "Jan 14, 2025",
-  //                 "endDate": "Jan 15, 2025",
-  //                 "totalDays": 2,
-  //                 "leaveType": "Casual Leave",
-  //                 "reason": "XYZPQR",
-  //                 "status": "Approved"
-  //             },
-  //             {
-  //                 "startDate": "Jan 17, 2025",
-  //                 "endDate": "Jan 18, 2025",
-  //                 "totalDays": 2,
-  //                 "leaveType": "Medical Leave",
-  //                 "reason": "XYZPQR",
-  //                 "status": "Rejected"
-  //             },
-  //             {
-  //                 "startDate": "Jan 19, 2025",
-  //                 "endDate": "Jan 20, 2025",
-  //                 "totalDays": 2,
-  //                 "leaveType": "Medical Leave",
-  //                 "reason": "XYZPQR",
-  //                 "status": "Pending"
-  //             }
-  //         ]
-  //     },
-  //     {
-  //         "employeeId": "EMP0000003",
-  //         "employeeName": "Ketan Gadhiya",
-  //         "branchName": "Canada",
-  //         "departmentName": "IT",
-  //         "leaves": [
-  //             {
-  //                 "startDate": "Jan 14, 2025",
-  //                 "endDate": "Jan 16, 2025",
-  //                 "totalDays": 3,
-  //                 "leaveType": "Casual Leave",
-  //                 "reason": "XYZPQR",
-  //                 "status": "Approved"
-  //             },
-  //             {
-  //                 "startDate": "Jan 18, 2025",
-  //                 "endDate": "Jan 19, 2025",
-  //                 "totalDays": 2,
-  //                 "leaveType": "Casual Leave",
-  //                 "reason": "XYZPQR",
-  //                 "status": "Rejected"
-  //             }
-  //         ]
-  //     }
-  // ]
+
   const [isCommonLeaveModalOpen, setIsCommonLeaveModalOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
