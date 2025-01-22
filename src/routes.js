@@ -38,6 +38,7 @@ import User from "./components/DashboardMain/Staff/User/User.js";
 import MyProfile from "./components/Header/My Profile/MyProfile.js";
 import StaffRole from "./components/DashboardMain/Staff/Role/StaffRole.js";
 import EmployeeProfile from "./components/DashboardMain/Staff/Employee Profile/EmployeeProfile.js";
+import Messenger from "./components/DashboardMain/Messenger/Messenger.js";
 
 const AppRoutes = ({ isAuthenticated, handleLogin }) => {
   return (
@@ -103,6 +104,7 @@ const AppRoutes = ({ isAuthenticated, handleLogin }) => {
             <Route path="/dashboard/account-setting" element={<MyProfile/>}></Route>
             <Route path="/dashboard/staff/role" element={<StaffRole/>}></Route>
             <Route path="/dashboard/staff/employee-profile" element={<EmployeeProfile/>}></Route>
+            <Route path="/dashboard/messenger" element={<Messenger/>}></Route>
           </Route>
 
           
