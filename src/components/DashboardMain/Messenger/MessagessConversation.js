@@ -15,6 +15,7 @@ import { FaCheckDouble } from "react-icons/fa6";
 import { FaPaperclip } from "react-icons/fa";
 import { FaPaperPlane } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { io } from "socket.io-client";
 
 const Messagess = () => {
   const [user, setUser] = useState(
@@ -26,6 +27,27 @@ const Messagess = () => {
   const [users, setUsers] = useState([]);
   const [currentView, setCurrentView] = useState("default");
   const [activeTab, setActiveTab] = useState("users");
+  const [socket, setSocket] = useState(null)
+
+  console.log("messagesss", messages)
+  useEffect(() =>{
+    setSocket(io('http://localhost:3030'))
+  }, [])
+
+  useEffect(() => {
+    socket?.emit('addUser', user?.id)
+    socket?.on('getUsers', users => {
+      // setUsers(users)
+      console.log('activeUsers:', users)
+    })
+    socket?.on('getMessage', data => {
+      console.log('data: ', data)
+      setMessages(prev => ({
+        ...prev, 
+        messages: [...prev.messages, {user: data.user, message: data.message}]
+      }))
+    })
+  }, [socket, user?.id])
 
   useEffect(() => {
     const userDetails = JSON.parse(localStorage.getItem("userDetails"));
@@ -51,10 +73,11 @@ const Messagess = () => {
     }
   };
 
-  const fetchMessages = async (conversationId, user) => {
+  const fetchMessages = async (conversationId, receiver) => {
     try {
-      const response = await getAPI(`/get-message/${conversationId}`);
-      setMessages({ messages: response.data, receiver: user, conversationId });
+      const response = await getAPI(`/get-message/${conversationId}?senderId=${user?.id}&&receiverId=${receiver?.receiverId}`);
+      setMessages({ messages: response.data, receiver, conversationId });
+      console.log(conversationId)
     } catch (error) {
       console.error("Failed to fetch data.", error);
     }
@@ -62,6 +85,13 @@ const Messagess = () => {
 
   const sendMessage = async (e) => {
     e.preventDefault();
+    
+    socket?.emit('sendMessage', {
+      senderId: user?.id,
+      receiverId: messages?.receiver?.receiverId,
+      message,
+      conversationId: messages?.conversationId,
+    })
 
     if (!message?.trim()) {
       toast("Message cannot be empty!");
