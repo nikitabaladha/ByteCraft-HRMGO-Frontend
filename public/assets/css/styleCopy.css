@@ -76,8 +76,8 @@ body {
   width: 100%;
 }
 .messenger-messagingView .m-body {
-  padding-top: 15px;
-  height: calc(100% - 90px);
+  /* padding-top: 15px;
+  height: calc(100% - 90px); */
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -130,8 +130,8 @@ body {
   text-decoration: none;
 }
 .messenger-tab {
-  overflow: auto;
-  height: calc(100vh - 143px);
+  /* overflow: auto;
+  height: calc(100vh - 143px); */
   display: none;
   position: relative;
 }

@@ -1,16 +1,15 @@
-import React from 'react'
-import MessengerHeader from './MessengerHeader'
-import Messagess from './MessagessConversation'
-// import MessengerMainContent from './MessengerMainContent'
+import React from 'react';
+import MessengerHeader from './MessengerHeader';
+import Messagess from './MessagessConversation';
+// import './Messenger.css';
 
 const Messenger = () => {
   return (
-    <>
-     <MessengerHeader/>
-     {/* <MessengerMainContent/>  */}
-     <Messagess/>
-    </>
-  )
-}
+    <div className='fixed-size-div'>
+      <MessengerHeader className="messenger-header" />
+      <Messagess className="messagess" />
+    </div>
+  );
+};
 
-export default Messenger
+export default Messenger;

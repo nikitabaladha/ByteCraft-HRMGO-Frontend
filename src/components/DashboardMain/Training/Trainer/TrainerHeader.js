@@ -5,17 +5,18 @@ import { TbFileExport } from "react-icons/tb";
 import { CiFileOn } from "react-icons/ci";
 import { FiPlus } from "react-icons/fi";
 import TrainerEditModal from './TrainerEditModel';
+import * as XLSX from "xlsx";
 
-const TrainerHeader = ({fetchTrainers}) => {
+const TrainerHeader = ({fetchTrainers, trainers}) => {
 
   const [showModal, setShowModal] = useState(false);
 
   const handleCreateClick = () => {
-    setShowModal(true); // Show the modal
+    setShowModal(true); 
   };
 
   const handleCloseModal = () => {
-    setShowModal(false); // Hide the modal
+    setShowModal(false); 
   };
 
   const handleSubmit = (event) => {
@@ -23,6 +24,30 @@ const TrainerHeader = ({fetchTrainers}) => {
     fetchTrainers();
     setShowModal(false);
   };
+
+  const handleExportToExcel = () => {
+      if (!trainers || trainers.length === 0) {
+        alert("No data available to export!");
+        return;
+      }
+  
+      const formattedData = trainers.map((trainerss, index) => ({
+        ID: index + 1,  
+        Branch: trainerss.branch,
+        "First Name": trainerss.firstName,
+        "Last Name": trainerss.lastName,
+        "Contact Number": trainerss.contactNumber,
+        Email: trainerss.email,
+        Experience: trainerss.expertise,
+        Address: trainerss.address,
+         }));
+      
+  
+      const worksheet = XLSX.utils.json_to_sheet(formattedData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "trainers");
+      XLSX.writeFile(workbook, "trianers.xlsx");
+    };
   return (
       <div className="page-header">
         <div className="page-block">
@@ -41,13 +66,13 @@ const TrainerHeader = ({fetchTrainers}) => {
             <div className="col">
               <div className="float-end">
                 <Link
-                  to="https://demo.workdo.io/hrmgo/export/trainer"
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
                   data-bs-original-title="Export"
                   className="btn btn-sm btn-primary me-1"
+                  onClick={handleExportToExcel}
                 >
-                  <TbFileExport />
+                   <TbFileExport />
                 </Link>
 
                 <Link

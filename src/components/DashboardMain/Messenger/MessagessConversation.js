@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import getAPI from "../../../api/getAPI";
 import postAPI from "../../../api/postAPI";
 import { useEffect, useState } from "react";
@@ -6,16 +6,19 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { BiTimeFive } from "react-icons/bi";
 import { FaUsers } from "react-icons/fa";
-// import { FaRegBookmark } from "react-icons/fa6";
 import { TiTimes } from "react-icons/ti";
 import { FaArrowLeft } from "react-icons/fa";
-import { FaStar } from "react-icons/fa";
 import { FaCircleInfo } from "react-icons/fa6";
 import { FaCheckDouble } from "react-icons/fa6";
 import { FaPaperclip } from "react-icons/fa";
 import { FaPaperPlane } from "react-icons/fa";
-import { FaRegTrashAlt } from "react-icons/fa";
 import { io } from "socket.io-client";
+import EmojiPicker from "emoji-picker-react";
+import { FaSmile } from "react-icons/fa";
+import DeleteMessage from "./DeleteMessage";
+import { Worker } from "@react-pdf-viewer/core";
+import "@react-pdf-viewer/core/lib/styles/index.css";
+import { HiOutlineDocumentDownload } from "react-icons/hi";
 
 const Messagess = () => {
   const [user, setUser] = useState(
@@ -24,30 +27,75 @@ const Messagess = () => {
   const [conversations, setConversations] = useState([]);
   const [messages, setMessages] = useState({});
   const [message, setMessage] = useState("");
+  const [file, setFile] = useState(null);
   const [users, setUsers] = useState([]);
   const [currentView, setCurrentView] = useState("default");
   const [activeTab, setActiveTab] = useState("users");
-  const [socket, setSocket] = useState(null)
+  const [socket, setSocket] = useState(null);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTrainee, setSelectedTrainee] = useState(null);
+  const messageRef = useRef(null);
+  const [previewMessagePDF, setPreviewMessagePDF] = useState(null);
+  const [previewMessageImage, setPreviewMessageImage] = useState(null);
+  const [isFilePreviewOpen, setIsFilePreviewOpen] = useState(false);
 
-  console.log("messagesss", messages)
-  useEffect(() =>{
-    setSocket(io('http://localhost:3030'))
-  }, [])
+  const handleChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  // timeAgo function
+  const formatTimeAgo = (createdAt) => {
+    const date = new Date(createdAt);
+    const now = new Date();
+    const diffInMs = now - date;
+    const diffInSecs = Math.floor(diffInMs / 1000);
+    const diffInMins = Math.floor(diffInSecs / 60);
+    const diffInHours = Math.floor(diffInMins / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
+
+    if (diffInSecs < 60) {
+      return `${diffInSecs} sec ago`;
+    } else if (diffInMins < 60) {
+      return `${diffInMins} min ago`;
+    } else if (diffInHours < 24) {
+      return `${diffInHours} hrs ago`;
+    } else {
+      return `${diffInDays} days ago`;
+    }
+  };
+
+  const handleEdit = (messages) => {
+    // console.log("messages", messages)
+    setSelectedTrainee(messages);
+    setIsModalOpen(true);
+  };
+
+  const handleEmojiClick = (emojiObject) => {
+    setMessage((prevMessage) => prevMessage + emojiObject.emoji);
+  };
 
   useEffect(() => {
-    socket?.emit('addUser', user?.id)
-    socket?.on('getUsers', users => {
+    setSocket(io("http://localhost:3030"));
+  }, []);
+
+  useEffect(() => {
+    socket?.emit("addUser", user?.id);
+    socket?.on("getUsers", (users) => {
       // setUsers(users)
-      console.log('activeUsers:', users)
-    })
-    socket?.on('getMessage', data => {
-      console.log('data: ', data)
-      setMessages(prev => ({
-        ...prev, 
-        messages: [...prev.messages, {user: data.user, message: data.message}]
-      }))
-    })
-  }, [socket, user?.id])
+      console.log("activeUsers:", users);
+    });
+    socket?.on("getMessage", (data) => {
+      // console.log("data: ", data);
+      setMessages((prev) => ({
+        ...prev,
+        messages: [
+          ...prev.messages,
+          { user: data.user, message: data.message },
+        ],
+      }));
+    });
+  }, [socket, user?.id]);
 
   useEffect(() => {
     const userDetails = JSON.parse(localStorage.getItem("userDetails"));
@@ -75,44 +123,55 @@ const Messagess = () => {
 
   const fetchMessages = async (conversationId, receiver) => {
     try {
-      const response = await getAPI(`/get-message/${conversationId}?senderId=${user?.id}&&receiverId=${receiver?.receiverId}`);
+      const response = await getAPI(
+        `/get-message/${conversationId}?senderId=${user?.id}&&receiverId=${receiver?.receiverId}`
+      );
       setMessages({ messages: response.data, receiver, conversationId });
-      console.log(conversationId)
+      console.log("messagesFile:", messages);
     } catch (error) {
       console.error("Failed to fetch data.", error);
     }
   };
 
+  useEffect(() => {
+    messageRef?.current?.scrollIntoView({ behaviour: "smooth" });
+  }, [messages.messages]);
+
   const sendMessage = async (e) => {
     e.preventDefault();
-    
-    socket?.emit('sendMessage', {
-      senderId: user?.id,
-      receiverId: messages?.receiver?.receiverId,
-      message,
-      conversationId: messages?.conversationId,
-    })
-
-    if (!message?.trim()) {
-      toast("Message cannot be empty!");
-      return;
-    }
 
     try {
-      const response = await postAPI(`/message`, {
-        conversationId: messages?.conversationId,
-        senderId: user?.id,
-        message,
-        receiverId: messages?.receiver?.receiverId,
-      });
+      const payload = new FormData();
+      payload.append("conversationId", messages?.conversationId || "new");
+      payload.append("senderId", user?.id);
+      payload.append("message", message);
+      payload.append("receiverId", messages?.receiver?.receiverId);
+      if (file) {
+        payload.append("messageFile", file);
+      }
+
+      if (file) {
+        setIsFilePreviewOpen(true);
+      }
+
+      const response = await postAPI(
+        "/message",
+        payload,
+        {
+          "Content-Type": "multipart/form-data",
+        },
+        true
+      );
+
       if (response.hasError) {
         toast(`Failed to send message: ${response.message}`);
         return;
       }
 
-      console.log("Response data:", response.data);
-
       setMessage("");
+      setFile(null);
+      setPreviewMessageImage(null);
+      setPreviewMessagePDF(null);
       toast("Message sent successfully!");
     } catch (error) {
       console.error("Error sending message:", error);
@@ -124,10 +183,16 @@ const Messagess = () => {
     <>
       <div className="row">
         <div className="col-xl-12">
-          <div className="cards rounded-12  p-0">
+          <div className="cards rounded-12 p-0">
             <div className="card-body">
-              <div className="messenger rounded min-h-750 overflow-hidden">
-                <div className="messenger-listView">
+              <div
+                className="messenger rounded min-h-750 overflow-hidden"
+                style={{ height: "100%", overflow: "hidden" }}
+              >
+                <div
+                  className="messenger-listView"
+                  style={{ height: "75vh", overflowY: "auto" }}
+                >
                   <div className="m-header">
                     <nav>
                       <nav className="m-header-right">
@@ -170,18 +235,17 @@ const Messagess = () => {
                       </Link>
                     </div>
                   </div>
-                  <div className="m-body">
+                  <div className="m-body" style={{ flexGrow: 1 }}>
                     {currentView === "default" && (
                       <div
-                        className=" show scroll  messenger-tab app-scroll"
+                        className="show scroll messenger-tab app-scroll"
                         data-view="users"
-                        style={{}}
+                        style={{ display: "block" }}
                       >
                         <div
                           className="listOfContacts"
                           style={{
                             width: "100%",
-                            height: "calc(100% - 200px)",
                             position: "relative",
                           }}
                         >
@@ -202,7 +266,9 @@ const Messagess = () => {
                                         data-action={0}
                                         className="avatar av-m"
                                         style={{
-                                          backgroundImage: `url(http://localhost:3001${user?.profileImage})`,
+                                          backgroundImage: `url(
+                                          http://localhost:3001${user?.profileImage}
+                                        )`,
                                         }}
                                       />
                                     </td>
@@ -213,7 +279,7 @@ const Messagess = () => {
                                         style={{ textAlign: "start" }}
                                       >
                                         {user.name}
-                                        <span>3 months ago</span>
+                                        <span></span>
                                       </p>
                                       <span
                                         style={{
@@ -254,7 +320,9 @@ const Messagess = () => {
                                   <div
                                     className="avatar av-m"
                                     style={{
-                                      backgroundImage: `url(http://localhost:3001${item.user.profileImage})`,
+                                      backgroundImage: `url(
+                                      http://localhost:3001${item.user.profileImage}
+                                    )`,
                                     }}
                                   />
                                 </td>
@@ -267,25 +335,15 @@ const Messagess = () => {
                         ))}
                       </div>
                     )}
-                    <div
-                      className="messenger-tab app-scroll"
-                      data-view="search"
-                      style={{ display: "none" }}
-                    >
-                      <p className="messenger-title">Search</p>
-                      <div className="search-records">
-                        <p className="message-hint center-el">
-                          <span>Type to search..</span>
-                        </p>
-                      </div>
-                    </div>
                   </div>
                 </div>
-
-                <div className="messenger-messagingView">
+                <div
+                  className="messenger-messagingView"
+                  style={{ flexGrow: 1 }}
+                >
                   {messages?.receiver?.name && (
                     <div className="m-header m-header-messaging">
-                      <nav className="d-flex a;align-items-center justify-content-between">
+                      <nav className="d-flex align-items-center justify-content-between">
                         <div style={{ display: "flex" }}>
                           <Link href="#" className="show-listView">
                             <FaArrowLeft />
@@ -294,7 +352,9 @@ const Messagess = () => {
                             className="avatar av-s header-avatar"
                             style={{
                               margin: "-5px 10px",
-                              backgroundImage: `url(http://localhost:3001${messages?.receiver?.profileImage})`,
+                              backgroundImage: `url(
+                              http://localhost:3001${messages?.receiver?.profileImage}
+                            )`,
                             }}
                           ></div>
                           <Link href="#" className="user-name">
@@ -304,14 +364,8 @@ const Messagess = () => {
                         <nav className="m-header-right">
                           <Link
                             href="#"
-                            className="add-to-favorite my-lg-1 my-xl-1 mx-lg-1 mx-xl-1 favorite"
-                            style={{ display: "inline" }}
-                          >
-                            <FaStar />
-                          </Link>
-                          <Link
-                            href="#"
                             className="show-infoSide my-lg-1 my-xl-1 mx-lg-1 mx-xl-2"
+                            onClick={() => handleEdit(messages)}
                           >
                             <FaCircleInfo />
                           </Link>
@@ -321,10 +375,18 @@ const Messagess = () => {
                   )}
 
                   <div className="m-body app-scroll" style={{ opacity: 1 }}>
-                    <div className="messages">
+                    <div
+                      className="messages"
+                      style={{ height: "60vh", overflowY: "auto" }}
+                    >
                       {messages?.messages?.length > 0 ? (
                         messages.messages.map(
-                          ({ message, user: { id } = {} }) => {
+                          ({
+                            message,
+                            createdAt,
+                            messageFile,
+                            user: { id } = {},
+                          }) => {
                             if (id === user?.id) {
                               return (
                                 <div
@@ -339,12 +401,140 @@ const Messagess = () => {
                                     }}
                                   >
                                     <p style={{ marginLeft: "5px" }}>
+                                      {messageFile && (
+                                        <>
+                                          {messageFile.endsWith(".pdf") ? (
+                                            <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
+                                              <div
+                                                style={{
+                                                  border: "1px solid #ccc",
+                                                  borderRadius: "10px",
+                                                  padding: "10px",
+                                                  backgroundColor: "#f9f9f9",
+                                                  textAlign: "center",
+                                                  boxShadow:
+                                                    "0 4px 8px rgba(0, 0, 0, 0.1)",
+                                                }}
+                                              >
+                                                <div
+                                                  style={{
+                                                    marginBottom: "10px",
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                  }}
+                                                >
+                                                  <strong
+                                                    style={{
+                                                      color: "#333333",
+                                                      marginRight: "10px",
+                                                      whiteSpace: "nowrap",
+                                                      overflow: "hidden",
+                                                      textOverflow: "ellipsis",
+                                                    }}
+                                                  >
+                                                    {messageFile
+                                                      .split("/")
+                                                      .pop()}
+                                                  </strong>
+                                                  <HiOutlineDocumentDownload
+                                                    size={30}
+                                                    style={{
+                                                      cursor: "pointer",
+                                                      color: "blue"
+                                                    }}
+                                                    onClick={() => {
+                                                      fetch(
+                                                        `http://localhost:3001${messageFile}`
+                                                      )
+                                                        .then((response) =>
+                                                          response.blob()
+                                                        )
+                                                        .then((blob) => {
+                                                          const url =
+                                                            window.URL.createObjectURL(
+                                                              blob
+                                                            );
+                                                          const a =
+                                                            document.createElement(
+                                                              "a"
+                                                            );
+                                                          a.style.display =
+                                                            "none";
+                                                          a.href = url;
+                                                          a.download =
+                                                            messageFile
+                                                              .split("/")
+                                                              .pop();
+                                                          document.body.appendChild(
+                                                            a
+                                                          );
+                                                          a.click();
+                                                          window.URL.revokeObjectURL(
+                                                            url
+                                                          );
+                                                        })
+                                                        .catch((error) => {
+                                                          console.error(
+                                                            "Error fetching the file:",
+                                                            error
+                                                          );
+                                                        });
+                                                    }}
+                                                  />
+                                                </div>
+                                              </div>
+                                            </Worker>
+                                          ) : (
+                                            <div
+                                              style={{
+                                                border: "1px solid #ccc",
+                                                borderRadius: "10px",
+                                                overflow: "hidden",
+                                                marginTop: "10px",
+                                                backgroundColor: "#f9f9f9",
+                                                boxShadow:
+                                                  "0 4px 8px rgba(0, 0, 0, 0.1)",
+                                              }}
+                                            >
+                                              <img
+                                                src={`http://localhost:3001${messageFile}`}
+                                                alt="Attached file"
+                                                style={{
+                                                  width: "100%",
+                                                  height: "auto",
+                                                  borderBottom:
+                                                    "1px solid #ccc",
+                                                }}
+                                              />
+                                              <div
+                                                style={{
+                                                  padding: "10px",
+                                                  textAlign: "center",
+                                                }}
+                                              >
+                                                <div
+                                                  style={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                  }}
+                                                >
+                                                 
+                                                </div>
+                                              </div>
+                                            </div>
+                                          )}
+                                        </>
+                                      )}
                                       {message}
+
                                       <sub
                                         title="2020-10-08 09:35:19"
                                         className="message-time"
                                       >
-                                        <FaCheckDouble /> 4 years ago
+                                        <FaCheckDouble />{" "}
+                                        {`${formatTimeAgo(createdAt)}`}
                                       </sub>
                                     </p>
                                   </div>
@@ -354,9 +544,192 @@ const Messagess = () => {
                               return (
                                 <div className="message-card">
                                   <p>
+                                  {messageFile && (
+                                        <>
+                                          {messageFile.endsWith(".pdf") ? (
+                                            <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
+                                              <div
+                                                style={{
+                                                  border: "1px solid #ccc",
+                                                  borderRadius: "10px",
+                                                  padding: "10px",
+                                                  backgroundColor: "#f9f9f9",
+                                                  textAlign: "center",
+                                                  boxShadow:
+                                                    "0 4px 8px rgba(0, 0, 0, 0.1)",
+                                                }}
+                                              >
+                                                <div
+                                                  style={{
+                                                    marginBottom: "10px",
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                  }}
+                                                >
+                                                  <strong
+                                                    style={{
+                                                      color: "#333333",
+                                                      marginRight: "10px",
+                                                      whiteSpace: "nowrap",
+                                                      overflow: "hidden",
+                                                      textOverflow: "ellipsis",
+                                                    }}
+                                                  >
+                                                    {messageFile
+                                                      .split("/")
+                                                      .pop()}
+                                                  </strong>
+                                                  <HiOutlineDocumentDownload
+                                                    size={30}
+                                                    style={{
+                                                      cursor: "pointer",
+                                                      color: "blue",
+                                                    }}
+                                                    onClick={() => {
+                                                      fetch(
+                                                        `http://localhost:3001${messageFile}`
+                                                      )
+                                                        .then((response) =>
+                                                          response.blob()
+                                                        )
+                                                        .then((blob) => {
+                                                          const url =
+                                                            window.URL.createObjectURL(
+                                                              blob
+                                                            );
+                                                          const a =
+                                                            document.createElement(
+                                                              "a"
+                                                            );
+                                                          a.style.display =
+                                                            "none";
+                                                          a.href = url;
+                                                          a.download =
+                                                            messageFile
+                                                              .split("/")
+                                                              .pop();
+                                                          document.body.appendChild(
+                                                            a
+                                                          );
+                                                          a.click();
+                                                          window.URL.revokeObjectURL(
+                                                            url
+                                                          );
+                                                        })
+                                                        .catch((error) => {
+                                                          console.error(
+                                                            "Error fetching the file:",
+                                                            error
+                                                          );
+                                                        });
+                                                    }}
+                                                  />
+                                                </div>
+                                              </div>
+                                            </Worker>
+                                          ) : (
+                                            <div
+                                              style={{
+                                                border: "1px solid #ccc",
+                                                borderRadius: "10px",
+                                                overflow: "hidden",
+                                                marginTop: "10px",
+                                                backgroundColor: "#f9f9f9",
+                                                boxShadow:
+                                                  "0 4px 8px rgba(0, 0, 0, 0.1)",
+                                              }}
+                                            >
+                                              <img
+                                                src={`http://localhost:3001${messageFile}`}
+                                                alt="Attached file"
+                                                style={{
+                                                  width: "100%",
+                                                  height: "auto",
+                                                  borderBottom:
+                                                    "1px solid #ccc",
+                                                }}
+                                              />
+                                              <div
+                                                style={{
+                                                  padding: "10px",
+                                                  textAlign: "center",
+                                                }}
+                                              >
+                                                <div
+                                                  style={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                  }}
+                                                >
+                                                  {/* <strong
+                                                    style={{
+                                                      color: "black",
+                                                      marginRight: "10px",
+                                                      whiteSpace: "nowrap",
+                                                      overflow: "hidden",
+                                                      textOverflow: "ellipsis",
+                                                    }}
+                                                  >
+                                                    {messageFile
+                                                      .split("/")
+                                                      .pop()}
+                                                  </strong> */}
+                                                  {/* <HiOutlineDocumentDownload
+                                                    size={30}
+                                                    style={{
+                                                      cursor: "pointer",
+                                                      color: "blue",
+                                                    }}
+                                                    onClick={() => {
+                                                      fetch(
+                                                        `http://localhost:3001${messageFile}`
+                                                      )
+                                                        .then((response) =>
+                                                          response.blob()
+                                                        )
+                                                        .then((blob) => {
+                                                          const url =
+                                                            window.URL.createObjectURL(
+                                                              blob
+                                                            );
+                                                          const a =
+                                                            document.createElement(
+                                                              "a"
+                                                            );
+                                                          a.style.display =
+                                                            "none";
+                                                          a.href = url;
+                                                          a.download =
+                                                            messageFile
+                                                              .split("/")
+                                                              .pop();
+                                                          document.body.appendChild(
+                                                            a
+                                                          );
+                                                          a.click();
+                                                          window.URL.revokeObjectURL(
+                                                            url
+                                                          );
+                                                        })
+                                                        .catch((error) => {
+                                                          console.error(
+                                                            "Error fetching the file:",
+                                                            error
+                                                          );
+                                                        });
+                                                    }}
+                                                  /> */}
+                                                </div>
+                                              </div>
+                                            </div>
+                                          )}
+                                        </>
+                                      )}
                                     {message}
                                     <sub title="2022-08-09 16:38:31">
-                                      2 years ago
+                                      {`${formatTimeAgo(createdAt)}`}
                                     </sub>
                                   </p>
                                 </div>
@@ -365,20 +738,7 @@ const Messagess = () => {
                           }
                         )
                       ) : (
-                        <p
-                        // style={{
-                        //   fontSize: "18px",
-                        //   color: "#333",
-                        //   fontWeight: "bold",
-                        //   textAlign: "center",
-                        //   backgroundColor: "#f5f5f5",
-                        //   padding: "10px 20px",
-                        //   borderRadius: "5px",
-                        //   boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                        // }}
-                        >
-                          {/* Start Conversation */}
-                        </p>
+                        <p></p>
                       )}
                     </div>
                     <div className="typing-indicator">
@@ -395,31 +755,63 @@ const Messagess = () => {
                     {messages?.receiver?.name && (
                       <div
                         className="messenger-sendCard"
-                        style={{ display: "block" }}
+                        style={{
+                          display: "block",
+                          position: "sticky",
+                          bottom: "0",
+                          backgroundColor: "white",
+                          zIndex: 10,
+                        }}
                       >
-                        <form onClick={(e) => sendMessage(e)}>
-                          <input type="hidden" />
+                        <form onSubmit={sendMessage}>
                           <label>
                             <FaPaperclip />
                             <input
                               type="file"
-                              className="upload-attachment"
-                              name="file"
-                              accept=".png, .jpg, .jpeg, .gif, .zip, .rar, .txt"
+                              id="panFile"
+                              name="messageFile"
+                              className="form-control"
+                              accept="image/*,application/pdf"
+                              onChange={handleChange}
                             />
                           </label>
+                          <div className="emoji-container">
+                            <FaSmile
+                              onClick={() =>
+                                setShowEmojiPicker((prev) => !prev)
+                              }
+                              style={{ cursor: "pointer", margin: "10px 8px" }}
+                            />
+                            {showEmojiPicker && (
+                              <div
+                                style={{
+                                  position: "absolute",
+                                  zIndex: 10,
+                                  bottom: "50px",
+                                }}
+                              >
+                                <EmojiPicker
+                                  onEmojiClick={handleEmojiClick}
+                                  height={300}
+                                  width={650}
+                                />
+                              </div>
+                            )}
+                          </div>
                           <textarea
                             name="message"
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
                             className="m-send app-scroll"
-                            placeholder="Type a message.."
+                            placeholder="Type a message..."
                             style={{
                               overflow: "hidden",
                               overflowWrap: "break-word",
                             }}
                           />
-                          <button>
+
+                          {/* Send Button */}
+                          <button type="submit">
                             <FaPaperPlane />
                           </button>
                         </form>
@@ -427,43 +819,15 @@ const Messagess = () => {
                     )}
                   </div>
                 </div>
-                <div
-                  className="messenger-infoView app-scroll text-center"
-                  style={{ display: "none" }}
-                >
-                  <nav className="text-center">
-                    <Link href="#">
-                      <TiTimes />
-                    </Link>
-                  </nav>
-                  <div
-                    className="avatar av-l"
-                    style={{
-                      backgroundImage: `url(http://localhost:3001${user?.profileImage})`,
-                    }}
-                  ></div>
-                  <p className="info-name">Teresa R McRae</p>
-                  <div className="messenger-infoView-btns">
-                    <Link
-                      href="#"
-                      className="danger delete-conversation"
-                      style={{ display: "inline" }}
-                    >
-                      <FaRegTrashAlt /> Delete Conversation
-                    </Link>
-                  </div>
-                  <div
-                    className="messenger-infoView-shared"
-                    style={{ display: "block" }}
-                  >
-                    <p className="messenger-title">shared photos</p>
-                    <div className="shared-photos-list">
-                      <p className="message-hint">
-                        <span>Nothing shared yet</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
+
+                {isModalOpen && selectedTrainee && (
+                  <DeleteMessage
+                    messages={selectedTrainee}
+                    conversationId={selectedTrainee.conversationId}
+                    setMessages={setMessages}
+                    onClose={() => setIsModalOpen(false)}
+                  />
+                )}
               </div>
             </div>
           </div>

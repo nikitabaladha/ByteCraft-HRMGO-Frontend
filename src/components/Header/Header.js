@@ -136,7 +136,7 @@ const Header = ({ toggleSidebar, }) => {
             <li className="dash-h-item">
               <Link
                 className="dash-head-link me-0"
-                to="https://demo.workdo.io/hrmgo/chats"
+                to="/dashboard/messenger"
               >
                 <i>
                   <FaRegCommentDots />

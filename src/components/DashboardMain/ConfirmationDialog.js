@@ -142,6 +142,12 @@ const DELETE_CONFIG = {
     errorMessage: "Failed to delete Employee.",
     idKey: "employeeId",
   },
+  conversation: {
+    getEndpoint: (id) => `/delete-conversation/${id}`,
+    successMessage: "Conversation successfully deleted!",
+    errorMessage: "Failed to delete Conversation.",
+    idKey: "conversationId",
+  },
 };
 
 function ConfirmationDialog({ onClose, deleteType, id, onDeleted }) {

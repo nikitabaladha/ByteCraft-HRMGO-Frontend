@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { TbFileExport } from "react-icons/tb";
 import { FiPlus } from "react-icons/fi";
 import TrainingListCreateModel from "./TrainingListCreateModel";
+import * as XLSX from "xlsx";
 
-const TrainingListHeader = ({ fetchTrainings }) => {
+const TrainingListHeader = ({ fetchTrainings, trainings }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalOpen = () => {
@@ -20,6 +21,41 @@ const TrainingListHeader = ({ fetchTrainings }) => {
     fetchTrainings();
     setIsModalOpen(false);
   };
+
+  const handleExportToExcel = () => {
+    if (!trainings || trainings.length === 0) {
+      alert("No data available to export!");
+      return;
+    }
+
+    const formattedData = trainings.map((training, index) => ({
+      ID: index + 1,  
+      Branch: training.branch,
+      "Trainer Option": training.trainer,
+      "Trainer Type": training.trainingType,
+      Trainer: training.trainer,
+      "Training Cost": training.trainingCost,
+      Employee: training.employee,
+      "Start date": new Date(training.startDate).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+      }),
+        "End date": new Date(training.endDate).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+      }),
+      Status: training.status,
+       }));
+    
+
+    const worksheet = XLSX.utils.json_to_sheet(formattedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "trainings");
+    XLSX.writeFile(workbook, "trianings.xlsx");
+  };
+
 
   return (
     <>
@@ -44,6 +80,7 @@ const TrainingListHeader = ({ fetchTrainings }) => {
                   className="btn btn-sm btn-primary me-1"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Export"
+                  onClick={handleExportToExcel}
                 >
                   <TbFileExport className="text-white" />
                 </a>

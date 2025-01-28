@@ -21,7 +21,7 @@ const Trainer = () => {
 
   return (
     <div>
-      <TrainerHeader fetchTrainers={fetchTrainers}/>
+      <TrainerHeader trainers={trainers}  fetchTrainers={fetchTrainers}/>
       <TrainerTable trainers={trainers} setTrainers={setTrainers} fetchTrainers={fetchTrainers}/>
     </div>
   )

@@ -20,7 +20,7 @@ const TrainingList = () => {
 
   return (
     <div>
-      <TrainingListHeader fetchTrainings={fetchTrainings}/>
+      <TrainingListHeader trainings={trainings} fetchTrainings={fetchTrainings}/>
       <TrainingListTable trainings={trainings} setTrainings={setTrainings} fetchTrainings={fetchTrainings}/>
     </div>
   )
