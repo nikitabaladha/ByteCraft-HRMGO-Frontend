@@ -31,6 +31,9 @@ import { GoBell } from "react-icons/go";
 import { FiTable } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
 
+import { ThemeContext } from "../../ThemeProvider";
+import { useContext } from "react";
+
 const menuConfig = [
   {
     id: "dashboard",
@@ -97,7 +100,7 @@ const menuConfig = [
       {
         id: "roles",
         label: "Role",
-        link: "/dashboard/staff/roles",
+        link: "/dashboard/staff/role",
       },
       {
         id: "employeeProfile",
@@ -252,7 +255,7 @@ const menuConfig = [
       {
         id: "trainingList",
         label: "Training List",
-        link: "/dashboard/training/training-list",
+        link: "/dashboard/training",
       },
       {
         id: "trainer",
@@ -332,13 +335,18 @@ const menuConfig = [
     subMenu: [
       {
         id: "jobs",
+
         label: "Jobs",
-        link: "/dashboard/recruitment/job",
+
+        link: "/dashboard/recruitment/jobs",
       },
+
       {
         id: "jobCreate",
+
         label: "Job Create",
-        link: "/dashboard/recruitment/job-create",
+
+        link: "/dashboard/recruitment/create-job",
       },
       {
         id: "jobApplication",
@@ -352,18 +360,20 @@ const menuConfig = [
       },
       {
         id: "jobOnboarding",
+
         label: "Job On-Boarding",
-        link: "/dashboard/recruitment/job-onboard",
+
+        link: "/dashboard/recruitment/job-on-boarding",
       },
-      {
-        id: "customQuestion",
-        label: "Custom Question",
-        link: "/dashboard/recruitment/custom-question",
-      },
+      // {
+      //   id: "customQuestion",
+      //   label: "Custom Question",
+      //   link: "/dashboard/recruitment/custom-question",
+      // },
       {
         id: "interviewSchedule",
         label: "Interview Schedule",
-        link: "h/dashboard/recruitment/interview-schedule",
+        link: "/dashboard/recruitment/interview-schedule",
       },
       {
         id: "career",
@@ -483,13 +493,15 @@ const menuConfig = [
     id: "systemSetting",
     label: "System Setting",
     iconClass: <IoSettingsOutline />,
-    link: "/dashboard/system-settings",
+    link: "/dashboard/system-setting",
   },
 ];
 
 const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
+
+  const { isDarkLayout } = useContext(ThemeContext);
 
   const sidebarRef = useRef(null);
   const location = useLocation();
@@ -608,26 +620,50 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
   return (
     <>
       <nav
-        ref={sidebarRef}
+        ref={sidebarRef} // Attach ref here
         className={`dash-sidebar light-sidebar transprent-bg ${
           sidebarVisible ? "mob-sidebar-active" : ""
         }`}
       >
         <div className="navbar-wrapper" style={{ display: "block" }}>
           <div className="m-header main-logo">
-            <Link
-              to="https://demo.workdo.io/hrmgo/dashboard"
-              className="b-brand"
-            >
+            <Link to="/dashboard" className="b-brand">
+              {/* <img
+
+        src="/storage/uploads/logo/Black-Logo.png"
+
+        alt="HRMSync"
+
+        className="logo logo-lg"
+
+        style={{height: '87px', width:'300px'}}
+
+      />
+
+      <img
+
+       src="/storage/uploads/logo/White-Logo (1).png"
+
+        alt="HRMSync"
+
+        className="logo logo-sm"
+
+        style={{height: '40px', width:'147px'}}
+
+      /> */}
+
               <img
-                src="https://demo.workdo.io/hrmgo/storage/uploads/logo/logo-dark.png?1730091906"
-                alt="HRMGo"
-                className="logo logo-lg"
-              />
-              <img
-                src="https://demo.workdo.io/hrmgo/storage/uploads/logo/logo-dark.png"
-                alt="HRMGo"
-                className="logo logo-sm"
+                src={
+                  isDarkLayout
+                    ? "/storage/uploads/logo/White-Logo (2).png"
+                    : "/storage/uploads/logo/Black-Logo (1).png"
+                }
+                alt="HRMSync"
+                className="logo"
+                style={{
+                  height: isDarkLayout ? "77px" : "77px",
+                  width: isDarkLayout ? "200px" : "200px",
+                }}
               />
             </Link>
           </div>
@@ -640,6 +676,7 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
               <div className="simplebar-height-auto-observer-wrapper">
                 <div className="simplebar-height-auto-observer"></div>
               </div>
+
               <div className="simplebar-mask">
                 <div
                   className="simplebar-offset"
@@ -675,7 +712,9 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                                 <span className="dash-micon">
                                   {menu.iconClass}
                                 </span>
+
                                 <span className="dash-mtext">{menu.label}</span>
+
                                 {menu.subMenu && (
                                   <span
                                     className={`dash-arrow ${
@@ -686,6 +725,7 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                                         activeMenu === menu.id
                                           ? "rotate(90deg)"
                                           : "rotate(0deg)",
+
                                       transition: "transform 0.3s ease",
                                     }}
                                   >
@@ -693,6 +733,7 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                                   </span>
                                 )}
                               </Link>
+
                               {menu.subMenu &&
                                 activeMenu === menu.id &&
                                 renderSubMenu(menu.subMenu)}
@@ -704,11 +745,13 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                   </div>
                 </div>
               </div>
+
               <div
                 className="simplebar-placeholder"
                 style={{ width: "auto", height: "1502px" }}
               ></div>
             </div>
+
             <div
               className="simplebar-track simplebar-horizontal"
               style={{ visibility: "hidden" }}
@@ -718,6 +761,7 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                 style={{ width: "0px", display: "none" }}
               ></div>
             </div>
+
             <div
               className="simplebar-track simplebar-vertical"
               style={{ visibility: "visible" }}
@@ -726,7 +770,9 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                 className="simplebar-scrollbar"
                 style={{
                   height: "260px",
+
                   transform: "translate3d(0px, 0px, 0px)",
+
                   display: "block",
                 }}
               ></div>
