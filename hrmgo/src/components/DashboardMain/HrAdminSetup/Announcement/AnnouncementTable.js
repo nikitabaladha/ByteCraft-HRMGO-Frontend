@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { formatDate } from "../../../../Js/custom";
+import { formatDate } from "../../../../js/custom";
 import UpdateAnnouncementModal from "./UpdateAnnouncementModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
 

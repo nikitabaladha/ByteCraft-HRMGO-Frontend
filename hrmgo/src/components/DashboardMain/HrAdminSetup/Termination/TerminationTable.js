@@ -7,7 +7,7 @@ import UpdateTerminationModal from "./UpdateTerminationModal";
 
 import { FaComment } from "react-icons/fa";
 import TerminationDescriptionModal from "./TerminationDescriptionModal";
-import { formatDate } from "../../../../Js/custom";
+import { formatDate } from "../../../../js/custom";
 import ConfirmationDialog from "../../ConfirmationDialog";
 const TerminationTable = ({
   terminations,

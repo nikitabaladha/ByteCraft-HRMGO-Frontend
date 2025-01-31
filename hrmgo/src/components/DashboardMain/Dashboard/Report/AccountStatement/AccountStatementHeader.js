@@ -12,8 +12,8 @@ const AccountStatementHeader = ({ transactions }) => {
       const filteredTransactions = transactions.flatMap(({ transactions }) =>
         transactions.map(({ account_name, date, amount }) => ({
           account_name,
-          date: new Date(date).toLocaleDateString('en-CA'),
-          amount
+          date: new Date(date).toLocaleDateString("en-CA"),
+          amount,
         }))
       );
 

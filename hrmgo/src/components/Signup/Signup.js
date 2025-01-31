@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 import postAPI from "../../api/postAPI.js";
 
-import "../custom-login.css";
-
 import background1 from "../../uploads/svg/login-1.svg";
 import background2 from "../../uploads/svg/login-2.svg";
+
+import "../custom-login.css";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -66,6 +66,7 @@ const Signup = () => {
 
   return (
     <div className="custom-login">
+      <ToastContainer />
       <div className="login-bg-img">
         <img src={background1} className="login-bg-1" alt="Background 1" />
         <img src={background2} className="login-bg-2" alt="Background 2" />
@@ -80,18 +81,17 @@ const Signup = () => {
                 <div className="custom-login-form">
                   <form onSubmit={handleSubmit}>
                     <div className="form-group mb-3">
-                      <label className="form-label">Full Name</label>
+                      <label className="form-label">Name</label>
                       <input
                         type="text"
                         className="form-control"
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        placeholder="Enter Your Full Name"
+                        placeholder="Enter your name"
                         required=""
                       />
                     </div>
-
                     <div className="form-group mb-3">
                       <label className="form-label">Email</label>
                       <input

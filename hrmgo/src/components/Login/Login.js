@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 import postAPI from "../../api/postAPI.js";
 
-import "../custom-login.css";
-
 import background1 from "../../uploads/svg/login-1.svg";
 import background2 from "../../uploads/svg/login-2.svg";
+
+import "../custom-login.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -41,7 +41,7 @@ const Login = () => {
           "userDetails",
           JSON.stringify(response.data.userDetails)
         );
-        localStorage.setItem("toastShown", "false");
+
         toast.success("Login successful!");
 
         setTimeout(() => {
@@ -64,6 +64,7 @@ const Login = () => {
 
   return (
     <div className="custom-login">
+      <ToastContainer />
       <div className="login-bg-img">
         <img src={background1} className="login-bg-1" alt="Background 1" />
         <img src={background2} className="login-bg-2" alt="Background 2" />
@@ -76,7 +77,11 @@ const Login = () => {
               <div className="card-body">
                 <h2 className="mb-3 f-w-600">Login</h2>
                 <div className="custom-login-form">
-                  <form onSubmit={handleSubmit}>
+                  <form
+                    onSubmit={handleSubmit}
+                    // class="needs-validation was-validated"
+                    // noValidate=""
+                  >
                     <div className="form-group mb-3">
                       <label className="form-label">Email</label>
                       <input

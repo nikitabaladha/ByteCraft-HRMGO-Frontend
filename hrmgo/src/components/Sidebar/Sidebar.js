@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import PerfectScrollbar from "react-perfect-scrollbar";
 
@@ -30,8 +30,7 @@ import { LuMessagesSquare } from "react-icons/lu";
 import { GoBell } from "react-icons/go";
 import { FiTable } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
-
-import { ThemeContext } from "../../ThemeProvider";
+import { ThemeContext } from "../../js/ThemeProvider";
 import { useContext } from "react";
 
 const menuConfig = [
@@ -145,11 +144,11 @@ const menuConfig = [
     iconClass: <FaRegClock />,
     link: "#!",
     subMenu: [
-      // {
-      //   id: "timeSheet",
-      //   label: "Timesheet",
-      //   link: "/dashboard/time-sheet/time-sheet",
-      // },
+      {
+        id: "timeSheet",
+        label: "Timesheet",
+        link: "/dashboard/time-sheet/time-sheet",
+      },
       {
         id: "manageLeave",
         label: "Manage Leave",
@@ -192,11 +191,11 @@ const menuConfig = [
         label: "Appraisal",
         link: "/dashboard/performance/appraisal",
       },
-      // {
-      //   id: "goalTracking",
-      //   label: "Goal Tracking",
-      //   link: "/dashboard/performance/goal-tracking",
-      // },
+      {
+        id: "goalTracking",
+        label: "Goal Tracking",
+        link: "/dashboard/performance/goal-tracking",
+      },
     ],
   },
 
@@ -277,21 +276,21 @@ const menuConfig = [
         label: "Award",
         link: "/dashboard/hr-admin-setup/award",
       },
-      // {
-      //   id: "transfer",
-      //   label: "Transfer",
-      //   link: "/dashboard/hr-admin-setup/transfer",
-      // },
+      {
+        id: "transfer",
+        label: "Transfer",
+        link: "/dashboard/hr-admin-setup/transfer",
+      },
       {
         id: "resignation",
         label: "Resignation",
         link: "/dashboard/hr-admin-setup/resignation",
       },
-      // {
-      //   id: "trip",
-      //   label: "Trip",
-      //   link: "/dashboard/hr-admin-setup/trip",
-      // },
+      {
+        id: "trip",
+        label: "Trip",
+        link: "/dashboard/hr-admin-setup/trip",
+      },
       {
         id: "promotion",
         label: "Promotion",
@@ -321,7 +320,7 @@ const menuConfig = [
       {
         id: "holidays",
         label: "Holidays",
-        link: "/dashboard/hr-admin-setup/holiday",
+        link: "/dashboard/hr-admin-setup/holidays",
       },
     ],
   },
@@ -335,17 +334,12 @@ const menuConfig = [
     subMenu: [
       {
         id: "jobs",
-
         label: "Jobs",
-
         link: "/dashboard/recruitment/jobs",
       },
-
       {
         id: "jobCreate",
-
         label: "Job Create",
-
         link: "/dashboard/recruitment/create-job",
       },
       {
@@ -360,9 +354,7 @@ const menuConfig = [
       },
       {
         id: "jobOnboarding",
-
         label: "Job On-Boarding",
-
         link: "/dashboard/recruitment/job-on-boarding",
       },
       // {
@@ -373,7 +365,7 @@ const menuConfig = [
       {
         id: "interviewSchedule",
         label: "Interview Schedule",
-        link: "/dashboard/recruitment/interview-schedule",
+        link: "/dashboard/recruitment/inrterview-schedule",
       },
       {
         id: "career",
@@ -500,11 +492,11 @@ const menuConfig = [
 const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
-
-  const { isDarkLayout } = useContext(ThemeContext);
+  // const [logoDark, setLogoDark] = useState(null);
+  // const [titleText, setTitleText] = useState("HRMGo");
 
   const sidebarRef = useRef(null);
-  const location = useLocation();
+  const { isDarkLayout } = useContext(ThemeContext);
 
   // Handle clicks outside of the sidebar
   useEffect(() => {
@@ -514,55 +506,16 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
         !sidebarRef.current.contains(event.target) &&
         sidebarVisible
       ) {
-        toggleSidebar();
+        toggleSidebar(); // Close the sidebar if clicking outside
       }
     };
 
+    // Add event listener for mouse clicks
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [sidebarVisible, toggleSidebar]);
-
-  // Set active menu and submenu based on the current path
-
-  useEffect(() => {
-    const currentPath = location.pathname;
-
-    // Find the active menu based on the current path
-
-    const activeMenuItem = menuConfig.find((menu) => {
-      if (menu.subMenu) {
-        return menu.subMenu.some((subMenu) => {
-          if (subMenu.subMenu) {
-            return subMenu.subMenu.some(
-              (subSubMenu) => subSubMenu.link === currentPath
-            );
-          }
-
-          return subMenu.link === currentPath;
-        });
-      }
-
-      return menu.link === currentPath;
-    });
-
-    if (activeMenuItem) {
-      setActiveMenu(activeMenuItem.id);
-
-      const activeSubMenuItem = activeMenuItem.subMenu?.find((subMenu) => {
-        if (subMenu.subMenu) {
-          return subMenu.subMenu.some(
-            (subSubMenu) => subSubMenu.link === currentPath
-          );
-        }
-
-        return subMenu.link === currentPath;
-      });
-
-      setActiveSubMenu(activeSubMenuItem ? activeSubMenuItem.id : null);
-    }
-  }, [location.pathname]);
 
   const toggleMenu = (menuId) => {
     setActiveMenu(activeMenu === menuId ? null : menuId);
@@ -573,6 +526,24 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
     setActiveSubMenu(activeSubMenu === subMenuId ? null : subMenuId);
   };
 
+  // useEffect(() => {
+  //   const fetchBusinessSetting = async () => {
+  //     try {
+  //       const response = await getAPI("/get-business-setting");
+  //       const {
+  //         titleText,
+  //         logoDark,
+  //       } = response.data.data;
+  //       setTitleText(titleText)
+  //       setLogoDark(logoDark || "not found");
+  //     } catch (error) {
+  //       toast.error("Error fetching business settings");
+  //     }
+  //   };
+
+  //   fetchBusinessSetting();
+  // }, []);
+
   const renderSubMenu = (subMenu) => (
     <ul className="dash-submenu">
       {subMenu.map((item) => (
@@ -580,7 +551,7 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
           {item.subMenu ? (
             <div
               className="dash-link"
-              onClick={() => toggleSubMenu(item.id)}
+              onClick={() => toggleSubMenu(item.id)} // Toggle submenu
               role="button"
               tabIndex={0}
               onKeyPress={(e) => {
@@ -619,6 +590,7 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
   );
   return (
     <>
+      {" "}
       <nav
         ref={sidebarRef} // Attach ref here
         className={`dash-sidebar light-sidebar transprent-bg ${
@@ -629,29 +601,17 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
           <div className="m-header main-logo">
             <Link to="/dashboard" className="b-brand">
               {/* <img
-
-        src="/storage/uploads/logo/Black-Logo.png"
-
-        alt="HRMSync"
-
-        className="logo logo-lg"
-
-        style={{height: '87px', width:'300px'}}
-
-      />
-
-      <img
-
-       src="/storage/uploads/logo/White-Logo (1).png"
-
-        alt="HRMSync"
-
-        className="logo logo-sm"
-
-        style={{height: '40px', width:'147px'}}
-
-      /> */}
-
+                src="/storage/uploads/logo/Black-Logo.png"
+                alt="HRMSync"
+                className="logo logo-lg"
+                style={{height: '87px', width:'300px'}}
+              />
+              <img
+               src="/storage/uploads/logo/White-Logo (1).png"
+                alt="HRMSync"
+                className="logo logo-sm"
+                style={{height: '40px', width:'147px'}}
+              /> */}
               <img
                 src={
                   isDarkLayout
@@ -676,7 +636,6 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
               <div className="simplebar-height-auto-observer-wrapper">
                 <div className="simplebar-height-auto-observer"></div>
               </div>
-
               <div className="simplebar-mask">
                 <div
                   className="simplebar-offset"
@@ -712,9 +671,7 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                                 <span className="dash-micon">
                                   {menu.iconClass}
                                 </span>
-
                                 <span className="dash-mtext">{menu.label}</span>
-
                                 {menu.subMenu && (
                                   <span
                                     className={`dash-arrow ${
@@ -725,7 +682,6 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                                         activeMenu === menu.id
                                           ? "rotate(90deg)"
                                           : "rotate(0deg)",
-
                                       transition: "transform 0.3s ease",
                                     }}
                                   >
@@ -733,7 +689,6 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                                   </span>
                                 )}
                               </Link>
-
                               {menu.subMenu &&
                                 activeMenu === menu.id &&
                                 renderSubMenu(menu.subMenu)}
@@ -745,13 +700,11 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                   </div>
                 </div>
               </div>
-
               <div
                 className="simplebar-placeholder"
                 style={{ width: "auto", height: "1502px" }}
               ></div>
             </div>
-
             <div
               className="simplebar-track simplebar-horizontal"
               style={{ visibility: "hidden" }}
@@ -761,7 +714,6 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                 style={{ width: "0px", display: "none" }}
               ></div>
             </div>
-
             <div
               className="simplebar-track simplebar-vertical"
               style={{ visibility: "visible" }}
@@ -770,9 +722,7 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                 className="simplebar-scrollbar"
                 style={{
                   height: "260px",
-
                   transform: "translate3d(0px, 0px, 0px)",
-
                   display: "block",
                 }}
               ></div>
@@ -782,7 +732,10 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
       </nav>
       {/* Overlay: Visible only when sidebarVisible is true */}
       {sidebarVisible && (
-        <div className="dash-menu-overlay" onClick={toggleSidebar}></div>
+        <div
+          className="dash-menu-overlay"
+          onClick={toggleSidebar} // Close sidebar when overlay is clicked
+        ></div>
       )}
     </>
   );

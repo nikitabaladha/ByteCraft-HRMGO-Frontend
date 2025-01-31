@@ -88,23 +88,85 @@ const DELETE_CONFIG = {
     errorMessage: "Failed to delete Warning.",
     idKey: "warningId",
   },
+  attendance: {
+    getEndpoint: (id) => `/marked-attendance-delete/${id}`,
+
+    successMessage: "Attendance successfully deleted!",
+
+    errorMessage: "Failed to delete Attendance.",
+
+    idKey: "attendanceId",
+  },
+
+  leave: {
+    getEndpoint: (id) => `/manage-leave-delete-by-id/${id}`,
+
+    successMessage: "Leave successfully deleted!",
+
+    errorMessage: "Failed to delete Leave.",
+
+    idKey: "leaveId",
+  },
+
+  app: {
+    getEndpoint: (id) => `/delete-application-by-id/${id}`,
+    successMessage: "Application successfully deleted!",
+    errorMessage: "Failed to delete Application.",
+    idKey: "appId",
+  },
+  row: {
+    getEndpoint: (id) => `/delete-job-on-board/${id}`,
+    successMessage: "Job On board successfully deleted!",
+    errorMessage: "Failed to delete Job On Board.",
+    idKey: "rowId",
+  },
+  schedule: {
+    getEndpoint: (id) => `/delete-interview-schedule/${id}`,
+    successMessage: "Job On board successfully deleted!",
+    errorMessage: "Failed to delete Job On Board.",
+    idKey: "scheduleId",
+  },
+  trainer: {
+    getEndpoint: (id) => `/traineeDelete/${id}`,
+    successMessage: "Trainer successfully deleted!",
+    errorMessage: "Failed to delete Trainer.",
+    idKey: "trainerId",
+  },
+  training: {
+    getEndpoint: (id) => `/training-list-delete/${id}`,
+    successMessage: "Training successfully deleted!",
+    errorMessage: "Failed to delete Training.",
+    idKey: "trainingId",
+  },
+  job: {
+    getEndpoint: (id) => `/delete-job/${id}`,
+    successMessage: "Training successfully deleted!",
+    errorMessage: "Failed to delete Training.",
+    idKey: "jobId",
+  },
+  role: {
+    getEndpoint: (id) => `/delete-role/${id}`,
+    successMessage: "Role successfully deleted!",
+    errorMessage: "Failed to delete Role.",
+    idKey: "roleId",
+  },
+  user: {
+    getEndpoint: (id) => `/delete-user/${id}`,
+    successMessage: "User successfully deleted!",
+    errorMessage: "Failed to delete User.",
+    idKey: "userId",
+  },
   employee: {
     getEndpoint: (id) => `/employee/${id}`,
     successMessage: "Employee successfully deleted!",
     errorMessage: "Failed to delete Employee.",
     idKey: "employeeId",
   },
-  attendance: {
-    getEndpoint: (id) => `/marked-attendance-delete/${id}`,
-    successMessage: "Attendance successfully deleted!",
-    errorMessage: "Failed to delete Attendance.",
-    idKey: "attendanceId",
-  },
-  leave: {
-    getEndpoint: (id) => `/manage-leave-delete-by-id/${id}`,
-    successMessage: "Leave successfully deleted!",
-    errorMessage: "Failed to delete Leave.",
-    idKey: "leaveId",
+  conversation: {
+    getEndpoint: (id) => `/delete-conversation/${id}`,
+    successMessage: "Conversation successfully deleted!",
+    errorMessage: "Failed to delete Conversation.",
+    idKey: "conversationId",
   },
 };
 

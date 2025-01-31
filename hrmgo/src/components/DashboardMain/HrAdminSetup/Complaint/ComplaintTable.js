@@ -6,7 +6,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import UpdateComplaintModal from "./UpdateComplaintModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-import { formatDate } from "../../../../Js/custom.js";
+import { formatDate } from "../../../../js/custom.js";
 
 const ComplaintTable = ({
   complaints,

@@ -7,7 +7,7 @@ import { FaRegClock } from "react-icons/fa";
 import { BsInfoCircle } from "react-icons/bs";
 import { IoMdAlarm } from "react-icons/io";
 
-import { formatDuration } from "../../../../../Js/custom";
+import { formatDuration } from "../../../../../js/custom";
 
 const AttendanceReport = ({ counts, duration }) => {
   const cardData = [

@@ -7,7 +7,7 @@ import getAPI from "../../../../api/getAPI.js";
 import IndicatorDetailModal from "./IndicatorDetailModal.js";
 import IndicatorUpdateModal from "./IndicatorUpdateModal.js";
 import ConfirmationDialog from "../../ConfirmationDialog";
-import { formatDate } from "../../../../Js/custom.js";
+import { formatDate } from "../../../../js/custom.js";
 
 const IndicatorTable = ({
   indicators,

@@ -5,7 +5,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 
 import UpdateWarningModal from "./UpdateWarningModal";
 
-import { formatDate } from "../../../../Js/custom";
+import { formatDate } from "../../../../js/custom";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
 const WarningTable = ({

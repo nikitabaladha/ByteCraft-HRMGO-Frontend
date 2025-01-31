@@ -5,7 +5,7 @@ import { FaRegFileAlt } from "react-icons/fa";
 import { TbCalendarClock } from "react-icons/tb";
 import { LuWallet } from "react-icons/lu";
 import { TbReportMoney } from "react-icons/tb";
-import { formatCost } from "../../../../../Js/custom";
+import { formatCost } from "../../../../../js/custom";
 
 const IncomeVsExpenseReport = ({ data, startMonth, endMonth }) => {
   const formatMonthYear = (monthYear) => {

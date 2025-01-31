@@ -7,7 +7,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import ConfirmationDialog from "../ConfirmationDialog";
 import UpdateContractModal from "./UpdateContractModal";
 import CopyContractModal from "./CopyContractModal";
-import { formatDate, formatCost } from "../../../Js/custom";
+import { formatDate, formatCost } from "../../../js/custom";
 
 const ContractTable = ({
   contracts,

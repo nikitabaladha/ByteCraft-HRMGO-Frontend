@@ -1,7 +1,7 @@
 import React from "react";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useLocation } from "react-router-dom";
-import { formatDate, formatCost } from "../../../../Js/custom";
+import { formatDate, formatCost } from "../../../../js/custom";
 import { saveAs } from "file-saver";
 import DOMPurify from "dompurify";
 import logoDark from "./logo-dark.png";

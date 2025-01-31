@@ -5,7 +5,7 @@ import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
 import UpdateHolidayModal from "./UpdateHolidayModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
-import { formatDate } from "../../../../Js/custom";
+import { formatDate } from "../../../../js/custom";
 
 const HolidayTable = ({
   holidays,

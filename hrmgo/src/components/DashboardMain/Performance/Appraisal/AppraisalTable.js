@@ -5,7 +5,7 @@ import { LuTrash2 } from "react-icons/lu";
 import React, { useState } from "react";
 import getAPI from "../../../../api/getAPI.js";
 
-import { formatDate } from "../../../../Js/custom.js";
+import { formatDate } from "../../../../js/custom.js";
 
 import AppraisalDetailModal from "./AppraisalDetailModal.js";
 import ConfirmationDialog from "../../ConfirmationDialog";

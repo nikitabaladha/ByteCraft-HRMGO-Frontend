@@ -6,7 +6,9 @@ const Footer = () => {
       <footer className="dash-footer">
         <div className="footer-wrapper">
           <div className="py-1">
-            <span className="text-muted">© 2024 HRMGo</span>
+            <span className="text-muted">
+              © {new Date().getFullYear()} HRMSync
+            </span>
           </div>
         </div>
       </footer>

@@ -1,30 +1,20 @@
 import React, { useEffect, useState } from "react";
 import getAPI from "../../../../../api/getAPI.js";
-import { formatDate } from "../../../../../Js/custom.js";
 
 const Meeting = () => {
   const [meetings, setMeetings] = useState([]);
 
   useEffect(() => {
-    const fetchMeeting = async () => {
+    const fetchMeetings = async () => {
       try {
-        const response = await getAPI(`/meeting-get-all`, {}, true);
-        if (
-          !response.hasError &&
-          response.data &&
-          Array.isArray(response.data.data)
-        ) {
-          setMeetings(response.data.data);
-          console.log("Meetings fetched successfully", response.data.data);
-        } else {
-          console.error("Invalid response format or error in response");
-        }
+        const response = await getAPI("/meeting-getall", {}, true);
+        setMeetings(response.data.meetings);
       } catch (err) {
-        console.error("Error fetching meetings:", err);
+        console.log("Failed to fetch Meetings");
       }
     };
 
-    fetchMeeting();
+    fetchMeetings();
   }, []);
 
   return (
@@ -46,8 +36,22 @@ const Meeting = () => {
               {meetings.map((meeting) => (
                 <tr key={meeting._id}>
                   <td>{meeting.title}</td>
-                  <td>{formatDate(meeting.date)}</td>
-                  <td>{meeting.time}</td>
+                  <td>
+                    {new Date(meeting.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </td>
+                  <td>
+                    {new Date("1970-01-01T" + meeting.time)
+                      .toLocaleTimeString("en-IN", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })
+                      .toUpperCase()}
+                  </td>
                 </tr>
               ))}
             </tbody>

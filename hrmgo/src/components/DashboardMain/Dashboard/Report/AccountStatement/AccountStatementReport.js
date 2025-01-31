@@ -2,8 +2,16 @@ import React from "react";
 import { TbReport, TbSitemap, TbLayoutList } from "react-icons/tb";
 import { CiCalendarDate } from "react-icons/ci";
 
-const AccountStatementReport = ({ transactions, startMonth, endMonth, type }) => {
-  const currentMonth = new Date().toLocaleString("default", { month: "short" }) + "-" + new Date().getFullYear();
+const AccountStatementReport = ({
+  transactions,
+  startMonth,
+  endMonth,
+  type,
+}) => {
+  const currentMonth =
+    new Date().toLocaleString("default", { month: "short" }) +
+    "-" +
+    new Date().getFullYear();
   const displayStartMonth = startMonth || currentMonth;
   const displayEndMonth = endMonth || currentMonth;
 
@@ -13,7 +21,9 @@ const AccountStatementReport = ({ transactions, startMonth, endMonth, type }) =>
       totalIncome: account.totalIncome,
       totalExpense: account.totalExpense,
     }))
-    .filter((account) => account.totalIncome !== 0 || account.totalExpense !== 0);
+    .filter(
+      (account) => account.totalIncome !== 0 || account.totalExpense !== 0
+    );
 
   const summaryData = [
     {
@@ -42,9 +52,10 @@ const AccountStatementReport = ({ transactions, startMonth, endMonth, type }) =>
       icon: <TbLayoutList />,
       bgColor: "bg-primary",
       title: account.accountName,
-      subtitle: type === "expense"
-        ? `Total Debit: ₹${account.totalExpense.toLocaleString("en-IN")}`
-        : `Total Credit: ₹${account.totalIncome.toLocaleString("en-IN")}`,
+      subtitle:
+        type === "expense"
+          ? `Total Debit: ₹${account.totalExpense.toLocaleString("en-IN")}`
+          : `Total Credit: ₹${account.totalIncome.toLocaleString("en-IN")}`,
     })),
   ];
 

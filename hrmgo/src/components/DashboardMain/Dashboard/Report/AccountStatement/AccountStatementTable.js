@@ -15,11 +15,13 @@ const AccountStatementTable = ({ transactions }) => {
       ...account,
       transactions: account.transactions.filter((transaction) => {
         const searchTerm = searchQuery.toLowerCase();
-        const formattedDate = new Date(transaction.date).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        }).toLowerCase();
+        const formattedDate = new Date(transaction.date)
+          .toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })
+          .toLowerCase();
 
         return (
           transaction.account_name.toLowerCase().includes(searchTerm) ||
@@ -78,20 +80,41 @@ const AccountStatementTable = ({ transactions }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {paginatedTransactions.map((transaction, transactionIndex) => (
-                        <tr key={transactionIndex}>
-                          <td>{transaction.account_name}</td>
-                          <td>{new Date(transaction.date).toLocaleDateString("en-IN", { year: "numeric", month: "short", day: "numeric" })}</td>
-                          <td>{`₹${transaction.amount.toLocaleString("en-IN")}`}</td>
-                        </tr>
-                      ))}
+                      {paginatedTransactions.map(
+                        (transaction, transactionIndex) => (
+                          <tr key={transactionIndex}>
+                            <td>{transaction.account_name}</td>
+                            <td>
+                              {new Date(transaction.date).toLocaleDateString(
+                                "en-IN",
+                                {
+                                  year: "numeric",
+                                  month: "short",
+                                  day: "numeric",
+                                }
+                              )}
+                            </td>
+                            <td>{`₹${transaction.amount.toLocaleString(
+                              "en-IN"
+                            )}`}</td>
+                          </tr>
+                        )
+                      )}
                     </tbody>
                   </table>
                 </div>
                 <div className="dataTable-bottom">
                   <div className="dataTable-info">
-                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, filteredTransactions.length)}{" "}
-                    to {Math.min(currentPage * entriesPerPage, filteredTransactions.length)}{" "}
+                    Showing{" "}
+                    {Math.min(
+                      (currentPage - 1) * entriesPerPage + 1,
+                      filteredTransactions.length
+                    )}{" "}
+                    to{" "}
+                    {Math.min(
+                      currentPage * entriesPerPage,
+                      filteredTransactions.length
+                    )}{" "}
                     of {filteredTransactions.length} entries
                   </div>
                   <nav className="dataTable-pagination">
@@ -107,25 +130,40 @@ const AccountStatementTable = ({ transactions }) => {
                         </li>
                       )}
 
-                      {Array.from({ length: Math.ceil(filteredTransactions.length / entriesPerPage) }, (_, index) => (
-                        <li
-                          key={index + 1}
-                          className={`page-item ${currentPage === index + 1 ? "active" : ""}`}
-                        >
-                          <button
-                            className="page-link"
-                            onClick={() => setCurrentPage(index + 1)}
-                            style={{
-                              backgroundColor: currentPage === index + 1 ? "#d9d9d9" : "transparent",
-                              color: "#6FD943",
-                            }}
+                      {Array.from(
+                        {
+                          length: Math.ceil(
+                            filteredTransactions.length / entriesPerPage
+                          ),
+                        },
+                        (_, index) => (
+                          <li
+                            key={index + 1}
+                            className={`page-item ${
+                              currentPage === index + 1 ? "active" : ""
+                            }`}
                           >
-                            {index + 1}
-                          </button>
-                        </li>
-                      ))}
+                            <button
+                              className="page-link"
+                              onClick={() => setCurrentPage(index + 1)}
+                              style={{
+                                backgroundColor:
+                                  currentPage === index + 1
+                                    ? "#d9d9d9"
+                                    : "transparent",
+                                color: "#6FD943",
+                              }}
+                            >
+                              {index + 1}
+                            </button>
+                          </li>
+                        )
+                      )}
 
-                      {currentPage < Math.ceil(filteredTransactions.length / entriesPerPage) && (
+                      {currentPage <
+                        Math.ceil(
+                          filteredTransactions.length / entriesPerPage
+                        ) && (
                         <li className="page-item">
                           <button
                             className="page-link next-button"

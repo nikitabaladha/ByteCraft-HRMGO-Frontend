@@ -4,7 +4,7 @@ import ViewAppraisal from "./ViewAppraisal";
 import ViewIndicator from "./ViewIndicator";
 import CompetencyTag from "./CompetencyTag";
 
-import { formatDate } from "../../../../Js/custom.js";
+import { formatDate } from "../../../../js/custom.js";
 
 const AppraisalDetailModal = ({ appraisal, closeModal }) => {
   if (!appraisal) {

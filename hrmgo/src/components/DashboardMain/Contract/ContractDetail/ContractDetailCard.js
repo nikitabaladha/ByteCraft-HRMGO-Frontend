@@ -1,5 +1,5 @@
 import React from "react";
-import { formatDate, formatCost } from "../../../../Js/custom";
+import { formatDate, formatCost } from "../../../../js/custom.js";
 
 const ContractDetailCard = ({ contractData }) => {
   if (!contractData) {

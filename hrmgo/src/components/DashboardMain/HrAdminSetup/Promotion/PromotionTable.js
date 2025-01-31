@@ -5,7 +5,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 
 import UpdatePromotionModal from "./UpdatePromotionModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
-import { formatDate } from "../../../../Js/custom";
+import { formatDate } from "../../../../js/custom";
 
 const PromotionTable = ({
   promotions,

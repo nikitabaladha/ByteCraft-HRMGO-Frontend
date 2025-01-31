@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import { TbPencil } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { formatDate } from "../../../Js/custom";
+import { formatDate } from "../../../js/custom";
 import { useNavigate } from "react-router-dom";
 import ConfirmationDialog from "../ConfirmationDialog";
 

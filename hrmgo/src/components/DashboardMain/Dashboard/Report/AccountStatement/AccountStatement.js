@@ -22,19 +22,29 @@ const AccountStatement = () => {
   };
 
   const fetchTransactions = async (startMonth, endMonth, account, type) => {
-    console.log("Fetching transactions with parameters:", { startMonth, endMonth, account, type });
-  
+    console.log("Fetching transactions with parameters:", {
+      startMonth,
+      endMonth,
+      account,
+      type,
+    });
+
     let query = "";
     if (startMonth) query += `start_month=${startMonth}&`;
     if (endMonth) query += `end_month=${endMonth}&`;
     if (account) query += `account=${account}&`;
     if (type) query += `type=${type}&`;
-  
+
     query = query.slice(0, -1); // Remove the last "&" if present
-  
+
     try {
-      const response = await getAPI(`/getaccount-by-date?${query}`, {}, true, true);
-  
+      const response = await getAPI(
+        `/getaccount-by-date?${query}`,
+        {},
+        true,
+        true
+      );
+
       if (!response.hasError && Array.isArray(response.data.data)) {
         setTransactions(response.data.data);
       } else {
@@ -48,7 +58,6 @@ const AccountStatement = () => {
   };
 
   useEffect(() => {
-
     fetchTransactions("", "", "", "income");
   }, []);
 
@@ -56,8 +65,8 @@ const AccountStatement = () => {
     setStartMonth("");
     setEndMonth("");
     setAccountName("");
-    setType("income"); 
-    fetchTransactions("", "", "", "income")
+    setType("income");
+    fetchTransactions("", "", "", "income");
   };
 
   return (
@@ -70,14 +79,14 @@ const AccountStatement = () => {
           endMonth={endMonth}
           accountName={accountName}
           type={type}
-          onReset={handleReset} 
-          
+          onReset={handleReset}
         />
-        <AccountStatementReport   
+        <AccountStatementReport
           transactions={transactions}
           startMonth={startMonth}
           endMonth={endMonth}
-          type={type}/>
+          type={type}
+        />
         <AccountStatementTable transactions={transactions} />
       </div>
     </>

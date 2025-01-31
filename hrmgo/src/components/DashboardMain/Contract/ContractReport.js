@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { formatCost } from "../../../Js/custom";
+import { formatCost } from "../../../js/custom";
 
 const ContractReport = ({
   totalValue,

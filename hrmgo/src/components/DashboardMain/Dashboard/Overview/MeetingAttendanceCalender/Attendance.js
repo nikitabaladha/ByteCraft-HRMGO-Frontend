@@ -1,53 +1,54 @@
 import React, { useEffect, useState } from "react";
-import getAPI from "../../../../../api/getAPI.js";
+import getAPI from "../../../../../api/getAPI";
+import { formatDate } from "../../../../../js/custom";
 
 const Attendance = () => {
-  const [absentEmployees, setAbsentEmployees] = useState([]);
+  const [holidays, setHolidays] = useState([]);
 
   useEffect(() => {
-    const fetchAttendance = async () => {
+    const fetchHolidayData = async () => {
       try {
-        const response = await getAPI(`/attendance-get-all`, {}, true);
+        const response = await getAPI(`/holiday`, {}, true);
         if (
           !response.hasError &&
           response.data &&
           Array.isArray(response.data.data)
         ) {
-          setAbsentEmployees(response.data.data);
-          console.log("Attendance fetched successfully", response.data.data);
+          setHolidays(response.data.data);
+          // setOriginalHolidays(response.data.data);
         } else {
           console.error("Invalid response format or error in response");
         }
       } catch (err) {
-        console.error("Error fetching attendance:", err);
+        console.error("Error fetching Holiday Data:", err);
       }
     };
 
-    fetchAttendance();
+    fetchHolidayData();
   }, []);
 
   return (
     <>
       <div className="card">
         <div className="card-header card-body table-border-style">
-          <h5>Today's Not Clock In</h5>
+          <h5>Holiday List</h5>
         </div>
         <div className="card-body" style={{ height: 324, overflow: "auto" }}>
           <div className="table-responsive">
             <table className="table">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Status</th>
+                  <th>Occasion</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
                 </tr>
               </thead>
               <tbody className="list">
-                {absentEmployees.map((employee, index) => (
+                {holidays.map((holiday, index) => (
                   <tr key={index}>
-                    <td>{employee.name}</td>
-                    <td>
-                      <span className="absent-btn">{employee.status}</span>
-                    </td>
+                    <td>{holiday.occasion}</td>
+                    <td>{formatDate(holiday.startDate)}</td>
+                    <td>{formatDate(holiday.endDate)}</td>
                   </tr>
                 ))}
               </tbody>
