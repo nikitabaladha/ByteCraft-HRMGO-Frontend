@@ -12,6 +12,17 @@
 .custom-login .custom-login-inner {
   width: 100%;
   max-width: 1300px;
+  min-height: calc(100vh - 40px);
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.custom-login .dash-header {
+  position: relative;
+  left: 0;
+  top: 0;
+  right: 0;
   box-shadow: none;
   min-height: auto;
 }
