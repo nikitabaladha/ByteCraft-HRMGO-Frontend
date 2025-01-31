@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import putAPI from '../../../api/putAPI';
 import 'react-toastify/dist/ReactToastify.css';
 
-const EditMeetingModal = ({ closeModal, meeting }) => {
+const EditMeetingModal = ({ closeModal, meeting,fetchMeetings}) => {
   const [formData, setFormData] = useState({
     title: meeting?.title || '',
     date: '', 
@@ -43,13 +43,15 @@ const EditMeetingModal = ({ closeModal, meeting }) => {
       const response = await putAPI(`/update_meeting/${meeting._id}`, updatedMeeting,true);
 
       if (!response.hasError) {
-        toast.success("Ticket updated successfully!");
+        toast.success("Meeting updated successfully!");
+        fetchMeetings();
         closeModal();
+       
       } else {
-        toast.error(`Failed to update ticket: ${response.message}`);
+        toast.error(`Failed to update meeting: ${response.message}`);
       }
     } catch (error) {
-      toast.error("An error occurred while updating ticket.");
+      toast.error("An error occurred while updating meeting.");
     }
   };
 

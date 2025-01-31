@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import getAPI from "../../../api/getAPI.js";
 import postAPI from "../../../api/postAPI.js";
 
-const MeetingModal = ({ onClose }) => {
+const MeetingModal = ({ onClose,fetchMeetings }) => {
   const [branches, setBranches] = useState([]);
   const [selectedBranch, setSelectedBranch] = useState("");
   const [departments, setDepartments] = useState([]);
@@ -137,6 +137,7 @@ const employeeOptions = [
         setTime("");
         setNote("");
         onClose();
+        fetchMeetings();
       } else {
         toast.error(`Failed to create meeting: ${response.message}`);
       }
@@ -442,6 +443,7 @@ const employeeOptions = [
                 Close
               </button>
               <button type="submit" className="btn btn-primary">
+                Submit
               </button>
             </div>
           </form>

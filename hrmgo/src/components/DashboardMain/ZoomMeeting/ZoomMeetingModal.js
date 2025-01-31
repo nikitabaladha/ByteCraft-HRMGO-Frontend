@@ -27,7 +27,7 @@ const ZoomMeetingModal = ({ onClose }) => {
 
   const [formData, setFormData] = useState({
     title: "",
-    user_id: [],
+    user_id: [],  
     start_date: "",
     duration: "",
     password: "",
@@ -57,16 +57,16 @@ const ZoomMeetingModal = ({ onClose }) => {
   };
 
   const handleUserChange = (selectedOptions) => {
-    const selectedUserNames = selectedOptions ? selectedOptions.map(option => option.label) : [];  
+    const selectedUserIds = selectedOptions ? selectedOptions.map(option => option.value) : [];  
     setFormData((prev) => ({
       ...prev,
-      user_id: selectedUserNames,
+      user_id: selectedUserIds,
     }));
   };
 
   const employeeOptions = employeeNames.map((employee) => ({
-    value: employee._id,
-    label: employee.name,
+    value: employee._id,  
+    label: employee.name,  
   }));
 
   const handleSubmit = async (e) => {
@@ -74,7 +74,7 @@ const ZoomMeetingModal = ({ onClose }) => {
 
     const zoomMeetingData = {
       title: formData.title,
-      employeeNames: formData.user_id,
+      employeeNames: formData.user_id, 
       start_date: formData.start_date,
       duration: formData.duration,
       password: formData.password,
@@ -123,7 +123,7 @@ const ZoomMeetingModal = ({ onClose }) => {
                         isMulti
                         options={employeeOptions}
                         onChange={handleUserChange}
-                        value={employeeOptions.filter(option => formData.user_id.includes(option.label))}
+                        value={employeeOptions.filter(option => formData.user_id.includes(option.value))}  // Filter by ObjectId
                         placeholder="Select Users"
                       />
                     </div>

@@ -442,10 +442,6 @@ const TicketDashboard = () => {
                   </ul>
                 </nav>
               </div>
-
-
-
-
             </div>
           </div>
         </div>

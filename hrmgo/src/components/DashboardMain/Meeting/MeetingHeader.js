@@ -5,7 +5,7 @@ import { CiCalendarDate } from "react-icons/ci";
 import MeetingModal from "./MeetingModal";
 import { useNavigate } from "react-router-dom";
 
-const MeetingHeader = () => {
+const MeetingHeader = ({fetchMeetings}) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -54,7 +54,7 @@ const MeetingHeader = () => {
             </div>
           </div>
         </div>
-      {isModalOpen && <MeetingModal onClose={toggleModal} />}
+      {isModalOpen && <MeetingModal onClose={toggleModal} fetchMeetings={fetchMeetings}/>}
     </div>
   );
 };

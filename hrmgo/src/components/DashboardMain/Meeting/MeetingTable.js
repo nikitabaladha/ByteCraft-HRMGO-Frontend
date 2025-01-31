@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
-import getAPI from "../../../api/getAPI";
 import ConfirmationDialog from "../ConfirmationDialog";
 import EditMeetingModal from "./EditMeetingmodal";
 
-const MeetingTable = () => {
-  const [meetings, setMeetings] = useState([]);
+const MeetingTable = ({meetings,setMeetings,fetchMeetings}) => {
+  
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [meetingToDelete, setMeetingToDelete] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -22,6 +21,7 @@ const MeetingTable = () => {
   const openModal = (meeting) => {
     setSelectedMeeting(meeting);
     setShowModal(true);
+    fetchMeetings();
   };
 
   const closeModal = () => {
@@ -46,19 +46,7 @@ const MeetingTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchMeetings = async () => {
-      try {
-        const response = await getAPI("/meeting-getall", {}, true);
-        setMeetings(response.data.meetings);
-      } catch (err) {
-        console.Error("Failed to fetch Meetings");
-
-      }
-    };
-
-    fetchMeetings();
-  }, []);
+ 
 
   const handleEntriesPerPageChange = (event) => {
     setEntriesPerPage(Number(event.target.value));
@@ -260,7 +248,7 @@ const MeetingTable = () => {
         />
       )}
       {showModal && selectedMeeting && (
-        <EditMeetingModal closeModal={closeModal} meeting={selectedMeeting} />
+        <EditMeetingModal closeModal={closeModal} meeting={selectedMeeting} fetchMeetings={fetchMeetings} />
       )}
     </div>
   );

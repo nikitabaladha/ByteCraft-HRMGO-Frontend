@@ -40,31 +40,6 @@ const CreateTicketModal = ({ closeModal }) => {
   };
 
 
-  // const handleFileChange = (e) => {
-  //   const { name, files } = e.target;
-
-  //   if (files.length > 0) {
-  //     const file = files[0];
-
-  //     if (name === "attachment") {
-  //       setAttachment(file);
-
-  //       if (file.type.startsWith("image/")) {
-  //         const reader = new FileReader();
-  //         reader.onloadend = () => {
-  //           setImagePreview(reader.result);
-  //         };
-  //         reader.readAsDataURL(file);
-  //       }
-  //     }
-  //   } else {
-  //     if (name === "attachment") {
-  //       setAttachment(null);
-  //       setImagePreview(null);
-  //     }
-  //   }
-  // };
-
     const handleFileChange = (event) => {
       const file = event.target.files[0];
       if (file) {
