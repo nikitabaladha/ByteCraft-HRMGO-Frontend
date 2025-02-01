@@ -168,6 +168,218 @@ const DELETE_CONFIG = {
     errorMessage: "Failed to delete Conversation.",
     idKey: "conversationId",
   },
+
+  // Shantanu
+
+  zoommeeting: {
+    getEndpoint: (id) => `/delete_zoommeeting/${id}`,
+    successMessage: "Zoom meeting successfully deleted!",
+    errorMessage: "Failed to delete Zoom meeting.",
+    idKey: "meetingId",
+  },
+
+  allowance: {
+    getEndpoint: (id) => `/deleteallowance/${id}`,
+    successMessage: "Allowance successfully deleted!",
+    errorMessage: "Failed to delete allowance.",
+    idKey: "allowanceId",
+  },
+  commission: {
+    getEndpoint: (id) => `/deletecommission/${id}`,
+    successMessage: "Commission successfully deleted!",
+    errorMessage: "Failed to delete commission.",
+    idKey: "commissionId",
+  },
+  loan: {
+    getEndpoint: (id) => `/deleteloan/${id}`,
+    successMessage: "Loan successfully deleted!",
+    errorMessage: "Failed to delete Loan.",
+    idKey: "LoanId",
+  },
+
+  otherpayment: {
+    getEndpoint: (id) => `/deleteotherpayment/${id}`,
+    successMessage: "Other deduction successfully deleted!",
+    errorMessage: "Failed to delete Other deduction.",
+    idKey: "OtherpaymentId",
+  },
+  tax: {
+    getEndpoint: (id) => `/deletetax/${id}`,
+    successMessage: "Tax successfully deleted!",
+    errorMessage: "Failed to delete Tax.",
+    idKey: "TaxId",
+  },
+  overtime: {
+    getEndpoint: (id) => `/deleteovertime/${id}`,
+    successMessage: "Overtime successfully deleted!",
+    errorMessage: "Failed to delete Overtime.",
+    idKey: "OvertimeId",
+  },
+  branch: {
+    getEndpoint: (id) => `/delete-branch/${id}`,
+    successMessage: "Branch successfully deleted!",
+    errorMessage: "Failed to delete Branch.",
+    idKey: "BranchId",
+  },
+  department: {
+    getEndpoint: (id) => `/delete-department/${id}`,
+    successMessage: "Department successfully deleted!",
+    errorMessage: "Failed to delete Department.",
+    idKey: "DepartmentId",
+  },
+  designation: {
+    getEndpoint: (id) => `/delete-designation/${id}`,
+    successMessage: "Designation successfully deleted!",
+    errorMessage: "Failed to delete Designation.",
+    idKey: "DesignationId",
+  },
+  leavetype: {
+    getEndpoint: (id) => `/delete-leave-type/${id}`,
+    successMessage: "Leave Type successfully deleted!",
+    errorMessage: "Failed to delete Leave Type.",
+    idKey: "LeaveTypeId",
+  },
+  paysliptype: {
+    getEndpoint: (id) => `/delete-payslip-type/${id}`,
+    successMessage: "Payslip Type successfully deleted!",
+    errorMessage: "Failed to delete Payslip Type.",
+    idKey: "PayslipTypeId",
+  },
+  documenttype: {
+    getEndpoint: (id) => `/delete-document-type/${id}`,
+    successMessage: "Document Type successfully deleted!",
+    errorMessage: "Failed to delete Document Type.",
+    idKey: "documentTypeId",
+  },
+  allowanceOption: {
+    getEndpoint: (id) => `/delete-allowance-option/${id}`,
+    successMessage: "Allowance Option successfully deleted!",
+    errorMessage: "Failed to delete Allowance Option.",
+    idKey: "allowanceOptionId",
+  },
+  loanOption: {
+    getEndpoint: (id) => `/delete-loan-option/${id}`,
+    successMessage: "Loan Option successfully deleted!",
+    errorMessage: "Failed to delete Loan Option.",
+    idKey: "loanOptionId",
+  },
+
+  deductionOption: {
+    getEndpoint: (id) => `/delete-deduction-option/${id}`,
+    successMessage: "Deduction Option successfully deleted!",
+    errorMessage: "Failed to delete Deduction Option.",
+    idKey: "deductionOptionId",
+  },
+  trainingType: {
+    getEndpoint: (id) => `/delete-training-type/${id}`,
+    successMessage: "Training Type successfully deleted!",
+    errorMessage: "Failed to delete Training Type.",
+    idKey: "trainingTypeId",
+  },
+  awardType: {
+    getEndpoint: (id) => `/delete-award-type/${id}`,
+    successMessage: "Award Type successfully deleted!",
+    errorMessage: "Failed to delete Award Type.",
+    idKey: "awardTypeId",
+  },
+  jobStage: {
+    getEndpoint: (id) => `/delete-job-stage/${id}`,
+    successMessage: "Job Stage successfully deleted!",
+    errorMessage: "Failed to delete Job Stage.",
+    idKey: "jobStageId",
+  },
+  terminationType: {
+    getEndpoint: (id) => `/delete-termination-type/${id}`,
+    successMessage: "Termination Type successfully deleted!",
+    errorMessage: "Failed to delete Termination Type.",
+    idKey: "terminationTypeId",
+  },
+  performanceType: {
+    getEndpoint: (id) => `/delete-performance-type/${id}`,
+    successMessage: "Performance Type successfully deleted!",
+    errorMessage: "Failed to delete Performance Type.",
+    idKey: "performanceTypeId",
+  },
+  expenseType: {
+    getEndpoint: (id) => `/delete-expense-type/${id}`,
+    successMessage: "Expense Type successfully deleted!",
+    errorMessage: "Failed to delete Expense Type.",
+    idKey: "expenseTypeId",
+  },
+  incomeType: {
+    getEndpoint: (id) => `/delete-income-type/${id}`,
+    successMessage: "Income Type successfully deleted!",
+    errorMessage: "Failed to delete Income Type.",
+    idKey: "incomeTypeId",
+  },
+  paymentType: {
+    getEndpoint: (id) => `/delete-payment-type/${id}`,
+    successMessage: "Payment Type successfully deleted!",
+    errorMessage: "Failed to delete Payment Type.",
+    idKey: "paymentTypeId",
+  },
+  contractType: {
+    getEndpoint: (id) => `/delete-contract-type/${id}`,
+    successMessage: "Contract Type successfully deleted!",
+    errorMessage: "Failed to delete Contract Type.",
+    idKey: "contractTypeId",
+  },
+  jobCategory: {
+    getEndpoint: (id) => `/delete-job-category/${id}`,
+    successMessage: "Job Category successfully deleted!",
+    errorMessage: "Failed to delete Job Category.",
+    idKey: "jobCategoryId",
+  },
+
+  account: {
+    getEndpoint: (id) => `/delete-AccountList/${id}`,
+    successMessage: "Account successfully deleted!",
+    errorMessage: "Failed to delete account.",
+    idKey: "accountId",
+  },
+
+  deposit: {
+    getEndpoint: (id) => `/delete_deposit/${id}`,
+    successMessage: "Deposit successfully deleted!",
+    errorMessage: "Failed to delete deposit.",
+    idKey: "depositId",
+  },
+  expense: {
+    getEndpoint: (id) => `/delete_expense/${id}`,
+    successMessage: "Expense successfully deleted!",
+    errorMessage: "Failed to delete expense.",
+    idKey: "expenseId",
+  },
+  transferbalance: {
+    getEndpoint: (id) => `/delete_transferbalance/${id}`,
+    successMessage: "Transfer balance successfully deleted!",
+    errorMessage: "Failed to delete transfer balance.",
+    idKey: "transferBalanceId",
+  },
+  payer: {
+    getEndpoint: (id) => `/delete_Payer/${id}`,
+    successMessage: "Payer successfully deleted!",
+    errorMessage: "Failed to delete payer.",
+    idKey: "payerId",
+  },
+  payee: {
+    getEndpoint: (id) => `/delete_Payee/${id}`,
+    successMessage: "Payee successfully deleted!",
+    errorMessage: "Failed to delete payee.",
+    idKey: "payeeId",
+  },
+  meeting: {
+    getEndpoint: (id) => `/meetings_delete/${id}`,
+    successMessage: "Meeting successfully deleted!",
+    errorMessage: "Failed to delete meeting.",
+    idKey: "meetingId",
+  },
+  ticket: {
+    getEndpoint: (id) => `/ticket-delete/${id}`,
+    successMessage: "Ticket successfully deleted!",
+    errorMessage: "Failed to delete ticket.",
+    idKey: "ticketId",
+  },
 };
 
 function ConfirmationDialog({ onClose, deleteType, id, onDeleted }) {
