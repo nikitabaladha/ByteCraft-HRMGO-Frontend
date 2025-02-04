@@ -7,7 +7,6 @@
 // import deleteAPI from "../../../../api/deleteAPI.js";
 // import { toast, ToastContainer } from "react-toastify";
 
-
 // const PayersTable = () => {
 //   const [payers, setPayers] = useState([]); // State for fetched payers
 //   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -200,7 +199,6 @@ const PayersTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPayer, setSelectedPayer] = useState(null);
 
-
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [payerToDelete, setPayerToDelete] = useState(null);
 
@@ -218,7 +216,6 @@ const PayersTable = () => {
     return (
       payer.payer_name.toLowerCase().includes(searchTerm) ||
       payer.contact_number.toString().toLowerCase().includes(searchTerm)
-
     );
   });
 
@@ -227,16 +224,13 @@ const PayersTable = () => {
     currentPage * entriesPerPage
   );
 
-
   useEffect(() => {
     const fetchPayers = async () => {
       try {
         const response = await getAPI(`/getall_Payer`, {}, true);
         setPayers(response.data.data);
-
       } catch (err) {
         console.log("Failed to fetch payers");
-
       }
     };
 
@@ -269,9 +263,6 @@ const PayersTable = () => {
     );
     closeDeleteDialog();
   };
-
-
-
 
   return (
     <div className="row">
@@ -360,7 +351,11 @@ const PayersTable = () => {
                 </div>
                 <div className="dataTable-bottom">
                   <div className="dataTable-info">
-                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, payers.length)}{" "}
+                    Showing{" "}
+                    {Math.min(
+                      (currentPage - 1) * entriesPerPage + 1,
+                      payers.length
+                    )}{" "}
                     to {Math.min(currentPage * entriesPerPage, payers.length)}{" "}
                     of {payers.length} entries
                   </div>
@@ -377,25 +372,34 @@ const PayersTable = () => {
                         </li>
                       )}
 
-                      {Array.from({ length: Math.ceil(payers.length / entriesPerPage) }, (_, index) => (
-                        <li
-                          key={index + 1}
-                          className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
-                        >
-                          <button
-                            className="page-link"
-                            onClick={() => setCurrentPage(index + 1)}
-                            style={{
-                              backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
-                              color: '#6FD943',
-                            }}
+                      {Array.from(
+                        { length: Math.ceil(payers.length / entriesPerPage) },
+                        (_, index) => (
+                          <li
+                            key={index + 1}
+                            className={`page-item ${
+                              currentPage === index + 1 ? "active" : ""
+                            }`}
                           >
-                            {index + 1}
-                          </button>
-                        </li>
-                      ))}
+                            <button
+                              className="page-link"
+                              onClick={() => setCurrentPage(index + 1)}
+                              style={{
+                                backgroundColor:
+                                  currentPage === index + 1
+                                    ? "#d9d9d9"
+                                    : "transparent",
+                                color: "#6FD943",
+                              }}
+                            >
+                              {index + 1}
+                            </button>
+                          </li>
+                        )
+                      )}
 
-                      {currentPage < Math.ceil(payers.length / entriesPerPage) && (
+                      {currentPage <
+                        Math.ceil(payers.length / entriesPerPage) && (
                         <li className="page-item">
                           <button
                             className="page-link next-button"
@@ -408,7 +412,6 @@ const PayersTable = () => {
                     </ul>
                   </nav>
                 </div>
-
               </div>
             </div>
           </div>
@@ -427,12 +430,8 @@ const PayersTable = () => {
           onDeleted={handleDeleteSuccess}
         />
       )}
-
-      <ToastContainer />
     </div>
-
   );
 };
 
 export default PayersTable;
-

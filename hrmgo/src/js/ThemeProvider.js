@@ -12,9 +12,11 @@ export const ThemeProvider = ({ children }) => {
   useEffect(() => {
     document.body.className = savedTheme;
     const themeStylesheet = document.getElementById("theme-stylesheet");
-    themeStylesheet.href = savedLayout
-      ? "/assets/css/style-dark.css"
-      : "/assets/css/style.css";
+    if (themeStylesheet) {
+      themeStylesheet.href = savedLayout
+        ? "/assets/css/style-dark.css"
+        : "/assets/css/style.css";
+    }
   }, [savedTheme, savedLayout]);
 
   useEffect(() => {

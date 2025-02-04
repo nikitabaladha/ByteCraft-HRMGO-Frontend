@@ -6,11 +6,10 @@ import ConfirmationDialog from "../../ConfirmationDialog";
 // import getAPI from "../../../../api/getAPI";
 import { ToastContainer } from "react-toastify";
 
-const PayeesTable = ({payees,setPayees,fetchPayees}) => {
+const PayeesTable = ({ payees, setPayees, fetchPayees }) => {
   // const [payees, setPayees] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPayee, setSelectedPayee] = useState(null);
-
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [payeeToDelete, setPayeeToDelete] = useState(null);
@@ -28,8 +27,7 @@ const PayeesTable = ({payees,setPayees,fetchPayees}) => {
     const searchTerm = searchQuery.toLowerCase();
     return (
       payee.payee_name.toLowerCase().includes(searchTerm) ||
-      payee.contact_number.toString().toLowerCase().includes(searchTerm) 
-    
+      payee.contact_number.toString().toLowerCase().includes(searchTerm)
     );
   });
 
@@ -37,7 +35,6 @@ const PayeesTable = ({payees,setPayees,fetchPayees}) => {
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
-
 
   // useEffect(() => {
   //   const fetchPayees = async () => {
@@ -79,9 +76,6 @@ const PayeesTable = ({payees,setPayees,fetchPayees}) => {
     );
     closeDeleteDialog();
   };
-
-
-
 
   return (
     <div className="row">
@@ -170,7 +164,11 @@ const PayeesTable = ({payees,setPayees,fetchPayees}) => {
                 </div>
                 <div className="dataTable-bottom">
                   <div className="dataTable-info">
-                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, payees.length)}{" "}
+                    Showing{" "}
+                    {Math.min(
+                      (currentPage - 1) * entriesPerPage + 1,
+                      payees.length
+                    )}{" "}
                     to {Math.min(currentPage * entriesPerPage, payees.length)}{" "}
                     of {payees.length} entries
                   </div>
@@ -187,25 +185,34 @@ const PayeesTable = ({payees,setPayees,fetchPayees}) => {
                         </li>
                       )}
 
-                      {Array.from({ length: Math.ceil(payees.length / entriesPerPage) }, (_, index) => (
-                        <li
-                          key={index + 1}
-                          className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
-                        >
-                          <button
-                            className="page-link"
-                            onClick={() => setCurrentPage(index + 1)}
-                            style={{
-                              backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
-                              color: '#6FD943',
-                            }}
+                      {Array.from(
+                        { length: Math.ceil(payees.length / entriesPerPage) },
+                        (_, index) => (
+                          <li
+                            key={index + 1}
+                            className={`page-item ${
+                              currentPage === index + 1 ? "active" : ""
+                            }`}
                           >
-                            {index + 1}
-                          </button>
-                        </li>
-                      ))}
+                            <button
+                              className="page-link"
+                              onClick={() => setCurrentPage(index + 1)}
+                              style={{
+                                backgroundColor:
+                                  currentPage === index + 1
+                                    ? "#d9d9d9"
+                                    : "transparent",
+                                color: "#6FD943",
+                              }}
+                            >
+                              {index + 1}
+                            </button>
+                          </li>
+                        )
+                      )}
 
-                      {currentPage < Math.ceil(payees.length / entriesPerPage) && (
+                      {currentPage <
+                        Math.ceil(payees.length / entriesPerPage) && (
                         <li className="page-item">
                           <button
                             className="page-link next-button"
@@ -218,14 +225,17 @@ const PayeesTable = ({payees,setPayees,fetchPayees}) => {
                     </ul>
                   </nav>
                 </div>
-
               </div>
             </div>
           </div>
         </div>
       </div>
       {isModalOpen && (
-        <EditPayeeModal payee={selectedPayee} closeModal={closeModal}   fetchPayees={fetchPayees} />
+        <EditPayeeModal
+          payee={selectedPayee}
+          closeModal={closeModal}
+          fetchPayees={fetchPayees}
+        />
       )}
 
       {isDeleteDialogOpen && (
@@ -236,8 +246,6 @@ const PayeesTable = ({payees,setPayees,fetchPayees}) => {
           onDeleted={handleDeleteSuccess}
         />
       )}
-
-      <ToastContainer />
     </div>
   );
 };

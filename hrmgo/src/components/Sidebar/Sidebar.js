@@ -89,7 +89,7 @@ const menuConfig = [
     id: "staff",
     label: "Staff",
     iconClass: <TbUsers />,
-    link: "",
+    link: "#!",
     subMenu: [
       {
         id: "user",
@@ -122,7 +122,7 @@ const menuConfig = [
     id: "payroll",
     label: "Payroll",
     iconClass: <TbReceipt />,
-    link: "",
+    link: "#!",
     subMenu: [
       {
         id: "setSalary",

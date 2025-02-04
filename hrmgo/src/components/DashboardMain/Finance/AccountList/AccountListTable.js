@@ -1,4 +1,3 @@
-
 // import React, { useEffect, useState } from "react";
 // // import axios from "axios"; // Import axios
 // import { Link } from "react-router-dom";
@@ -68,7 +67,6 @@
 //       }
 //     }
 //   };
-
 
 //   return (
 //     <div className="dash-content">
@@ -151,7 +149,7 @@
 
 // export default ManageAccount;
 
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ConfirmationDialog from "../../ConfirmationDialog.js";
@@ -161,7 +159,7 @@ import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import AccountUpdateModal from "./AccountUpdateModal.js";
 
-const ManageAccount = ({accounts,setAccounts,fetchAccounts}) => {
+const ManageAccount = ({ accounts, setAccounts, fetchAccounts }) => {
   // const [accounts, setAccounts] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -189,8 +187,6 @@ const ManageAccount = ({accounts,setAccounts,fetchAccounts}) => {
     );
   });
 
-
-
   const paginatedAccounts = filteredAccounts.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
@@ -213,18 +209,15 @@ const ManageAccount = ({accounts,setAccounts,fetchAccounts}) => {
     closeDeleteDialog();
   };
 
-
   const handleEdit = (account) => {
     setSelectedAccount(account);
     fetchAccounts();
     setIsModalOpen(true);
   };
 
-
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
 
   return (
     <div className="row">
@@ -277,7 +270,9 @@ const ManageAccount = ({accounts,setAccounts,fetchAccounts}) => {
                       {paginatedAccounts.map((account) => (
                         <tr key={account._id}>
                           <td>{account.account_name}</td>
-                          <td>{`₹${new Intl.NumberFormat('en-IN').format(account.initial_balance)}`}</td>
+                          <td>{`₹${new Intl.NumberFormat("en-IN").format(
+                            account.initial_balance
+                          )}`}</td>
                           <td>{account.account_number}</td>
                           <td>{account.branch_code}</td>
                           <td>{account.bank_branch}</td>
@@ -298,7 +293,9 @@ const ManageAccount = ({accounts,setAccounts,fetchAccounts}) => {
                                 </div>
                                 <div className="action-btn bg-danger">
                                   <button
-                                    onClick={() => openDeleteDialog(account._id)}
+                                    onClick={() =>
+                                      openDeleteDialog(account._id)
+                                    }
                                     className="mx-3 btn btn-sm align-items-center bs-pass-para"
                                     data-bs-toggle="tooltip"
                                     title="Delete"
@@ -318,7 +315,11 @@ const ManageAccount = ({accounts,setAccounts,fetchAccounts}) => {
                 </div>
                 <div className="dataTable-bottom">
                   <div className="dataTable-info">
-                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, accounts.length)}{" "}
+                    Showing{" "}
+                    {Math.min(
+                      (currentPage - 1) * entriesPerPage + 1,
+                      accounts.length
+                    )}{" "}
                     to {Math.min(currentPage * entriesPerPage, accounts.length)}{" "}
                     of {accounts.length} entries
                   </div>
@@ -335,25 +336,34 @@ const ManageAccount = ({accounts,setAccounts,fetchAccounts}) => {
                         </li>
                       )}
 
-                      {Array.from({ length: Math.ceil(accounts.length / entriesPerPage) }, (_, index) => (
-                        <li
-                          key={index + 1}
-                          className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
-                        >
-                          <button
-                            className="page-link"
-                            onClick={() => setCurrentPage(index + 1)}
-                            style={{
-                              backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
-                              color: '#6FD943',
-                            }}
+                      {Array.from(
+                        { length: Math.ceil(accounts.length / entriesPerPage) },
+                        (_, index) => (
+                          <li
+                            key={index + 1}
+                            className={`page-item ${
+                              currentPage === index + 1 ? "active" : ""
+                            }`}
                           >
-                            {index + 1}
-                          </button>
-                        </li>
-                      ))}
+                            <button
+                              className="page-link"
+                              onClick={() => setCurrentPage(index + 1)}
+                              style={{
+                                backgroundColor:
+                                  currentPage === index + 1
+                                    ? "#d9d9d9"
+                                    : "transparent",
+                                color: "#6FD943",
+                              }}
+                            >
+                              {index + 1}
+                            </button>
+                          </li>
+                        )
+                      )}
 
-                      {currentPage < Math.ceil(accounts.length / entriesPerPage) && (
+                      {currentPage <
+                        Math.ceil(accounts.length / entriesPerPage) && (
                         <li className="page-item">
                           <button
                             className="page-link next-button"
@@ -368,7 +378,6 @@ const ManageAccount = ({accounts,setAccounts,fetchAccounts}) => {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -387,11 +396,8 @@ const ManageAccount = ({accounts,setAccounts,fetchAccounts}) => {
           onDeleted={handleDeleteSuccess}
         />
       )}
-
-      <ToastContainer />
     </div>
   );
 };
 
 export default ManageAccount;
-

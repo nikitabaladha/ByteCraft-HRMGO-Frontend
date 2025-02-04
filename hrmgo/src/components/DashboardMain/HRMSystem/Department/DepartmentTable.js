@@ -108,7 +108,7 @@ const DepartmentTable = () => {
                         <option value="15">15</option>
                         <option value="20">20</option>
                         <option value="25">25</option>
-                      </select>{" "}
+                      </select>
                       entries per page
                     </label>
                   </div>
