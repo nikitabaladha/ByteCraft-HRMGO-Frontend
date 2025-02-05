@@ -23,8 +23,8 @@ const PersonalInfo = () => {
           const user = response.data.data;
           // const profile = response.data.data;
           const profilePath = user.profileImage.startsWith("/")
-            ? `http://localhost:3001${user.profileImage}`
-            : `http://localhost:3001/Images/profilePicture/default-avatar.png`;
+            ? `${process.env.REACT_APP_API_URL_FOR_IMAGE}${user.profileImage}`
+            : `${process.env.REACT_APP_API_URL_FOR_IMAGE}/Images/profilePicture/default-avatar.png`;
 
           setFormData({
             name: user.name || "",

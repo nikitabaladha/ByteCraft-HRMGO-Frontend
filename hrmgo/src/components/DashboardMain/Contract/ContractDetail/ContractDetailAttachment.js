@@ -171,7 +171,7 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
                         <div className="col">
                           <h6 className="text-sm mb-0">
                             <Link
-                              to={`http://localhost:3001/contract-attachment/download/${attachment.id}`}
+                              to={`${process.env.REACT_APP_API_URL_FOR_IMAGE}/contract-attachment/download/${attachment.id}`}
                               download
                               target="_blank"
                               rel="noopener noreferrer"

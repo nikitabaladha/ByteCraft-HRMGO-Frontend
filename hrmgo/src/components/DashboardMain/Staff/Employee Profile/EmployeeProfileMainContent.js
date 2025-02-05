@@ -242,11 +242,11 @@ const EmployeeProfileMainContent = ({
               <div className="card-body">
                 <div className="avatar">
                   <Link
-                    href={`http://localhost:3001${employee.employeePhotoUrl}`}
+                    href={`${process.env.REACT_APP_API_URL_FOR_IMAGE}${employee.employeePhotoUrl}`}
                     target="_blank"
                   >
                     <img
-                      src={`http://localhost:3001${employee.employeePhotoUrl}`}
+                      src={`${process.env.REACT_APP_API_URL_FOR_IMAGE}${employee.employeePhotoUrl}`}
                       className="img-fluid rounded border-2 border border-primary"
                       width="120px"
                       style={{ height: "120px" }}

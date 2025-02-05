@@ -267,7 +267,7 @@ const Messagess = () => {
                                         className="avatar av-m"
                                         style={{
                                           backgroundImage: `url(
-                                          http://localhost:3001${user?.profileImage}
+                                            ${process.env.REACT_APP_API_URL_FOR_IMAGE}${user?.profileImage}
                                         )`,
                                         }}
                                       />
@@ -321,7 +321,7 @@ const Messagess = () => {
                                     className="avatar av-m"
                                     style={{
                                       backgroundImage: `url(
-                                      http://localhost:3001${item.user.profileImage}
+                                        ${process.env.REACT_APP_API_URL_FOR_IMAGE}${item.user.profileImage}
                                     )`,
                                     }}
                                   />
@@ -353,7 +353,7 @@ const Messagess = () => {
                             style={{
                               margin: "-5px 10px",
                               backgroundImage: `url(
-                              http://localhost:3001${messages?.receiver?.profileImage}
+                                ${process.env.REACT_APP_API_URL_FOR_IMAGE}${messages?.receiver?.profileImage}
                             )`,
                             }}
                           ></div>
@@ -445,7 +445,7 @@ const Messagess = () => {
                                                     }}
                                                     onClick={() => {
                                                       fetch(
-                                                        `http://localhost:3001${messageFile}`
+                                                        `${process.env.REACT_APP_API_URL_FOR_IMAGE}${messageFile}`
                                                       )
                                                         .then((response) =>
                                                           response.blob()
@@ -498,7 +498,7 @@ const Messagess = () => {
                                               }}
                                             >
                                               <img
-                                                src={`http://localhost:3001${messageFile}`}
+                                                src={`${process.env.REACT_APP_API_URL_FOR_IMAGE}${messageFile}`}
                                                 alt="Attached file"
                                                 style={{
                                                   width: "100%",
@@ -584,7 +584,7 @@ const Messagess = () => {
                                                   }}
                                                   onClick={() => {
                                                     fetch(
-                                                      `http://localhost:3001${messageFile}`
+                                                      `${process.env.REACT_APP_API_URL_FOR_IMAGE}${messageFile}`
                                                     )
                                                       .then((response) =>
                                                         response.blob()
@@ -636,7 +636,7 @@ const Messagess = () => {
                                             }}
                                           >
                                             <img
-                                              src={`http://localhost:3001${messageFile}`}
+                                              src={`${process.env.REACT_APP_API_URL_FOR_IMAGE}${messageFile}`}
                                               alt="Attached file"
                                               style={{
                                                 width: "100%",
@@ -678,7 +678,7 @@ const Messagess = () => {
                                                     }}
                                                     onClick={() => {
                                                       fetch(
-                                                        `http://localhost:3001${messageFile}`
+                                                        `${process.env.REACT_APP_API_URL_FOR_IMAGE}${messageFile}`
                                                       )
                                                         .then((response) =>
                                                           response.blob()

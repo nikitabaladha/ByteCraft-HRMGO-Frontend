@@ -208,7 +208,7 @@ const ZoomMeetingTable = () => {
                                 meeting.employeeNames.map((employee) => (
                                   <img
                                     key={employee._id}
-                                    src={`http://localhost:3001${employee.employeePhotoUrl}`}
+                                    src={`${process.env.REACT_APP_API_URL_FOR_IMAGE}${employee.employeePhotoUrl}`}
                                     alt={employee.name}
                                     className="employee-photo"
                                     style={{
