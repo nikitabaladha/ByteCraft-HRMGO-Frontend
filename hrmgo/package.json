@@ -1,5 +1,5 @@
 {
-  "name": "hrmgo",
+  "name": "hrmsync",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -29,6 +29,7 @@
     "bootstrap-switch-button": "^1.1.0",
     "choices.js": "^11.0.3",
     "cookieconsent": "^3.1.1",
+    "cra-template": "1.2.0",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "docx": "^9.1.1",
@@ -37,6 +38,7 @@
     "feather-icons": "^4.29.2",
     "file-saver": "^2.0.5",
     "hrmgo": "file:",
+    "hrmsync": "file:",
     "html-docx-js": "^0.3.1",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.2",
@@ -56,7 +58,7 @@
     "react-perfect-scrollbar": "^1.5.8",
     "react-quill": "^2.0.0",
     "react-router-dom": "^7.1.5",
-    "react-scripts": "^5.0.1",
+    "react-scripts": "5.0.1",
     "react-select": "^5.10.0",
     "react-toastify": "^11.0.3",
     "simple-datatables": "^9.2.2",
