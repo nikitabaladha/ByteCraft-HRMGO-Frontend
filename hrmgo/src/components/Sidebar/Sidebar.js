@@ -74,11 +74,6 @@ const menuConfig = [
             label: "Payroll",
             link: "/dashboard/report/payroll",
           },
-          {
-            id: "timesheet",
-            label: "Timesheet",
-            link: "/dashboard/report/time-sheet",
-          },
         ],
       },
     ],
@@ -186,11 +181,6 @@ const menuConfig = [
         label: "Appraisal",
         link: "/dashboard/performance/appraisal",
       },
-      {
-        id: "goalTracking",
-        label: "Goal Tracking",
-        link: "/dashboard/performance/goal-tracking",
-      },
     ],
   },
 
@@ -271,21 +261,13 @@ const menuConfig = [
         label: "Award",
         link: "/dashboard/hr-admin-setup/award",
       },
-      {
-        id: "transfer",
-        label: "Transfer",
-        link: "/dashboard/hr-admin-setup/transfer",
-      },
+
       {
         id: "resignation",
         label: "Resignation",
         link: "/dashboard/hr-admin-setup/resignation",
       },
-      {
-        id: "trip",
-        label: "Trip",
-        link: "/dashboard/hr-admin-setup/trip",
-      },
+
       {
         id: "promotion",
         label: "Promotion",
@@ -315,7 +297,7 @@ const menuConfig = [
       {
         id: "holidays",
         label: "Holidays",
-        link: "/dashboard/hr-admin-setup/holidays",
+        link: "/dashboard/hr-admin-setup/holiday",
       },
     ],
   },
@@ -388,12 +370,12 @@ const menuConfig = [
   },
 
   // Event
-  {
-    id: "event",
-    label: "Event",
-    iconClass: <TbCalendarEvent />,
-    link: "/dashboard/event",
-  },
+  // {
+  //   id: "event",
+  //   label: "Event",
+  //   iconClass: <TbCalendarEvent />,
+  //   link: "/dashboard/event",
+  // },
 
   // Meeting
   {
@@ -412,28 +394,28 @@ const menuConfig = [
   },
 
   // Assets
-  {
-    id: "assets",
-    label: "Assets",
-    iconClass: <TbMedicalCross />,
-    link: "/dashboard/assets",
-  },
+  // {
+  //   id: "assets",
+  //   label: "Assets",
+  //   iconClass: <TbMedicalCross />,
+  //   link: "/dashboard/assets",
+  // },
 
   // Document
-  {
-    id: "document",
-    label: "Document",
-    iconClass: <CiFileOn />,
-    link: "/dashboard/upload",
-  },
+  // {
+  //   id: "document",
+  //   label: "Document",
+  //   iconClass: <CiFileOn />,
+  //   link: "/dashboard/upload",
+  // },
 
   // Email Templates
-  {
-    id: "emailTemplates",
-    label: "Email Templates",
-    iconClass: <TbTemplate />,
-    link: "/dashboard/email-templates",
-  },
+  // {
+  //   id: "emailTemplates",
+  //   label: "Email Templates",
+  //   iconClass: <TbTemplate />,
+  //   link: "/dashboard/email-templates",
+  // },
 
   // Company Policy
   {
@@ -452,12 +434,12 @@ const menuConfig = [
   },
 
   // Notification Template
-  {
-    id: "notificationTemplate",
-    label: "Notification Template",
-    iconClass: <GoBell />,
-    link: "/dashboard/notification-templates",
-  },
+  // {
+  //   id: "notificationTemplate",
+  //   label: "Notification Template",
+  //   iconClass: <GoBell />,
+  //   link: "/dashboard/notification-templates",
+  // },
 
   // HRM System Setup
   {
@@ -468,12 +450,6 @@ const menuConfig = [
   },
 
   // Landing Page
-  {
-    id: "landingPage",
-    label: "Landing Page",
-    iconClass: <TbLicense />,
-    link: "/dashboard/landing-page",
-  },
 
   // System Setting
   {

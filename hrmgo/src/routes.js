@@ -272,6 +272,7 @@ const AppRoutes = () => {
         <Route path="hr-admin-setup/warning" element={<Warning />} />
         <Route path="hr-admin-setup/termination" element={<Termination />} />
         <Route path="hr-admin-setup/announcement" element={<Announcement />} />
+
         <Route path="hr-admin-setup/holiday" element={<Holiday />}>
           <Route path="calendar" element={<HolidayCalendarView />} />
         </Route>
