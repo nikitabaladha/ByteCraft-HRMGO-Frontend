@@ -90,24 +90,16 @@ const DELETE_CONFIG = {
   },
   attendance: {
     getEndpoint: (id) => `/marked-attendance-delete/${id}`,
-
     successMessage: "Attendance successfully deleted!",
-
     errorMessage: "Failed to delete Attendance.",
-
     idKey: "attendanceId",
   },
-
   leave: {
     getEndpoint: (id) => `/manage-leave-delete-by-id/${id}`,
-
     successMessage: "Leave successfully deleted!",
-
     errorMessage: "Failed to delete Leave.",
-
     idKey: "leaveId",
   },
-
   app: {
     getEndpoint: (id) => `/delete-application-by-id/${id}`,
     successMessage: "Application successfully deleted!",
@@ -177,7 +169,6 @@ const DELETE_CONFIG = {
     errorMessage: "Failed to delete Zoom meeting.",
     idKey: "meetingId",
   },
-
   allowance: {
     getEndpoint: (id) => `/deleteallowance/${id}`,
     successMessage: "Allowance successfully deleted!",
@@ -337,7 +328,6 @@ const DELETE_CONFIG = {
     errorMessage: "Failed to delete account.",
     idKey: "accountId",
   },
-
   deposit: {
     getEndpoint: (id) => `/delete_deposit/${id}`,
     successMessage: "Deposit successfully deleted!",
