@@ -145,11 +145,6 @@ const menuConfig = [
     link: "#!",
     subMenu: [
       {
-        id: "timeSheet",
-        label: "Timesheet",
-        link: "/dashboard/time-sheet/time-sheet",
-      },
-      {
         id: "manageLeave",
         label: "Manage Leave",
         link: "/dashboard/time-sheet/manage-leave",
