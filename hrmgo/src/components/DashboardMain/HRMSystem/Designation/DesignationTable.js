@@ -4,7 +4,7 @@ import Sidebar from "../HRMSystemSidebar";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import EditDepartmentModal from "./EditDesignationModal";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import getAPI from "../../../../api/getAPI";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
@@ -29,9 +29,10 @@ const DesignationTable = () => {
     console.log(designation);
     return (
       designation.branchId.branchName.toLowerCase().includes(searchTerm) ||
-      designation.departmentId.departmentName.toLowerCase().includes(searchTerm) ||
+      designation.departmentId.departmentName
+        .toLowerCase()
+        .includes(searchTerm) ||
       designation.designationName.toLowerCase().includes(searchTerm)
-
     );
   });
 
@@ -39,7 +40,6 @@ const DesignationTable = () => {
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
-
 
   const openDeleteDialog = (designationId) => {
     setDesignationToDelete(designationId);
@@ -53,7 +53,9 @@ const DesignationTable = () => {
 
   const handleDeleteSuccess = (deletedDesignationId) => {
     setDesignations((prevDesignations) =>
-      prevDesignations.filter((designation) => designation._id !== deletedDesignationId)
+      prevDesignations.filter(
+        (designation) => designation._id !== deletedDesignationId
+      )
     );
     closeDeleteDialog();
   };
@@ -74,9 +76,6 @@ const DesignationTable = () => {
 
     fetchDesignations();
   }, []);
-
-
-
 
   const handleEditClick = (designation) => {
     setSelectedDesignation(designation);
@@ -174,7 +173,9 @@ const DesignationTable = () => {
                                       value="OYzJQFXWqx1d9iWbHPH2ntDxxtmt4I8jLovG1Fuv"
                                     />
                                     <Link
-                                      onClick={() => openDeleteDialog(designation._id)}
+                                      onClick={() =>
+                                        openDeleteDialog(designation._id)
+                                      }
                                       className="mx-3 btn btn-sm align-items-center bs-pass-para"
                                     >
                                       <span className="text-white">
@@ -193,8 +194,16 @@ const DesignationTable = () => {
                 </div>
                 <div className="dataTable-bottom">
                   <div className="dataTable-info">
-                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, designations.length)}{" "}
-                    to {Math.min(currentPage * entriesPerPage, designations.length)}{" "}
+                    Showing{" "}
+                    {Math.min(
+                      (currentPage - 1) * entriesPerPage + 1,
+                      designations.length
+                    )}{" "}
+                    to{" "}
+                    {Math.min(
+                      currentPage * entriesPerPage,
+                      designations.length
+                    )}{" "}
                     of {designations.length} entries
                   </div>
                   <nav className="dataTable-pagination">
@@ -210,25 +219,38 @@ const DesignationTable = () => {
                         </li>
                       )}
 
-                      {Array.from({ length: Math.ceil(designations.length / entriesPerPage) }, (_, index) => (
-                        <li
-                          key={index + 1}
-                          className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
-                        >
-                          <button
-                            className="page-link"
-                            onClick={() => setCurrentPage(index + 1)}
-                            style={{
-                              backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
-                              color: '#6FD943',
-                            }}
+                      {Array.from(
+                        {
+                          length: Math.ceil(
+                            designations.length / entriesPerPage
+                          ),
+                        },
+                        (_, index) => (
+                          <li
+                            key={index + 1}
+                            className={`page-item ${
+                              currentPage === index + 1 ? "active" : ""
+                            }`}
                           >
-                            {index + 1}
-                          </button>
-                        </li>
-                      ))}
+                            <button
+                              className="page-link"
+                              onClick={() => setCurrentPage(index + 1)}
+                              style={{
+                                backgroundColor:
+                                  currentPage === index + 1
+                                    ? "#d9d9d9"
+                                    : "transparent",
+                                color: "#6FD943",
+                              }}
+                            >
+                              {index + 1}
+                            </button>
+                          </li>
+                        )
+                      )}
 
-                      {currentPage < Math.ceil(designations.length / entriesPerPage) && (
+                      {currentPage <
+                        Math.ceil(designations.length / entriesPerPage) && (
                         <li className="page-item">
                           <button
                             className="page-link next-button"
