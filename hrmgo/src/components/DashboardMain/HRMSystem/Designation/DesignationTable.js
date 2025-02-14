@@ -138,8 +138,8 @@ const DesignationTable = () => {
                     <tbody>
                       {paginatedDesignations?.map((designation) => (
                         <tr key={designation._id}>
-                          <td>{designation.branchId.branchName}</td>
-                          <td>{designation.departmentId.departmentName}</td>
+                          <td>{designation?.branchId?.branchName}</td>
+                          <td>{designation?.departmentId?.departmentName}</td>
                           <td>{designation.designationName}</td>
                           <td className="Action">
                             <div className="dt-buttons">

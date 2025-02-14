@@ -28,7 +28,7 @@ const DepartmentTable = () => {
     const searchTerm = searchQuery.toLowerCase();
 
     return (
-      department?.branchId?.branchName?.toLowerCase()?.includes(searchTerm) ||
+      department?.branchId?.branchName?.toLowerCase().includes(searchTerm) ||
       department?.departmentName?.toLowerCase()?.includes(searchTerm)
     );
   });
@@ -108,7 +108,7 @@ const DepartmentTable = () => {
                         <option value="15">15</option>
                         <option value="20">20</option>
                         <option value="25">25</option>
-                      </select>
+                      </select>{" "}
                       entries per page
                     </label>
                   </div>
@@ -134,8 +134,8 @@ const DepartmentTable = () => {
                     <tbody>
                       {paginatedDepartments.map((department) => (
                         <tr key={department._id}>
-                          <td>{department.branchId.branchName}</td>
-                          <td>{department.departmentName}</td>
+                          <td>{department?.branchId?.branchName}</td>
+                          <td>{department?.departmentName}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>
