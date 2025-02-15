@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import getAPI from "../../../../../api/getAPI.js";
 
-import IncomeVsExpenseHeader from "./IncomVsExpenseHeader";
+import IncomeVsExpenseHeader from "./IncomeVsExpenseHeader";
 import IncomeVsExpenseSearchForm from "./IncomeVsExpenseSearchForm";
 import IncomeVsExpenseReport from "./IncomeVsExpenseReport";
 import IncomeVsExpenseChart from "./IncomeVsExpenseChart";
@@ -10,6 +10,29 @@ const IncomeVsExpense = () => {
   const [data, setData] = useState([]);
   const [startMonth, setStartMonth] = useState(null);
   const [endMonth, setEndMonth] = useState(null);
+
+  const fetchDefaultData = async () => {
+    try {
+      const response = await getAPI(
+        "/income-expense-chart-get-all",
+        { params: {} },
+        true,
+        true
+      );
+
+      const responseData = response.data.data;
+      setData(responseData);
+      if (responseData.length) {
+        const firstMonth = responseData[0].categories;
+        const lastMonth = responseData[responseData.length - 1].categories;
+
+        setStartMonth(firstMonth);
+        setEndMonth(lastMonth);
+      }
+    } catch (error) {
+      console.error("Error fetching default data:", error);
+    }
+  };
 
   const fetchData = async (startMonth, endMonth) => {
     try {
@@ -41,7 +64,7 @@ const IncomeVsExpense = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchDefaultData();
   }, []);
 
   const handleSearch = (startMonth, endMonth) => {
@@ -52,6 +75,10 @@ const IncomeVsExpense = () => {
     setStartMonth(startMonth);
     setEndMonth(endMonth);
     fetchData(startMonth, endMonth);
+  };
+
+  const handleReset = () => {
+    fetchDefaultData();
   };
 
   return (
@@ -65,7 +92,10 @@ const IncomeVsExpense = () => {
 
       {/* Second row */}
       <div className="row">
-        <IncomeVsExpenseSearchForm onSearch={handleSearch} />
+        <IncomeVsExpenseSearchForm
+          onSearch={handleSearch}
+          onReset={handleReset}
+        />
 
         {/* Third row */}
         <div id="printableArea">

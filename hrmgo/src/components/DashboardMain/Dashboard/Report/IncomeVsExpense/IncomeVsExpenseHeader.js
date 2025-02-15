@@ -67,7 +67,6 @@ const IncomeVsExpenseHeader = () => {
                 >
                   <span className="btn-inner--icon">
                     <MdOutlineFileDownload />
-                    {/* i want to use this button and download pdf  */}
                   </span>
                 </Link>
               </div>

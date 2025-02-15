@@ -5,15 +5,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { TbRefresh } from "react-icons/tb";
 import { IoIosSearch } from "react-icons/io";
 
-const IncomeVsExpenseSearchForm = ({ onSearch }) => {
+const IncomeVsExpenseSearchForm = ({ onSearch, onReset }) => {
   const [startMonth, setStartMonth] = useState("");
   const [endMonth, setEndMonth] = useState("");
 
   useEffect(() => {
     const today = new Date();
-
     const formattedMonth = today.toISOString().slice(0, 7);
-
     setStartMonth(formattedMonth);
     setEndMonth(formattedMonth);
   }, []);
@@ -23,9 +21,20 @@ const IncomeVsExpenseSearchForm = ({ onSearch }) => {
       toast.error("Please select both start and end months.");
       return;
     }
-
     onSearch(startMonth, endMonth);
   };
+
+  const handleReset = (e) => {
+    e.preventDefault();
+
+    const today = new Date();
+    const formattedMonth = today.toISOString().slice(0, 7);
+    setStartMonth(formattedMonth);
+    setEndMonth(formattedMonth);
+
+    onReset();
+  };
+
   return (
     <>
       <div className="col-sm-12">
@@ -34,9 +43,9 @@ const IncomeVsExpenseSearchForm = ({ onSearch }) => {
             <div className="card-body">
               <form
                 method="GET"
-                action="/report/income-expense"
                 acceptCharset="UTF-8"
                 id="report_income_expense"
+                onSubmit={(e) => e.preventDefault()}
               >
                 <div className="row align-items-center justify-content-end">
                   <div className="col-xl-10">
@@ -99,11 +108,12 @@ const IncomeVsExpenseSearchForm = ({ onSearch }) => {
                           </span>
                         </button>
                         <button
-                          to="/report/income-expense"
+                          type="button"
                           className="btn btn-sm btn-danger"
                           data-bs-toggle="tooltip"
                           title=""
                           data-bs-original-title="Reset"
+                          onClick={handleReset}
                         >
                           <span className="btn-inner--icon">
                             <TbRefresh />
