@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify'; 
 import putAPI from "../../../../api/putAPI.js";
 
-const EditPayslipTypeModal = ({ closeModal, payslipType }) => {
+const EditPayslipTypeModal = ({ closeModal, payslipType, fetchPayslipTypes }) => {
     const [name, setName] = useState('');
 
     useEffect(() => {
@@ -34,6 +34,7 @@ const EditPayslipTypeModal = ({ closeModal, payslipType }) => {
             if (!response.hasError) {
                 toast.success("Payslip type updated successfully");
                 closeModal();
+                fetchPayslipTypes();
             } else {
                 toast.error(`Failed to update payslip type: ${response.message}`);
             }

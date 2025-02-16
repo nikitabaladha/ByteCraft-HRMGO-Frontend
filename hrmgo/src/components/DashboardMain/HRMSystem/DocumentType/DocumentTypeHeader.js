@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreateDocumentTypeModal from "./CreateDocumentTypeModal"; 
 
-const DocumentTypeHeader = () => {
+const DocumentTypeHeader = ({fetchDocumentTypes}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const DocumentTypeHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateDocumentTypeModal closeModal={closeModal} />} 
+      {showModal && <CreateDocumentTypeModal closeModal={closeModal} fetchDocumentTypes={fetchDocumentTypes} />} 
     </>
   );
 };

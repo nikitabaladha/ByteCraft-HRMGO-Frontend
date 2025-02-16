@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import putAPI from "../../../../api/putAPI.js";
 
-const EditBranchModal = ({ closeModal, branch }) => {
+const EditBranchModal = ({ closeModal, branch, fetchBranches }) => {
   const [name, setName] = useState("");
 
   useEffect(() => {
@@ -33,6 +33,7 @@ const EditBranchModal = ({ closeModal, branch }) => {
       if (!response.hasError) {
         toast.success("Branch updated successfully");
         closeModal();
+        fetchBranches();
       } else {
         toast.error(`Failed to update branch: ${response.message}`);
       }

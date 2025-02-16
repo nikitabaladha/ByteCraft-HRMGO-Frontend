@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreateContractTypeModal from "./CreateContractTypeModal";
 
-const ContractTypeHeader = () => {
+const ContractTypeHeader = ({fetchContractTypes}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const ContractTypeHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateContractTypeModal closeModal={closeModal} />}
+      {showModal && <CreateContractTypeModal closeModal={closeModal} fetchContractTypes={fetchContractTypes} />}
     </>
   );
 };

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import EditLeaveTypeModal from "./EditLeaveTypeModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const LeaveTypeTable = () => {
+const LeaveTypeTable = ({leaveTypes, setLeaveTypes, fetchLeaveTypes}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLeaveType, setSelectedLeaveType] = useState(null);
-  const [leaveTypes, setLeaveTypes] = useState([]);
+  // const [leaveTypes, setLeaveTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [leaveTypeToDelete, setLeaveTypeToDelete] = useState(null);
 
@@ -57,22 +57,22 @@ const LeaveTypeTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchLeaveTypes = async () => {
-      try {
-        const response = await getAPI("/leave-type-get-all", true);
-        if (!response.hasError) {
-          setLeaveTypes(response.data.data);
-        } else {
-          toast.error(`Failed to fetch leave types: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching leave types.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchLeaveTypes = async () => {
+  //     try {
+  //       const response = await getAPI("/leave-type-get-all", true);
+  //       if (!response.hasError) {
+  //         setLeaveTypes(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch leave types: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching leave types.");
+  //     }
+  //   };
 
-    fetchLeaveTypes();
-  }, []);
+  //   fetchLeaveTypes();
+  // }, []);
 
   const handleEdit = (leaveType) => {
     setSelectedLeaveType(leaveType);
@@ -236,6 +236,7 @@ const LeaveTypeTable = () => {
         <EditLeaveTypeModal
           closeModal={handleCloseModal}
           leaveType={selectedLeaveType}
+          fetchLeaveTypes={fetchLeaveTypes}
         />
       )}
 

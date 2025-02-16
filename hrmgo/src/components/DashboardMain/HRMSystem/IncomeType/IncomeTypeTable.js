@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import EditIncomeTypeModal from "./EditIncomeTypeModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const IncomeTypeTable = () => {
+const IncomeTypeTable = ({incomeTypes, setIncomeTypes, fetchIncomeTypes}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedIncomeType, setSelectedIncomeType] = useState(null);
-  const [incomeTypes, setIncomeTypes] = useState([]);
+  // const [incomeTypes, setIncomeTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [incomeTypeToDelete, setIncomeTypeToDelete] = useState(null);
 
@@ -54,22 +54,22 @@ const IncomeTypeTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchIncomeTypes = async () => {
-      try {
-        const response = await getAPI("/income-type-get-all", true);
-        if (!response.hasError) {
-          setIncomeTypes(response.data.data);
-        } else {
-          toast.error(`Failed to fetch income types: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching income types.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchIncomeTypes = async () => {
+  //     try {
+  //       const response = await getAPI("/income-type-get-all", true);
+  //       if (!response.hasError) {
+  //         setIncomeTypes(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch income types: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching income types.");
+  //     }
+  //   };
 
-    fetchIncomeTypes();
-  }, []);
+  //   fetchIncomeTypes();
+  // }, []);
 
   const handleEdit = (incomeType) => {
     setSelectedIncomeType(incomeType);
@@ -232,6 +232,7 @@ const IncomeTypeTable = () => {
         <EditIncomeTypeModal
           closeModal={handleCloseModal}
           incomeType={selectedIncomeType}
+          fetchIncomeTypes={fetchIncomeTypes}
         />
       )}
 

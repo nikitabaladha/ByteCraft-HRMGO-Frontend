@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify'; 
 import postAPI from "../../../../api/postAPI.js";
 
-const CreatePayslipModal = ({ closeModal }) => {
+const CreatePayslipModal = ({ closeModal, fetchPayslipTypes }) => {
     const [name, setName] = useState('');
 
     const handleSubmit = async (e) => {
@@ -18,6 +18,7 @@ const CreatePayslipModal = ({ closeModal }) => {
             if (!response.hasError) {
                 toast.success("Payslip Created Successfully");
                 closeModal();
+                fetchPayslipTypes();
             } else {
                 toast.error(`Failed to create payslip: ${response.message}`);
             }

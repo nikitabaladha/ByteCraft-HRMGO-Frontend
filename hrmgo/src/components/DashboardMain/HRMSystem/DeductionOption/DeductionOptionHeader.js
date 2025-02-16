@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreateDeductionOptionModal from "./CreateDeductionOptionModal";
 
-const DeductionOptionHeader = () => {
+const DeductionOptionHeader = ({fetchDeductionOptions}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const DeductionOptionHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateDeductionOptionModal closeModal={closeModal} />}
+      {showModal && <CreateDeductionOptionModal closeModal={closeModal} fetchDeductionOptions={fetchDeductionOptions} />}
     </>
   );
 };

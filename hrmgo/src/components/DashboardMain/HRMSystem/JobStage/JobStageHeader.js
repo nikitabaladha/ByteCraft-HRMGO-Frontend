@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreateJobStageModal from "./CreateJobStageModal";
 
-const JobStageHeader = () => {
+const JobStageHeader = ({fetchJobStages}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const JobStageHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateJobStageModal closeModal={closeModal} />}
+      {showModal && <CreateJobStageModal closeModal={closeModal} fetchJobStages={fetchJobStages} />}
     </>
   );
 };

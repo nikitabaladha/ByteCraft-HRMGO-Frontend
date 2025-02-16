@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import postAPI from "../../../../api/postAPI";
 
-const CreateTerminationTypeModal = ({ closeModal }) => {
+const CreateTerminationTypeModal = ({ closeModal, fetchTerminationTypes }) => {
   const [name, setName] = useState('');
 
   const handleSubmit = async (e) => {
@@ -23,6 +23,7 @@ const CreateTerminationTypeModal = ({ closeModal }) => {
       if (!response.hasError) {
         toast.success("Termination type created successfully");
         closeModal();
+        fetchTerminationTypes();
       } else {
         toast.error(`Failed to create termination type: ${response.message}`);
       }

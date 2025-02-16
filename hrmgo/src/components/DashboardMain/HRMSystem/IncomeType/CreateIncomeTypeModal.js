@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import postAPI from "../../../../api/postAPI";
 
-const CreateIncomeTypeModal = ({ closeModal }) => {
+const CreateIncomeTypeModal = ({ closeModal, fetchIncomeTypes }) => {
   const [name, setName] = useState('');
 
   const handleSubmit = async (e) => {
@@ -23,6 +23,7 @@ const CreateIncomeTypeModal = ({ closeModal }) => {
       if (!response.hasError) {
         toast.success("Income type created successfully");
         closeModal();
+        fetchIncomeTypes();
       } else {
         toast.error(`Failed to create income type: ${response.message}`);
       }

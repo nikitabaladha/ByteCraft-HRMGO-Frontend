@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreateLeaveTypeModal from "./CreateLeaveTypeModal";
 
-const LeaveHeader = () => {
+const LeaveHeader = ({fetchLeaveTypes}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const LeaveHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateLeaveTypeModal closeModal={closeModal} />}
+      {showModal && <CreateLeaveTypeModal closeModal={closeModal} fetchLeaveTypes={fetchLeaveTypes}/>}
     </>
   );
 };

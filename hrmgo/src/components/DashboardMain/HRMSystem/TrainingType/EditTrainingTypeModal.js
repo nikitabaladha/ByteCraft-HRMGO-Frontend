@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import putAPI from "../../../../api/putAPI.js";
 
-const EditTrainingTypeModal = ({ closeModal, trainingType }) => {
+const EditTrainingTypeModal = ({ closeModal, trainingType, fetchTrainingTypes }) => {
     const [name, setName] = useState('');
 
     useEffect(() => {
@@ -29,6 +29,7 @@ const EditTrainingTypeModal = ({ closeModal, trainingType }) => {
             if (!response.hasError) {
                 toast.success("Training type updated successfully");
                 closeModal();
+                fetchTrainingTypes()
             } else {
                 toast.error(`Failed to update training type: ${response.message}`);
             }

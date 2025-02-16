@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import postAPI from "../../../../api/postAPI";
 
-const CreateContractTypeModal = ({ closeModal }) => {
+const CreateContractTypeModal = ({ closeModal, fetchContractTypes }) => {
   const [name, setName] = useState('');
 
   const handleSubmit = async (e) => {
@@ -23,6 +23,7 @@ const CreateContractTypeModal = ({ closeModal }) => {
       if (!response.hasError) {
         toast.success("Contract type created successfully");
         closeModal();
+        fetchContractTypes();
       } else {
         toast.error(`Failed to create contract type: ${response.message}`);
       }

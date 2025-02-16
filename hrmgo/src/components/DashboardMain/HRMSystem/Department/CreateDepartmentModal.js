@@ -3,12 +3,12 @@ import { toast } from 'react-toastify';
 import postAPI from "../../../../api/postAPI.js";
 import getAPI from "../../../../api/getAPI";
 
-const CreateDepartmentModal = ({ closeModal }) => {
+const CreateDepartmentModal = ({ closeModal, fetchDepartments }) => {
     const [branchId, setBranchId] = useState('');
     const [departmentName, setDepartmentName] = useState('');
     const [branches, setBranches] = useState([]);
 
-    useEffect(() => {
+    
         const fetchBranches = async () => {
             try {
                 const response = await getAPI("/branch-get-all", true); 
@@ -21,6 +21,7 @@ const CreateDepartmentModal = ({ closeModal }) => {
                 toast.error("An error occurred while fetching branches.");
             }
         };
+        useEffect(() => {
 
         fetchBranches();
     }, []);
@@ -39,6 +40,8 @@ const CreateDepartmentModal = ({ closeModal }) => {
             if (!response.hasError) {
                 toast.success("Department Created Successfully");
                 closeModal();
+                fetchBranches()
+                fetchDepartments()
             } else {
                 toast.error(`Failed to create department: ${response.message}`);
             }

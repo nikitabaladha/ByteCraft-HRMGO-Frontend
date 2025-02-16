@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreateJobCategoryModal from "./CreateJobCategoryModal";
 
-const JobCategoryHeader = () => {
+const JobCategoryHeader = ({fetchJobCategories}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const JobCategoryHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateJobCategoryModal closeModal={closeModal} />}
+      {showModal && <CreateJobCategoryModal closeModal={closeModal} fetchJobCategories={fetchJobCategories} />}
     </>
   );
 };

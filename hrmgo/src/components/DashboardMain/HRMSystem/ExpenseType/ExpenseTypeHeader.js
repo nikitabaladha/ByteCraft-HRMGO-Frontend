@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreateExpenseTypeModal from "./CreateExpenseTypeModal";
 
-const ExpenseTypeHeader = () => {
+const ExpenseTypeHeader = ({fetchExpenseTypes}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const ExpenseTypeHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateExpenseTypeModal closeModal={closeModal} />}
+      {showModal && <CreateExpenseTypeModal closeModal={closeModal} fetchExpenseTypes={fetchExpenseTypes} />}
     </>
   );
 };

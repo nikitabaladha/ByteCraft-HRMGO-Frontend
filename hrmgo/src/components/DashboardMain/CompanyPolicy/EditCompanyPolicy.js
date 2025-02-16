@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import  putAPI  from "../../../api/putAPI"; 
 import getAPI from  "../../../api/getAPI";
 
-const EditPolicyModal = ({ onClose, policy }) => {
+const EditPolicyModal = ({ onClose, policy, fetchCompanyPolicies }) => {
   const [branchNames, setBranchNames] = useState([]);
   const [formData, setFormData] = useState({
     branch: policy?.branch || '',
@@ -54,6 +54,7 @@ const EditPolicyModal = ({ onClose, policy }) => {
       if (!response.hasError) {
         toast.success("Company policy updated successfully!");
         onClose(); 
+        fetchCompanyPolicies()
       } else {
         toast.error(`Failed to update company policy: ${response.message}`);
       }

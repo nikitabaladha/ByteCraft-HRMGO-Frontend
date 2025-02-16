@@ -5,7 +5,7 @@ import CompanyPolicy from "./CompanyPolicyModal";
 
 
 
-const EventHeader = () => {
+const EventHeader = ({fetchCompanyPolicies}) => {
     const [isModalOpen, setModalOpen] = useState(false);
     const toggleModal = () => {
         setModalOpen(!isModalOpen);
@@ -42,7 +42,7 @@ const EventHeader = () => {
                         </div>
                     </div>
                 </div>
-                {isModalOpen && <CompanyPolicy onClose={toggleModal} />}
+                {isModalOpen && <CompanyPolicy onClose={toggleModal} fetchCompanyPolicies={fetchCompanyPolicies}/>}
             </div>
         </div>
     )

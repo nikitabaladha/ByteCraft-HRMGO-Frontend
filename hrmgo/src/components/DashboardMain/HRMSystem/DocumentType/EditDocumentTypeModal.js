@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify'; 
 import putAPI from "../../../../api/putAPI.js";
 
-const EditDocumentTypeModal = ({ closeModal, documentType }) => {
+const EditDocumentTypeModal = ({ closeModal, documentType, fetchDocumentTypes }) => {
     const [name, setName] = useState('');
     const [isRequired, setIsRequired] = useState('');
 
@@ -37,6 +37,7 @@ const EditDocumentTypeModal = ({ closeModal, documentType }) => {
             if (!response.hasError) {
                 toast.success("Document type updated successfully");
                 closeModal();
+                fetchDocumentTypes();
             } else {
                 toast.error(`Failed to update document type: ${response.message}`);
             }

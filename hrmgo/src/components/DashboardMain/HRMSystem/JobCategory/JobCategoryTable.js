@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import EditJobCategoryModal from "./EditJobCategoryModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const JobCategoryTable = () => {
+const JobCategoryTable = ({jobCategories, setJobCategories, fetchJobCategories}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedJobCategory, setSelectedJobCategory] = useState(null);
-  const [jobCategories, setJobCategories] = useState([]);
+  // const [jobCategories, setJobCategories] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [jobCategoryToDelete, setJobCategoryToDelete] = useState(null);
 
@@ -54,22 +54,22 @@ const JobCategoryTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchJobCategories = async () => {
-      try {
-        const response = await getAPI("/job-category-get-all", true);
-        if (!response.hasError) {
-          setJobCategories(response.data.data);
-        } else {
-          toast.error(`Failed to fetch job categories: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching job categories.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchJobCategories = async () => {
+  //     try {
+  //       const response = await getAPI("/job-category-get-all", true);
+  //       if (!response.hasError) {
+  //         setJobCategories(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch job categories: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching job categories.");
+  //     }
+  //   };
 
-    fetchJobCategories();
-  }, []);
+  //   fetchJobCategories();
+  // }, []);
 
   const handleEdit = (jobCategory) => {
     setSelectedJobCategory(jobCategory);
@@ -232,6 +232,7 @@ const JobCategoryTable = () => {
         <EditJobCategoryModal
           closeModal={handleCloseModal}
           jobCategory={selectedJobCategory}
+          fetchJobCategories={fetchJobCategories}
         />
       )}
 

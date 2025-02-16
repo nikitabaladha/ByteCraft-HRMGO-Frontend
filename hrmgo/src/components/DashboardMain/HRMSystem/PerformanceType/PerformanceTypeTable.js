@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import EditPerformanceTypeModal from "./EditPerformanceTypeModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const PerformanceTypeTable = () => {
+const PerformanceTypeTable = ({performanceTypes, setPerformanceTypes, fetchPerformanceTypes}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPerformanceType, setSelectedPerformanceType] = useState(null);
-  const [performanceTypes, setPerformanceTypes] = useState([]);
+  // const [performanceTypes, setPerformanceTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [performanceTypeToDelete, setPerformanceTypeToDelete] = useState(null);
 
@@ -54,22 +54,22 @@ const PerformanceTypeTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchPerformanceTypes = async () => {
-      try {
-        const response = await getAPI("/performance-type-get-all", true);
-        if (!response.hasError) {
-          setPerformanceTypes(response.data.data);
-        } else {
-          toast.error(`Failed to fetch performance types: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching performance types.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchPerformanceTypes = async () => {
+  //     try {
+  //       const response = await getAPI("/performance-type-get-all", true);
+  //       if (!response.hasError) {
+  //         setPerformanceTypes(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch performance types: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching performance types.");
+  //     }
+  //   };
 
-    fetchPerformanceTypes();
-  }, []);
+  //   fetchPerformanceTypes();
+  // }, []);
 
   const handleEdit = (performanceType) => {
     setSelectedPerformanceType(performanceType);
@@ -230,6 +230,7 @@ const PerformanceTypeTable = () => {
         <EditPerformanceTypeModal
           closeModal={handleCloseModal}
           performanceType={selectedPerformanceType}
+          fetchPerformanceTypes={fetchPerformanceTypes}
         />
       )}
 

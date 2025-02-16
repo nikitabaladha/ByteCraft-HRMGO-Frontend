@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import EditDepartmentModal from "./EditDepartmentModal";
-import { toast } from "react-toastify";
-import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const DepartmentTable = () => {
+const DepartmentTable = ({departments, setDepartments, fetchDepartments}) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
-  const [departments, setDepartments] = useState([]);
+  // const [departments, setDepartments] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [departmentToDelete, setDepartmentToDelete] = useState(null);
 
@@ -57,22 +57,22 @@ const DepartmentTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchDepartments = async () => {
-      try {
-        const response = await getAPI("/department-get-all", true);
-        if (!response.hasError) {
-          setDepartments(response.data.data);
-        } else {
-          toast.error(`Failed to fetch departments: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching departments.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchDepartments = async () => {
+  //     try {
+  //       const response = await getAPI("/department-get-all", true);
+  //       if (!response.hasError) {
+  //         setDepartments(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch departments: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching departments.");
+  //     }
+  //   };
 
-    fetchDepartments();
-  }, []);
+  //   fetchDepartments();
+  // }, []);
 
   const handleEditClick = (department) => {
     setSelectedDepartment(department);
@@ -265,6 +265,7 @@ const DepartmentTable = () => {
         <EditDepartmentModal
           department={selectedDepartment}
           closeModal={handleCloseModal}
+          fetchDepartments={fetchDepartments}
         />
       )}
       {isDeleteDialogOpen && (

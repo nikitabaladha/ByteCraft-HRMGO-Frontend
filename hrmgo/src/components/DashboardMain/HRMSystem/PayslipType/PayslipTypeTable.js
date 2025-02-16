@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import EditPayslipTypeModal from "./EditPayslipTypeModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const PayslipTypeTable = () => {
+const PayslipTypeTable = ({payslipTypes, setPayslipTypes, fetchPayslipTypes }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPayslipType, setSelectedPayslipType] = useState(null);
-  const [payslipTypes, setPayslipTypes] = useState([]);
+  // const [payslipTypes, setPayslipTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [payslipTypeToDelete, setPayslipTypeToDelete] = useState(null);
 
@@ -56,22 +56,22 @@ const PayslipTypeTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchPayslipTypes = async () => {
-      try {
-        const response = await getAPI("/payslip-type-get-all", true);
-        if (!response.hasError) {
-          setPayslipTypes(response.data.data);
-        } else {
-          toast.error(`Failed to fetch payslip types: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching payslip types.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchPayslipTypes = async () => {
+  //     try {
+  //       const response = await getAPI("/payslip-type-get-all", true);
+  //       if (!response.hasError) {
+  //         setPayslipTypes(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch payslip types: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching payslip types.");
+  //     }
+  //   };
 
-    fetchPayslipTypes();
-  }, []);
+  //   fetchPayslipTypes();
+  // }, []);
 
   const handleEdit = (payslipType) => {
     setSelectedPayslipType(payslipType);
@@ -233,6 +233,7 @@ const PayslipTypeTable = () => {
         <EditPayslipTypeModal
           closeModal={handleCloseModal}
           payslipType={selectedPayslipType}
+          fetchPayslipTypes={fetchPayslipTypes}
         />
       )}
 

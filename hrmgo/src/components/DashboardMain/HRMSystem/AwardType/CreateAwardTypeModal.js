@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import postAPI from "../../../../api/postAPI";
 
-const CreateAwardTypeModal = ({ closeModal }) => {
+const CreateAwardTypeModal = ({ closeModal, fetchAwardTypes }) => {
   const [name, setName] = useState('');
 
   const handleSubmit = async (e) => {
@@ -23,6 +23,7 @@ const CreateAwardTypeModal = ({ closeModal }) => {
       if (!response.hasError) {
         toast.success("Award type created successfully");
         closeModal();
+        fetchAwardTypes();
       } else {
         toast.error(`Failed to create award type: ${response.message}`);
       }

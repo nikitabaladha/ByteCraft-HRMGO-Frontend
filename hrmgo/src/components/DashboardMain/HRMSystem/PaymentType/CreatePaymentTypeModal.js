@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import postAPI from "../../../../api/postAPI";
 
-const CreatePaymentTypeModal = ({ closeModal }) => {
+const CreatePaymentTypeModal = ({ closeModal, fetchPaymentTypes }) => {
   const [name, setName] = useState('');
 
   const handleSubmit = async (e) => {
@@ -23,6 +23,7 @@ const CreatePaymentTypeModal = ({ closeModal }) => {
       if (!response.hasError) {
         toast.success("Payment type created successfully");
         closeModal();
+        fetchPaymentTypes()
       } else {
         toast.error(`Failed to create payment type: ${response.message}`);
       }

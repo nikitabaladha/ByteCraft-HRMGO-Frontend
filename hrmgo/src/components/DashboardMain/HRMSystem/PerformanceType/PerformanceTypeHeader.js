@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreatePerformanceTypeModal from "./CreatePerformanceTypeModal";
 
-const PerformanceTypeHeader = () => {
+const PerformanceTypeHeader = ({fetchPerformanceTypes}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const PerformanceTypeHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreatePerformanceTypeModal closeModal={closeModal} />}
+      {showModal && <CreatePerformanceTypeModal closeModal={closeModal} fetchPerformanceTypes={fetchPerformanceTypes} />}
     </>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import postAPI from "../../../../api/postAPI";
 
-const CreatePerformanceTypeModal = ({ closeModal }) => {
+const CreatePerformanceTypeModal = ({ closeModal, fetchPerformanceTypes }) => {
   const [name, setName] = useState('');
 
   const handleSubmit = async (e) => {
@@ -23,6 +23,7 @@ const CreatePerformanceTypeModal = ({ closeModal }) => {
       if (!response.hasError) {
         toast.success("Performance type created successfully");
         closeModal();
+        fetchPerformanceTypes()
       } else {
         toast.error(`Failed to create performance type: ${response.message}`);
       }

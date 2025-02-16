@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import putAPI from "../../../../api/putAPI.js";
 
-const EditTerminationTypeModal = ({ closeModal, terminationType }) => {
+const EditTerminationTypeModal = ({ closeModal, terminationType, fetchTerminationTypes }) => {
     const [name, setName] = useState('');
 
     useEffect(() => {
@@ -29,6 +29,7 @@ const EditTerminationTypeModal = ({ closeModal, terminationType }) => {
             if (!response.hasError) {
                 toast.success("Termination type updated successfully");
                 closeModal();
+                fetchTerminationTypes();
             } else {
                 toast.error(`Failed to update termination type: ${response.message}`);
             }

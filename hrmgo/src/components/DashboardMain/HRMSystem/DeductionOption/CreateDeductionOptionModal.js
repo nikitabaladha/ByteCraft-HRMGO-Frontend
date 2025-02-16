@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify'; 
 import postAPI from "../../../../api/postAPI.js";
 
-const CreateDeductionOptionModal = ({ closeModal }) => {
+const CreateDeductionOptionModal = ({ closeModal, fetchDeductionOptions }) => {
     const [name, setName] = useState('');
 
     const handleSubmit = async (e) => {
@@ -18,6 +18,7 @@ const CreateDeductionOptionModal = ({ closeModal }) => {
             if (!response.hasError) {
                 toast.success("Deduction Option Created Successfully");
                 closeModal();
+                fetchDeductionOptions();
             } else {
                 toast.error(`Failed to create deduction option: ${response.message}`);
             }

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreateTerminationTypeModal from "./CreateTerminationTypeModal";
 
-const TerminationTypeHeader = () => {
+const TerminationTypeHeader = ({fetchTerminationTypes}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const TerminationTypeHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateTerminationTypeModal closeModal={closeModal} />} 
+      {showModal && <CreateTerminationTypeModal closeModal={closeModal} fetchTerminationTypes={fetchTerminationTypes}/>} 
     </>
   );
 };

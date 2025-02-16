@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import EditTrainingTypeModal from "./EditTrainingTypeModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const TrainingTypeTable = () => {
+const TrainingTypeTable = ({trainingTypes, setTrainingTypes, fetchTrainingTypes}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTrainingType, setSelectedTrainingType] = useState(null);
-  const [trainingTypes, setTrainingTypes] = useState([]);
+  // const [trainingTypes, setTrainingTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [trainingTypeToDelete, setTrainingTypeToDelete] = useState(null);
 
@@ -52,22 +52,22 @@ const TrainingTypeTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchTrainingTypes = async () => {
-      try {
-        const response = await getAPI("/training-type-get-all", true);
-        if (!response.hasError) {
-          setTrainingTypes(response.data.data);
-        } else {
-          toast.error(`Failed to fetch training types: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching training types.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchTrainingTypes = async () => {
+  //     try {
+  //       const response = await getAPI("/training-type-get-all", true);
+  //       if (!response.hasError) {
+  //         setTrainingTypes(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch training types: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching training types.");
+  //     }
+  //   };
 
-    fetchTrainingTypes();
-  }, []);
+  //   fetchTrainingTypes();
+  // }, []);
 
   const handleEdit = (trainingType) => {
     setSelectedTrainingType(trainingType);
@@ -228,6 +228,7 @@ const TrainingTypeTable = () => {
         <EditTrainingTypeModal
           closeModal={handleCloseModal}
           trainingType={selectedTrainingType}
+          fetchTrainingTypes={fetchTrainingTypes}
         />
       )}
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import putAPI from "../../../../api/putAPI.js";
 
-const EditPerformanceTypeModal = ({ closeModal, performanceType }) => {
+const EditPerformanceTypeModal = ({ closeModal, performanceType, fetchPerformanceTypes }) => {
     const [name, setName] = useState('');
 
     useEffect(() => {
@@ -29,6 +29,7 @@ const EditPerformanceTypeModal = ({ closeModal, performanceType }) => {
             if (!response.hasError) {
                 toast.success("Performance type updated successfully");
                 closeModal();
+                fetchPerformanceTypes();
             } else {
                 toast.error(`Failed to update performance type: ${response.message}`);
             }

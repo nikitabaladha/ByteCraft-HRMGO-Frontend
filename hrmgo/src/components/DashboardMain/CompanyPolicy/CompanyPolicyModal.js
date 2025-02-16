@@ -4,7 +4,7 @@ import getAPI from "../../../api/getAPI";
 import { Link } from "react-router-dom";
 import postAPI from "../../../api/postAPI";
 
-const CreatePolicyModal = ({ onClose }) => {
+const CreatePolicyModal = ({ onClose, fetchCompanyPolicies }) => {
   const [branch, setBranch] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -43,6 +43,7 @@ useEffect(() => {
       if (!response.hasError) {
         toast.success("Company Policy Created Successfully");
         onClose();
+        fetchCompanyPolicies()
       } else {
         toast.error(`Failed to create policy: ${response.message}`);
       }

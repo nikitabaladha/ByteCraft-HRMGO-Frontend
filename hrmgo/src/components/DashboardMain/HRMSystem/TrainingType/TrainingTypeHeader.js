@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreateTrainingTypeModal from "./CreateTrainingTypeModal";
 
-const TrainingTypeHeader = () => {
+const TrainingTypeHeader = ({fetchTrainingTypes}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const TrainingTypeHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateTrainingTypeModal closeModal={closeModal} />}
+      {showModal && <CreateTrainingTypeModal closeModal={closeModal} fetchTrainingTypes={fetchTrainingTypes}/>}
     </>
   );
 };

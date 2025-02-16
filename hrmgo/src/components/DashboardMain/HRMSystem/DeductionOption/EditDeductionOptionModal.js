@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify'; 
 import putAPI from "../../../../api/putAPI.js";
 
-const EditDeductionOptionModal = ({ closeModal, deductionOption }) => {
+const EditDeductionOptionModal = ({ closeModal, deductionOption, fetchDeductionOptions }) => {
     const [name, setName] = useState('');
 
     useEffect(() => {
@@ -29,6 +29,7 @@ const EditDeductionOptionModal = ({ closeModal, deductionOption }) => {
             if (!response.hasError) {
                 toast.success("Deduction option updated successfully");
                 closeModal();
+                fetchDeductionOptions();
             } else {
                 toast.error(`Failed to update deduction option: ${response.message}`);
             }

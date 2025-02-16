@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import putAPI from "../../../../api/putAPI.js";
 
-const EditJobCategoryModal = ({ closeModal, jobCategory }) => {
+const EditJobCategoryModal = ({ closeModal, jobCategory, fetchJobCategories }) => {
     const [name, setName] = useState('');
 
     useEffect(() => {
@@ -29,6 +29,7 @@ const EditJobCategoryModal = ({ closeModal, jobCategory }) => {
             if (!response.hasError) {
                 toast.success("Job category updated successfully");
                 closeModal();
+                fetchJobCategories()
             } else {
                 toast.error(`Failed to update job category: ${response.message}`);
             }

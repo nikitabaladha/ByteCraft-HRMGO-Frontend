@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import EditDepartmentModal from "./EditDesignationModal";
-import { toast } from "react-toastify";
-import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const DesignationTable = () => {
+const DesignationTable = ({designations, setDesignations, fetchDesignations}) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedDesignation, setSelectedDesignation] = useState(null);
-  const [designations, setDesignations] = useState([]);
+  // const [designations, setDesignations] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [designationToDelete, setDesignationToDelete] = useState(null);
 
@@ -28,11 +28,11 @@ const DesignationTable = () => {
     const searchTerm = searchQuery.toLowerCase();
     console.log(designation);
     return (
-      designation?.branchId?.branchName?.toLowerCase()?.includes(searchTerm) ||
-      designation?.departmentId?.departmentName
-        ?.toLowerCase()
-        ?.includes(searchTerm) ||
-      designation?.designationName?.toLowerCase()?.includes(searchTerm)
+      designation.branchId.branchName.toLowerCase().includes(searchTerm) ||
+      designation.departmentId.departmentName
+        .toLowerCase()
+        .includes(searchTerm) ||
+      designation.designationName.toLowerCase().includes(searchTerm)
     );
   });
 
@@ -60,22 +60,22 @@ const DesignationTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchDesignations = async () => {
-      try {
-        const response = await getAPI("/designation-get-all", true);
-        if (!response.hasError) {
-          setDesignations(response.data.data);
-        } else {
-          toast.error(`Failed to fetch designations: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching designations.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchDesignations = async () => {
+  //     try {
+  //       const response = await getAPI("/designation-get-all", true);
+  //       if (!response.hasError) {
+  //         setDesignations(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch designations: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching designations.");
+  //     }
+  //   };
 
-    fetchDesignations();
-  }, []);
+  //   fetchDesignations();
+  // }, []);
 
   const handleEditClick = (designation) => {
     setSelectedDesignation(designation);
@@ -136,10 +136,10 @@ const DesignationTable = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {paginatedDesignations?.map((designation) => (
+                      {paginatedDesignations.map((designation) => (
                         <tr key={designation._id}>
-                          <td>{designation?.branchId?.branchName}</td>
-                          <td>{designation?.departmentId?.departmentName}</td>
+                          <td>{designation.branchId.branchName}</td>
+                          <td>{designation.departmentId.departmentName}</td>
                           <td>{designation.designationName}</td>
                           <td className="Action">
                             <div className="dt-buttons">
@@ -273,6 +273,7 @@ const DesignationTable = () => {
         <EditDepartmentModal
           designation={selectedDesignation}
           closeModal={handleCloseModal}
+          fetchDesignations={fetchDesignations}
         />
       )}
       {isDeleteDialogOpen && (

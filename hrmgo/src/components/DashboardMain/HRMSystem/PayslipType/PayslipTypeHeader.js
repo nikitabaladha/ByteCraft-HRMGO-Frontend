@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreatePayslipTypeModal from "./CreatePayslipTypeModal"; 
 
-const PayslipHeader = () => {
+const PayslipHeader = ({fetchPayslipTypes}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const PayslipHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreatePayslipTypeModal closeModal={closeModal} />} 
+      {showModal && <CreatePayslipTypeModal closeModal={closeModal} fetchPayslipTypes={fetchPayslipTypes}/>} 
     </>
   );
 };

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreateDepartmentModal from "./CreateDepartmentModal";
 
-const DepartmentHeader = () => {
+const DepartmentHeader = ({fetchDepartments}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const DepartmentHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateDepartmentModal closeModal={closeModal} />}
+      {showModal && <CreateDepartmentModal closeModal={closeModal} fetchDepartments={fetchDepartments}/>}
     </>
   );
 };

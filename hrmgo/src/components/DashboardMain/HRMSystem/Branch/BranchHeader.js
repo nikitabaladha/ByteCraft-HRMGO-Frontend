@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreateBranchModal from "./CreateBranchModal";
 
-const BranchHeader = () => {
+const BranchHeader = ({fetchBranches}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const BranchHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateBranchModal closeModal={closeModal} />}
+      {showModal && <CreateBranchModal closeModal={closeModal} fetchBranches={fetchBranches}/>}
     </>
   );
 };

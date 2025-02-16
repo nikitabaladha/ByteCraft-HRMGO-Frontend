@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Sidebar from "../HRMSystemSidebar";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import EditJobStageModal from "./EditJobStageModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 import {
   DndContext,
@@ -21,28 +21,28 @@ import {
   useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-const JobStageList = () => {
+const JobStageList = ({jobStages, setJobStages, fetchJobStages}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedJobStage, setSelectedJobStage] = useState(null);
-  const [jobStages, setJobStages] = useState([]);
+  // const [jobStages, setJobStages] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [jobStageToDelete, setJobStageToDelete] = useState(null);
 
-  useEffect(() => {
-    const fetchJobStages = async () => {
-      try {
-        const response = await getAPI("/job-stage-get-all", true);
-        if (!response.hasError) {
-          setJobStages(response.data.data);
-        } else {
-          toast.error(`Failed to fetch job stages: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching job stages.");
-      }
-    };
-    fetchJobStages();
-  }, []);
+  // useEffect(() => {
+  //   const fetchJobStages = async () => {
+  //     try {
+  //       const response = await getAPI("/job-stage-get-all", true);
+  //       if (!response.hasError) {
+  //         setJobStages(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch job stages: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching job stages.");
+  //     }
+  //   };
+  //   fetchJobStages();
+  // }, []);
 
   const handleEdit = (jobStage) => {
     setSelectedJobStage(jobStage);
@@ -139,6 +139,7 @@ const JobStageList = () => {
         <EditJobStageModal
           closeModal={handleCloseModal}
           jobStage={selectedJobStage}
+          fetchJobStages={fetchJobStages}
         />
       )}
       {isDeleteDialogOpen && (

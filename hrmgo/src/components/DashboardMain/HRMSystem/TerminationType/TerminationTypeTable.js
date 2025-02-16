@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
 import { HiOutlinePencil } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import EditTerminationTypeModal from "./EditTerminationTypeModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const TerminationTypeTable = () => {
+const TerminationTypeTable = ({terminationTypes, setTerminationTypes, fetchTerminationTypes}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTerminationType, setSelectedTerminationType] = useState(null);
-  const [terminationTypes, setTerminationTypes] = useState([]);
+  // const [terminationTypes, setTerminationTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [terminationTypeToDelete, setTerminationTypeToDelete] = useState(null);
 
@@ -54,22 +54,22 @@ const TerminationTypeTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchTerminationTypes = async () => {
-      try {
-        const response = await getAPI("/termination-type-get-all", true);
-        if (!response.hasError) {
-          setTerminationTypes(response.data.data);
-        } else {
-          toast.error(`Failed to fetch termination types: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching termination types.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchTerminationTypes = async () => {
+  //     try {
+  //       const response = await getAPI("/termination-type-get-all", true);
+  //       if (!response.hasError) {
+  //         setTerminationTypes(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch termination types: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching termination types.");
+  //     }
+  //   };
 
-    fetchTerminationTypes();
-  }, []);
+  //   fetchTerminationTypes();
+  // }, []);
 
   const handleEdit = (terminationType) => {
     setSelectedTerminationType(terminationType);
@@ -233,6 +233,7 @@ const TerminationTypeTable = () => {
         <EditTerminationTypeModal
           closeModal={handleCloseModal}
           terminationType={selectedTerminationType}
+          fetchTerminationTypes={fetchTerminationTypes}
         />
       )}
 

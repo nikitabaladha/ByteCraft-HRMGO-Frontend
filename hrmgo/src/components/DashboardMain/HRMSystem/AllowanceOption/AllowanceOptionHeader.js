@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreateAllowanceOptionModal from "./CreateAllowanceOptionModal";
 
-const AllowanceOptionHeader = () => {
+const AllowanceOptionHeader = ({fetchAllowanceOptions}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const AllowanceOptionHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateAllowanceOptionModal closeModal={closeModal} />}
+      {showModal && <CreateAllowanceOptionModal closeModal={closeModal} fetchAllowanceOptions={fetchAllowanceOptions}/>}
     </>
   );
 };

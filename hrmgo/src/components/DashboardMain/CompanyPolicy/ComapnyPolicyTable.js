@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import getAPI from "../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../api/getAPI";
+// import { toast } from "react-toastify";
 import { HiOutlinePencil } from "react-icons/hi";
 import ConfirmationDialog from "../ConfirmationDialog";
 import { RiDeleteBinLine } from "react-icons/ri";
 import EditCompanyPolicy from "./EditCompanyPolicy";
 
-const CompanyPolicy = () => {
-  const [companyPolicies, setCompanyPolicies] = useState([]);
+const CompanyPolicy = ({companyPolicies, setCompanyPolicies, fetchCompanyPolicies}) => {
+  // const [companyPolicies, setCompanyPolicies] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedPolicy, setSelectedPolicy] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -38,23 +38,23 @@ const CompanyPolicy = () => {
     setIsDeleteDialogOpen(true);
   };
 
-  useEffect(() => {
-    const fetchCompanyPolicies = async () => {
-      try {
-        const response = await getAPI('/getallcompany_policy', {}, true);
-        if (response.data && !response.data.hasError) {
-          setCompanyPolicies(response.data.companyPolicies);
-        } else {
-          toast.error("Failed to fetch company policies.");
-        }
-      } catch (error) {
-        console.error("Error fetching company policies:", error);
-        toast.error("An error occurred while fetching company policies.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchCompanyPolicies = async () => {
+  //     try {
+  //       const response = await getAPI('/getallcompany_policy', {}, true);
+  //       if (response.data && !response.data.hasError) {
+  //         setCompanyPolicies(response.data.companyPolicies);
+  //       } else {
+  //         toast.error("Failed to fetch company policies.");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching company policies:", error);
+  //       toast.error("An error occurred while fetching company policies.");
+  //     }
+  //   };
 
-    fetchCompanyPolicies();
-  }, []);
+  //   fetchCompanyPolicies();
+  // }, []);
 
   const handleEntriesPerPageChange = (event) => {
     setEntriesPerPage(Number(event.target.value));
@@ -267,7 +267,7 @@ const CompanyPolicy = () => {
         />
       )}
 
-      {isModalOpen && <EditCompanyPolicy policy={selectedPolicy} onClose={toggleModal} />}
+      {isModalOpen && <EditCompanyPolicy policy={selectedPolicy} onClose={toggleModal} fetchCompanyPolicies={fetchCompanyPolicies}/>}
     </div>
   );
 };

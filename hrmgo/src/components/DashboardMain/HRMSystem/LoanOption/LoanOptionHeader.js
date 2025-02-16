@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreateLoanOptionModal from "./CreateLoanOptionModal";
 
-const LoanOptionHeader = () => {
+const LoanOptionHeader = ({fetchLoanOptions}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const LoanOptionHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateLoanOptionModal closeModal={closeModal} />}
+      {showModal && <CreateLoanOptionModal closeModal={closeModal} fetchLoanOptions={fetchLoanOptions}/>}
     </>
   );
 };

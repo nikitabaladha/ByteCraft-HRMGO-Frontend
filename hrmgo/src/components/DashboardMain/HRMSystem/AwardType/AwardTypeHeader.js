@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import CreateAwardTypeModal from "./CreateAwardTypeModal";
 
-const AwardTypeHeader = () => {
+const AwardTypeHeader = ({fetchAwardTypes}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -41,7 +41,7 @@ const AwardTypeHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateAwardTypeModal closeModal={closeModal} />} 
+      {showModal && <CreateAwardTypeModal closeModal={closeModal} fetchAwardTypes={fetchAwardTypes}/>} 
     </>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import putAPI from "../../../../api/putAPI.js";
 
-const EditPaymentTypeModal = ({ closeModal, paymentType }) => {
+const EditPaymentTypeModal = ({ closeModal, paymentType, fetchPaymentTypes }) => {
     const [name, setName] = useState('');
 
     useEffect(() => {
@@ -29,6 +29,7 @@ const EditPaymentTypeModal = ({ closeModal, paymentType }) => {
             if (!response.hasError) {
                 toast.success("Payment type updated successfully");
                 closeModal();
+                fetchPaymentTypes();
             } else {
                 toast.error(`Failed to update payment type: ${response.message}`);
             }
