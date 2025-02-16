@@ -25,7 +25,6 @@ const UpdateWarningModal = ({ warning, onClose, updateWarning }) => {
           ? new Date(warning.warningDate).toISOString().split("T")[0]
           : ""
       );
-
       setDescription(warning.description);
       setWarningToId(warning.warningToId);
       setWarningBy(warning.warningBy);
@@ -38,6 +37,14 @@ const UpdateWarningModal = ({ warning, onClose, updateWarning }) => {
         const response = await getAPI("/employee-get-all-name", {}, true);
         if (!response.hasError && Array.isArray(response.data.data)) {
           setWarningTo(response.data.data);
+
+          // **Set the already present "Warning To" when modal opens**
+          const selectedEmployee = response.data.data.find(
+            (emp) => emp._id === warning.warningToId
+          );
+          if (selectedEmployee) {
+            setWarningToId(selectedEmployee._id);
+          }
         } else {
           toast.error("Failed to load employees.");
         }
@@ -46,7 +53,7 @@ const UpdateWarningModal = ({ warning, onClose, updateWarning }) => {
       }
     };
     fetchEmployeeData();
-  }, []);
+  }, [warning]);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -81,44 +88,20 @@ const UpdateWarningModal = ({ warning, onClose, updateWarning }) => {
           warningTo: newWarningToName,
           subject: response.data.data.subject,
           warningDate: response.data.data.warningDate,
+          warningToId: response.data.data.warningToId,
         };
 
         updateWarning(newUpdatedWarning);
-
         onClose();
       } else {
         toast.error("Failed to update warning.");
       }
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("An unexpected error occurred. Please try again.");
-      }
+      toast.error(
+        error.response?.data?.message || "An unexpected error occurred."
+      );
     }
   };
-
-  const handleDateChange = (e) => {
-    setWarningDate(e.target.value); // Correctly extract the value
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      const modalDialog = document.querySelector(".modal-dialog");
-      if (modalDialog && !modalDialog.contains(event.target)) {
-        onClose();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [onClose]);
 
   return (
     <div
@@ -165,7 +148,6 @@ const UpdateWarningModal = ({ warning, onClose, updateWarning }) => {
                       className="form-control"
                       name="employeeId"
                       value={warningBy}
-                      onChange={(e) => setWarningBy(e.target.value)}
                       disabled
                       aria-readonly
                     >
@@ -217,7 +199,7 @@ const UpdateWarningModal = ({ warning, onClose, updateWarning }) => {
                     <span className="text-danger">*</span>
                     <input
                       value={warningDate}
-                      onChange={handleDateChange} // Corrected
+                      onChange={(e) => setWarningDate(e.target.value)}
                       className="form-control"
                       autoComplete="off"
                       required
@@ -238,7 +220,6 @@ const UpdateWarningModal = ({ warning, onClose, updateWarning }) => {
                       rows={3}
                       required
                       name="description"
-                      cols={50}
                       id="description"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}

@@ -77,6 +77,7 @@ const CreateWarningModal = ({ onClose, addWarning }) => {
           warningTo: warningTo,
           subject: response.data.data.subject,
           warningDate: response.data.data.warningDate,
+          warningToId: response.data.data.warningToId,
         };
 
         addWarning(newWarning);
