@@ -37,7 +37,7 @@ const AwardTable = ({
       .toLowerCase();
     return (
       award?.employeeName?.toLowerCase().includes(searchTerm) ||
-      award.awardType.toLowerCase().includes(searchTerm) ||
+      award?.awardType?.toLowerCase()?.includes(searchTerm) ||
       award.gift.toLowerCase().includes(searchTerm) ||
       award.description.toLowerCase().includes(searchTerm) ||
       formattedDate.includes(searchTerm)
@@ -120,7 +120,7 @@ const AwardTable = ({
                         {paginatedAwards.map((award) => (
                           <tr key={award.id}>
                             <td>{award.employeeName}</td>
-                            <td>{award.awardType}</td>
+                            <td>{award?.awardType}</td>
                             <td>{formatDate(award.date)}</td>
                             <td>{award.gift}</td>
                             <td>{award.description}</td>

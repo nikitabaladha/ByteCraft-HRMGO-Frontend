@@ -2,20 +2,40 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import putAPI from "../../../../api/putAPI.js";
+import getAPI from "../../../../api/getAPI.js";
 
 const UpdateAwardModal = ({ award, onClose, updateAward }) => {
   const [employeeName, setEmployeeName] = useState(award?.employeeName || "");
-  const [awardType, setAwardType] = useState(award?.awardType || "");
+  const [awardTypeId, setAwardTypeId] = useState(award?.awardTypeId || "");
   const [date, setDate] = useState(
     award?.date ? new Date(award.date).toISOString().split("T")[0] : ""
   );
   const [gift, setGift] = useState(award?.gift || "");
   const [description, setDescription] = useState(award?.description || "");
+  const [awardTypes, setAwardTypes] = useState([]);
 
+  // Fetch award types on component mount
+  useEffect(() => {
+    const fetchAllAwardType = async () => {
+      try {
+        const response = await getAPI("/award-type-get-all", {}, true);
+        if (!response.hasError && Array.isArray(response.data.data)) {
+          setAwardTypes(response.data.data);
+        } else {
+          toast.error("Failed to load award types.");
+        }
+      } catch (err) {
+        toast.error("Error fetching award type data.");
+      }
+    };
+    fetchAllAwardType();
+  }, []);
+
+  // Set initial values when the award prop changes
   useEffect(() => {
     if (award) {
       setEmployeeName(award.employeeName);
-      setAwardType(award.awardType);
+      setAwardTypeId(award.awardTypeId); // Set awardTypeId
       setDate(
         award.date ? new Date(award.date).toISOString().split("T")[0] : ""
       );
@@ -24,12 +44,13 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
     }
   }, [award]);
 
+  // Handle form submission
   const handleUpdate = async (e) => {
     e.preventDefault();
 
     // Prepare updated award data
     const updatedAward = {
-      awardType,
+      awardTypeId,
       date,
       gift,
       description,
@@ -41,16 +62,24 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
       if (!response.hasError) {
         toast.success("Award updated successfully!");
 
+        // Find the selected award type for display
+        const selectedAwardType = awardTypes.find(
+          (type) => type._id === awardTypeId
+        );
+
         const newUpdatedAward = {
           id: response.data.data._id,
-          employeeName: employeeName,
-          awardType: response.data.data.awardType,
+          employeeName,
+          awardType: selectedAwardType ? selectedAwardType.awardName : "",
           date: response.data.data.date,
           gift: response.data.data.gift,
           description: response.data.data.description,
           employeeId: response.data.data.employeeId,
         };
 
+        console.log("new updated award", newUpdatedAward);
+
+        // Update the award in the list
         updateAward(newUpdatedAward);
         onClose();
       } else {
@@ -63,10 +92,7 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
     }
   };
 
-  const handleDateChange = (e) => {
-    setDate(e.target.value);
-  };
-
+  // Handle click outside the modal to close it
   useEffect(() => {
     const handleClickOutside = (event) => {
       const modalDialog = document.querySelector(".modal-dialog");
@@ -81,6 +107,9 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onClose]);
+
+  // Find the existing award type name
+  const existingAwardType = awardTypes.find((type) => type._id === awardTypeId);
 
   return (
     <div
@@ -135,12 +164,22 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
                   <select
                     className="form-control"
                     required
-                    value={awardType}
-                    onChange={(e) => setAwardType(e.target.value)}
+                    value={awardTypeId}
+                    onChange={(e) => setAwardTypeId(e.target.value)}
                   >
-                    <option value="">Select Award</option>
-                    <option value="Trophy">Trophy</option>
-                    <option value="Certificate">Certificate</option>
+                    {existingAwardType && (
+                      <option value={existingAwardType._id}>
+                        {existingAwardType.awardName}
+                      </option>
+                    )}
+
+                    {awardTypes
+                      .filter((type) => type._id !== awardTypeId)
+                      .map((type) => (
+                        <option key={type._id} value={type._id}>
+                          {type.awardName}
+                        </option>
+                      ))}
                   </select>
                 </div>
                 <div className="form-group col-md-6">
@@ -151,7 +190,7 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
                     type="date"
                     className="form-control"
                     value={date}
-                    onChange={handleDateChange}
+                    onChange={(e) => setDate(e.target.value)}
                     required
                   />
                 </div>
