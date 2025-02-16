@@ -25,13 +25,11 @@ const UpdateComplaintModal = ({ complaint, onClose, updateComplaint }) => {
   useEffect(() => {
     if (complaint) {
       setTitle(complaint.title);
-
       setComplaintDate(
         complaint.complaintDate
           ? new Date(complaint.complaintDate).toISOString().split("T")[0]
           : ""
       );
-
       setDescription(complaint.description);
       setComplaintAgainstId(complaint.complaintAgainstId);
       setComplaintFrom(complaint.complaintFrom);
@@ -42,15 +40,20 @@ const UpdateComplaintModal = ({ complaint, onClose, updateComplaint }) => {
     const fetchEmployeeData = async () => {
       try {
         const response = await getAPI("/employee-get-all-name", {}, true);
-        if (!response.hasError && Array.isArray(response.data.data)) {
+        console.log("API Response:", response);
+
+        if (!response.hasError && Array.isArray(response.data?.data)) {
           setComplaintAgainst(response.data.data);
+          console.log("Employee Data:", response.data.data);
         } else {
           toast.error("Failed to load employees.");
         }
       } catch (err) {
+        console.error("API Error:", err);
         toast.error("Error fetching employee data.");
       }
     };
+
     fetchEmployeeData();
   }, []);
 
@@ -85,9 +88,13 @@ const UpdateComplaintModal = ({ complaint, onClose, updateComplaint }) => {
           description: response.data.data.description,
           complaintAgainst: complaintAgainstName,
           complaintFrom: complaintFromName,
+          complaintAgainstId: response.data.data.complaintAgainstId,
         };
 
         updateComplaint(newUpdatedComplaint);
+
+        setComplaintAgainstId(response.data.data.complaintAgainstId);
+
         onClose();
       } else {
         toast.error("Failed to update Complaint.");
@@ -182,7 +189,7 @@ const UpdateComplaintModal = ({ complaint, onClose, updateComplaint }) => {
                     >
                       Complaint Against
                     </label>
-                    <span className="text-danger">*</span>
+
                     <select
                       className="form-control"
                       name="complaintAgainstId"

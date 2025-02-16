@@ -41,7 +41,6 @@ const UpdatePromotionModal = ({ promotion, onClose, updatePromotion }) => {
         if (!response.hasError && Array.isArray(response.data.data)) {
           setDesignations(response.data.data);
 
-          // Find and set the existing designationId based on promotion.designationName
           const existingDesignation = response.data.data.find(
             (des) => des.designationName === promotion.designationName
           );

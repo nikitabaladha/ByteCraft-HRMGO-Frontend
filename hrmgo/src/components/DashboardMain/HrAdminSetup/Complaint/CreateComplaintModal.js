@@ -69,6 +69,7 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
           description: response.data.data.description,
           complaintAgainst: complaintAgainstName,
           complaintFrom: complaintFromName,
+          complaintAgainstId: response.data.data.complaintAgainstId,
         };
 
         addComplaint(newComplaint);
