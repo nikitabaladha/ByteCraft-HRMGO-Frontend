@@ -81,15 +81,6 @@ const HolidayHeader = ({ holidays, addHoliday }) => {
             <div className="col">
               <div className="float-end ">
                 <Link
-                  className="btn btn-sm btn-primary me-2"
-                  data-bs-toggle="tooltip"
-                  data-bs-original-title="Export"
-                  onClick={exportHolidayData}
-                >
-                  <TbFileExport />
-                </Link>
-
-                <Link
                   data-ajax-popup="true"
                   data-title="Import Holiday CSV file"
                   data-bs-toggle="tooltip"
@@ -99,6 +90,14 @@ const HolidayHeader = ({ holidays, addHoliday }) => {
                   onClick={openImportModal}
                 >
                   <TbFileImport />
+                </Link>
+                <Link
+                  className="btn btn-sm btn-primary me-2"
+                  data-bs-toggle="tooltip"
+                  data-bs-original-title="Export"
+                  onClick={exportHolidayData}
+                >
+                  <TbFileExport />
                 </Link>
                 <Link
                   className="btn btn-sm btn-primary me-2"

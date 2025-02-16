@@ -11,30 +11,31 @@ const Holiday = () => {
 
   const [holidays, setHolidays] = useState([]);
   const [selectedHoliday, setSelectedHoliday] = useState(null);
-
   const [originalHolidays, setOriginalHolidays] = useState([]);
 
-  useEffect(() => {
-    const fetchHolidayData = async () => {
-      try {
-        const response = await getAPI(`/holiday`, {}, true);
-        if (
-          !response.hasError &&
-          response.data &&
-          Array.isArray(response.data.data)
-        ) {
-          setHolidays(response.data.data);
-          setOriginalHolidays(response.data.data);
-        } else {
-          console.error("Invalid response format or error in response");
-        }
-      } catch (err) {
-        console.error("Error fetching Holiday Data:", err);
+  const fetchHolidayData = async () => {
+    try {
+      const response = await getAPI(`/holiday`, {}, true);
+      if (
+        !response.hasError &&
+        response.data &&
+        Array.isArray(response.data.data)
+      ) {
+        setHolidays(response.data.data);
+        setOriginalHolidays(response.data.data);
+      } else {
+        console.error("Invalid response format or error in response");
       }
-    };
+    } catch (err) {
+      console.error("Error fetching Holiday Data:", err);
+    }
+  };
 
-    fetchHolidayData();
-  }, []);
+  useEffect(() => {
+    if (location.pathname === "/dashboard/hr-admin-setup/holiday") {
+      fetchHolidayData();
+    }
+  }, [location.pathname]);
 
   const addHoliday = (newHoliday) => {
     setHolidays((prevHolidays) => [...prevHolidays, newHoliday]);
@@ -51,6 +52,7 @@ const Holiday = () => {
   const handleSearchResults = (searchedHolidays) => {
     setHolidays(searchedHolidays);
   };
+
   const resetSearch = () => {
     setHolidays(originalHolidays);
   };
