@@ -6,9 +6,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 const CreateTerminationModal = ({ onClose, addTermination }) => {
   const [employees, setEmployees] = useState([]);
+  const [terminationTypes, setTerminationTypes] = useState([]);
   const [formData, setFormData] = useState({
     employeeId: "",
-    terminationType: "",
+    terminationTypeId: "",
     noticeDate: new Date().toISOString().split("T")[0],
     terminationDate: new Date().toISOString().split("T")[0],
     description: "",
@@ -30,6 +31,22 @@ const CreateTerminationModal = ({ onClose, addTermination }) => {
     fetchEmployeeData();
   }, []);
 
+  useEffect(() => {
+    const fetchAllTerminationType = async () => {
+      try {
+        const response = await getAPI("/termination-type-get-all", {}, true);
+        if (!response.hasError && Array.isArray(response.data.data)) {
+          setTerminationTypes(response.data.data);
+        } else {
+          toast.error("Failed to load termination types.");
+        }
+      } catch (err) {
+        toast.error("Error fetching termination type data.");
+      }
+    };
+    fetchAllTerminationType();
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -42,7 +59,7 @@ const CreateTerminationModal = ({ onClose, addTermination }) => {
         "/termination",
         {
           employeeId: formData.employeeId,
-          terminationType: formData.terminationType,
+          terminationTypeId: formData.terminationTypeId,
           noticeDate: formData.noticeDate,
           terminationDate: formData.terminationDate,
           description: formData.description,
@@ -58,11 +75,19 @@ const CreateTerminationModal = ({ onClose, addTermination }) => {
         );
         const employeeName = selectedEmployee ? selectedEmployee.name : "";
 
+        const selectedTerminationType = terminationTypes.find(
+          (type) => type._id === formData.terminationTypeId
+        );
+        const terminationType = selectedTerminationType
+          ? selectedTerminationType.terminationName
+          : "Unknown";
+
         const newTermination = {
           id: response.data.data._id,
           employeeName,
+          terminationType,
           terminationDate: response.data.data.terminationDate,
-          terminationType: response.data.data.terminationType,
+          terminationTypeId: response.data.data.terminationTypeId,
           noticeDate: response.data.data.noticeDate,
           description: response.data.data.description,
         };
@@ -71,7 +96,7 @@ const CreateTerminationModal = ({ onClose, addTermination }) => {
 
         setFormData({
           employeeId: "",
-          terminationType: "",
+          terminationTypeId: "",
           noticeDate: new Date().toISOString().split("T")[0],
           terminationDate: new Date().toISOString().split("T")[0],
           description: "",
@@ -180,17 +205,16 @@ const CreateTerminationModal = ({ onClose, addTermination }) => {
                         className="form-control"
                         required="required"
                         id="termination_type"
-                        name="terminationType"
-                        value={formData.terminationType}
+                        name="terminationTypeId"
+                        value={formData.terminationTypeId}
                         onChange={handleChange}
                       >
-                        <option value="">Select Termination</option>
-                        <option value="Test Termination">
-                          Test Termination
-                        </option>
-                        <option value="Voluntary Termination">
-                          Voluntary Termination
-                        </option>
+                        <option value="">Select Termination Type</option>
+                        {terminationTypes.map((type) => (
+                          <option key={type._id} value={type._id}>
+                            {type.terminationName}
+                          </option>
+                        ))}
                       </select>
                     </div>
                     <div className="form-group col-md-6 col-lg-6">

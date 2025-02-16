@@ -16,13 +16,13 @@ const TerminationTypeHeader = () => {
           <div className="row align-items-center">
             <div className="col-auto">
               <div className="page-header-title">
-                <h4 className="m-b-10">Manage Termination Type</h4> 
+                <h4 className="m-b-10">Manage Termination Type</h4>
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
                   <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Termination Type</li> 
+                <li className="breadcrumb-item">Termination Type</li>
               </ul>
             </div>
             <div className="col">
@@ -41,7 +41,7 @@ const TerminationTypeHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateTerminationTypeModal closeModal={closeModal} />} 
+      {showModal && <CreateTerminationTypeModal closeModal={closeModal} />}
     </>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import putAPI from "../../../../api/putAPI.js";
-
+import getAPI from "../../../../api/getAPI.js";
 const UpdateTerminationModal = ({
   termination,
   onClose,
@@ -10,6 +10,9 @@ const UpdateTerminationModal = ({
 }) => {
   const [employeeName, setEmployeeName] = useState(
     termination?.employeeName || ""
+  );
+  const [terminationTypeId, setTerminationTypeId] = useState(
+    termination?.terminationTypeId || ""
   );
   const [terminationType, setTerminationType] = useState(
     termination?.terminationType || ""
@@ -29,10 +32,28 @@ const UpdateTerminationModal = ({
     termination?.description || ""
   );
 
+  const [terminationTypes, setTerminationTypes] = useState([]);
+
+  useEffect(() => {
+    const fetchAllTerminationType = async () => {
+      try {
+        const response = await getAPI("/termination-type-get-all", {}, true);
+        if (!response.hasError && Array.isArray(response.data.data)) {
+          setTerminationTypes(response.data.data);
+        } else {
+          toast.error("Failed to load termination types.");
+        }
+      } catch (err) {
+        toast.error("Error fetching termination type data.");
+      }
+    };
+    fetchAllTerminationType();
+  }, []);
+
   useEffect(() => {
     if (termination) {
       setTerminationType(termination.terminationType);
-
+      setTerminationTypeId(termination.terminationTypeId);
       setNoticeDate(
         termination?.noticeDate
           ? new Date(termination.noticeDate).toISOString().split("T")[0]
@@ -50,9 +71,8 @@ const UpdateTerminationModal = ({
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    // Prepare updated Termination data
     const updatedTermination = {
-      terminationType,
+      terminationTypeId: terminationTypeId || termination.terminationTypeId,
       noticeDate,
       terminationDate,
       description,
@@ -69,11 +89,18 @@ const UpdateTerminationModal = ({
       if (!response.hasError) {
         toast.success("Termination updated successfully!");
 
+        const selectedTerminationType = terminationTypes.find(
+          (type) => type._id === terminationTypeId
+        );
+
         const newUpdatedTermination = {
           id: response.data.data._id,
           employeeName,
+          terminationType: selectedTerminationType
+            ? selectedTerminationType.terminationName
+            : termination.terminationType,
           terminationDate: response.data.data.terminationDate,
-          terminationType: response.data.data.terminationType,
+          terminationTypeId: response.data.data.terminationTypeId,
           noticeDate: response.data.data.noticeDate,
           description: response.data.data.description,
         };
@@ -180,19 +207,22 @@ const UpdateTerminationModal = ({
                       Termination Type
                     </label>
                     <span className="text-danger">*</span>
+
                     <select
                       className="form-control"
-                      required="required"
-                      id="termination_type"
-                      name="terminationType"
-                      value={terminationType}
-                      onChange={(e) => setTerminationType(e.target.value)}
+                      name="terminationTypeId"
+                      value={terminationTypeId}
+                      onChange={(e) => setTerminationTypeId(e.target.value)}
+                      required
                     >
-                      <option value="">Select Termination</option>
-                      <option value="Test Termination">Test Termination</option>
-                      <option value="Voluntary Termination">
-                        Voluntary Termination
+                      <option value="" disabled>
+                        Select Termination Type
                       </option>
+                      {terminationTypes.map((type) => (
+                        <option key={type._id} value={type._id}>
+                          {type.terminationName}
+                        </option>
+                      ))}
                     </select>
                   </div>
                   <div className="form-group col-md-6 col-lg-6">

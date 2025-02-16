@@ -13,16 +13,17 @@ const DashboardMetrics = () => {
   const [trainers, setTrainers] = useState([]);
   const [accounts, setAccounts] = useState([]);
 
-  const totalBalance = accounts.reduce((sum, account) => sum + account.initial_balance, 0).toFixed(2);
+  const totalBalance = accounts
+    .reduce((sum, account) => sum + account.initial_balance, 0)
+    .toFixed(2);
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const response = await getAPI("/get-all-job");
         setJobs(response.data.data);
-      
       } catch (err) {
-        toast.err("Failed to load jobs. Please try again.");
+        toast.error("Failed to load jobs. Please try again.");
       }
     };
 
@@ -31,7 +32,7 @@ const DashboardMetrics = () => {
         const response = await getAPI("/get-all-users", {}, true);
         if (response.data && response.data.data) {
           setUsers(response.data.data);
-          console.log("data", response.data.data)
+          console.log("data", response.data.data);
         } else {
           toast.error("Failed to fetch users.");
         }
@@ -46,14 +47,14 @@ const DashboardMetrics = () => {
         const response = await getAPI(`/getAccount-Name-Balance`, {}, true);
         console.log("API Response:", response.data);
 
-        if (response.data.message === 'Accounts fetched successfully') {
+        if (response.data.message === "Accounts fetched successfully") {
           setAccounts(response.data.data);
         } else {
-        console.log(response.data.message);
+          console.log(response.data.message);
         }
       } catch (err) {
         console.error("Error fetching accounts:", err);
-      } 
+      }
     };
 
     const fetchTrainers = async () => {
@@ -90,7 +91,7 @@ const DashboardMetrics = () => {
                   <div className="col-auto mb-3 mb-sm-0">
                     <div className="d-flex align-items-center">
                       <div className="badge theme-avtar bg-primary">
-                      <TbUsers />
+                        <TbUsers />
                       </div>
                       <div className="ms-3">
                         <small className="text-muted">Total</small>
@@ -115,7 +116,7 @@ const DashboardMetrics = () => {
                   <div className="col-auto mb-3 mb-sm-0">
                     <div className="d-flex align-items-center">
                       <div className="badge theme-avtar bg-info">
-                      <HiOutlineTicket />
+                        <HiOutlineTicket />
                       </div>
                       <div className="ms-3">
                         <small className="text-muted">Total</small>
@@ -142,7 +143,7 @@ const DashboardMetrics = () => {
                   <div className="col-auto mb-3 mb-sm-0">
                     <div className="d-flex align-items-center">
                       <div className="badge theme-avtar bg-warning">
-                      <TbWallet />
+                        <TbWallet />
                       </div>
                       <div className="ms-3">
                         <small className="text-muted">Total</small>
@@ -155,112 +156,114 @@ const DashboardMetrics = () => {
                     </div>
                   </div>
                   <div className="col-auto text-end">
-                    <h6 className="m-0 text-warning">{`₹${new Intl.NumberFormat('en-IN').format(totalBalance)}`}</h6>
+                    <h6 className="m-0 text-warning">{`₹${new Intl.NumberFormat(
+                      "en-IN"
+                    ).format(totalBalance)}`}</h6>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="col-lg-4 col-md-6">
-          <div className="card">
-            <div className="card-body">
-              <div className="row align-items-center justify-content-between">
-                <div className="col-auto mb-3 mb-sm-0">
-                  <div className="d-flex align-items-center">
-                    <div className="badge theme-avtar bg-primary">
-                    <HiOutlineBriefcase />
-                    </div>
-                    <div className="ms-3">
-                      <small className="text-muted">Total</small>
-                      <h6 className="m-0">Jobs</h6>
+            <div className="card">
+              <div className="card-body">
+                <div className="row align-items-center justify-content-between">
+                  <div className="col-auto mb-3 mb-sm-0">
+                    <div className="d-flex align-items-center">
+                      <div className="badge theme-avtar bg-primary">
+                        <HiOutlineBriefcase />
+                      </div>
+                      <div className="ms-3">
+                        <small className="text-muted">Total</small>
+                        <h6 className="m-0">Jobs</h6>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="col-auto text-end">
-                  <h4 className="m-0">{jobs.length}</h4>
+                  <div className="col-auto text-end">
+                    <h4 className="m-0">{jobs.length}</h4>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="col-lg-4 col-md-6">
-          <div className="card">
-            <div className="card-body">
-              <div className="row align-items-center justify-content-between">
-                <div className="col-auto mb-3 mb-sm-0">
-                  <div className="d-flex align-items-center">
-                    <div className="badge theme-avtar bg-info">
-                    <svg
-                        xmlns="https://demo.workdo.io/hrmgo/storage/uploads/job/icons/active.svg"
-                        width="40"
-                        height="40"
-                        viewBox="0 0 40 40"
-                      >
-                        <rect width="20" height="20" fill="none"></rect>
-                        <image
-                          href="https://demo.workdo.io/hrmgo/storage/uploads/job/icons/active.svg"
-                          x="0"
-                          y="0"
+          <div className="col-lg-4 col-md-6">
+            <div className="card">
+              <div className="card-body">
+                <div className="row align-items-center justify-content-between">
+                  <div className="col-auto mb-3 mb-sm-0">
+                    <div className="d-flex align-items-center">
+                      <div className="badge theme-avtar bg-info">
+                        <svg
+                          xmlns="https://demo.workdo.io/hrmgo/storage/uploads/job/icons/active.svg"
                           width="40"
                           height="40"
-                        ></image>
-                      </svg>
-                    </div>
-                    <div className="ms-3">
-                      <small className="text-muted">Active</small>
-                      <h6 className="m-0">Jobs</h6>
+                          viewBox="0 0 40 40"
+                        >
+                          <rect width="20" height="20" fill="none"></rect>
+                          <image
+                            href="https://demo.workdo.io/hrmgo/storage/uploads/job/icons/active.svg"
+                            x="0"
+                            y="0"
+                            width="40"
+                            height="40"
+                          ></image>
+                        </svg>
+                      </div>
+                      <div className="ms-3">
+                        <small className="text-muted">Active</small>
+                        <h6 className="m-0">Jobs</h6>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="col-auto text-end">
-                  <h4 className="m-0">
-                    {jobs.filter((job) => job.status === "active").length}
-                  </h4>
+                  <div className="col-auto text-end">
+                    <h4 className="m-0">
+                      {jobs.filter((job) => job.status === "active").length}
+                    </h4>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="col-lg-4 col-md-6">
-          <div className="card">
-            <div className="card-body">
-              <div className="row align-items-center justify-content-between">
-                <div className="col-auto mb-3 mb-sm-0">
-                  <div className="d-flex align-items-center">
-                    <div className="badge theme-avtar bg-warning">
-                    <svg
-                        xmlns="https://demo.workdo.io/hrmgo/storage/uploads/job/icons/inactive.svg"
-                        width="40"
-                        height="40"
-                        viewBox="0 0 40 40"
-                      >
-                        <rect width="20" height="20" fill="none"></rect>
-                        <image
-                          href="https://demo.workdo.io/hrmgo/storage/uploads/job/icons/inactive.svg"
-                          x="0"
-                          y="0"
+          <div className="col-lg-4 col-md-6">
+            <div className="card">
+              <div className="card-body">
+                <div className="row align-items-center justify-content-between">
+                  <div className="col-auto mb-3 mb-sm-0">
+                    <div className="d-flex align-items-center">
+                      <div className="badge theme-avtar bg-warning">
+                        <svg
+                          xmlns="https://demo.workdo.io/hrmgo/storage/uploads/job/icons/inactive.svg"
                           width="40"
                           height="40"
-                        ></image>
-                      </svg>
-                    </div>
-                    <div className="ms-3">
-                      <small className="text-muted">Inactive</small>
-                      <h6 className="m-0">Jobs</h6>
+                          viewBox="0 0 40 40"
+                        >
+                          <rect width="20" height="20" fill="none"></rect>
+                          <image
+                            href="https://demo.workdo.io/hrmgo/storage/uploads/job/icons/inactive.svg"
+                            x="0"
+                            y="0"
+                            width="40"
+                            height="40"
+                          ></image>
+                        </svg>
+                      </div>
+                      <div className="ms-3">
+                        <small className="text-muted">Inactive</small>
+                        <h6 className="m-0">Jobs</h6>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="col-auto text-end">
-                  <h4 className="m-0">
-                    {jobs.filter((job) => job.status !== "active").length}
-                  </h4>
+                  <div className="col-auto text-end">
+                    <h4 className="m-0">
+                      {jobs.filter((job) => job.status !== "active").length}
+                    </h4>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
         </div>
       </div>
     </>
@@ -268,4 +271,3 @@ const DashboardMetrics = () => {
 };
 
 export default DashboardMetrics;
-
