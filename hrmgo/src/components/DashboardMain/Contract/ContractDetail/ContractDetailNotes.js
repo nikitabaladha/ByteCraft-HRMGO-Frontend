@@ -1,20 +1,81 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 import postAPI from "../../../../api/postAPI";
 import { useParams } from "react-router-dom";
-
 import { formatDistance } from "date-fns";
+import getAPI from "../../../../api/getAPI";
 
 const ContractDetailNotes = ({ notes, setNotes }) => {
   const [noteText, setNoteText] = useState("");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-
   const [selectedNote, setSelectedNote] = useState(null);
-
+  const [userAvatar, setUserAvatar] = useState(""); // State to hold user avatar
   const { id: contractId } = useParams();
+
+  // Fetch user details including avatar when the component mounts
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await getAPI("/get-user-details", {}, true);
+        if (!response.hasError && response.data) {
+          const user = response.data.data;
+          const profilePath = user.profileImage.startsWith("/")
+            ? `${process.env.REACT_APP_API_URL_FOR_IMAGE}${user.profileImage}`
+            : `${process.env.REACT_APP_API_URL_FOR_IMAGE}/Images/profilePicture/default-avatar.png`;
+          setUserAvatar(profilePath); // Set the user avatar
+        } else {
+          toast.error("Failed to fetch User data.");
+        }
+      } catch (error) {
+        console.error("Error fetching User data:", error);
+        toast.error("An error occurred while fetching User data.");
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
+
+  // Fetch notes with user avatars when the component mounts
+  useEffect(() => {
+    const fetchNotesWithAvatars = async () => {
+      try {
+        const response = await getAPI(
+          `/contract-note?contractId=${contractId}`,
+          {},
+          true
+        );
+        if (!response.hasError && response.data) {
+          const notesWithAvatars = await Promise.all(
+            response.data.data.map(async (note) => {
+              const userResponse = await getAPI(`/get-user-details`, {}, true);
+              const userAvatar = userResponse.data.data.profileImage.startsWith(
+                "/"
+              )
+                ? `${process.env.REACT_APP_API_URL_FOR_IMAGE}${userResponse.data.data.profileImage}`
+                : `${process.env.REACT_APP_API_URL_FOR_IMAGE}/Images/profilePicture/default-avatar.png`;
+
+              return {
+                ...note,
+                userAvatar,
+              };
+            })
+          );
+
+          setNotes(notesWithAvatars);
+        } else {
+          toast.error("Failed to fetch notes.");
+        }
+      } catch (error) {
+        console.error("Error fetching notes:", error);
+        // toast.error("An error occurred while fetching notes.");
+      }
+    };
+
+    fetchNotesWithAvatars();
+  }, [contractId]);
 
   const handleDeleteCancel = () => {
     setIsDeleteDialogOpen(false);
@@ -34,7 +95,7 @@ const ContractDetailNotes = ({ notes, setNotes }) => {
     e.preventDefault();
 
     if (!noteText.trim()) {
-      toast.error("Comment cannot be empty!");
+      toast.error("Note cannot be empty!");
       return;
     }
 
@@ -54,7 +115,7 @@ const ContractDetailNotes = ({ notes, setNotes }) => {
           id: response.data.data._id,
           note: noteText,
           createdAt: relativeTime,
-          userAvatar: "path/to/default/avatar.png",
+          userAvatar: userAvatar,
         };
 
         setNotes((prevNotes) => [...prevNotes, newNote]);

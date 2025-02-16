@@ -17,6 +17,10 @@ const ContractDetailHeader = ({ contractData, copyContract }) => {
 
   const handleDownload = (event) => {
     event.preventDefault();
+
+    navigate(`/contract/preview/${contractData.id}`, {
+      state: { contractData, autoDownload: true },
+    });
   };
 
   const navigateToContractDetailPreview = (event, contractData) => {

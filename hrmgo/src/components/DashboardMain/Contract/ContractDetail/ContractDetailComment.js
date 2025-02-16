@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TbBrandTelegram } from "react-icons/tb";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { formatDistance } from "date-fns";
 import ConfirmationDialog from "../../ConfirmationDialog";
-
+import getAPI from "../../../../api/getAPI";
 import postAPI from "../../../../api/postAPI";
 import { useParams } from "react-router-dom";
-
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -16,6 +15,44 @@ const ContractDetailComment = ({ comments, setComments }) => {
   const [selectedComment, setSelectedComment] = useState(null);
   const [commentText, setCommentText] = useState("");
   const { id: contractId } = useParams();
+
+  useEffect(() => {
+    const fetchCommentsWithAvatars = async () => {
+      try {
+        const response = await getAPI(
+          `/contract-comment?contractId=${contractId}`,
+          {},
+          true
+        );
+        if (!response.hasError && response.data) {
+          const commentsWithAvatars = await Promise.all(
+            response.data.data.map(async (comment) => {
+              const userResponse = await getAPI(`/get-user-details`, {}, true);
+              const userAvatar = userResponse.data.data.profileImage.startsWith(
+                "/"
+              )
+                ? `${process.env.REACT_APP_API_URL_FOR_IMAGE}${userResponse.data.data.profileImage}`
+                : `${process.env.REACT_APP_API_URL_FOR_IMAGE}/Images/profilePicture/default-avatar.png`;
+
+              return {
+                ...comment,
+                userAvatar,
+              };
+            })
+          );
+
+          setComments(commentsWithAvatars);
+        } else {
+          toast.error("Failed to fetch comments.");
+        }
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+        // toast.error("An error occurred while fetching comments.");
+      }
+    };
+
+    fetchCommentsWithAvatars();
+  }, [contractId]);
 
   const openDeleteDialog = (comment) => {
     setSelectedComment(comment);
@@ -42,6 +79,19 @@ const ContractDetailComment = ({ comments, setComments }) => {
     }
 
     try {
+      // Fetch user details including avatar
+      const userResponse = await getAPI("/get-user-details", {}, true);
+      if (userResponse.hasError || !userResponse.data) {
+        toast.error("Failed to fetch user details.");
+        return;
+      }
+
+      const user = userResponse.data.data;
+      const userAvatar = user.profileImage.startsWith("/")
+        ? `${process.env.REACT_APP_API_URL_FOR_IMAGE}${user.profileImage}`
+        : `${process.env.REACT_APP_API_URL_FOR_IMAGE}/Images/profilePicture/default-avatar.png`;
+
+      // Submit the comment
       const payload = {
         contractId,
         comment: commentText,
@@ -57,7 +107,7 @@ const ContractDetailComment = ({ comments, setComments }) => {
           id: response.data.data._id,
           comment: commentText,
           createdAt: relativeTime,
-          userAvatar: "path/to/default/avatar.png",
+          userAvatar: userAvatar,
         };
 
         setComments((prevComments) => [...prevComments, newComment]);

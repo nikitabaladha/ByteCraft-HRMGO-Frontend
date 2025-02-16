@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react"; // Add useRef
 import { MdOutlineFileDownload } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -11,9 +11,9 @@ import getAPI from "../../../../api/getAPI";
 const ContractDetailAttachment = ({ attachments, setAttachments }) => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedAttachment, setSelectedAttachment] = useState(null);
-
   const { id: contractId } = useParams();
   const [selectedFile, setSelectedFile] = useState(null);
+  const fileInputRef = useRef(null); // Create a ref for the file input
 
   const openDeleteDialog = (attachment) => {
     setSelectedAttachment(attachment);
@@ -34,6 +34,11 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!selectedFile) {
+      toast.error("Please select a file to upload.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("contractId", contractId);
     formData.append("contractAttachmentUrl", selectedFile);
@@ -49,7 +54,6 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
       );
 
       if (!response.hasError) {
-        console.log("attechment create response", response);
         const newAttachment = {
           id: response.data.data._id,
           fileName: selectedFile.name,
@@ -57,10 +61,14 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
           contractAttachmentUrl: response.data.data.contractAttachmentUrl,
         };
 
+        // Clear the selected file and reset the file input
         setSelectedFile(null);
-        setAttachments((prev) => [...prev, newAttachment]);
-        console.log("newAttachment", newAttachment);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = ""; // Reset the file input
+        }
 
+        // Add the new attachment to the list
+        setAttachments((prev) => [...prev, newAttachment]);
         toast.success("Attachment added successfully!");
       } else {
         toast.error(response.message || "Failed to add Attachment.");
@@ -80,7 +88,6 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
 
   const handleDownload = async (id) => {
     try {
-      // Make a request to the backend to download the file
       const response = await getAPI(
         `contract-attachment/download/${id}`,
         {},
@@ -90,12 +97,11 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
       if (!response.hasError && response.data) {
         const a = document.createElement("a");
         a.href = response.data.data;
-        // Set the filename if available in the response
-        a.download = response.data.fileName || `attachment-${id}.png`; // Default filename if not provided
+        a.download = response.data.fileName || `attachment-${id}.png`;
         document.body.appendChild(a);
-        a.click(); // Trigger the download
-        a.remove(); // Clean up
-        window.URL.revokeObjectURL(a.href); // Clean up URL object
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(a.href);
       } else {
         toast.error(response.message || "Failed to download attachment.");
       }
@@ -135,6 +141,7 @@ const ContractDetailAttachment = ({ attachments, setAttachments }) => {
                         required
                         style={{ display: "none" }}
                         onChange={handleFileChange}
+                        ref={fileInputRef} // Attach the ref to the file input
                       />
                       <button
                         className="dz-button"
