@@ -9,17 +9,13 @@ const UpdatePromotionModal = ({ promotion, onClose, updatePromotion }) => {
   const [promotionTitle, setPromotionTitle] = useState(
     promotion?.promotionTitle || ""
   );
-
   const [promotionDate, setPromotionDate] = useState(
     promotion?.promotionDate
       ? new Date(promotion.promotionDate).toISOString().split("T")[0]
       : ""
   );
-
   const [description, setDescription] = useState(promotion?.description || "");
-  const [designationId, setDesignationId] = useState(
-    promotion?.designationId || ""
-  );
+  const [designationId, setDesignationId] = useState("");
   const [designations, setDesignations] = useState([]);
 
   useEffect(() => {
@@ -44,6 +40,14 @@ const UpdatePromotionModal = ({ promotion, onClose, updatePromotion }) => {
         const response = await getAPI("/designation-get-all", {}, true);
         if (!response.hasError && Array.isArray(response.data.data)) {
           setDesignations(response.data.data);
+
+          // Find and set the existing designationId based on promotion.designationName
+          const existingDesignation = response.data.data.find(
+            (des) => des.designationName === promotion.designationName
+          );
+          if (existingDesignation) {
+            setDesignationId(existingDesignation.id);
+          }
         } else {
           toast.error("Failed to load Designations.");
         }
@@ -52,21 +56,6 @@ const UpdatePromotionModal = ({ promotion, onClose, updatePromotion }) => {
       }
     };
     fetchDesignationData();
-  }, []);
-
-  // Update state when the promotion prop changes
-  useEffect(() => {
-    if (promotion) {
-      setPromotionTitle(promotion.promotionTitle || "");
-      setPromotionDate(
-        promotion.promotionDate
-          ? new Date(promotion.promotionDate).toISOString().split("T")[0]
-          : ""
-      );
-
-      setDescription(promotion.description || "");
-      setDesignationId(promotion.designationId || "");
-    }
   }, [promotion]);
 
   const handleUpdate = async (e) => {
@@ -94,6 +83,7 @@ const UpdatePromotionModal = ({ promotion, onClose, updatePromotion }) => {
         const designationName = selectedDesignation
           ? selectedDesignation.designationName
           : promotion.designationName;
+
         const newUpdatedPromotion = {
           id: response.data.data._id,
           employeeName: promotion.employeeName,
@@ -104,7 +94,6 @@ const UpdatePromotionModal = ({ promotion, onClose, updatePromotion }) => {
         };
 
         updatePromotion(newUpdatedPromotion);
-
         onClose();
       } else {
         toast.error("Failed to update Promotion.");
@@ -116,24 +105,6 @@ const UpdatePromotionModal = ({ promotion, onClose, updatePromotion }) => {
       );
     }
   };
-
-  const handleDateChange = (e) => {
-    setPromotionDate(e.target.value);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      const modalDialog = document.querySelector(".modal-dialog");
-      if (modalDialog && !modalDialog.contains(event.target)) {
-        onClose();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [onClose]);
 
   return (
     <div
@@ -152,9 +123,7 @@ const UpdatePromotionModal = ({ promotion, onClose, updatePromotion }) => {
       <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">
-              Edit Promotion
-            </h5>
+            <h5 className="modal-title">Edit Promotion</h5>
             <button
               type="button"
               className="btn-close"
@@ -164,33 +133,24 @@ const UpdatePromotionModal = ({ promotion, onClose, updatePromotion }) => {
           </div>
           <div className="body">
             <form
-              method="POST"
               className="needs-validation"
               noValidate
               onSubmit={handleUpdate}
             >
               <div className="modal-body">
                 <div className="row">
-                  <div className="form-group col-md-6 col-lg-6">
+                  <div className="form-group col-md-6">
                     <label htmlFor="employee_id" className="col-form-label">
                       Employee
                     </label>
-                    <select
-                      className="form-control"
-                      name="employeeId"
-                      value={promotion?.employeeName || ""}
-                      disabled
-                    >
-                      <option value={promotion?.employeeId}>
-                        {promotion?.employeeName}
-                      </option>
+                    <select className="form-control" disabled>
+                      <option>{promotion?.employeeName}</option>
                     </select>
                   </div>
-                  <div className="form-group col-md-6 col-lg-6">
+                  <div className="form-group col-md-6">
                     <label htmlFor="designation_id" className="col-form-label">
-                      Designation
+                      Designation <span className="text-danger">*</span>
                     </label>
-                    <span className="text-danger">*</span>
                     <select
                       className="form-control"
                       name="designationId"
@@ -208,47 +168,40 @@ const UpdatePromotionModal = ({ promotion, onClose, updatePromotion }) => {
                       ))}
                     </select>
                   </div>
-                  <div className="form-group col-md-6 col-lg-6">
+                  <div className="form-group col-md-6">
                     <label htmlFor="promotion_title" className="col-form-label">
-                      Promotion Title
+                      Promotion Title <span className="text-danger">*</span>
                     </label>
-                    <span className="text-danger">*</span>
                     <input
                       className="form-control"
                       required
-                      id="promotion_title"
                       name="promotionTitle"
                       value={promotionTitle}
                       onChange={(e) => setPromotionTitle(e.target.value)}
                     />
                   </div>
-                  <div className="form-group col-md-6 col-lg-6">
+                  <div className="form-group col-md-6">
                     <label htmlFor="promotionDate" className="col-form-label">
-                      Date
+                      Date <span className="text-danger">*</span>
                     </label>
-                    <span className="text-danger">*</span>
                     <input
                       className="form-control"
                       required
-                      name="promotionDate"
                       type="date"
-                      id="promotionDate"
+                      name="promotionDate"
                       value={promotionDate}
-                      onChange={handleDateChange}
+                      onChange={(e) => setPromotionDate(e.target.value)}
                     />
                   </div>
                   <div className="form-group col-md-12">
                     <label htmlFor="description" className="col-form-label">
-                      Description
+                      Description <span className="text-danger">*</span>
                     </label>
-                    <span className="text-danger">*</span>
                     <textarea
                       className="form-control"
-                      placeholder="Enter Description"
                       rows={3}
                       required
                       name="description"
-                      id="description"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                     />

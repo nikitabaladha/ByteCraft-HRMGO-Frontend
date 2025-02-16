@@ -206,7 +206,6 @@ const CreatePromotionModal = ({ onClose, addPromotion }) => {
                         Designation
                       </label>
                       <span className="text-danger">*</span>
-
                       <select
                         className="form-control"
                         name="designationId"

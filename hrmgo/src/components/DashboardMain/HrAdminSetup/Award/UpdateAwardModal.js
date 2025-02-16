@@ -6,7 +6,7 @@ import getAPI from "../../../../api/getAPI.js";
 
 const UpdateAwardModal = ({ award, onClose, updateAward }) => {
   const [employeeName, setEmployeeName] = useState(award?.employeeName || "");
-  const [awardTypeId, setAwardTypeId] = useState(award?.awardTypeId || "");
+  const [awardTypeId, setAwardTypeId] = useState("");
   const [date, setDate] = useState(
     award?.date ? new Date(award.date).toISOString().split("T")[0] : ""
   );
@@ -21,6 +21,14 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
         const response = await getAPI("/award-type-get-all", {}, true);
         if (!response.hasError && Array.isArray(response.data.data)) {
           setAwardTypes(response.data.data);
+
+          // Find and set the existing awardTypeId based on award.awardType
+          const existingAwardType = response.data.data.find(
+            (type) => type.awardName === award.awardType
+          );
+          if (existingAwardType) {
+            setAwardTypeId(existingAwardType._id);
+          }
         } else {
           toast.error("Failed to load award types.");
         }
@@ -29,19 +37,6 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
       }
     };
     fetchAllAwardType();
-  }, []);
-
-  // Set initial values when the award prop changes
-  useEffect(() => {
-    if (award) {
-      setEmployeeName(award.employeeName);
-      setAwardTypeId(award.awardTypeId); // Set awardTypeId
-      setDate(
-        award.date ? new Date(award.date).toISOString().split("T")[0] : ""
-      );
-      setGift(award.gift);
-      setDescription(award.description);
-    }
   }, [award]);
 
   // Handle form submission
@@ -50,7 +45,7 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
 
     // Prepare updated award data
     const updatedAward = {
-      awardTypeId,
+      awardTypeId: awardTypeId || award.awardTypeId,
       date,
       gift,
       description,
@@ -70,46 +65,27 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
         const newUpdatedAward = {
           id: response.data.data._id,
           employeeName,
-          awardType: selectedAwardType ? selectedAwardType.awardName : "",
+          awardType: selectedAwardType
+            ? selectedAwardType.awardName
+            : award.awardType,
           date: response.data.data.date,
           gift: response.data.data.gift,
           description: response.data.data.description,
           employeeId: response.data.data.employeeId,
         };
 
-        console.log("new updated award", newUpdatedAward);
-
-        // Update the award in the list
         updateAward(newUpdatedAward);
         onClose();
       } else {
         toast.error("Failed to update award.");
       }
     } catch (error) {
-      const errorMessage =
-        error.response?.data?.message || "An unexpected error occurred.";
-      toast.error(errorMessage);
+      toast.error(
+        error.response?.data?.message ||
+          "An unexpected error occurred. Please try again."
+      );
     }
   };
-
-  // Handle click outside the modal to close it
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      const modalDialog = document.querySelector(".modal-dialog");
-      if (modalDialog && !modalDialog.contains(event.target)) {
-        onClose();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [onClose]);
-
-  // Find the existing award type name
-  const existingAwardType = awardTypes.find((type) => type._id === awardTypeId);
 
   return (
     <div
@@ -128,9 +104,7 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
       <div className="modal-dialog modal-lg" role="document">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">
-              Edit Award
-            </h5>
+            <h5 className="modal-title">Edit Award</h5>
             <button
               type="button"
               className="btn-close"
@@ -146,75 +120,67 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
             >
               <div className="row">
                 <div className="form-group col-md-6">
-                  <label htmlFor="employee_id" className="col-form-label">
-                    Employee
-                  </label>
-                  <select
+                  <label className="col-form-label">Employee</label>
+                  <input
                     className="form-control"
                     value={employeeName}
                     disabled
-                  >
-                    <option value={employeeName}>{employeeName}</option>
-                  </select>
+                  />
                 </div>
                 <div className="form-group col-md-6">
-                  <label htmlFor="award_type" className="col-form-label">
+                  <label className="col-form-label">
                     Award Type <span className="text-danger">*</span>
                   </label>
                   <select
                     className="form-control"
-                    required
+                    name="awardTypeId"
                     value={awardTypeId}
                     onChange={(e) => setAwardTypeId(e.target.value)}
+                    required
                   >
-                    {existingAwardType && (
-                      <option value={existingAwardType._id}>
-                        {existingAwardType.awardName}
+                    <option value="" disabled>
+                      Select Award Type
+                    </option>
+                    {awardTypes.map((type) => (
+                      <option key={type._id} value={type._id}>
+                        {type.awardName}
                       </option>
-                    )}
-
-                    {awardTypes
-                      .filter((type) => type._id !== awardTypeId)
-                      .map((type) => (
-                        <option key={type._id} value={type._id}>
-                          {type.awardName}
-                        </option>
-                      ))}
+                    ))}
                   </select>
                 </div>
                 <div className="form-group col-md-6">
-                  <label htmlFor="date" className="col-form-label">
+                  <label className="col-form-label">
                     Date <span className="text-danger">*</span>
                   </label>
                   <input
-                    type="date"
                     className="form-control"
+                    type="date"
+                    name="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                     required
                   />
                 </div>
                 <div className="form-group col-md-6">
-                  <label htmlFor="gift" className="col-form-label">
+                  <label className="col-form-label">
                     Gift <span className="text-danger">*</span>
                   </label>
                   <input
-                    type="text"
                     className="form-control"
-                    placeholder="Enter Gift"
+                    name="gift"
                     value={gift}
                     onChange={(e) => setGift(e.target.value)}
                     required
                   />
                 </div>
                 <div className="form-group col-md-12">
-                  <label htmlFor="description" className="col-form-label">
+                  <label className="col-form-label">
                     Description <span className="text-danger">*</span>
                   </label>
                   <textarea
                     className="form-control"
-                    placeholder="Enter Description"
                     rows={3}
+                    name="description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     required
@@ -229,9 +195,11 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
                 >
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary">
-                  Update
-                </button>
+                <input
+                  type="submit"
+                  value="Update"
+                  className="btn btn-primary"
+                />
               </div>
             </form>
           </div>
