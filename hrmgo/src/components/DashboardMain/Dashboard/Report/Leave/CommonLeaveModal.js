@@ -1,11 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import getAPI from "../../../../../api/getAPI";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CommonLeaveModal = ({ employee, onClose }) => {
   const { leaves, leaveStatus } = employee;
+  const [leaveTypes, setLeaveTypes] = useState([]);
 
   const filteredLeaves = leaves?.filter(
     (leave) => leave.status === leaveStatus
   );
+
+  console.log("filteredLeaves", filteredLeaves);
 
   const leaveTitle =
     leaveStatus === "Approved"
@@ -15,6 +21,23 @@ const CommonLeaveModal = ({ employee, onClose }) => {
       : leaveStatus === "Pending"
       ? "Pending Leave Detail"
       : "Invalid Leave Detail";
+
+  useEffect(() => {
+    const fetchAllLeaveType = async () => {
+      try {
+        const response = await getAPI("/leave-type-get-all", {}, true);
+        if (!response.hasError && Array.isArray(response.data.data)) {
+          setLeaveTypes(response.data.data);
+          console.log("Leave type", response.data.data);
+        } else {
+          toast.error("Failed to load leave types.");
+        }
+      } catch (err) {
+        toast.error("Error fetching leave type data.");
+      }
+    };
+    fetchAllLeaveType();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -59,30 +82,22 @@ const CommonLeaveModal = ({ employee, onClose }) => {
             <div className="body">
               <div className="col-form-label">
                 <div className="row m-2">
-                  <div className="col text-center">
-                    <div className="card p-4 mb-4">
-                      <h5 className="report-text gray-text mb-0">
-                        Casual Leave:
-                      </h5>
-                      <h5 className="report-text mb-0">
-                        {filteredLeaves.filter(
-                          (leave) => leave.leaveType === "Casual Leave"
-                        ).length || 0}
-                      </h5>
-                    </div>
-                  </div>
-                  <div className="col text-center">
-                    <div className="card p-4 mb-4">
-                      <h5 className="report-text gray-text mb-0">
-                        Medical Leave:
-                      </h5>
-                      <h5 className="report-text mb-0">
-                        {filteredLeaves.filter(
-                          (leave) => leave.leaveType === "Medical Leave"
-                        ).length || 0}
-                      </h5>
-                    </div>
-                  </div>
+                  {leaveTypes.map((leaveType) => {
+                    const count = filteredLeaves.filter(
+                      (leave) => leave.leaveType === leaveType.leaveTypeName
+                    ).length;
+
+                    return (
+                      <div className="col text-center" key={leaveType._id}>
+                        <div className="card p-4 mb-4">
+                          <h5 className="report-text gray-text mb-0">
+                            {leaveType.leaveTypeName}:
+                          </h5>
+                          <h5 className="report-text mb-0">{count || 0}</h5>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
                 <div className="row m-2">
                   <div className="table-responsive">

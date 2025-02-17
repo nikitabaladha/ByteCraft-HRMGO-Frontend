@@ -93,6 +93,7 @@ const LeaveTable = ({
                             </Link>
                           </td>
                           <td>{employee.employeeName}</td>
+
                           <td>
                             <div className="btn btn-sm btn-info rounded">
                               {employee.approvedLeaves}
