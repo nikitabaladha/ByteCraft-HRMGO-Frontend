@@ -6,9 +6,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 const CreateModal = ({ onClose, addLeave }) => {
   const [employees, setEmployees] = useState([]);
+  const [leaveTypes, setLeaveTypes] = useState([]);
   const [formData, setFormData] = useState({
     employeeId: "",
-    leaveType: "",
+    leaveTypeId: "",
     startDate: new Date().toISOString().split("T")[0],
     endDate: new Date().toISOString().split("T")[0],
     reason: "",
@@ -28,6 +29,22 @@ const CreateModal = ({ onClose, addLeave }) => {
       }
     };
     fetchEmployeeData();
+  }, []);
+
+  useEffect(() => {
+    const fetchAllLeaveType = async () => {
+      try {
+        const response = await getAPI("/leave-type-get-all", {}, true);
+        if (!response.hasError && Array.isArray(response.data.data)) {
+          setLeaveTypes(response.data.data);
+        } else {
+          toast.error("Failed to load leave types.");
+        }
+      } catch (err) {
+        toast.error("Error fetching leave type data.");
+      }
+    };
+    fetchAllLeaveType();
   }, []);
 
   const handleChange = (e) => {
@@ -53,7 +70,7 @@ const CreateModal = ({ onClose, addLeave }) => {
         `/manage-leave`,
         {
           employeeId: formData.employeeId,
-          leaveType: formData.leaveType,
+          leaveTypeId: formData.leaveTypeId,
           startDate: formData.startDate,
           endDate: formData.endDate,
           reason: formData.reason,
@@ -67,6 +84,13 @@ const CreateModal = ({ onClose, addLeave }) => {
         );
         const employeeName = selectedEmployee ? selectedEmployee.name : "";
 
+        const selectedLeaveType = leaveTypes.find(
+          (type) => type._id === formData.leaveTypeId
+        );
+        const leaveType = selectedLeaveType
+          ? selectedLeaveType.leaveTypeName
+          : "";
+
         const newLeave = {
           id: response.data.data._id,
           employeeName,
@@ -74,7 +98,8 @@ const CreateModal = ({ onClose, addLeave }) => {
           endDate: response.data.data.endDate,
           reason: response.data.data.reason,
           employeeId: response.data.data.employeeId,
-          leaveType: response.data.data.leaveType,
+          leaveTypeId: response.data.data.leaveTypeId,
+          leaveType,
           status: response.data.data.status,
           totalDays: response.data.data.totalDays,
           appliedOn: response.data.data.appliedOn,
@@ -88,7 +113,7 @@ const CreateModal = ({ onClose, addLeave }) => {
           employeeId: "",
           startDate: new Date().toISOString().split("T")[0],
           endDate: new Date().toISOString().split("T")[0],
-          leaveType: "",
+          leaveTypeId: "",
           reason: "",
         });
         onClose();
@@ -192,18 +217,20 @@ const CreateModal = ({ onClose, addLeave }) => {
                         Leave Type
                       </label>
                       <span className="text-danger">*</span>
-
                       <select
                         className="form-control"
                         required="required"
-                        id="leaveType"
-                        name="leaveType"
-                        value={formData.leaveType}
+                        id="leave_type"
+                        name="leaveTypeId"
+                        value={formData.leaveTypeId}
                         onChange={handleChange}
                       >
                         <option value="">Select Leave Type</option>
-                        <option value="Casual Leave">Casual Leave</option>
-                        <option value="Medical Leave">Medical Leave</option>
+                        {leaveTypes.map((type) => (
+                          <option key={type._id} value={type._id}>
+                            {type.leaveTypeName}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -216,7 +243,6 @@ const CreateModal = ({ onClose, addLeave }) => {
                         Start Date
                       </label>
                       <span className="text-danger">*</span>
-
                       <input
                         type="date"
                         className="form-control"
@@ -267,7 +293,7 @@ const CreateModal = ({ onClose, addLeave }) => {
 
                 <div className="form-group col-md-6">
                   <label htmlFor="synchronize_type" className="form-label">
-                    Synchroniz in Google Calendar ?
+                    Synchronize in Google Calendar ?
                   </label>
                   <div className=" form-switch">
                     <input

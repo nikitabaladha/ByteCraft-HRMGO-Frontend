@@ -68,7 +68,6 @@ const Award = () => {
   const [awards, setAwards] = useState([]);
   const [selectedAward, setSelectedAward] = useState(null);
 
-  // Fetch award data from the backend when the component mounts
   useEffect(() => {
     const fetchAwardData = async () => {
       try {
@@ -78,7 +77,7 @@ const Award = () => {
           response.data &&
           Array.isArray(response.data.data)
         ) {
-          setAwards(response.data.data); // Update the awards state with data from the backend
+          setAwards(response.data.data);
           console.log("Award Data fetched successfully", response.data.data);
         } else {
           console.error("Invalid response format or error in response");

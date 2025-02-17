@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import putAPI from "../../../../api/putAPI.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import getAPI from "../../../../api/getAPI.js";
 
 const UpdateModal = ({ leave, onClose, updateLeave }) => {
-  const [leaveType, setLeaveType] = useState(leave?.leaveType || "");
+  const [leaveTypes, setLeaveTypes] = useState([]);
+  const [leaveTypeId, setLeaveTypeId] = useState(leave?.leaveTypeId || "");
   const [startDate, setStartDate] = useState(
     leave?.startDate ? leave.startDate.split("T")[0] : ""
   );
@@ -14,8 +16,31 @@ const UpdateModal = ({ leave, onClose, updateLeave }) => {
   const [reason, setReason] = useState(leave?.reason || "");
 
   useEffect(() => {
+    const fetchAllLeaveType = async () => {
+      try {
+        const response = await getAPI("/leave-type-get-all", {}, true);
+        if (!response.hasError && Array.isArray(response.data.data)) {
+          setLeaveTypes(response.data.data);
+
+          const existingLeaveType = response.data.data.find(
+            (type) => type.leaveTypeName === leave.leaveType
+          );
+          if (existingLeaveType) {
+            setLeaveTypeId(existingLeaveType._id);
+          }
+        } else {
+          toast.error("Failed to load leave types.");
+        }
+      } catch (err) {
+        toast.error("Error fetching leave type data.");
+      }
+    };
+    fetchAllLeaveType();
+  }, []);
+
+  useEffect(() => {
     if (leave) {
-      setLeaveType(leave.leaveType);
+      setLeaveTypeId(leave.leaveTypeId);
       setStartDate(leave.startDate ? leave.startDate.split("T")[0] : "");
       setEndDate(leave.endDate ? leave.endDate.split("T")[0] : "");
       setReason(leave.reason);
@@ -26,7 +51,7 @@ const UpdateModal = ({ leave, onClose, updateLeave }) => {
     e.preventDefault();
 
     const updatedLeave = {
-      leaveType,
+      leaveTypeId: leaveTypeId || leave.leaveTypeId,
       startDate,
       endDate,
       reason,
@@ -41,6 +66,11 @@ const UpdateModal = ({ leave, onClose, updateLeave }) => {
 
       if (!response.hasError) {
         toast.success("Leave updated successfully!");
+
+        const selectedLeaveType = leaveTypes.find(
+          (type) => type._id === leaveTypeId
+        );
+
         const newUpdatedLeave = {
           id: response.data.data._id,
           employeeName: leave.employeeName,
@@ -48,7 +78,9 @@ const UpdateModal = ({ leave, onClose, updateLeave }) => {
           endDate: response.data.data.endDate,
           reason: response.data.data.reason,
           employeeId: response.data.data.employeeId,
-          leaveType: response.data.data.leaveType,
+          leaveType: selectedLeaveType
+            ? selectedLeaveType.leaveTypeName
+            : leave.leaveType,
           status: response.data.data.status,
           totalDays: response.data.data.totalDays,
           appliedOn: response.data.data.appliedOn,
@@ -143,7 +175,7 @@ const UpdateModal = ({ leave, onClose, updateLeave }) => {
                         Leave Type
                       </label>
                       <span className="text-danger">*</span>
-                      <select
+                      {/* <select
                         name="leave_type_id"
                         id="leave_type_id"
                         className="form-control select"
@@ -158,6 +190,22 @@ const UpdateModal = ({ leave, onClose, updateLeave }) => {
                         <option value="Medical Leave">
                           Medical Leave&nbsp;(0/10)
                         </option>
+                      </select> */}
+                      <select
+                        className="form-control"
+                        name="leaveTypeId"
+                        value={leaveTypeId}
+                        onChange={(e) => setLeaveTypeId(e.target.value)}
+                        required
+                      >
+                        <option value="" disabled>
+                          Select Award Type
+                        </option>
+                        {leaveTypes.map((type) => (
+                          <option key={type._id} value={type._id}>
+                            {type.leaveTypeName}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
