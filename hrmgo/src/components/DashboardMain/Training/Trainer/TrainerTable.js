@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { TbPencil } from "react-icons/tb";
-import { FaRegTrashAlt, FaEye } from "react-icons/fa";
+// import { TbPencil } from "react-icons/tb";
+// import { FaRegTrashAlt, FaEye } from "react-icons/fa";
 import getAPI from "../../../../api/getAPI";
 // import deleteAPI from "../../../../api/deleteAPI";
 import { toast } from "react-toastify";
@@ -122,7 +122,8 @@ const TrainerTable = ({trainers, setTrainers, fetchTrainers}) => {
           title="View"
           onClick={() => handleViewTrainee(trainer.id)} // Fetch and show trainee details
         >
-          <FaEye />
+          {/* <FaEye /> */}
+          <i className="ti ti-eye"></i>
         </button>
       </div>
       <div className="action-btn bg-info">
@@ -131,7 +132,8 @@ const TrainerTable = ({trainers, setTrainers, fetchTrainers}) => {
           title="Edit"
           onClick={() => handleEditTrainee(trainer)} // Open the update modal
         >
-          <TbPencil />
+          {/* <TbPencil /> */}
+          <i className="ti ti-pencil"></i>
         </button>
       </div>
       <div className="action-btn bg-danger">
@@ -143,7 +145,8 @@ const TrainerTable = ({trainers, setTrainers, fetchTrainers}) => {
             openDeleteDialog(trainer);
           }}
         >
-          <FaRegTrashAlt />
+          {/* <FaRegTrashAlt /> */}
+          <i className="ti ti-trash"></i>
         </button>
       </div>
     </div>

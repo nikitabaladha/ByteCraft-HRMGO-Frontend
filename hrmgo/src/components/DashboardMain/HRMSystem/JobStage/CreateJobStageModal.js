@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import postAPI from "../../../../api/postAPI";
 
-const CreateJobStageModal = ({ closeModal }) => {
+const CreateJobStageModal = ({ closeModal, fetchJobStages }) => {
   const [name, setName] = useState('');
 
   const handleSubmit = async (e) => {
@@ -23,6 +23,7 @@ const CreateJobStageModal = ({ closeModal }) => {
       if (!response.hasError) {
         toast.success("Job stage created successfully");
         closeModal();
+        fetchJobStages()
       } else {
         toast.error(`Failed to create job stage: ${response.message}`);
       }

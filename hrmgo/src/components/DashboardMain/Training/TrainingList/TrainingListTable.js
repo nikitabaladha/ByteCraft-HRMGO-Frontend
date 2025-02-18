@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { TbPencil } from "react-icons/tb";
-import { FaRegTrashAlt, FaEye } from "react-icons/fa";
+// import { TbPencil } from "react-icons/tb";
+// import { FaRegTrashAlt, FaEye } from "react-icons/fa";
 import getAPI from "../../../../api/getAPI";
 import TrainingListUpdateModel from "./TrainingListUpdateModel";
 import ConfirmationDialog from "../../ConfirmationDialog";
@@ -102,7 +102,8 @@ const openDeleteDialog = (training) => {
           title="View"
           onClick={() => handleView(training)}
         >
-          <FaEye />
+          {/* <FaEye /> */}
+          <i className="ti ti-eye"></i>
         </button>
       </div>
       <div className="action-btn bg-info">
@@ -111,7 +112,8 @@ const openDeleteDialog = (training) => {
           title="Edit"
           onClick={() => handleEdit(training)}
         >
-          <TbPencil />
+          {/* <TbPencil /> */}
+          <i className="ti ti-pencil"></i>
         </button>
       </div>
       <div className="action-btn bg-danger">
@@ -125,7 +127,8 @@ const openDeleteDialog = (training) => {
           title="Delete"
         >
          
-            <FaRegTrashAlt />
+            {/* <FaRegTrashAlt /> */}
+            <i className="ti ti-trash"></i>
         </button>
       </div>
     </div>

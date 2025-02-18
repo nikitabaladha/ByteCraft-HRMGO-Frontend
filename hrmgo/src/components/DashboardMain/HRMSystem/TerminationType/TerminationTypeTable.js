@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditTerminationTypeModal from "./EditTerminationTypeModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const TerminationTypeTable = () => {
+const TerminationTypeTable = ({terminationTypes, setTerminationTypes, fetchTerminationTypes}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTerminationType, setSelectedTerminationType] = useState(null);
-  const [terminationTypes, setTerminationTypes] = useState([]);
+  // const [terminationTypes, setTerminationTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [terminationTypeToDelete, setTerminationTypeToDelete] = useState(null);
 
@@ -24,17 +24,16 @@ const TerminationTypeTable = () => {
     setCurrentPage(1);
   };
 
-  const filteredTerminationTypes = terminationTypes.filter(
-    (terminationType) => {
-      const searchTerm = searchQuery.toLowerCase();
-      return terminationType.terminationName.toLowerCase().includes(searchTerm);
-    }
-  );
+  const filteredTerminationTypes = terminationTypes.filter((terminationType) => {
+    const searchTerm = searchQuery.toLowerCase();
+    return terminationType.terminationName.toLowerCase().includes(searchTerm);
+  });
 
   const paginatedTerminationTypes = filteredTerminationTypes.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
+
 
   const openDeleteDialog = (terminationTypeId) => {
     setTerminationTypeToDelete(terminationTypeId);
@@ -55,22 +54,22 @@ const TerminationTypeTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchTerminationTypes = async () => {
-      try {
-        const response = await getAPI("/termination-type-get-all", true);
-        if (!response.hasError) {
-          setTerminationTypes(response.data.data);
-        } else {
-          toast.error(`Failed to fetch termination types: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching termination types.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchTerminationTypes = async () => {
+  //     try {
+  //       const response = await getAPI("/termination-type-get-all", true);
+  //       if (!response.hasError) {
+  //         setTerminationTypes(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch termination types: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching termination types.");
+  //     }
+  //   };
 
-    fetchTerminationTypes();
-  }, []);
+  //   fetchTerminationTypes();
+  // }, []);
 
   const handleEdit = (terminationType) => {
     setSelectedTerminationType(terminationType);
@@ -125,9 +124,7 @@ const TerminationTypeTable = () => {
                     <thead>
                       <tr>
                         <th data-sortable="">Termination Type</th>
-                        <th width="200px" data-sortable="">
-                          Action
-                        </th>
+                        <th width="200px" data-sortable="">Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -145,38 +142,25 @@ const TerminationTypeTable = () => {
                                     title="Edit"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil text-white"></i>
                                     </span>
                                   </button>
                                 </div>
 
                                 <div className="action-btn bg-danger">
-                                  <form
-                                    method="POST"
-                                    action={`/hrmgo/termination-type`}
-                                    acceptCharset="UTF-8"
-                                    id={`delete-form`}
-                                  >
-                                    <input
-                                      name="_method"
-                                      type="hidden"
-                                      value="DELETE"
-                                    />
-                                    <input
-                                      name="_token"
-                                      type="hidden"
-                                      value="OYzJQFXWqx1d9iWbHPH2ntDxxtmt4I8jLovG1Fuv"
-                                    />
+                                  <form method="POST" action={`/hrmgo/termination-type`} acceptCharset="UTF-8" id={`delete-form`}>
+                                    <input name="_method" type="hidden" value="DELETE" />
+                                    <input name="_token" type="hidden" value="OYzJQFXWqx1d9iWbHPH2ntDxxtmt4I8jLovG1Fuv" />
                                     <Link
-                                      onClick={() =>
-                                        openDeleteDialog(terminationType._id)
-                                      }
+                                      onClick={() => openDeleteDialog(terminationType._id)}
                                       className="mx-3 btn btn-sm align-items-center bs-pass-para"
                                       data-bs-toggle="tooltip"
                                       title="Delete"
                                     >
                                       <span className="text-white">
-                                        <RiDeleteBinLine />
+                                        {/* <RiDeleteBinLine /> */}
+                                        <i className="ti ti-trash text-white"></i>
                                       </span>
                                     </Link>
                                   </form>
@@ -191,16 +175,8 @@ const TerminationTypeTable = () => {
                 </div>
                 <div className="dataTable-bottom">
                   <div className="dataTable-info">
-                    Showing{" "}
-                    {Math.min(
-                      (currentPage - 1) * entriesPerPage + 1,
-                      terminationTypes.length
-                    )}{" "}
-                    to{" "}
-                    {Math.min(
-                      currentPage * entriesPerPage,
-                      terminationTypes.length
-                    )}{" "}
+                    Showing {Math.min((currentPage - 1) * entriesPerPage + 1, terminationTypes.length)}{" "}
+                    to {Math.min(currentPage * entriesPerPage, terminationTypes.length)}{" "}
                     of {terminationTypes.length} entries
                   </div>
                   <nav className="dataTable-pagination">
@@ -216,38 +192,25 @@ const TerminationTypeTable = () => {
                         </li>
                       )}
 
-                      {Array.from(
-                        {
-                          length: Math.ceil(
-                            terminationTypes.length / entriesPerPage
-                          ),
-                        },
-                        (_, index) => (
-                          <li
-                            key={index + 1}
-                            className={`page-item ${
-                              currentPage === index + 1 ? "active" : ""
-                            }`}
+                      {Array.from({ length: Math.ceil(terminationTypes.length / entriesPerPage) }, (_, index) => (
+                        <li
+                          key={index + 1}
+                          className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+                        >
+                          <button
+                            className="page-link"
+                            onClick={() => setCurrentPage(index + 1)}
+                            style={{
+                              backgroundColor: currentPage === index + 1 ? '#d9d9d9' : 'transparent',
+                              color: '#6FD943',
+                            }}
                           >
-                            <button
-                              className="page-link"
-                              onClick={() => setCurrentPage(index + 1)}
-                              style={{
-                                backgroundColor:
-                                  currentPage === index + 1
-                                    ? "#d9d9d9"
-                                    : "transparent",
-                                color: "#6FD943",
-                              }}
-                            >
-                              {index + 1}
-                            </button>
-                          </li>
-                        )
-                      )}
+                            {index + 1}
+                          </button>
+                        </li>
+                      ))}
 
-                      {currentPage <
-                        Math.ceil(terminationTypes.length / entriesPerPage) && (
+                      {currentPage < Math.ceil(terminationTypes.length / entriesPerPage) && (
                         <li className="page-item">
                           <button
                             className="page-link next-button"
@@ -260,6 +223,8 @@ const TerminationTypeTable = () => {
                     </ul>
                   </nav>
                 </div>
+
+
               </div>
             </div>
           </div>
@@ -270,6 +235,7 @@ const TerminationTypeTable = () => {
         <EditTerminationTypeModal
           closeModal={handleCloseModal}
           terminationType={selectedTerminationType}
+          fetchTerminationTypes={fetchTerminationTypes}
         />
       )}
 

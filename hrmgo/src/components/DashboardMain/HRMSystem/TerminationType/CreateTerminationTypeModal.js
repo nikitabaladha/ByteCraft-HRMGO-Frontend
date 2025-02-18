@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { toast } from "react-toastify";
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import postAPI from "../../../../api/postAPI";
 
-const CreateTerminationTypeModal = ({ closeModal }) => {
-  const [name, setName] = useState("");
+const CreateTerminationTypeModal = ({ closeModal, fetchTerminationTypes }) => {
+  const [name, setName] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,15 +18,12 @@ const CreateTerminationTypeModal = ({ closeModal }) => {
     };
 
     try {
-      const response = await postAPI(
-        "/create-termination-type",
-        terminationTypeData,
-        true
-      );
+      const response = await postAPI("/create-termination-type", terminationTypeData, true);
 
       if (!response.hasError) {
         toast.success("Termination type created successfully");
         closeModal();
+        fetchTerminationTypes();
       } else {
         toast.error(`Failed to create termination type: ${response.message}`);
       }
@@ -36,43 +33,20 @@ const CreateTerminationTypeModal = ({ closeModal }) => {
   };
 
   return (
-    <div
-      className="modal fade show modal-overlay"
-      id="commonModal"
-      tabIndex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-modal="true"
-      style={{ display: "block" }}
-    >
+    <div className="modal fade show modal-overlay" id="commonModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-modal="true" style={{ display: 'block' }}>
       <div className="modal-dialog modal-undefined" role="document">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">
-              Create New Termination Type
-            </h5>
-            <button
-              type="button"
-              className="btn-close"
-              onClick={closeModal}
-              aria-label="Close"
-            ></button>
+            <h5 className="modal-title" id="exampleModalLabel">Create New Termination Type</h5>
+            <button type="button" className="btn-close" onClick={closeModal} aria-label="Close"></button>
           </div>
           <div className="body">
-            <form
-              onSubmit={handleSubmit}
-              className="needs-validation"
-              noValidate
-            >
+            <form onSubmit={handleSubmit} className="needs-validation" noValidate>
               <div className="modal-body">
                 <div className="row">
                   <div className="col-lg-12 col-md-12 col-sm-12">
                     <div className="form-group">
-                      <label htmlFor="name" className="form-label">
-                        {" "}
-                        Name
-                      </label>
-                      <span className="text-danger">*</span>
+                      <label htmlFor="name" className="form-label"> Name</label><span className="text-danger">*</span>
                       <div className="form-icon-user">
                         <input
                           className="form-control"
@@ -90,16 +64,8 @@ const CreateTerminationTypeModal = ({ closeModal }) => {
                 </div>
               </div>
               <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={closeModal}
-                >
-                  Cancel
-                </button>
-                <button type="submit" className="btn btn-primary">
-                  Create
-                </button>
+                <button type="button" className="btn btn-secondary" onClick={closeModal}>Cancel</button>
+                <button type="submit" className="btn btn-primary">Create</button>
               </div>
             </form>
           </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiFilter } from "react-icons/fi";
+// import { FiFilter } from "react-icons/fi";
 
 const EmployeeProfileHeader = () => {
   return (
@@ -29,7 +29,8 @@ const EmployeeProfileHeader = () => {
                   aria-controls="multiCollapseExample1"
                   title="Filter"
                 >
-                  <FiFilter />
+                  {/* <FiFilter /> */}
+                  <i className="ti ti-filter"></i>
                 </a>
               </div>
             </div>

@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import putAPI from "../../../../api/putAPI";
 import getAPI from "../../../../api/getAPI";
 
-const EditDesignationModal = ({ closeModal, designation }) => {
+const EditDesignationModal = ({ closeModal, designation, fetchDesignations }) => {
     const [branchId, setBranchId] = useState('');
     const [departmentId, setDepartmentId] = useState('');
     const [designationName, setDesignationName] = useState('');
@@ -93,6 +93,7 @@ const EditDesignationModal = ({ closeModal, designation }) => {
             if (!response.hasError) {
                 toast.success("Designation Updated Successfully");
                 closeModal();
+                fetchDesignations()
             } else {
                 toast.error(`Failed to update designation: ${response.message}`);
             }

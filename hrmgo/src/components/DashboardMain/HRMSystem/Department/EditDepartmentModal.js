@@ -3,12 +3,11 @@ import { toast } from 'react-toastify';
 import putAPI  from "../../../../api/putAPI"; 
 import getAPI from "../../../../api/getAPI";
 
-const EditDepartmentModal = ({ closeModal, department }) => {
+const EditDepartmentModal = ({ closeModal, department, fetchDepartments }) => {
     const [branchId, setBranchId] = useState('');
     const [departmentName, setDepartmentName] = useState('');
     const [branches, setBranches] = useState([]);
 
-    useEffect(() => {
         const fetchBranches = async () => {
             try {
               
@@ -22,6 +21,7 @@ const EditDepartmentModal = ({ closeModal, department }) => {
                 toast.error("An error occurred while fetching branches.");
             }
         };
+        useEffect(() => {
 
         fetchBranches();
 
@@ -46,6 +46,8 @@ const EditDepartmentModal = ({ closeModal, department }) => {
             if (!response.hasError) {
                 toast.success("Department Updated Successfully");
                 closeModal();
+                fetchBranches();
+                fetchDepartments();
             } else {
                 toast.error(`Failed to update department: ${response.message}`);
             }

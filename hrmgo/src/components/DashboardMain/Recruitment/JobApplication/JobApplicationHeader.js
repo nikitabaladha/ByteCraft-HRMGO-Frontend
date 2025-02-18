@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 import CreateJobApplication from "./CreateJobApplicationModal";
 
 const JobApplicationHeader = ({fetchApplications}) => {
@@ -47,7 +47,8 @@ const JobApplicationHeader = ({fetchApplications}) => {
               className="btn btn-sm btn-primary"
               data-bs-original-title="Create"
             >
-              <FiPlus className="text-white" />
+              {/* <FiPlus className="text-white" /> */}
+              <i className="ti ti-plus"></i>
             </Link>
           </div>
         </div>

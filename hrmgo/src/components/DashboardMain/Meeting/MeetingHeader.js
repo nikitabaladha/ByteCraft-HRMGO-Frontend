@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
-import { CiCalendarDate } from "react-icons/ci";
+// import { FiPlus } from "react-icons/fi";
+// import { CiCalendarDate } from "react-icons/ci";
 import MeetingModal from "./MeetingModal";
 import { useNavigate } from "react-router-dom";
 
@@ -40,7 +40,8 @@ const MeetingHeader = ({fetchMeetings}) => {
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Calendar View"
                 >
-                  <CiCalendarDate />
+                  {/* <CiCalendarDate /> */}
+                  <i className="ti ti-calendar"></i>
                 </button>
                 <button
                   onClick={toggleModal}
@@ -48,7 +49,8 @@ const MeetingHeader = ({fetchMeetings}) => {
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Create"
                 >
-                  <FiPlus />
+                  {/* <FiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </button>
               </div>
             </div>

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 import CreateLeaveTypeModal from "./CreateLeaveTypeModal";
 
-const LeaveHeader = () => {
+const LeaveHeader = ({fetchLeaveTypes}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -33,7 +33,8 @@ const LeaveHeader = () => {
                   data-bs-toggle="tooltip"
                   title="Create"
                 >
-                  <FiPlus />
+                  {/* <FiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </button>
               </div>
             </div>
@@ -41,7 +42,7 @@ const LeaveHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateLeaveTypeModal closeModal={closeModal} />}
+      {showModal && <CreateLeaveTypeModal closeModal={closeModal} fetchLeaveTypes={fetchLeaveTypes}/>}
     </>
   );
 };

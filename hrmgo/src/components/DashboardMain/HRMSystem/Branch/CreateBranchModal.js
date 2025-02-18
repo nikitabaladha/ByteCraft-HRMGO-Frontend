@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import postAPI from "../../../../api/postAPI.js";
 
 
-const CreateBranchModal = ({ closeModal }) => {
+const CreateBranchModal = ({ closeModal, fetchBranches }) => {
     const [name, setName] = useState('');
 
     const handleSubmit = async (e) => {
@@ -19,6 +19,7 @@ const CreateBranchModal = ({ closeModal }) => {
             if (!response.hasError) {
                 toast.success("Branch Created Successfully");
                 closeModal();
+                fetchBranches();
             } else {
                 toast.error(`Failed to create branch: ${response.message}`);
             }

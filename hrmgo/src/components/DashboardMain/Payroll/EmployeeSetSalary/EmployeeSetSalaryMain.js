@@ -190,9 +190,7 @@ const EmployeeSetSalary = () => {
     useEffect(() => {
         const fetchEmployeeData = async () => {
             try {
-                // const nameResponse = await getAPI(`/getemployee/${employeeId}`, {}, true);
                 const nameResponse = await getAPI(`/getemployeeemployee/${employeeId}`, {}, true);
-                setEmployeeName(nameResponse.data.employeeName || '');
                 setEmployeeName(nameResponse.data.employeeName || '');
 
                 const response = await getAPI(`/getemployeedatabyid/${employeeId}`, {}, true);

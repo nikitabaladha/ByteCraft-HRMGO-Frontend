@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify'; 
 import postAPI from "../../../../api/postAPI.js";
 
-const CreateDocumentTypeModal = ({ closeModal }) => {
+const CreateDocumentTypeModal = ({ closeModal, fetchDocumentTypes }) => {
     const [name, setName] = useState('');
     const [isRequired, setIsRequired] = useState('');
 
@@ -20,6 +20,7 @@ const CreateDocumentTypeModal = ({ closeModal }) => {
             if (!response.hasError) {
                 toast.success("Document Type Created Successfully");
                 closeModal();
+                fetchDocumentTypes();
             } else {
                 toast.error(`Failed to create document type: ${response.message}`);
             }

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+import React, { useState} from "react";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditDepositModal from "./EditDepositeModal";
-import getAPI from "../../../../api/getAPI";
+// import getAPI from "../../../../api/getAPI";
 import ConfirmationDialog from "../../ConfirmationDialog";
 // import DepositHeader from "./DepositHeader";
 
-const DepositTable = () => {
-  const [deposits, setDeposits] = useState([]);
+const DepositTable = ({deposits, setDeposits, fetchDeposits}) => {
+  // const [deposits, setDeposits] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [depositToDelete, setDepositToDelete] = useState(null);
@@ -76,20 +76,20 @@ const DepositTable = () => {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    const fetchDeposits = async () => {
-      try {
-        const response = await getAPI("/getall_deposit", {}, true);
-        setDeposits(response.data.data);
+  // useEffect(() => {
+  //   const fetchDeposits = async () => {
+  //     try {
+  //       const response = await getAPI("/getall_deposit", {}, true);
+  //       setDeposits(response.data.data);
 
-      } catch (err) {
-        console.log("Failed to fetch deposits");
+  //     } catch (err) {
+  //       console.log("Failed to fetch deposits");
 
-      }
-    };
+  //     }
+  //   };
 
-    fetchDeposits();
-  }, []);
+  //   fetchDeposits();
+  // }, []);
 
 
   return (
@@ -165,7 +165,8 @@ const DepositTable = () => {
                                     className="mx-3 btn btn-sm align-items-center"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -179,7 +180,8 @@ const DepositTable = () => {
                                     title="Delete"
                                   >
                                     <span className="text-white">
-                                      <RiDeleteBinLine />
+                                      {/* <RiDeleteBinLine /> */}
+                                      <i className="ti ti-trash"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -252,6 +254,7 @@ const DepositTable = () => {
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           selectedDeposit={selectedDeposit}
+          fetchDeposits={fetchDeposits}
         />
       )}
 

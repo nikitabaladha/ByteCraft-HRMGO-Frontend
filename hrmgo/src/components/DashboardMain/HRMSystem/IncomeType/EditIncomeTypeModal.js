@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import putAPI from "../../../../api/putAPI.js";
 
-const EditIncomeTypeModal = ({ closeModal, incomeType }) => {
+const EditIncomeTypeModal = ({ closeModal, incomeType, fetchIncomeTypes }) => {
     const [name, setName] = useState('');
 
     useEffect(() => {
@@ -29,6 +29,7 @@ const EditIncomeTypeModal = ({ closeModal, incomeType }) => {
             if (!response.hasError) {
                 toast.success("Income type updated successfully");
                 closeModal();
+                fetchIncomeTypes()
             } else {
                 toast.error(`Failed to update income type: ${response.message}`);
             }

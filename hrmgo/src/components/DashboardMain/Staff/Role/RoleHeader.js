@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 import CreateRole from './CreateRole';
 
 const RoleHeader = ({fetchRoles}) => {
@@ -49,7 +49,8 @@ const RoleHeader = ({fetchRoles}) => {
                   className="btn btn-sm btn-primary"
                   data-bs-original-title="Create"
                 >
-                  <FiPlus />
+                  {/* <FiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </Link>
             </div>
           </div>

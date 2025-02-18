@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 import CreateDepartmentModal from "./CreateDesignationModal";
 
-const DepartmentHeader = () => {
+const DepartmentHeader = ({fetchDesignations}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -33,7 +33,8 @@ const DepartmentHeader = () => {
                   data-bs-toggle="tooltip"
                   title="Create"
                 >
-                  <FiPlus />
+                  {/* <FiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </button>
               </div>
             </div>
@@ -41,7 +42,7 @@ const DepartmentHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateDepartmentModal closeModal={closeModal} />}
+      {showModal && <CreateDepartmentModal closeModal={closeModal} fetchDesignations={fetchDesignations} />}
     </>
   );
 };

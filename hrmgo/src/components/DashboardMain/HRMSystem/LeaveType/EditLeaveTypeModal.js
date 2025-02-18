@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import putAPI from "../../../../api/putAPI.js";
 
 
-const EditLeaveTypeModal = ({ closeModal, leaveType }) => {
+const EditLeaveTypeModal = ({ closeModal, leaveType, fetchLeaveTypes }) => {
     const [name, setName] = useState('');
     const [daysPerYear, setDaysPerYear] = useState('');
 
@@ -33,6 +33,7 @@ const EditLeaveTypeModal = ({ closeModal, leaveType }) => {
             if (!response.hasError) {
                 toast.success("Leave Type updated successfully");
                 closeModal();
+                fetchLeaveTypes();
             } else {
                 toast.error(`Failed to update leave type: ${response.message}`);
             }

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 import ZoomMeetingModal from "./ZoomMeetingModal";
-import { GoListUnordered } from "react-icons/go";
+// import { GoListUnordered } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 
 
@@ -45,7 +45,8 @@ const TicketReplyHeader = () => {
                                     title="List View"
                                     className="btn btn-sm btn-primary me-2"
                                 >
-                                    <GoListUnordered />
+                                    {/* <GoListUnordered /> */}
+                                    <i className="ti ti-list"></i>
                                 </button>
 
                                 <Link
@@ -54,7 +55,8 @@ const TicketReplyHeader = () => {
                                     data-bs-toggle="tooltip"
                                     data-bs-original-title="Create"
                                 >
-                                    <FiPlus />
+                                    {/* <FiPlus /> */}
+                                    <i className="ti ti-plus"></i>
                                 </Link>
                             </div>
                         </div>

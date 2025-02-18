@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditAllowanceOptionModal from "./EditAllowanceOptionModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const AllowanceOptionTable = () => {
+const AllowanceOptionTable = ({allowanceOptions, setAllowanceOptions, fetchAllowanceOptions}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAllowanceOption, setSelectedAllowanceOption] = useState(null);
-  const [allowanceOptions, setAllowanceOptions] = useState([]);
+  // const [allowanceOptions, setAllowanceOptions] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [allowanceOptionToDelete, setAllowanceOptionToDelete] = useState(null);
 
@@ -55,22 +55,22 @@ const AllowanceOptionTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchAllowanceOptions = async () => {
-      try {
-        const response = await getAPI("/allowance-option-get-all", true);
-        if (!response.hasError) {
-          setAllowanceOptions(response.data.data);
-        } else {
-          toast.error(`Failed to fetch allowance options: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching allowance options.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchAllowanceOptions = async () => {
+  //     try {
+  //       const response = await getAPI("/allowance-option-get-all", true);
+  //       if (!response.hasError) {
+  //         setAllowanceOptions(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch allowance options: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching allowance options.");
+  //     }
+  //   };
 
-    fetchAllowanceOptions();
-  }, []);
+  //   fetchAllowanceOptions();
+  // }, []);
 
   const handleEdit = (allowanceOption) => {
     setSelectedAllowanceOption(allowanceOption);
@@ -144,7 +144,8 @@ const AllowanceOptionTable = () => {
                                     title="Edit"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil text-white"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -160,7 +161,8 @@ const AllowanceOptionTable = () => {
                                       title="Delete"
                                     >
                                       <span className="text-white">
-                                        <RiDeleteBinLine />
+                                        {/* <RiDeleteBinLine /> */}
+                                        <i className="ti ti-trash text-white"></i>
                                       </span>
                                     </Link>
                                   </form>
@@ -234,6 +236,7 @@ const AllowanceOptionTable = () => {
         <EditAllowanceOptionModal
           closeModal={handleCloseModal}
           allowanceOption={selectedAllowanceOption}
+          fetchAllowanceOptions={fetchAllowanceOptions}
         />
       )}
 

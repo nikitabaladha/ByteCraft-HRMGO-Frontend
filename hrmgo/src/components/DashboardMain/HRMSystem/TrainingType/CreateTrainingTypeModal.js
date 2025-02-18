@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import postAPI from "../../../../api/postAPI";
 
-const CreateTrainingTypeModal = ({ closeModal }) => {
+const CreateTrainingTypeModal = ({ closeModal, fetchTrainingTypes }) => {
   const [name, setName] = useState('');
 
   const handleSubmit = async (e) => {
@@ -23,6 +23,7 @@ const CreateTrainingTypeModal = ({ closeModal }) => {
       if (!response.hasError) {
         toast.success("Training type created successfully");
         closeModal();
+        fetchTrainingTypes();
       } else {
         toast.error(`Failed to create training type: ${response.message}`);
       }

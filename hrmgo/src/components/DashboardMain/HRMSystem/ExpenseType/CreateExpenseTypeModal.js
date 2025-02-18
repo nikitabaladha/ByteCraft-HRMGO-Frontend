@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import postAPI from "../../../../api/postAPI";
 
-const CreateExpenseTypeModal = ({ closeModal }) => {
+const CreateExpenseTypeModal = ({ closeModal, fetchExpenseTypes }) => {
   const [name, setName] = useState('');
 
   const handleSubmit = async (e) => {
@@ -23,6 +23,7 @@ const CreateExpenseTypeModal = ({ closeModal }) => {
       if (!response.hasError) {
         toast.success("Expense type created successfully");
         closeModal();
+        fetchExpenseTypes()
       } else {
         toast.error(`Failed to create expense type: ${response.message}`);
       }

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify'; 
 import postAPI from "../../../../api/postAPI.js";
 
-const CreateAllowanceOptionModal = ({ closeModal }) => {
+const CreateAllowanceOptionModal = ({ closeModal, fetchAllowanceOptions }) => {
     const [name, setName] = useState('');
 
     const handleSubmit = async (e) => {
@@ -18,6 +18,7 @@ const CreateAllowanceOptionModal = ({ closeModal }) => {
             if (!response.hasError) {
                 toast.success("Allowance Option Created Successfully");
                 closeModal();
+                fetchAllowanceOptions();
             } else {
                 toast.error(`Failed to create allowance option: ${response.message}`);
             }

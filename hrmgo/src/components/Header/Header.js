@@ -8,6 +8,7 @@ import { IoPower } from "react-icons/io5";
 import { FaRegCommentDots } from "react-icons/fa";
 import { TbMessage2 } from "react-icons/tb";
 import getAPI from "../../api/getAPI";
+// import deleteAPI from "../../../../api/deleteAPI";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 
@@ -34,6 +35,7 @@ const Header = ({ toggleSidebar }) => {
         const response = await getAPI("/get-user-details", {}, true);
         if (!response.hasError && response.data) {
           const user = response.data.data;
+          // const profile = response.data.data;
           const profilePath = user.profileImage.startsWith("/")
             ? `${process.env.REACT_APP_API_URL_FOR_IMAGE}${user.profileImage}`
             : `${process.env.REACT_APP_API_URL_FOR_IMAGE}/Images/profilePicture/default-avatar.png`;
@@ -86,7 +88,6 @@ const Header = ({ toggleSidebar }) => {
                 aria-expanded="false"
               >
                 <span className="theme-avtar">
-                  {/* this is the image i want to show this image in contract detail page  */}
                   <img
                     alt="User Avatar"
                     src={imagePreview}
@@ -111,11 +112,16 @@ const Header = ({ toggleSidebar }) => {
                 </Link>
                 <form
                   id="logout-form"
-                  action=""
+                  action="https://demo.workdo.io/hrmgo/logout"
                   method="POST"
                   style={{ display: "none" }}
                 >
-                  <input type="hidden" name="_token" autoComplete="off" />
+                  <input
+                    type="hidden"
+                    name="_token"
+                    value="pkX4v0W6csqzjuYqeZpAhGPsJWaWz4kwSn169bGi"
+                    autoComplete="off"
+                  />
                 </form>
               </div>
             </li>
@@ -124,7 +130,7 @@ const Header = ({ toggleSidebar }) => {
 
         <div className="ms-auto">
           <ul className="list-unstyled">
-            <li className="dash-h-item">
+            {/* <li className="dash-h-item">
               <Link className="dash-head-link me-0" to="/dashboard/messenger">
                 <i>
                   <FaRegCommentDots />
@@ -133,9 +139,9 @@ const Header = ({ toggleSidebar }) => {
                   0<span className="sr-only"></span>
                 </span>
               </Link>
-            </li>
+            </li> */}
 
-            <li className="dropdown dash-h-item drp-notification">
+            {/* <li className="dropdown dash-h-item drp-notification">
               <Link
                 className="dash-head-link dropdown-toggle arrow-none me-0"
                 data-bs-toggle="dropdown"
@@ -167,7 +173,7 @@ const Header = ({ toggleSidebar }) => {
                 <div className="noti-footer">
                   <div className="d-grid">
                     <Link
-                      to=""
+                      to="https://demo.workdo.io/hrmgo/chats"
                       className="btn dash-head-link justify-content-center text-primary mx-0"
                     >
                       View all
@@ -175,7 +181,7 @@ const Header = ({ toggleSidebar }) => {
                   </div>
                 </div>
               </div>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

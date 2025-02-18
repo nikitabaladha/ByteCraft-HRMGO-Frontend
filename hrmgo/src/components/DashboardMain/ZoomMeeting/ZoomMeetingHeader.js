@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
-import { CiCalendarDate } from "react-icons/ci";
+// import { FiPlus } from "react-icons/fi";
+// import { CiCalendarDate } from "react-icons/ci";
 import ZoomMeetingModal from "./ZoomMeetingModal";
 import { useNavigate } from "react-router-dom";
 
-const MeetingHeader = () => {
+const MeetingHeader = ({fetchMeetings}) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -40,7 +40,8 @@ const MeetingHeader = () => {
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Calendar View"
                 >
-                  <CiCalendarDate />
+                  {/* <CiCalendarDate /> */}
+                  <i className="ti ti-calendar"></i>
                 </button>
                 <button
                   onClick={toggleModal}
@@ -48,13 +49,14 @@ const MeetingHeader = () => {
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Create"
                 >
-                  <FiPlus />
+                  {/* <FiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </button>
               </div>
             </div>
           </div>
         </div>
-      {isModalOpen && <ZoomMeetingModal onClose={toggleModal} />}
+      {isModalOpen && <ZoomMeetingModal onClose={toggleModal} fetchMeetings={fetchMeetings}/>}
     </div>
   );
 };

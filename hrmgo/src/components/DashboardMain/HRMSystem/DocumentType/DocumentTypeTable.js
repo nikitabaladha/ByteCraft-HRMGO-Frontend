@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Sidebar from "../HRMSystemSidebar";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { toast } from "react-toastify";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
+// import { toast } from "react-toastify";
 import EditDocumentTypeModal from "./EditDocumentTypeModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
-import getAPI from "../../../../api/getAPI";
+// import getAPI from "../../../../api/getAPI";
 
-const DocumentTypeTable = () => {
-  const [documentTypes, setDocumentTypes] = useState([]);
+const DocumentTypeTable = ({documentTypes, setDocumentTypes, fetchDocumentTypes}) => {
+  // const [documentTypes, setDocumentTypes] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDocumentType, setSelectedDocumentType] = useState(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -35,27 +35,23 @@ const DocumentTypeTable = () => {
   );
 
 
-  useEffect(() => {
-    const fetchDocumentTypes = async () => {
-      try {
-        const response = await getAPI("/document-type-get-all", true);
-        if (!response.hasError) {
-          setDocumentTypes(response.data.data);
+  // useEffect(() => {
+  //   const fetchDocumentTypes = async () => {
+  //     try {
+  //       const response = await getAPI("/document-type-get-all", true);
+  //       if (!response.hasError) {
+  //         setDocumentTypes(response.data.data);
          
-        } else {
-          toast.error(`Failed to fetch document types: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching document types.");
-      }
-    };
+  //       } else {
+  //         toast.error(`Failed to fetch document types: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching document types.");
+  //     }
+  //   };
 
-    fetchDocumentTypes();
-  }, []);
-
-
-
-
+  //   fetchDocumentTypes();
+  // }, []);
 
   const openDeleteDialog = (documentTypeId) => {
     setDocumentTypeToDelete(documentTypeId);
@@ -157,7 +153,8 @@ const DocumentTypeTable = () => {
                                     onClick={() => handleEdit(documentType)}
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil text-white"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -168,7 +165,9 @@ const DocumentTypeTable = () => {
                                     onClick={() => openDeleteDialog(documentType._id)}
                                   >
                                     <span className="text-white">
-                                      <RiDeleteBinLine />
+                                      {/* <RiDeleteBinLine />
+                                       */}
+                                       <i className="ti ti-trash text-white"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -241,6 +240,7 @@ const DocumentTypeTable = () => {
         <EditDocumentTypeModal
           closeModal={handleCloseModal}
           documentType={selectedDocumentType}
+          fetchDocumentTypes={fetchDocumentTypes}
         />
       )}
 

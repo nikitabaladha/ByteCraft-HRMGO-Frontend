@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 import CreateTerminationTypeModal from "./CreateTerminationTypeModal";
 
-const TerminationTypeHeader = () => {
+const TerminationTypeHeader = ({fetchTerminationTypes}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -16,13 +16,13 @@ const TerminationTypeHeader = () => {
           <div className="row align-items-center">
             <div className="col-auto">
               <div className="page-header-title">
-                <h4 className="m-b-10">Manage Termination Type</h4>
+                <h4 className="m-b-10">Manage Termination Type</h4> 
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
                   <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Termination Type</li>
+                <li className="breadcrumb-item">Termination Type</li> 
               </ul>
             </div>
             <div className="col">
@@ -33,7 +33,8 @@ const TerminationTypeHeader = () => {
                   data-bs-toggle="tooltip"
                   title="Create"
                 >
-                  <FiPlus />
+                  {/* <FiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </button>
               </div>
             </div>
@@ -41,7 +42,7 @@ const TerminationTypeHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateTerminationTypeModal closeModal={closeModal} />}
+      {showModal && <CreateTerminationTypeModal closeModal={closeModal} fetchTerminationTypes={fetchTerminationTypes}/>} 
     </>
   );
 };

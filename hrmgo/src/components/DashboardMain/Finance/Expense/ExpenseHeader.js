@@ -1,12 +1,12 @@
 import React, { useState,useEffect} from "react";
 import { Link } from "react-router-dom";
-import { TiPlus } from "react-icons/ti";
-import { TbFileExport } from "react-icons/tb";
+// import { TiPlus } from "react-icons/ti";
+// import { TbFileExport } from "react-icons/tb";
 import ExpenseModal from "./ExpenseModal"; 
 import * as XLSX from "xlsx"; 
 import getAPI  from "../../../../api/getAPI"; 
 
-const ExpenseHeader = () => {
+const ExpenseHeader = ({fetchExpenses}) => {
 const [expenses, setExpenses] = useState([]);
 const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -84,7 +84,8 @@ useEffect(() => {
                   title="Export"
                   onClick={handleExportToExcel}
                 >
-                  <TbFileExport />
+                  {/* <TbFileExport /> */}
+                  <i className="ti ti-file-export"></i>
                 </button>
 
                 <button
@@ -93,7 +94,8 @@ useEffect(() => {
                   title="Create"
                   onClick={handleOpenModal}
                 >
-                  <TiPlus />
+                  {/* <TiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </button>
               </div>
             </div>
@@ -101,7 +103,7 @@ useEffect(() => {
         </div>
 
       {/* Render the Modal */}
-      <ExpenseModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      <ExpenseModal isOpen={isModalOpen} onClose={handleCloseModal} fetchExpenses={fetchExpenses} />
     </div>
   );
 };

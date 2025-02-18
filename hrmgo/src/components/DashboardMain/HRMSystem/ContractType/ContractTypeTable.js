@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditContractTypeModal from "./EditContractTypeModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const ContractTypeTable = () => {
+const ContractTypeTable = ({contractTypes, setContractTypes, fetchContractTypes}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedContractType, setSelectedContractType] = useState(null);
-  const [contractTypes, setContractTypes] = useState([]);
+  // const [contractTypes, setContractTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [contractTypeToDelete, setContractTypeToDelete] = useState(null);
 
@@ -54,22 +54,22 @@ const ContractTypeTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchContractTypes = async () => {
-      try {
-        const response = await getAPI("/contract-type-get-all", true);
-        if (!response.hasError) {
-          setContractTypes(response.data.data);
-        } else {
-          toast.error(`Failed to fetch contract types: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching contract types.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchContractTypes = async () => {
+  //     try {
+  //       const response = await getAPI("/contract-type-get-all", true);
+  //       if (!response.hasError) {
+  //         setContractTypes(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch contract types: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching contract types.");
+  //     }
+  //   };
 
-    fetchContractTypes();
-  }, []);
+  //   fetchContractTypes();
+  // }, []);
 
   const handleEdit = (contractType) => {
     setSelectedContractType(contractType);
@@ -142,7 +142,8 @@ const ContractTypeTable = () => {
                                     title="Edit"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil text-white"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -158,7 +159,8 @@ const ContractTypeTable = () => {
                                       title="Delete"
                                     >
                                       <span className="text-white">
-                                        <RiDeleteBinLine />
+                                        {/* <RiDeleteBinLine /> */}
+                                        <i className="ti ti-trash text-white"></i>
                                       </span>
                                     </Link>
                                   </form>
@@ -232,6 +234,7 @@ const ContractTypeTable = () => {
         <EditContractTypeModal
           closeModal={handleCloseModal}
           contractType={selectedContractType}
+          fetchContractTypes={fetchContractTypes}
         />
       )}
 

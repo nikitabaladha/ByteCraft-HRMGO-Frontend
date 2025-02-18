@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaEllipsisVertical } from "react-icons/fa6";
-import { FaRegEdit } from "react-icons/fa";
-import { TfiKey } from "react-icons/tfi";
-import { TbRoadSign } from "react-icons/tb";
-import { FaRegTrashAlt } from "react-icons/fa";
-import { FiPlus } from "react-icons/fi";
+// import { FaRegEdit } from "react-icons/fa";
+// import { TfiKey } from "react-icons/tfi";
+// import { TbRoadSign } from "react-icons/tb";
+// import { FaRegTrashAlt } from "react-icons/fa";
+// import { FiPlus } from "react-icons/fi";
 import UserCreate from "./UserCreate";
 import ConfirmationDialog from "../../ConfirmationDialog";
 import EditUser from "./EditUser";
@@ -89,7 +89,8 @@ const UserMainContent = ({ users, setUsers, fetchUsers }) => {
                         data-title="Update User"
                         onClick={() => handleEdit(user)}
                       >
-                        <FaRegEdit />
+                        {/* <FaRegEdit /> */}
+                        <i className="ti ti-edit"></i>
                         <span className="ms-2">Edit</span>
                       </Link>
                       <Link
@@ -100,7 +101,8 @@ const UserMainContent = ({ users, setUsers, fetchUsers }) => {
                         data-url={`/user-reset-password/${user.id}`}
                         onClick={() => handleResetPassword(user)}
                       >
-                        <TfiKey />
+                        {/* <TfiKey /> */}
+                        <i className="ti ti-key"></i>
                         <span className="ms-1">Reset Password</span>
                       </Link>
                       <Link
@@ -108,7 +110,8 @@ const UserMainContent = ({ users, setUsers, fetchUsers }) => {
                         className="dropdown-item"
                         onClick={() => handleCreatePassword(user)}
                       >
-                        <TbRoadSign />
+                        {/* <TbRoadSign /> */}
+                        <i className="ti ti-road-sign"></i>
                         <span className="text-success"> Login Enable</span>
                       </Link>
                       <form
@@ -138,7 +141,8 @@ const UserMainContent = ({ users, setUsers, fetchUsers }) => {
                             openDeleteDialog(user);
                           }}
                         >
-                          <FaRegTrashAlt />
+                          {/* <FaRegTrashAlt /> */}
+                          <i className="ti ti-trash"></i>
                           <span className="ms-2">Delete</span>
                         </Link>
                       </form>
@@ -175,7 +179,8 @@ const UserMainContent = ({ users, setUsers, fetchUsers }) => {
             title="Create a new user"
           >
             <div className="bg-primary proj-add-icon">
-              <FiPlus />
+              {/* <FiPlus /> */}
+              <i className="ti ti-plus"></i>
             </div>
             <h6 className="mt-4 mb-2">New User</h6>
             <p className="text-muted text-center">Click here to add new user</p>

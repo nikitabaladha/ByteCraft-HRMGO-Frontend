@@ -24,6 +24,24 @@ const ContractDetailHeader = ({ contractData, copyContract }) => {
   };
 
   const navigateToContractDetailPreview = (event, contractData) => {
+    console.log("contractData from navigate function", contractData);
+
+    //   {
+    //     "contractId": "CON0000001",
+    //     "employeeName": "Shantanu Bilsare",
+    //     "subject": "vsgchx cn",
+    //     "value": 1000,
+    //     "contractType": "Express",
+    //     "contractTypeId": "67aec93eb1fd1bc413286026",
+    //     "employeeId": "67b405f6e0aa3df33b9ba70c",
+    //     "startDate": "2025-02-18T00:00:00.000Z",
+    //     "endDate": "2025-02-28T00:00:00.000Z",
+    //     "status": "Pending",
+    //     "id": "67b40bd3e0aa3df33b9ba8a8",
+    //     "description": ""
+    // }
+
+    // here i want to pass contract data to navigate
     event.preventDefault();
     navigate(`/contract/preview/${contractData.id}`, {
       state: contractData,
@@ -93,8 +111,8 @@ const ContractDetailHeader = ({ contractData, copyContract }) => {
                     className="btn btn-sm btn-primary btn-icon m-2"
                     data-bs-toggle="tooltip"
                     title="Preview"
-                    onClick={(e) =>
-                      navigateToContractDetailPreview(e, contractData)
+                    onClick={(event) =>
+                      navigateToContractDetailPreview(event, contractData)
                     }
                   >
                     {/* <TiEyeOutline /> */}

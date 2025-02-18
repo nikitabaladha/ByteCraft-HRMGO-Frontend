@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { TbPencil } from "react-icons/tb";
-import { FaRegTrashAlt } from "react-icons/fa";
+// import { TbPencil } from "react-icons/tb";
+// import { FaRegTrashAlt } from "react-icons/fa";
 import ConfirmationDialog from "../../ConfirmationDialog";
 import EditRole from "./EditRole";
 
@@ -137,7 +137,8 @@ const RoleMainContent = ({roles, setRoles, fetchRoles}) => {
                                     title="Edit Role"
                                   >
                                     <span className="text-white">
-                                      <TbPencil />
+                                      {/* <TbPencil /> */}
+                                      <i className="ti ti-trash text-white"></i>
                                     </span>
                                   </Link>
                                 </div>
@@ -150,7 +151,8 @@ const RoleMainContent = ({roles, setRoles, fetchRoles}) => {
                                       openDeleteDialog(role);
                                     }}
                                   >
-                                    <FaRegTrashAlt />
+                                    {/* <FaRegTrashAlt /> */}
+                                    <i className="ti ti-trash"></i>
                                   </button>
                                 </div>
                               </div>

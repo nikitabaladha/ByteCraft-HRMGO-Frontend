@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify'; 
 import putAPI from "../../../../api/putAPI.js";
 
-const EditLoanOptionModal = ({ closeModal, loanOption }) => {
+const EditLoanOptionModal = ({ closeModal, loanOption, fetchLoanOptions }) => {
     const [name, setName] = useState('');
 
     useEffect(() => {
@@ -29,6 +29,7 @@ const EditLoanOptionModal = ({ closeModal, loanOption }) => {
             if (!response.hasError) {
                 toast.success("Loan option updated successfully");
                 closeModal();
+                fetchLoanOptions();
             } else {
                 toast.error(`Failed to update loan option: ${response.message}`);
             }

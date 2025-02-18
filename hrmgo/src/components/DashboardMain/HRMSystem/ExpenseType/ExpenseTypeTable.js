@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditExpenseTypeModal from "./EditExpenseTypeModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const ExpenseTypeTable = () => {
+const ExpenseTypeTable = ({expenseTypes, setExpenseTypes, fetchExpenseTypes}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedExpenseType, setSelectedExpenseType] = useState(null);
-  const [expenseTypes, setExpenseTypes] = useState([]);
+  // const [expenseTypes, setExpenseTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [expenseTypeToDelete, setExpenseTypeToDelete] = useState(null);
 
@@ -54,22 +54,22 @@ const ExpenseTypeTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchExpenseTypes = async () => {
-      try {
-        const response = await getAPI("/expense-type-get-all", true);
-        if (!response.hasError) {
-          setExpenseTypes(response.data.data);
-        } else {
-          toast.error(`Failed to fetch expense types: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching expense types.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchExpenseTypes = async () => {
+  //     try {
+  //       const response = await getAPI("/expense-type-get-all", true);
+  //       if (!response.hasError) {
+  //         setExpenseTypes(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch expense types: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching expense types.");
+  //     }
+  //   };
 
-    fetchExpenseTypes();
-  }, []);
+  //   fetchExpenseTypes();
+  // }, []);
 
   const handleEdit = (expenseType) => {
     setSelectedExpenseType(expenseType);
@@ -142,7 +142,8 @@ const ExpenseTypeTable = () => {
                                     title="Edit"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil text-white"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -158,7 +159,8 @@ const ExpenseTypeTable = () => {
                                       title="Delete"
                                     >
                                       <span className="text-white">
-                                        <RiDeleteBinLine />
+                                        {/* <RiDeleteBinLine /> */}
+                                        <i className="ti ti-trash text-white"></i>
                                       </span>
                                     </Link>
                                   </form>
@@ -231,6 +233,7 @@ const ExpenseTypeTable = () => {
         <EditExpenseTypeModal
           closeModal={handleCloseModal}
           expenseType={selectedExpenseType}
+          fetchExpenseTypes={fetchExpenseTypes}
         />
       )}
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import postAPI from "../../../../api/postAPI";
 
-const CreateJobCategoryModal = ({ closeModal }) => {
+const CreateJobCategoryModal = ({ closeModal, fetchJobCategories }) => {
   const [name, setName] = useState('');
 
   const handleSubmit = async (e) => {
@@ -23,6 +23,7 @@ const CreateJobCategoryModal = ({ closeModal }) => {
       if (!response.hasError) {
         toast.success("Job category created successfully");
         closeModal();
+        fetchJobCategories()
       } else {
         toast.error(`Failed to create job category: ${response.message}`);
       }

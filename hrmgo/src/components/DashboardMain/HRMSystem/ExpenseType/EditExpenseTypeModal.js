@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import putAPI from "../../../../api/putAPI.js";
 
-const EditExpenseTypeModal = ({ closeModal, expenseType }) => {
+const EditExpenseTypeModal = ({ closeModal, expenseType, fetchExpenseTypes }) => {
     const [name, setName] = useState('');
 
     useEffect(() => {
@@ -29,6 +29,7 @@ const EditExpenseTypeModal = ({ closeModal, expenseType }) => {
             if (!response.hasError) {
                 toast.success("Expense type updated successfully");
                 closeModal();
+                fetchExpenseTypes();
             } else {
                 toast.error(`Failed to update expense type: ${response.message}`);
             }

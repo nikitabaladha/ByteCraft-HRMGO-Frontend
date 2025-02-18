@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import putAPI from "../../../../api/putAPI.js";
 import getAPI from "../../../../api/getAPI.js";
 
-const EditDepositModal = ({ isOpen, onClose, selectedDeposit }) => {
+const EditDepositModal = ({ isOpen, onClose, selectedDeposit, fetchDeposits }) => {
   const [currentDate, setCurrentDate] = useState(selectedDeposit?.date || null);
   const [accountname, setAccountId] = useState(selectedDeposit?.account_name || '');
   const [amount, setAmount] = useState(selectedDeposit?.amount || '');
@@ -127,6 +127,7 @@ const EditDepositModal = ({ isOpen, onClose, selectedDeposit }) => {
       if (!response.hasError) {
         toast.success("Deposit Updated Successfully");
         onClose();
+        fetchDeposits();
       } else {
         toast.error(`Failed to update deposit: ${response.message}`);
       }

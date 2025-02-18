@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditLoanOptionModal from "./EditLoanOptionModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const LoanOptionTable = () => {
+const LoanOptionTable = ({loanOptions, setLoanOptions, fetchLoanOptions}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLoanOption, setSelectedLoanOption] = useState(null);
-  const [loanOptions, setLoanOptions] = useState([]);
+  // const [loanOptions, setLoanOptions] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [loanOptionToDelete, setLoanOptionToDelete] = useState(null);
 
@@ -52,22 +52,22 @@ const paginatedLoanOptions = filteredLoanOptions.slice(
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchLoanOptions = async () => {
-      try {
-        const response = await getAPI("/loan-option-get-all", true);
-        if (!response.hasError) {
-          setLoanOptions(response.data.data);
-        } else {
-          toast.error(`Failed to fetch loan options: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching loan options.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchLoanOptions = async () => {
+  //     try {
+  //       const response = await getAPI("/loan-option-get-all", true);
+  //       if (!response.hasError) {
+  //         setLoanOptions(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch loan options: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching loan options.");
+  //     }
+  //   };
 
-    fetchLoanOptions();
-  }, []);
+  //   fetchLoanOptions();
+  // }, []);
 
   const handleEdit = (loanOption) => {
     setSelectedLoanOption(loanOption);
@@ -140,7 +140,8 @@ const paginatedLoanOptions = filteredLoanOptions.slice(
                                     title="Edit"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil text-white"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -156,7 +157,8 @@ const paginatedLoanOptions = filteredLoanOptions.slice(
                                       title="Delete"
                                     >
                                       <span className="text-white">
-                                        <RiDeleteBinLine />
+                                        {/* <RiDeleteBinLine /> */}
+                                        <i className="ti ti-trash text-white"></i>
                                       </span>
                                     </Link>
                                   </form>
@@ -230,6 +232,7 @@ const paginatedLoanOptions = filteredLoanOptions.slice(
         <EditLoanOptionModal
           closeModal={handleCloseModal}
           loanOption={selectedLoanOption}
+          fetchLoanOptions={fetchLoanOptions}
         />
       )}
 

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 // import { TbFileExport } from "react-icons/tb";
 // import { CiFileOn } from "react-icons/ci";
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 import CreateTicketModal from "./CreateTicketModal"; 
 
 const TicketHeader = () => {
@@ -39,7 +39,8 @@ const TicketHeader = () => {
                   data-bs-original-title="Create"
                   onClick={openModal}
                 >
-                  <FiPlus />
+                  {/* <FiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </Link>
               </div>
             </div>

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditAwardTypeModal from "./EditAwardTypeModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const AwardTypeTable = () => {
+const AwardTypeTable = ({awardTypes, setAwardTypes, fetchAwardTypes}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAwardType, setSelectedAwardType] = useState(null);
-  const [awardTypes, setAwardTypes] = useState([]);
+  // const [awardTypes, setAwardTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [awardTypeToDelete, setAwardTypeToDelete] = useState(null);
 
@@ -52,22 +52,22 @@ const AwardTypeTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchAwardTypes = async () => {
-      try {
-        const response = await getAPI("/award-type-get-all", true);
-        if (!response.hasError) {
-          setAwardTypes(response.data.data);
-        } else {
-          toast.error(`Failed to fetch award types: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching award types.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchAwardTypes = async () => {
+  //     try {
+  //       const response = await getAPI("/award-type-get-all", true);
+  //       if (!response.hasError) {
+  //         setAwardTypes(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch award types: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching award types.");
+  //     }
+  //   };
 
-    fetchAwardTypes();
-  }, []);
+  //   fetchAwardTypes();
+  // }, []);
 
   const handleEdit = (awardType) => {
     setSelectedAwardType(awardType);
@@ -140,7 +140,8 @@ const AwardTypeTable = () => {
                                     title="Edit"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil text-white"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -156,7 +157,8 @@ const AwardTypeTable = () => {
                                       title="Delete"
                                     >
                                       <span className="text-white">
-                                        <RiDeleteBinLine />
+                                        {/* <RiDeleteBinLine /> */}
+                                        <i className="ti ti-trash text-white"></i>
                                       </span>
                                     </Link>
                                   </form>
@@ -230,6 +232,7 @@ const AwardTypeTable = () => {
         <EditAwardTypeModal
           closeModal={handleCloseModal}
           awardType={selectedAwardType}
+          fetchAwardTypes={fetchAwardTypes}
         />
       )}
 

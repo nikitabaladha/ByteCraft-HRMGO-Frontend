@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import putAPI from "../../../../api/putAPI.js";
 
-const EditContractTypeModal = ({ closeModal, contractType }) => {
+const EditContractTypeModal = ({ closeModal, contractType, fetchContractTypes }) => {
     const [name, setName] = useState('');
 
     useEffect(() => {
@@ -29,6 +29,7 @@ const EditContractTypeModal = ({ closeModal, contractType }) => {
             if (!response.hasError) {
                 toast.success("Contract type updated successfully");
                 closeModal();
+                fetchContractTypes();
             } else {
                 toast.error(`Failed to update contract type: ${response.message}`);
             }

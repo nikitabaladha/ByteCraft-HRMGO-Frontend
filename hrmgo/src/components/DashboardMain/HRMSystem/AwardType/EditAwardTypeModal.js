@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import putAPI from "../../../../api/putAPI.js";
 
-const EditAwardTypeModal = ({ closeModal, awardType }) => {
+const EditAwardTypeModal = ({ closeModal, awardType, fetchAwardTypes }) => {
     const [name, setName] = useState('');
 
     useEffect(() => {
@@ -29,6 +29,7 @@ const EditAwardTypeModal = ({ closeModal, awardType }) => {
             if (!response.hasError) {
                 toast.success("Award type updated successfully");
                 closeModal();
+                fetchAwardTypes();
             } else {
                 toast.error(`Failed to update award type: ${response.message}`);
             }

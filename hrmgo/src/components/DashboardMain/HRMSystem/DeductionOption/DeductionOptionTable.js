@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditDeductionOptionModal from "./EditDeductionOptionModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const DeductionOptionTable = () => {
+const DeductionOptionTable = ({deductionOptions, setDeductionOptions, fetchDeductionOptions}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDeductionOption, setSelectedDeductionOption] = useState(null);
-  const [deductionOptions, setDeductionOptions] = useState([]);
+  // const [deductionOptions, setDeductionOptions] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [deductionOptionToDelete, setDeductionOptionToDelete] = useState(null);
 
@@ -52,22 +52,22 @@ const DeductionOptionTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchDeductionOptions = async () => {
-      try {
-        const response = await getAPI("/deduction-option-get-all", true);
-        if (!response.hasError) {
-          setDeductionOptions(response.data.data);
-        } else {
-          toast.error(`Failed to fetch deduction options: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching deduction options.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchDeductionOptions = async () => {
+  //     try {
+  //       const response = await getAPI("/deduction-option-get-all", true);
+  //       if (!response.hasError) {
+  //         setDeductionOptions(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch deduction options: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching deduction options.");
+  //     }
+  //   };
 
-    fetchDeductionOptions();
-  }, []);
+  //   fetchDeductionOptions();
+  // }, []);
 
   const handleEdit = (deductionOption) => {
     setSelectedDeductionOption(deductionOption);
@@ -140,7 +140,8 @@ const DeductionOptionTable = () => {
                                     title="Edit"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil text-white"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -156,7 +157,8 @@ const DeductionOptionTable = () => {
                                       title="Delete"
                                     >
                                       <span className="text-white">
-                                        <RiDeleteBinLine />
+                                        {/* <RiDeleteBinLine /> */}
+                                        <i className="ti ti-trash text-white"></i>
                                       </span>
                                     </Link>
                                   </form>
@@ -230,6 +232,7 @@ const DeductionOptionTable = () => {
         <EditDeductionOptionModal
           closeModal={handleCloseModal}
           deductionOption={selectedDeductionOption}
+          fetchDeductionOptions={fetchDeductionOptions}
         />
       )}
 

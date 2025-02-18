@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import postAPI from "../../../../api/postAPI.js";
 import getAPI from "../../../../api/getAPI";
 
-const CreateDesignationModal = ({ closeModal }) => {
+const CreateDesignationModal = ({ closeModal, fetchDesignations }) => {
     const [branchId, setBranchId] = useState('');
     const [departmentId, setDepartmentId] = useState('');
     const [designationName, setDesignationName] = useState('');
@@ -65,6 +65,7 @@ const CreateDesignationModal = ({ closeModal }) => {
             if (!response.hasError) {
                 toast.success("Designation Created Successfully");
                 closeModal();
+                fetchDesignations()
             } else {
                 toast.error(`Failed to create designation: ${response.message}`);
             }

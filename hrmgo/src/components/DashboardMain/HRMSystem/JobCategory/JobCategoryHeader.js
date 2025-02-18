@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 import CreateJobCategoryModal from "./CreateJobCategoryModal";
 
-const JobCategoryHeader = () => {
+const JobCategoryHeader = ({fetchJobCategories}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -33,7 +33,8 @@ const JobCategoryHeader = () => {
                   data-bs-toggle="tooltip"
                   title="Create"
                 >
-                  <FiPlus />
+                  {/* <FiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </button>
               </div>
             </div>
@@ -41,7 +42,7 @@ const JobCategoryHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateJobCategoryModal closeModal={closeModal} />}
+      {showModal && <CreateJobCategoryModal closeModal={closeModal} fetchJobCategories={fetchJobCategories} />}
     </>
   );
 };

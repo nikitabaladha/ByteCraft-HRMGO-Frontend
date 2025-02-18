@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import postAPI from "../../../../api/postAPI.js";
 import getAPI from "../../../../api/getAPI.js";
 
-const ExpenseModal = ({ isOpen, onClose }) => {
+const ExpenseModal = ({ isOpen, onClose, fetchExpenses }) => {
   const [currentDate, setCurrentDate] = useState(null);
   const [accountId, setAccountId] = useState('');
   const [amount, setAmount] = useState('');
@@ -127,6 +127,7 @@ const ExpenseModal = ({ isOpen, onClose }) => {
       if (!response.hasError) {
         toast.success("Expense Created Successfully");
         onClose();
+        fetchExpenses()
       } else {
         toast.error(`Failed to create expense: ${response.message}`);
       }

@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
 import EditBranchModal from "./EditBranchModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog"
 
-const BranchTable = () => {
+const BranchTable = ({branches, setBranches, fetchBranches}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBranch, setSelectedBranch] = useState(null);
-  const [branches, setBranches] = useState([]);
+  // const [branches, setBranches] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [branchToDelete, setBranchToDelete] = useState(null);
 
@@ -57,22 +53,22 @@ const BranchTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchBranches = async () => {
-      try {
-        const response = await getAPI("/branch-get-all", true);
-        if (!response.hasError) {
-          setBranches(response.data.data);
-        } else {
-          toast.error(`Failed to fetch branches: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching branches.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchBranches = async () => {
+  //     try {
+  //       const response = await getAPI("/branch-get-all", true);
+  //       if (!response.hasError) {
+  //         setBranches(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch branches: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching branches.");
+  //     }
+  //   };
 
-    fetchBranches();
-  }, []);
+  //   fetchBranches();
+  // }, []);
 
   const handleEdit = (branch) => {
     setSelectedBranch(branch);
@@ -145,7 +141,8 @@ const BranchTable = () => {
                                     title="Edit"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i class="ti ti-pencil text-white"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -160,7 +157,9 @@ const BranchTable = () => {
                                       data-bs-toggle="tooltip"
                                       title="Delete">
                                       <span className="text-white">
-                                        <RiDeleteBinLine />
+                                        {/* <RiDeleteBinLine />
+                                         */}
+                                         <i class="ti ti-trash text-white"></i>
                                       </span>
                                     </Link>
                                   </form>
@@ -235,6 +234,7 @@ const BranchTable = () => {
         <EditBranchModal
           closeModal={handleCloseModal}
           branch={selectedBranch}
+          fetchBranches={fetchBranches}
         />
       )}
 

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 import CompanyPolicy from "./CompanyPolicyModal";
 
 
 
-const EventHeader = () => {
+const EventHeader = ({fetchCompanyPolicies}) => {
     const [isModalOpen, setModalOpen] = useState(false);
     const toggleModal = () => {
         setModalOpen(!isModalOpen);
@@ -36,13 +36,15 @@ const EventHeader = () => {
                                     data-bs-toggle="tooltip"
                                     data-bs-original-title="Create"
                                 >
-                                    <FiPlus />
+                                    {/* <FiPlus /> */}
+
+                                    <i className="ti ti-plus"></i>
                                 </Link>
                             </div>
                         </div>
                     </div>
                 </div>
-                {isModalOpen && <CompanyPolicy onClose={toggleModal} />}
+                {isModalOpen && <CompanyPolicy onClose={toggleModal} fetchCompanyPolicies={fetchCompanyPolicies}/>}
             </div>
         </div>
     )

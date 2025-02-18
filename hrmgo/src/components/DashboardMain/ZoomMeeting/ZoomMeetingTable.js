@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { TiEyeOutline } from "react-icons/ti";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { TiEyeOutline } from "react-icons/ti";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import ViewModal from "./Viewmodal";
-import getAPI from "../../../api/getAPI";
+// import getAPI from "../../../api/getAPI";
 import ConfirmationDialog from "../ConfirmationDialog";
 import dayjs from "dayjs";
 import { HiExternalLink } from "react-icons/hi";
@@ -12,9 +12,9 @@ import { toast } from "react-toastify";
 import isBetween from "dayjs/plugin/isBetween";
 dayjs.extend(isBetween);
 
-const ZoomMeetingTable = () => {
+const ZoomMeetingTable = ({meetings, setMeetings, fetchMeetings}) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [meetings, setMeetings] = useState([]);
+  // const [meetings, setMeetings] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedMeeting, setSelectedMeeting] = useState(null);
 
@@ -111,22 +111,22 @@ const ZoomMeetingTable = () => {
     });
   };
 
-  useEffect(() => {
-    const fetchMeetings = async () => {
-      try {
-        const response = await getAPI("/getall_zoommeeting", {}, true);
-        const updatedMeetings = response.data.meetings.map((meeting) => ({
-          ...meeting,
-          status: meeting.status || "Waiting",
-        }));
-        setMeetings(updatedMeetings);
-      } catch (err) {
-        // console.Error("Failed to fetch Meetings");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchMeetings = async () => {
+  //     try {
+  //       const response = await getAPI("/getall_zoommeeting", {}, true);
+  //       const updatedMeetings = response.data.meetings.map((meeting) => ({
+  //         ...meeting,
+  //         status: meeting.status || "Waiting",
+  //       }));
+  //       setMeetings(updatedMeetings);
+  //     } catch (err) {
+  //       // console.Error("Failed to fetch Meetings");
+  //     }
+  //   };
 
-    fetchMeetings();
-  }, []);
+  //   fetchMeetings();
+  // }, []);
 
   useEffect(() => {
     const intervalId = setInterval(updateMeetingStatus, 60000);
@@ -275,7 +275,8 @@ const ZoomMeetingTable = () => {
                                   onClick={() => toggleModal(meeting)}
                                 >
                                   <span className="text-white">
-                                    <TiEyeOutline className="text-white" />
+                                    {/* <TiEyeOutline className="text-white" /> */}
+                                    <i className="ti ti-eye"></i>
                                   </span>
                                 </Link>
                               </div>
@@ -290,7 +291,8 @@ const ZoomMeetingTable = () => {
                                   title="Delete"
                                 >
                                   <span className="text-white">
-                                    <RiDeleteBinLine />
+                                    {/* <RiDeleteBinLine /> */}
+                                    <i className="ti ti-trash text-white"></i>
                                   </span>
                                 </button>
                               </div>

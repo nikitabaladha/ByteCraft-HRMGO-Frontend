@@ -8,6 +8,7 @@ import Footer from "../Footer/Footer";
 
 const DashboardMain = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
+
   const [name, setName] = useState("");
 
   const toggleSidebar = () => {
@@ -30,6 +31,7 @@ const DashboardMain = () => {
   return (
     <>
       <Header toggleSidebar={toggleSidebar} name={name} />
+
       <Sidebar sidebarVisible={sidebarVisible} toggleSidebar={toggleSidebar} />
 
       <section className="dash-container">

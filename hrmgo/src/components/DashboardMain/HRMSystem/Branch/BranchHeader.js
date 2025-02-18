@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
 import CreateBranchModal from "./CreateBranchModal";
 
-const BranchHeader = () => {
+const BranchHeader = ({fetchBranches}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -33,7 +32,8 @@ const BranchHeader = () => {
                   data-bs-toggle="tooltip"
                   title="Create"
                 >
-                  <FiPlus />
+                  {/* <FiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </button>
               </div>
             </div>
@@ -41,7 +41,7 @@ const BranchHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateBranchModal closeModal={closeModal} />}
+      {showModal && <CreateBranchModal closeModal={closeModal} fetchBranches={fetchBranches}/>}
     </>
   );
 };

@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import putAPI from "../../../../api/putAPI.js";
 import getAPI from "../../../../api/getAPI.js";
 
-const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
+const EditExpenseModal = ({ isOpen, onClose, selectedExpense, fetchExpenses }) => {
   const [currentDate, setCurrentDate] = useState(selectedExpense?.date || null);
   const [accountname, setAccountId] = useState(selectedExpense?.account_name || '');
   const [amount, setAmount] = useState(selectedExpense?.amount || '');
@@ -130,6 +130,7 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense }) => {
       if (!response.hasError) {
         toast.success("Expense Updated Successfully");
         onClose();
+        fetchExpenses();
       } else {
         toast.error(`Failed to update expense: ${response.message}`);
       }

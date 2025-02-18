@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify'; 
 import postAPI from "../../../../api/postAPI.js";
 
-const CreateLoanOptionModal = ({ closeModal }) => {
+const CreateLoanOptionModal = ({ closeModal, fetchLoanOptions }) => {
     const [name, setName] = useState('');
 
     const handleSubmit = async (e) => {
@@ -18,6 +18,7 @@ const CreateLoanOptionModal = ({ closeModal }) => {
             if (!response.hasError) {
                 toast.success("Loan Option Created Successfully");
                 closeModal();
+                fetchLoanOptions();
             } else {
                 toast.error(`Failed to create loan option: ${response.message}`);
             }

@@ -7,29 +7,6 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
 import { IoIosArrowForward } from "react-icons/io";
-import { AiOutlineHome } from "react-icons/ai";
-import { TbUsers } from "react-icons/tb";
-import { LuUser } from "react-icons/lu";
-import { TbReceipt } from "react-icons/tb";
-import { FaRegClock } from "react-icons/fa6";
-import { HiCubeTransparent } from "react-icons/hi";
-import { LuWallet } from "react-icons/lu";
-import { TbSchool } from "react-icons/tb";
-import { LuUserPlus } from "react-icons/lu";
-import { TbLicense } from "react-icons/tb";
-import { TbDeviceFloppy } from "react-icons/tb";
-import { LuTicket } from "react-icons/lu";
-import { TbCalendarEvent } from "react-icons/tb";
-import { MdOutlineCalendarMonth } from "react-icons/md";
-import { CiVideoOn } from "react-icons/ci";
-import { TbMedicalCross } from "react-icons/tb";
-import { CiFileOn } from "react-icons/ci";
-import { TbTemplate } from "react-icons/tb";
-import { TbPray } from "react-icons/tb";
-import { LuMessagesSquare } from "react-icons/lu";
-import { GoBell } from "react-icons/go";
-import { FiTable } from "react-icons/fi";
-import { IoSettingsOutline } from "react-icons/io5";
 import { ThemeContext } from "../../js/ThemeProvider";
 import { useContext } from "react";
 
@@ -37,7 +14,7 @@ const menuConfig = [
   {
     id: "dashboard",
     label: "Dashboard",
-    iconClass: <AiOutlineHome />,
+    iconClass: "ti-home",
     link: "/dashboard/overview",
     subMenu: [
       {
@@ -83,7 +60,7 @@ const menuConfig = [
   {
     id: "staff",
     label: "Staff",
-    iconClass: <TbUsers />,
+    iconClass: "ti ti-users",
     link: "#!",
     subMenu: [
       {
@@ -108,7 +85,7 @@ const menuConfig = [
   {
     id: "employee",
     label: "Employee",
-    iconClass: <LuUser />,
+    iconClass: "ti ti-user",
     link: "/dashboard/employee",
   },
 
@@ -116,7 +93,7 @@ const menuConfig = [
   {
     id: "payroll",
     label: "Payroll",
-    iconClass: <TbReceipt />,
+    iconClass: "ti ti-receipt",
     link: "#!",
     subMenu: [
       {
@@ -136,7 +113,7 @@ const menuConfig = [
   {
     id: "timeSheet",
     label: "Timesheet",
-    iconClass: <FaRegClock />,
+    iconClass: "ti-clock",
     link: "#!",
     subMenu: [
       {
@@ -168,7 +145,7 @@ const menuConfig = [
   {
     id: "performance",
     label: "Performance",
-    iconClass: <HiCubeTransparent />,
+    iconClass: "ti-3d-cube-sphere",
     link: "#!",
     subMenu: [
       {
@@ -188,7 +165,7 @@ const menuConfig = [
   {
     id: "finance",
     label: "Finance",
-    iconClass: <LuWallet />,
+    iconClass: "ti-wallet",
     link: "#!",
     subMenu: [
       {
@@ -233,7 +210,7 @@ const menuConfig = [
   {
     id: "training",
     label: "Training",
-    iconClass: <TbSchool />,
+    iconClass: "ti-school",
     link: "#!",
     subMenu: [
       {
@@ -253,7 +230,7 @@ const menuConfig = [
   {
     id: "hrAdminSetup",
     label: "Hr Admin Setup",
-    iconClass: <LuUserPlus />,
+    iconClass: "ti-user-plus",
     link: "#!",
     subMenu: [
       {
@@ -306,7 +283,7 @@ const menuConfig = [
   {
     id: "recruitment",
     label: "Recruitment",
-    iconClass: <TbLicense />,
+    iconClass: "ti-license",
     link: "#!",
     subMenu: [
       {
@@ -357,7 +334,7 @@ const menuConfig = [
   {
     id: "contract",
     label: "Contracts",
-    iconClass: <TbDeviceFloppy />,
+    iconClass: "ti-device-floppy",
     link: "/dashboard/contract",
   },
 
@@ -365,7 +342,7 @@ const menuConfig = [
   {
     id: "ticket",
     label: "Ticket",
-    iconClass: <LuTicket />,
+    iconClass: "ti-ticket",
     link: "/dashboard/ticket",
   },
 
@@ -381,7 +358,7 @@ const menuConfig = [
   {
     id: "meeting",
     label: "Meeting",
-    iconClass: <MdOutlineCalendarMonth />,
+    iconClass: "ti-calendar-time",
     link: "/dashboard/meeting",
   },
 
@@ -389,7 +366,7 @@ const menuConfig = [
   {
     id: "zoomMeeting",
     label: "Zoom Meeting",
-    iconClass: <CiVideoOn />,
+    iconClass: "ti-video",
     link: "/dashboard/zoom-meeting",
   },
 
@@ -421,7 +398,7 @@ const menuConfig = [
   {
     id: "companyPolicy",
     label: "Company Policy",
-    iconClass: <TbPray />,
+    iconClass: "ti-pray",
     link: "/dashboard/company-policy",
   },
 
@@ -429,7 +406,7 @@ const menuConfig = [
   {
     id: "messenger",
     label: "Messenger",
-    iconClass: <LuMessagesSquare />,
+    iconClass: "ti-messages",
     link: "/dashboard/messenger",
   },
 
@@ -445,7 +422,7 @@ const menuConfig = [
   {
     id: "hrmSystemSetup",
     label: "HRM System Setup",
-    iconClass: <FiTable />,
+    iconClass: "ti-table",
     link: "/dashboard/hrm-system-branch",
   },
 
@@ -455,7 +432,7 @@ const menuConfig = [
   {
     id: "systemSetting",
     label: "System Setting",
-    iconClass: <IoSettingsOutline />,
+    iconClass: "ti-settings",
     link: "/dashboard/system-setting",
   },
 ];
@@ -496,24 +473,6 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
   const toggleSubMenu = (subMenuId) => {
     setActiveSubMenu(activeSubMenu === subMenuId ? null : subMenuId);
   };
-
-  // useEffect(() => {
-  //   const fetchBusinessSetting = async () => {
-  //     try {
-  //       const response = await getAPI("/get-business-setting");
-  //       const {
-  //         titleText,
-  //         logoDark,
-  //       } = response.data.data;
-  //       setTitleText(titleText)
-  //       setLogoDark(logoDark || "not found");
-  //     } catch (error) {
-  //       toast.error("Error fetching business settings");
-  //     }
-  //   };
-
-  //   fetchBusinessSetting();
-  // }, []);
 
   const renderSubMenu = (subMenu) => (
     <ul className="dash-submenu">
@@ -640,7 +599,10 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                                 onClick={() => toggleMenu(menu.id)}
                               >
                                 <span className="dash-micon">
-                                  {menu.iconClass}
+                                  {/* {menu.iconClass} */}
+                                  {/* <i className={`${menu.iconClass}`}></i> */}
+                                  {/* <i className={menu.iconClass}></i> */}
+                                  <i className={`ti ${menu.iconClass}`}></i>
                                 </span>
                                 <span className="dash-mtext">{menu.label}</span>
                                 {menu.subMenu && (

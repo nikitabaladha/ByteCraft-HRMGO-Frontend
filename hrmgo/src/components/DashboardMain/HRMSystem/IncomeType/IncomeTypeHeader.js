@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 import CreateIncomeTypeModal from "./CreateIncomeTypeModal";
 
-const IncomeTypeHeader = () => {
+const IncomeTypeHeader = ({fetchIncomeTypes}) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -33,7 +33,8 @@ const IncomeTypeHeader = () => {
                   data-bs-toggle="tooltip"
                   title="Create"
                 >
-                  <FiPlus />
+                  {/* <FiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </button>
               </div>
             </div>
@@ -41,7 +42,7 @@ const IncomeTypeHeader = () => {
         </div>
       </div>
 
-      {showModal && <CreateIncomeTypeModal closeModal={closeModal} />}
+      {showModal && <CreateIncomeTypeModal closeModal={closeModal} fetchIncomeTypes={fetchIncomeTypes} />}
     </>
   );
 };

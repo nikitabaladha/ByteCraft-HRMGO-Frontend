@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify'; 
 import putAPI from "../../../../api/putAPI.js";
 
-const EditAllowanceOptionModal = ({ closeModal, allowanceOption }) => {
+const EditAllowanceOptionModal = ({ closeModal, allowanceOption, fetchAllowanceOptions }) => {
     const [name, setName] = useState('');
 
     useEffect(() => {
@@ -29,6 +29,7 @@ const EditAllowanceOptionModal = ({ closeModal, allowanceOption }) => {
             if (!response.hasError) {
                 toast.success("Allowance option updated successfully");
                 closeModal();
+                fetchAllowanceOptions();
             } else {
                 toast.error(`Failed to update allowance option: ${response.message}`);
             }

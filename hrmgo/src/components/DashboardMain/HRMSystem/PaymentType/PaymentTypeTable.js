@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditPaymentTypeModal from "./EditPaymentTypeModal"
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const PaymentTypeTable = () => {
+const PaymentTypeTable = ({paymentTypes, setPaymentTypes, fetchPaymentTypes}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPaymentType, setSelectedPaymentType] = useState(null);
-  const [paymentTypes, setPaymentTypes] = useState([]);
+  // const [paymentTypes, setPaymentTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [paymentTypeToDelete, setPaymentTypeToDelete] = useState(null);
 
@@ -54,22 +54,22 @@ const PaymentTypeTable = () => {
     closeDeleteDialog();
   };
 
-  useEffect(() => {
-    const fetchPaymentTypes = async () => {
-      try {
-        const response = await getAPI("/payment-type-get-all", true);
-        if (!response.hasError) {
-          setPaymentTypes(response.data.data);
-        } else {
-          toast.error(`Failed to fetch payment types: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching payment types.");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchPaymentTypes = async () => {
+  //     try {
+  //       const response = await getAPI("/payment-type-get-all", true);
+  //       if (!response.hasError) {
+  //         setPaymentTypes(response.data.data);
+  //       } else {
+  //         toast.error(`Failed to fetch payment types: ${response.message}`);
+  //       }
+  //     } catch (error) {
+  //       toast.error("An error occurred while fetching payment types.");
+  //     }
+  //   };
 
-    fetchPaymentTypes();
-  }, []);
+  //   fetchPaymentTypes();
+  // }, []);
 
   const handleEdit = (paymentType) => {
     setSelectedPaymentType(paymentType);
@@ -142,7 +142,8 @@ const PaymentTypeTable = () => {
                                     title="Edit"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil text-white"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -158,7 +159,8 @@ const PaymentTypeTable = () => {
                                       title="Delete"
                                     >
                                       <span className="text-white">
-                                        <RiDeleteBinLine />
+                                        {/* <RiDeleteBinLine /> */}
+                                        <i className="ti ti-trash text-white"></i>
                                       </span>
                                     </Link>
                                   </form>
@@ -232,6 +234,7 @@ const PaymentTypeTable = () => {
         <EditPaymentTypeModal
           closeModal={handleCloseModal}
           paymentType={selectedPaymentType}
+          fetchPaymentTypes={fetchPaymentTypes}
         />
       )}
 

@@ -67,10 +67,19 @@ const CreateNewInterviewSchedule = ({
 
     const fetchApplications = async () => {
       try {
-        const response = await getAPI("/get-all-job-application");
-        setApplications(response.data.applications || []);
+        const response = await getAPI(`/get-all-job-application`, {}, true);
+        if (
+          !response.hasError &&
+          response.data &&
+          Array.isArray(response.data.data)
+        ) {
+          setApplications(response.data.data);
+          console.log("Application fetched successfully", response.data.data);
+        } else {
+          console.error("Invalid response format or error in response");
+        }
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching Application:", err);
       }
     };
 
@@ -142,7 +151,7 @@ const CreateNewInterviewSchedule = ({
           </div>
           <form onSubmit={handleSubmit}>
             <div className="modal-body">
-              <div className="text-end">
+              {/* <div className="text-end">
                 <button
                   type="button"
                   className="btn btn-sm btn-primary"
@@ -150,7 +159,7 @@ const CreateNewInterviewSchedule = ({
                 >
                   <i className="fas fa-robot"></i> Generate With AI
                 </button>
-              </div>
+              </div> */}
               <div className="row">
                 <div className="form-group col-md-6">
                   <label htmlFor="candidate" className="col-form-label">
@@ -165,7 +174,7 @@ const CreateNewInterviewSchedule = ({
                     onChange={handleInputChange}
                     required
                   >
-                    <option value="">-- Select Candidate --</option>
+                    {/* <option value="">-- Select Candidate --</option> */}
                     {applications.map((candidate) => (
                       <option key={candidate.value} value={candidate.name}>
                         {candidate.name}

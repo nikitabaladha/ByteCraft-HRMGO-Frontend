@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom'; 
 import { useParams } from 'react-router-dom';
-import { HiOutlinePencil } from "react-icons/hi";
+// import { HiOutlinePencil } from "react-icons/hi";
 import EditTicketModal from "./EditTicketModal"; 
 
 const TicketReplyHeader = () => {
@@ -45,7 +45,8 @@ const TicketReplyHeader = () => {
                     data-bs-original-title="Edit"
                     onClick={openModal}
                   >
-                       <HiOutlinePencil />
+                       {/* <HiOutlinePencil /> */}
+                       <i className="ti ti-pencil"></i>
                   </Link>
                 </div>
               </div>

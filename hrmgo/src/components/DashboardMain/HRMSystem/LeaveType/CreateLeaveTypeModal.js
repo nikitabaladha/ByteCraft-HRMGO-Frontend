@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify'; 
 import postAPI from "../../../../api/postAPI.js";
 
-const CreateLeaveTypeModal = ({ closeModal }) => {
+const CreateLeaveTypeModal = ({ closeModal, fetchLeaveTypes }) => {
     const [name, setName] = useState('');
     const [daysPerYear, setDaysPerYear] = useState('');
 
@@ -20,6 +20,7 @@ const CreateLeaveTypeModal = ({ closeModal }) => {
             if (!response.hasError) {
                 toast.success("Leave Type Created Successfully");
                 closeModal();
+                fetchLeaveTypes();
             } else {
                 toast.error(`Failed to create leave type: ${response.message}`);
             }
