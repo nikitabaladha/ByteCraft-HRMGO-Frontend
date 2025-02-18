@@ -188,7 +188,7 @@ const menuConfig = [
   {
     id: "finance",
     label: "Finance",
-    iconClass: "ti-wallet" ,
+    iconClass: "ti-wallet",
     link: "#!",
     subMenu: [
       {
