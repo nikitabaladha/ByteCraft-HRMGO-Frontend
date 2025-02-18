@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { IoIosSearch } from "react-icons/io";
-import { TbRefresh } from "react-icons/tb";
+// import { IoIosSearch } from "react-icons/io";
+// import { TbRefresh } from "react-icons/tb";
 import getAPI from "../../../../../api/getAPI";
 import { toast } from "react-toastify";
 
@@ -136,7 +136,8 @@ const AccountStatementSearchForm = ({
                     onClick={handleSearch}
                   >
                     <span className="btn-inner--icon">
-                      <IoIosSearch />
+                      {/* <IoIosSearch /> */}
+                      <i className="ti ti-search text-white"></i>
                     </span>
                   </button>
                   <button
@@ -145,7 +146,8 @@ const AccountStatementSearchForm = ({
                     onClick={handleReset}
                   >
                     <span className="btn-inner--icon">
-                      <TbRefresh className="text-white-off" />
+                      {/* <TbRefresh className="text-white-off" /> */}
+                      <i className="ti ti-refresh text-white-off"></i>
                     </span>
                   </button>
                 </div>

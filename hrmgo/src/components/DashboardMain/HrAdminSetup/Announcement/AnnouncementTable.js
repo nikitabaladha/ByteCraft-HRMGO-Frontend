@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { TbPencil } from "react-icons/tb";
-import { FaRegTrashAlt } from "react-icons/fa";
+// import { TbPencil } from "react-icons/tb";
+// import { FaRegTrashAlt } from "react-icons/fa";
 import { formatDate } from "../../../../js/custom";
 import UpdateAnnouncementModal from "./UpdateAnnouncementModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
@@ -144,7 +144,8 @@ const AnnouncementTable = ({
                                       onClick={() => handleUpdate(announcement)}
                                     >
                                       <span className="text-white">
-                                        <TbPencil />
+                                        {/* <TbPencil /> */}
+                                        <i className="ti ti-pencil text-white"></i>
                                       </span>
                                     </Link>
                                   </div>
@@ -173,7 +174,8 @@ const AnnouncementTable = ({
                                         }}
                                       >
                                         <span className="text-white">
-                                          <FaRegTrashAlt />
+                                          {/* <FaRegTrashAlt /> */}
+                                          <i className="ti ti-trash text-white"></i>
                                         </span>
                                       </Link>
                                     </form>

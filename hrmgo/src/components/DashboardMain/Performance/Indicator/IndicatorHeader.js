@@ -1,7 +1,7 @@
 // HRMGO\hrmgo\src\components\DashboardMain\Indicator\Indicator\IndicatorHeader.js
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaPlus } from "react-icons/fa";
+// import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
 import IndicatorCreateModal from "./IndicatorCreateModal";
 
@@ -27,7 +27,7 @@ const IndicatorHeader = ({ addIndicator }) => {
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <Link to="">Home</Link>
+                  <Link to="/dashboard">Home</Link>
                 </li>
                 <li className="breadcrumb-item">Indicator</li>
               </ul>
@@ -46,7 +46,8 @@ const IndicatorHeader = ({ addIndicator }) => {
                   btn-sm btn-primary"
                   data-bs-original-title="Create"
                 >
-                  <FaPlus />
+                  {/* <FaPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </Link>
               </div>
             </div>

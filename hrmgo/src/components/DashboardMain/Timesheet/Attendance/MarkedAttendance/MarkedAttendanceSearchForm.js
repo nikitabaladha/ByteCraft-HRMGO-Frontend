@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import getAPI from "../../../../../api/getAPI.js";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { TbRefresh } from "react-icons/tb";
-import { IoMdSearch } from "react-icons/io";
-import { FaRegFile } from "react-icons/fa";
+// import { TbRefresh } from "react-icons/tb";
+// import { IoMdSearch } from "react-icons/io";
+// import { FaRegFile } from "react-icons/fa";
 
 const MarkedAttendanceSearchForm = ({
   onDataFetched,
@@ -241,18 +241,20 @@ const MarkedAttendanceSearchForm = ({
                         title="Apply"
                       >
                         <span className="btn-inner--icon">
-                          <IoMdSearch />
+                          {/* <IoMdSearch /> */}
+                          <i className="ti ti-search text-white"></i>
                         </span>
                       </button>
                       <button
                         type="button"
-                        className="btn btn-sm btn-danger"
+                        className="btn btn-sm btn-danger mx-2"
                         data-bs-toggle="tooltip"
                         title="Reset"
                         onClick={onReset}
                       >
                         <span className="btn-inner--icon">
-                          <TbRefresh className="text-white-off" />
+                          {/* <TbRefresh className="text-white-off" /> */}
+                          <i className="ti ti-refresh text-white-off"></i>
                         </span>
                       </button>
                       <Link
@@ -264,7 +266,8 @@ const MarkedAttendanceSearchForm = ({
                         title=""
                         className="btn btn-sm btn-primary"
                       >
-                        <FaRegFile />
+                        {/* <FaRegFile /> */}
+                        <i className="ti ti-file text-white"></i>
                       </Link>
                     </div>
                   </div>

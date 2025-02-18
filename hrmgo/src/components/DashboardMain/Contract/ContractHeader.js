@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaPlus } from "react-icons/fa";
+// import { FaPlus } from "react-icons/fa";
 import CreateContractModal from "./CreateContractModal";
 
 const ContractHeader = ({ addContract }) => {
@@ -43,7 +43,8 @@ const ContractHeader = ({ addContract }) => {
                     className="btn btn-sm btn-primary"
                     onClick={openModal}
                   >
-                    <FaPlus />
+                    {/* <FaPlus /> */}
+                    <i className="ti ti-pencil text-white"></i>
                   </Link>
                 </div>
               </div>

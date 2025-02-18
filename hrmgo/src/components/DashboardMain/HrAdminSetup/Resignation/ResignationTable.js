@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { TbPencil } from "react-icons/tb";
-import { FaRegTrashAlt } from "react-icons/fa";
+// import { TbPencil } from "react-icons/tb";
+// import { FaRegTrashAlt } from "react-icons/fa";
 
 import UpdateResignationModal from "./UpdateResignationModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
@@ -185,7 +185,8 @@ const ResignationTable = ({
                                       onClick={() => handleUpdate(resignation)}
                                     >
                                       <span className="text-white">
-                                        <TbPencil />
+                                        {/* <TbPencil /> */}
+                                        <i className="ti ti-pencil text-white"></i>
                                       </span>
                                     </Link>
                                   </div>
@@ -214,7 +215,8 @@ const ResignationTable = ({
                                         }}
                                       >
                                         <span className="text-white">
-                                          <FaRegTrashAlt />
+                                          {/* <FaRegTrashAlt /> */}
+                                          <i className="ti ti-trash text-white"></i>
                                         </span>
                                       </Link>
                                     </form>

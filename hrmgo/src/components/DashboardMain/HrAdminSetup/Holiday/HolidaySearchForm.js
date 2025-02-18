@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { TbRefresh } from "react-icons/tb";
-import { IoIosSearch } from "react-icons/io";
+// import { TbRefresh } from "react-icons/tb";
+// import { IoIosSearch } from "react-icons/io";
 import getAPI from "../../../../api/getAPI";
 
 const HolidaySearchForm = ({ onSearchResults, resetSearch }) => {
@@ -112,7 +112,7 @@ const HolidaySearchForm = ({ onSearchResults, resetSearch }) => {
                   </div>
                   <div className="col-auto float-end ms-2 mt-4">
                     <button
-                      className="btn btn-sm btn-primary"
+                      className="btn btn-sm btn-primary mx-2"
                       data-bs-toggle="tooltip"
                       title=""
                       data-bs-original-title="apply"
@@ -120,7 +120,8 @@ const HolidaySearchForm = ({ onSearchResults, resetSearch }) => {
                       onClick={handleSearch}
                     >
                       <span className="btn-inner--icon">
-                        <IoIosSearch />
+                        {/* <IoIosSearch /> */}
+                        <i className="ti ti-search text-white"></i>
                       </span>
                     </button>
 
@@ -133,7 +134,8 @@ const HolidaySearchForm = ({ onSearchResults, resetSearch }) => {
                       onClick={handleReset}
                     >
                       <span className="btn-inner--icon">
-                        <TbRefresh className="text-white-off " />
+                        {/* <TbRefresh className="text-white-off " /> */}
+                        <i className="ti ti-refresh text-white"></i>
                       </span>
                     </button>
                   </div>

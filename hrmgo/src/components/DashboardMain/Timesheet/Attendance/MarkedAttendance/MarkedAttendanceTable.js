@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
-import { HiOutlineTrash } from "react-icons/hi2";
-import { TbPencil } from "react-icons/tb";
+// import { HiOutlineTrash } from "react-icons/hi2";
+// import { TbPencil } from "react-icons/tb";
 import ConfirmationDialog from "../../../ConfirmationDialog";
 
 const MarkedAttendanceTable = ({
@@ -148,7 +148,8 @@ const MarkedAttendanceTable = ({
                                         openDeleteDialog(attendance);
                                       }}
                                     >
-                                      <HiOutlineTrash className="text-white text-white" />
+                                      {/* <HiOutlineTrash className="text-white text-white" /> */}
+                                      <i className="ti ti-trash text-white"></i>
                                     </Link>
                                   </form>
                                 </div>

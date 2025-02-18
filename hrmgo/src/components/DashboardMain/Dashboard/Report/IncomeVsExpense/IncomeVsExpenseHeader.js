@@ -1,7 +1,7 @@
 // ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Dashboard\Report\IncomeVsExpense\IncomVsExpenseHeader.js
 import React from "react";
 import { Link } from "react-router-dom";
-import { MdOutlineFileDownload } from "react-icons/md";
+// import { MdOutlineFileDownload } from "react-icons/md";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 
@@ -66,7 +66,8 @@ const IncomeVsExpenseHeader = () => {
                   data-bs-original-title="Download"
                 >
                   <span className="btn-inner--icon">
-                    <MdOutlineFileDownload />
+                    {/* <MdOutlineFileDownload /> */}
+                    <i className="ti ti-download"></i>
                   </span>
                 </Link>
               </div>

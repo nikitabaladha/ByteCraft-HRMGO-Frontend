@@ -210,7 +210,7 @@
 // export default ContractPreview;
 
 import React, { useEffect } from "react";
-import { MdOutlineFileDownload } from "react-icons/md";
+// import { MdOutlineFileDownload } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 import { formatDate, formatCost } from "../../../../js/custom";
 import { saveAs } from "file-saver";
@@ -297,7 +297,8 @@ const ContractPreview = () => {
                     title="Download"
                     aria-label="Download"
                   >
-                    <MdOutlineFileDownload className="text-white" />
+                    {/* <MdOutlineFileDownload className="text-white" /> */}
+                    <i className="ti ti-download text-white"></i>
                   </button>
                 </div>
 

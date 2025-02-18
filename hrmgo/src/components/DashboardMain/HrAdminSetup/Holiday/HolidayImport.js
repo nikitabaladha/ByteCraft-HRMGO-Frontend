@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { FiUpload } from "react-icons/fi";
-import { FiDownload } from "react-icons/fi";
+// import { FiUpload } from "react-icons/fi";
+// import { FiDownload } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import postAPI from "../../../../api/postAPI";
 import { toast } from "react-toastify";
@@ -104,7 +104,7 @@ const HolidayImportModal = ({ onClose }) => {
                       to="https://demo.workdo.io/hrmgo/storage/uploads/sample/sample_holidays1.csv"
                       className="btn btn-sm btn-primary"
                     >
-                      <FiDownload /> Download
+                      <i className="ti ti-download text-white"></i> Download
                     </Link>
                   </div>
                   <div className="col-md-12">
@@ -116,7 +116,7 @@ const HolidayImportModal = ({ onClose }) => {
                         htmlFor="file"
                         className="form-label choose-files bg-primary"
                       >
-                        <FiUpload /> Choose file here
+                        <i className="ti ti-upload text-white"></i> Choose file here
                       </label>
                       <input
                         type="file"

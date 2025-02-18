@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { TiEyeOutline } from "react-icons/ti";
-import { LuPencil } from "react-icons/lu";
-import { LuTrash2 } from "react-icons/lu";
+// import { TiEyeOutline } from "react-icons/ti";
+// import { LuPencil } from "react-icons/lu";
+// import { LuTrash2 } from "react-icons/lu";
 import React, { useState } from "react";
 import getAPI from "../../../../api/getAPI.js";
 import IndicatorDetailModal from "./IndicatorDetailModal.js";
@@ -195,7 +195,8 @@ const IndicatorTable = ({
                                       data-bs-original-title="View"
                                     >
                                       <span className="text-white">
-                                        <TiEyeOutline />
+                                        {/* <TiEyeOutline /> */}
+                                        <i className="ti ti-eye text-white"></i>
                                       </span>
                                     </Link>
                                   </div>
@@ -210,7 +211,8 @@ const IndicatorTable = ({
                                       onClick={() => handleUpdate(indicator)}
                                     >
                                       <span className="text-white">
-                                        <LuPencil />
+                                        {/* <LuPencil /> */}
+                                        <i className="ti ti-pencil text-white"></i>
                                       </span>
                                     </Link>
                                   </div>
@@ -242,7 +244,8 @@ const IndicatorTable = ({
                                         }
                                       >
                                         <span className="text-white">
-                                          <LuTrash2 />
+                                          {/* <LuTrash2 /> */}
+                                          <i className="ti ti-trash text-white"></i>
                                         </span>
                                       </Link>
                                     </form>

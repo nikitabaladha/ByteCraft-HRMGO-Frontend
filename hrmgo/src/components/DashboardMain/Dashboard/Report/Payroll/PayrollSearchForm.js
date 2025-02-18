@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import getAPI from "../../../../../api/getAPI.js";
 import { toast } from "react-toastify";
-import { TbRefresh } from "react-icons/tb";
-import { IoMdSearch } from "react-icons/io";
+// import { TbRefresh } from "react-icons/tb";
+// import { IoMdSearch } from "react-icons/io";
 
 const PayrollSearchForm = ({
   onDataFetched,
@@ -252,7 +252,8 @@ const PayrollSearchForm = ({
                         title="Apply"
                       >
                         <span className="btn-inner--icon">
-                          <IoMdSearch />
+                          {/* <IoMdSearch /> */}
+                          <i className="ti ti-search text-white"></i>
                         </span>
                       </button>
                       <button
@@ -263,7 +264,8 @@ const PayrollSearchForm = ({
                         onClick={onReset}
                       >
                         <span className="btn-inner--icon">
-                          <TbRefresh className="text-white-off" />
+                          {/* <TbRefresh className="text-white-off" /> */}
+                          <i className="ti ti-refresh text-white-off"></i>
                         </span>
                       </button>
                     </div>

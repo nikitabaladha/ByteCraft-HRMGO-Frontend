@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MdOutlineFileDownload } from "react-icons/md";
-import { TbFileExport } from "react-icons/tb";
+// import { MdOutlineFileDownload } from "react-icons/md";
+// import { TbFileExport } from "react-icons/tb";
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
@@ -117,14 +117,15 @@ const MonthlyAttendanceHeader = ({ attendanceData, selectedMonthYear }) => {
             <div className="col">
               <div className="float-end ">
                 <Link
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary mx-2"
                   onClick={saveAsPDF}
                   data-bs-toggle="tooltip"
                   title="Download"
                   data-original-title="Download"
                 >
                   <span className="btn-inner--icon">
-                    <MdOutlineFileDownload />
+                    {/* <MdOutlineFileDownload /> */}
+                    <i className="ti ti-download"></i>
                   </span>
                 </Link>
                 <Link
@@ -135,7 +136,8 @@ const MonthlyAttendanceHeader = ({ attendanceData, selectedMonthYear }) => {
                   onClick={handleExport}
                 >
                   <span className="btn-inner--icon">
-                    <TbFileExport />
+                    {/* <TbFileExport /> */}
+                    <i className="ti ti-file-export"></i>
                   </span>
                 </Link>
               </div>

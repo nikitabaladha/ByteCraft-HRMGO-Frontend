@@ -4,8 +4,8 @@ import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
 
-import { TbPencil } from "react-icons/tb";
-import { FaRegTrashAlt } from "react-icons/fa";
+// import { TbPencil } from "react-icons/tb";
+// import { FaRegTrashAlt } from "react-icons/fa";
 import { formatDate } from "../../../js/custom";
 import { useNavigate } from "react-router-dom";
 import ConfirmationDialog from "../ConfirmationDialog";
@@ -151,7 +151,8 @@ const EmployeeTable = ({
                                       navigateToEmployeeUpdate(event, employee)
                                     }
                                   >
-                                    <TbPencil className="text-white" />
+                                    {/* <TbPencil className="text-white" /> */}
+                                    <i className="ti ti-pencil text-white"></i>
                                   </Link>
                                 </div>
                                 <div className="action-btn bg-danger ms-2">
@@ -174,7 +175,8 @@ const EmployeeTable = ({
                                         openDeleteDialog(employee);
                                       }}
                                     >
-                                      <FaRegTrashAlt className="text-white" />
+                                      {/* <FaRegTrashAlt className="text-white" /> */}
+                                      <i className="ti ti-trash text-white"></i>
                                     </Link>
                                   </form>
                                 </div>

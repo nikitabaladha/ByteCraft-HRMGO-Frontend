@@ -2,8 +2,8 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { MdOutlineFileDownload } from "react-icons/md";
-import { TbFileExport } from "react-icons/tb";
+// import { MdOutlineFileDownload } from "react-icons/md";
+// import { TbFileExport } from "react-icons/tb";
 import * as XLSX from "xlsx";
 
 const AccountStatementHeader = ({ transactions }) => {
@@ -60,7 +60,8 @@ const AccountStatementHeader = ({ transactions }) => {
                   style={{ marginRight: 5 }}
                 >
                   <span className="btn-inner--icon">
-                    <MdOutlineFileDownload />
+                    {/* <MdOutlineFileDownload /> */}
+                    <i className="ti ti-download text-white"></i>
                   </span>
                 </Link>
                 <Link
@@ -69,7 +70,8 @@ const AccountStatementHeader = ({ transactions }) => {
                   data-bs-original-title="Export"
                   onClick={handleExportExcel}
                 >
-                  <TbFileExport />
+                  {/* <TbFileExport /> */}
+                  <i className="ti ti-file-export text-white"></i>
                 </Link>
               </div>
             </div>

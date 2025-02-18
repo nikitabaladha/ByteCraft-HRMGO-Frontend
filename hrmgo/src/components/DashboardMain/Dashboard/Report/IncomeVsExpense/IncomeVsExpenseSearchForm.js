@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { TbRefresh } from "react-icons/tb";
-import { IoIosSearch } from "react-icons/io";
+// import { TbRefresh } from "react-icons/tb";
+// import { IoIosSearch } from "react-icons/io";
 
 const IncomeVsExpenseSearchForm = ({ onSearch, onReset }) => {
   const [startMonth, setStartMonth] = useState("");
@@ -97,14 +97,15 @@ const IncomeVsExpenseSearchForm = ({ onSearch, onReset }) => {
                       <div className="col-auto mt-4">
                         <button
                           type="button"
-                          className="btn btn-sm btn-primary"
+                          className="btn btn-sm btn-primary mx-2"
                           onClick={handleSearch}
                           data-bs-toggle="tooltip"
                           title=""
                           data-bs-original-title="apply"
                         >
                           <span className="btn-inner--icon">
-                            <IoIosSearch />
+                            {/* <IoIosSearch /> */}
+                            <i className="ti ti-search"></i>
                           </span>
                         </button>
                         <button
@@ -116,7 +117,8 @@ const IncomeVsExpenseSearchForm = ({ onSearch, onReset }) => {
                           onClick={handleReset}
                         >
                           <span className="btn-inner--icon">
-                            <TbRefresh />
+                            {/* <TbRefresh /> */}
+                            <i className="ti ti-refresh"></i>
                           </span>
                         </button>
                       </div>

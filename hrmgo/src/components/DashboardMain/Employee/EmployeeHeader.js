@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { TbFileExport } from "react-icons/tb";
-import { CiFileOn } from "react-icons/ci";
-import { FiPlus } from "react-icons/fi";
+// import { TbFileExport } from "react-icons/tb";
+// import { CiFileOn } from "react-icons/ci";
+// import { FiPlus } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { exportToExcel } from "../../../js/export-excel";
 import { formatDate } from "../../../js/custom";
@@ -71,9 +71,10 @@ const EmployeeHeader = ({ employeeData }) => {
                   className="btn btn-sm btn-primary me-2"
                   onClick={handleExport}
                 >
-                  <TbFileExport />
+                  {/* <TbFileExport /> */}
+                  <i className="ti ti-file-export"></i>
                 </Link>
-                <Link
+                {/* <Link
                   data-ajax-popup="true"
                   data-title="Import  employee CSV file"
                   data-bs-toggle="tooltip"
@@ -82,7 +83,7 @@ const EmployeeHeader = ({ employeeData }) => {
                   data-bs-original-title="Import"
                 >
                   <CiFileOn />
-                </Link>
+                </Link> */}
                 <Link
                   data-title="Create New Employee"
                   data-bs-toggle="tooltip"
@@ -91,7 +92,8 @@ const EmployeeHeader = ({ employeeData }) => {
                   data-bs-original-title="Create"
                   onClick={(event) => navigateToEmployeeCreate(event)}
                 >
-                  <FiPlus />
+                  {/* <FiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </Link>
               </div>
             </div>

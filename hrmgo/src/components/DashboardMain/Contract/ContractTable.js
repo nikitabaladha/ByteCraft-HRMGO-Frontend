@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { TbCopy } from "react-icons/tb";
-import { TiEyeOutline } from "react-icons/ti";
-import { TbPencil } from "react-icons/tb";
-import { FaRegTrashAlt } from "react-icons/fa";
+// import { TbCopy } from "react-icons/tb";
+// import { TiEyeOutline } from "react-icons/ti";
+// import { TbPencil } from "react-icons/tb";
+// import { FaRegTrashAlt } from "react-icons/fa";
 import ConfirmationDialog from "../ConfirmationDialog";
 import UpdateContractModal from "./UpdateContractModal";
 import CopyContractModal from "./CopyContractModal";
@@ -194,7 +194,8 @@ const ContractTable = ({
                                       }
                                     >
                                       <span className="text-white">
-                                        <TbCopy />
+                                        {/* <TbCopy /> */}
+                                        <i className="ti ti-copy text-white"></i>
                                       </span>
                                     </Link>
                                   </div>
@@ -209,7 +210,8 @@ const ContractTable = ({
                                       }
                                     >
                                       <span className="text-white">
-                                        <TiEyeOutline />
+                                        {/* <TiEyeOutline /> */}
+                                        <i className="ti ti-eye text-white"></i>
                                       </span>
                                     </Link>
                                   </div>
@@ -222,7 +224,8 @@ const ContractTable = ({
                                       onClick={(e) => handleUpdate(e, contract)}
                                     >
                                       <span className="text-white">
-                                        <TbPencil />
+                                        {/* <TbPencil /> */}
+                                        <i className="ti ti-pencil text-white"></i>
                                       </span>
                                     </Link>
                                   </div>
@@ -238,7 +241,8 @@ const ContractTable = ({
                                       }}
                                     >
                                       <span className="text-white">
-                                        <FaRegTrashAlt />
+                                        {/* <FaRegTrashAlt /> */}
+                                        <i className="ti ti-trash text-white"></i>
                                       </span>
                                     </Link>
                                   </div>

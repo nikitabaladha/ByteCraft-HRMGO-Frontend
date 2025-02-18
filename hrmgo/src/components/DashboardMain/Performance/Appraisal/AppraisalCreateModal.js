@@ -235,15 +235,11 @@ const AppraisalCreateModal = ({ closeModal, addAppraisal }) => {
       <div
         className="modal fade show"
         id="commonModal"
-        tabIndex={-1}
+        tabIndex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-modal="true"
-        style={{
-          display: "block",
-          paddingLeft: 0,
-          backgroundColor: " rgba(0, 0, 0, 0.5)",
-        }}
+        style={{ display: "block", paddingLeft: "0px" }}
       >
         <div className="modal-dialog modal-lg" role="document">
           <div className="modal-content">

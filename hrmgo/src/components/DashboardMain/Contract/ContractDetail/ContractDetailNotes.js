@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaRegTrashAlt } from "react-icons/fa";
+// import { FaRegTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
@@ -204,7 +204,8 @@ const ContractDetailNotes = ({ notes, setNotes }) => {
                             }}
                           >
                             <span className="text-white">
-                              <FaRegTrashAlt />
+                              {/* <FaRegTrashAlt /> */}
+                              <i className="ti ti-trash text-white"></i>
                             </span>
                           </Link>
                         </div>

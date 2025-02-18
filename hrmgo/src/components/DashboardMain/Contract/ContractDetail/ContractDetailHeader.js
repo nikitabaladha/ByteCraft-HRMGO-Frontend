@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { MdMailOutline, MdOutlineFileDownload } from "react-icons/md";
-import { TbCopy, TbWritingSign } from "react-icons/tb";
-import { TiEyeOutline } from "react-icons/ti";
+// import { MdMailOutline, MdOutlineFileDownload } from "react-icons/md";
+// import { TbCopy, TbWritingSign } from "react-icons/tb";
+// import { TiEyeOutline } from "react-icons/ti";
 import CopyContractModal from "../CopyContractModal";
 
 const ContractDetailHeader = ({ contractData, copyContract }) => {
@@ -62,7 +62,8 @@ const ContractDetailHeader = ({ contractData, copyContract }) => {
                     title="Send Email"
                     onClick={(e) => e.preventDefault()}
                   >
-                    <MdMailOutline />
+                    {/* <MdMailOutline /> */}
+                    <i className="ti ti-mail text-white"></i>
                   </Link>
                   <button
                     className="btn btn-sm btn-primary btn-icon m-2"
@@ -73,7 +74,8 @@ const ContractDetailHeader = ({ contractData, copyContract }) => {
                       handleCopyContract(e);
                     }}
                   >
-                    <TbCopy />
+                    {/* <TbCopy /> */}
+                    <i className="ti ti-copy text-white"></i>
                   </button>
 
                   <Link
@@ -83,7 +85,8 @@ const ContractDetailHeader = ({ contractData, copyContract }) => {
                     title="Download"
                     onClick={handleDownload}
                   >
-                    <MdOutlineFileDownload />
+                    {/* <MdOutlineFileDownload /> */}
+                    <i className="ti ti-download text-white"></i>
                   </Link>
                   <Link
                     to="#"
@@ -94,7 +97,8 @@ const ContractDetailHeader = ({ contractData, copyContract }) => {
                       navigateToContractDetailPreview(e, contractData)
                     }
                   >
-                    <TiEyeOutline />
+                    {/* <TiEyeOutline /> */}
+                    <i className="ti ti-eye text-white"></i>
                   </Link>
                   <Link
                     to="#"
@@ -103,7 +107,8 @@ const ContractDetailHeader = ({ contractData, copyContract }) => {
                     title="Signature"
                     onClick={handleSignature}
                   >
-                    <TbWritingSign />
+                    {/* <TbWritingSign /> */}
+                    <i className="ti ti-writing-sign text-white"></i>
                   </Link>
                 </div>
               </div>

@@ -5,10 +5,10 @@ import CreateHolidayModal from "./CreateHolidayModal";
 import HolidayImportModal from "./HolidayImport";
 import * as XLSX from "xlsx";
 
-import { FaPlus } from "react-icons/fa";
-import { TbFileExport } from "react-icons/tb";
-import { TbFileImport } from "react-icons/tb";
-import { CiCalendarDate } from "react-icons/ci";
+// import { FaPlus } from "react-icons/fa";
+// import { TbFileExport } from "react-icons/tb";
+// import { TbFileImport } from "react-icons/tb";
+// import { CiCalendarDate } from "react-icons/ci";
 
 const HolidayHeader = ({ holidays, addHoliday }) => {
   const [isCreateHolidayModalOpen, setIsCreateHolidayModalOpen] =
@@ -26,9 +26,9 @@ const HolidayHeader = ({ holidays, addHoliday }) => {
     setIsCreateHolidayModalOpen(false);
   };
 
-  const openImportModal = () => {
-    setIsImportHolidayModalOpen(true);
-  };
+  // const openImportModal = () => {
+  //   setIsImportHolidayModalOpen(true);
+  // };
 
   const closeImportModal = () => {
     setIsImportHolidayModalOpen(false);
@@ -80,7 +80,7 @@ const HolidayHeader = ({ holidays, addHoliday }) => {
             </div>
             <div className="col">
               <div className="float-end ">
-                <Link
+                {/* <Link
                   data-ajax-popup="true"
                   data-title="Import Holiday CSV file"
                   data-bs-toggle="tooltip"
@@ -90,14 +90,15 @@ const HolidayHeader = ({ holidays, addHoliday }) => {
                   onClick={openImportModal}
                 >
                   <TbFileImport />
-                </Link>
+                </Link> */}
                 <Link
                   className="btn btn-sm btn-primary me-2"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Export"
                   onClick={exportHolidayData}
                 >
-                  <TbFileExport />
+                  {/* <TbFileExport /> */}
+                  <i className="ti ti-file-export text-white"></i>
                 </Link>
                 <Link
                   className="btn btn-sm btn-primary me-2"
@@ -105,7 +106,8 @@ const HolidayHeader = ({ holidays, addHoliday }) => {
                   data-bs-original-title="Calendar View"
                   onClick={navigateToCalendar}
                 >
-                  <CiCalendarDate />
+                  {/* <CiCalendarDate /> */}
+                  <i className="ti ti-calendar text-white"></i>
                 </Link>
                 <Link
                   data-ajax-popup="true"
@@ -117,7 +119,8 @@ const HolidayHeader = ({ holidays, addHoliday }) => {
                   data-bs-original-title="Create"
                   onClick={openModal}
                 >
-                  <FaPlus />
+                  {/* <FaPlus /> */}
+                  <i className="ti ti-plus text-white"></i>
                 </Link>
               </div>
             </div>

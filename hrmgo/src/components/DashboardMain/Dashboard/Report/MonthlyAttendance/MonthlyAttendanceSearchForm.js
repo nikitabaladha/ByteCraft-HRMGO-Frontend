@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import getAPI from "../../../../../api/getAPI.js";
 import { Link } from "react-router-dom";
-import { IoIosSearch } from "react-icons/io";
-import { TbRefresh } from "react-icons/tb";
+// import { IoIosSearch } from "react-icons/io";
+// import { TbRefresh } from "react-icons/tb";
 import Select from "react-select";
 
 const MonthlyAttendanceSearchForm = ({
@@ -203,13 +203,14 @@ const MonthlyAttendanceSearchForm = ({
                   <div className="row">
                     <div className="col-auto mt-4">
                       <button
-                        className="btn btn-sm btn-primary"
+                        className="btn btn-sm btn-primary mx-2"
                         data-bs-toggle="tooltip"
                         title="Apply"
                         type="submit"
                       >
                         <span className="btn-inner--icon">
-                          <IoIosSearch />
+                          {/* <IoIosSearch /> */}
+                          <i className="ti ti-search"></i>
                         </span>
                       </button>
                       <Link
@@ -219,7 +220,8 @@ const MonthlyAttendanceSearchForm = ({
                         onClick={onRefresh}
                       >
                         <span className="btn-inner--icon">
-                          <TbRefresh />
+                          {/* <TbRefresh /> */}
+                          <i className="ti ti-refresh"></i>
                         </span>
                       </Link>
                     </div>

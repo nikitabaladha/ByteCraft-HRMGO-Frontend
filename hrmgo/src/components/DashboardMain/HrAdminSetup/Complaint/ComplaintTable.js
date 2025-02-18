@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { TbPencil } from "react-icons/tb";
-import { FaRegTrashAlt } from "react-icons/fa";
+// import { TbPencil } from "react-icons/tb";
+// import { FaRegTrashAlt } from "react-icons/fa";
 
 import UpdateComplaintModal from "./UpdateComplaintModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
@@ -141,7 +141,8 @@ const ComplaintTable = ({
                                       onClick={() => handleUpdate(complaint)}
                                     >
                                       <span className="text-white">
-                                        <TbPencil />
+                                        {/* <TbPencil /> */}
+                                        <i className="ti ti-pencil text-white"></i>
                                       </span>
                                     </Link>
                                   </div>
@@ -170,7 +171,8 @@ const ComplaintTable = ({
                                         }}
                                       >
                                         <span className="text-white">
-                                          <FaRegTrashAlt />
+                                          {/* <FaRegTrashAlt /> */}
+                                          <i className="ti ti-trash text-white"></i>
                                         </span>
                                       </Link>
                                     </form>

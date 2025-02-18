@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import getAPI from "../../../../../api/getAPI.js";
-import { TbRefresh } from "react-icons/tb";
-import { IoMdSearch } from "react-icons/io";
+// import { TbRefresh } from "react-icons/tb";
+// import { IoMdSearch } from "react-icons/io";
 
 const LeaveSearchForm = ({
   onDataFetched,
@@ -224,12 +224,13 @@ const LeaveSearchForm = ({
                     <div className="col-auto">
                       <button
                         type="submit"
-                        className="btn btn-sm btn-primary"
+                        className="btn btn-sm btn-primary mx-2"
                         data-bs-toggle="tooltip"
                         title="Apply"
                       >
                         <span className="btn-inner--icon">
-                          <IoMdSearch />
+                          {/* <IoMdSearch /> */}
+                          <i className="ti ti-search"></i>
                         </span>
                       </button>
                       <button
@@ -240,7 +241,8 @@ const LeaveSearchForm = ({
                         onClick={onReset}
                       >
                         <span className="btn-inner--icon">
-                          <TbRefresh className="text-white-off" />
+                          {/* <TbRefresh className="text-white-off" /> */}
+                          <i className="ti ti-refresh text-white-off"></i>
                         </span>
                       </button>
                     </div>

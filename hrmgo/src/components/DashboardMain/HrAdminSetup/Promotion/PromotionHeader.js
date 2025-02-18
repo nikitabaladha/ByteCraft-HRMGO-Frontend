@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { FaPlus } from "react-icons/fa";
+// import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import CreatePromotionModal from "./CreatePromotionModal";
 
@@ -43,7 +43,8 @@ const PromotionHeader = ({ addPromotion }) => {
                   data-bs-original-title="Create"
                   onClick={openModal}
                 >
-                  <FaPlus />
+                  {/* <FaPlus /> */}
+                  <i className="ti ti-plus text-white"></i>
                 </Link>
               </div>
             </div>

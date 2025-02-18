@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
-import { HiOutlineTrash } from "react-icons/hi2";
-import { TbPencil, TbCaretRight } from "react-icons/tb";
+// import { HiOutlineTrash } from "react-icons/hi2";
+// import { TbPencil, TbCaretRight } from "react-icons/tb";
 import StatusModal from "./StatusModal";
 
 import UpdateModal from "./UpdateModal.js";
@@ -193,7 +193,8 @@ const ManageLeaveTable = ({
                                   className="mx-3 btn btn-sm align-items-center"
                                   title="Manage Leave"
                                 >
-                                  <TbCaretRight className="text-white" />
+                                  {/* <TbCaretRight className="text-white" /> */}
+                                  <i className="ti ti-caret-right text-white"></i>
                                 </Link>
                               </div>
                               <div className="action-btn bg-info ms-2">
@@ -205,7 +206,8 @@ const ManageLeaveTable = ({
                                   title="Edit Leave"
                                   onClick={() => handleUpdate(leave)}
                                 >
-                                  <TbPencil className="text-white" />
+                                  {/* <TbPencil className="text-white" /> */}
+                                  <i className="ti ti-pencil text-white"></i>
                                 </Link>
                               </div>
                               <div className="action-btn bg-danger ms-2">
@@ -232,7 +234,8 @@ const ManageLeaveTable = ({
                                     title="Delete"
                                     aria-label="Delete"
                                   >
-                                    <HiOutlineTrash className="text-white" />
+                                    {/* <HiOutlineTrash className="text-white" /> */}
+                                    <i className="ti ti-trash text-white"></i>
                                   </Link>
                                 </form>
                               </div>

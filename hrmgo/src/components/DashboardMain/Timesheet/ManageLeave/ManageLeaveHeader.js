@@ -2,9 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
-import { TbFileExport } from "react-icons/tb";
-import { CiCalendarDate } from "react-icons/ci";
-import { FiPlus } from "react-icons/fi";
+// import { TbFileExport } from "react-icons/tb";
+// import { CiCalendarDate } from "react-icons/ci";
+// import { FiPlus } from "react-icons/fi";
 import CreateModal from "./CreateModal";
 import * as XLSX from "xlsx";
 import getAPI from "../../../../api/getAPI";
@@ -107,15 +107,17 @@ const ManageLeaveHeader = ({ addLeave }) => {
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Export"
                 >
-                  <TbFileExport />
+                  {/* <TbFileExport /> */}
+                  <i className="ti ti-file-export text-white"></i>
                 </Link>
                 <Link
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary mx-2"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Calendar View"
                   onClick={navigateToCalendar}
                 >
-                  <CiCalendarDate />
+                  {/* <CiCalendarDate /> */}
+                  <i className="ti ti-calendar text-white"></i>
                 </Link>
                 <Link
                   onClick={openModal}
@@ -127,7 +129,8 @@ const ManageLeaveHeader = ({ addLeave }) => {
                   className="btn btn-sm btn-primary"
                   data-bs-original-title="Create"
                 >
-                  <FiPlus />
+                  {/* <FiPlus /> */}
+                  <i className="ti ti-plus text-white"></i>
                 </Link>
               </div>
             </div>

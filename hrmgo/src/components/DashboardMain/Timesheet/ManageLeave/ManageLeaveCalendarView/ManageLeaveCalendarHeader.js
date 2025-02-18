@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import CreateModal from "../CreateModal";
 
-import { FaPlus } from "react-icons/fa";
+// import { FaPlus } from "react-icons/fa";
 import { TbListCheck } from "react-icons/tb";
 
 const ManageLeaveCalendarHeader = ({ addLeave }) => {
@@ -60,7 +60,8 @@ const ManageLeaveCalendarHeader = ({ addLeave }) => {
                   data-bs-original-title="Create"
                   onClick={openModal}
                 >
-                  <FaPlus />
+                  {/* <FaPlus /> */}
+                  <i className="ti ti-plus text-white"></i>
                 </Link>
               </div>
             </div>

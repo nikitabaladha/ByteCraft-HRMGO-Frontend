@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { TbPencil } from "react-icons/tb";
-import { FaRegTrashAlt } from "react-icons/fa";
+// import { TbPencil } from "react-icons/tb";
+// import { FaRegTrashAlt } from "react-icons/fa";
 
 import UpdateWarningModal from "./UpdateWarningModal";
 
@@ -141,7 +141,8 @@ const WarningTable = ({
                                       onClick={() => handleUpdate(warning)}
                                     >
                                       <span className="text-white">
-                                        <TbPencil />
+                                        {/* <TbPencil /> */}
+                                        <i className="ti ti-pencil text-white"></i>
                                       </span>
                                     </Link>
                                   </div>
@@ -169,7 +170,8 @@ const WarningTable = ({
                                         }}
                                       >
                                         <span className="text-white">
-                                          <FaRegTrashAlt />
+                                          {/* <FaRegTrashAlt /> */}
+                                          <i className="ti ti-trash text-white"></i>
                                         </span>
                                       </Link>
                                     </form>

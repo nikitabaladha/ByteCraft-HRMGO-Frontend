@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MdOutlineFileDownload } from "react-icons/md";
-import { TbFileExport } from "react-icons/tb";
+// import { MdOutlineFileDownload } from "react-icons/md";
+// import { TbFileExport } from "react-icons/tb";
 import * as XLSX from "xlsx";
 
 const MarkedAttendanceHeader = ({ payrollData }) => {
@@ -43,15 +43,16 @@ const MarkedAttendanceHeader = ({ payrollData }) => {
             <div className="col">
               <div className="float-end "></div>
               <Link
-                className="btn btn-sm btn-primary float-end"
+                className="btn btn-sm btn-primary float-end mx-2"
                 // onclick="saveAsPDF()"
                 data-bs-toggle="tooltip"
                 title="Download"
                 data-original-title="Download"
               >
-                <span className="btn-inner--icon">
-                  <MdOutlineFileDownload />
-                </span>
+                {/* <span className="btn-inner--icon"> */}
+                  {/* <MdOutlineFileDownload /> */}
+                  <i className="ti ti-download text-white"></i>
+                {/* </span> */}
               </Link>
               <Link
                 onClick={handleExport}
@@ -59,7 +60,8 @@ const MarkedAttendanceHeader = ({ payrollData }) => {
                 data-bs-toggle="tooltip"
                 data-bs-original-title="Export"
               >
-                <TbFileExport />
+                {/* <TbFileExport /> */}
+                <i className="ti ti-file-export text-white"></i>
               </Link>
             </div>
           </div>

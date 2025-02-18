@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import getAPI from "../../../../../api/getAPI.js";
-import { TbRefresh } from "react-icons/tb";
-import { IoMdSearch } from "react-icons/io";
+// import { TbRefresh } from "react-icons/tb";
+// import { IoMdSearch } from "react-icons/io";
 import { format } from "date-fns";
 
 const BulkAttendanceSearchForm = ({
@@ -164,12 +164,13 @@ const BulkAttendanceSearchForm = ({
                 <div className="col-auto float-end ms-2 mt-4">
                   <button
                     type="submit"
-                    className="btn btn-sm btn-primary"
+                    className="btn btn-sm btn-primary mx-2"
                     data-bs-toggle="tooltip"
                     title="Apply"
                   >
                     <span className="btn-inner--icon">
-                      <IoMdSearch />
+                      {/* <IoMdSearch /> */}
+                      <i className="ti ti-search text-white"></i>
                     </span>
                   </button>
                   <button
@@ -180,7 +181,8 @@ const BulkAttendanceSearchForm = ({
                     onClick={onReset}
                   >
                     <span className="btn-inner--icon">
-                      <TbRefresh className="text-white-off" />
+                      {/* <TbRefresh className="text-white-off" /> */}
+                      <i className="ti ti-refresh text-white-off"></i>
                     </span>
                   </button>
                 </div>

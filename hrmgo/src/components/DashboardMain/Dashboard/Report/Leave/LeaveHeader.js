@@ -1,8 +1,8 @@
 // ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Dashboard\Report\Leave\LeaveHeader.js
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { MdOutlineFileDownload } from "react-icons/md";
-import { TbFileExport } from "react-icons/tb";
+// import { MdOutlineFileDownload } from "react-icons/md";
+// import { TbFileExport } from "react-icons/tb";
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
@@ -104,7 +104,8 @@ const LeaveHeader = ({ leaveData }) => {
                   style={{ marginRight: 5 }}
                 >
                   <span className="btn-inner--icon">
-                    <MdOutlineFileDownload />
+                    {/* <MdOutlineFileDownload /> */}
+                    <i className="ti ti-download"></i>
                   </span>
                 </Link>
                 <Link
@@ -113,7 +114,8 @@ const LeaveHeader = ({ leaveData }) => {
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Export"
                 >
-                  <TbFileExport />
+                  {/* <TbFileExport /> */}
+                  <i className="ti ti-file-export"></i>
                 </Link>
               </div>
             </div>
