@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { TbReportMoney, TbCurrencyDollar } from "react-icons/tb";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import BulkpaymentModal from "./bulkpaymentmodel.js";
 import Payslipreceipt from "./payslipreceipt.js";
 import * as XLSX from "xlsx";
@@ -430,7 +430,8 @@ const PayslipTable = () => {
                                   className="btn-sm btn btn-info me-1"
                                   title="Edit"
                                 >
-                                  <HiOutlinePencil />
+                                  {/* <HiOutlinePencil /> */}
+                                  <i className="ti ti-pencil"></i>
                                 </Link>
                               )}
                               <button
@@ -438,7 +439,8 @@ const PayslipTable = () => {
                                 title="Delete"
                                 onClick={() => openDeleteDialog(row._id)}
                               >
-                                <RiDeleteBinLine />
+                                {/* <RiDeleteBinLine /> */}
+                                <i className="ti ti-trash"></i>
                               </button>
                             </div>
                           </td>

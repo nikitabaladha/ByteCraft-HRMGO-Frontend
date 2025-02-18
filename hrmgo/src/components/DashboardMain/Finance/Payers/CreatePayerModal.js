@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import postAPI from "../../../../api/postAPI"; 
 import "react-toastify/dist/ReactToastify.css";
 
-const CreatePayerModal = ({ closeModal }) => {
+const CreatePayerModal = ({ closeModal, fetchPayers }) => {
   const [payerName, setPayerName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
 
@@ -23,6 +23,7 @@ const CreatePayerModal = ({ closeModal }) => {
       if (!response.hasError) {
         toast.success("Payer Created Successfully");
         closeModal();
+        fetchPayers()
       } else {
         toast.error(`Failed to create Payer: ${response.message}`);
       }

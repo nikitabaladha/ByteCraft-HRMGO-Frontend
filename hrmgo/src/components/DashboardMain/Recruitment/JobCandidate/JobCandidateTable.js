@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaEye } from 'react-icons/fa';
+// import { FaEye } from 'react-icons/fa';
 import getAPI from '../../../../api/getAPI';
 
 const JobCandidateTable = () => {
@@ -61,8 +61,6 @@ const JobCandidateTable = () => {
     });
   }
   
-  
-
   return (
     <div className="row">
     <div className="col-xl-12">
@@ -143,7 +141,8 @@ const JobCandidateTable = () => {
                                       to={`/dashboard/recruitment/job-application-view/${application._id}`}
                                     >
                                       <span className="text-white">
-                                        <FaEye />
+                                        {/* <FaEye /> */}
+                                        <i className="ti ti-eye"></i>
                                       </span>
                                     </Link>
                                   </div>

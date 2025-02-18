@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { TbPencil } from "react-icons/tb";
-import { FaRegTrashAlt, FaEye } from "react-icons/fa";
+// import { TbPencil } from "react-icons/tb";
+// import { FaRegTrashAlt, FaEye } from "react-icons/fa";
 import ConfirmationDialog from "../../ConfirmationDialog";
 import { HiOutlineBriefcase } from "react-icons/hi";
 
@@ -244,14 +244,16 @@ const handleDeleteCancel = () => {
                               title="View Job"
                               
                             >
-                              <FaEye />
+                              {/* <FaEye /> */}
+                              <i className="ti ti-eye"></i>
                             </Link>
                             <Link
                               to={`/dashboard/recruitment/job-edit/${job._id}`}
                               className="btn btn-sm bg-info text-white mx-1"
                               title="Edit Job"
                             >
-                              <TbPencil />
+                              {/* <TbPencil /> */}
+                              <i className="ti ti-pencil"></i>
                             </Link>
                             <button
                               className="btn btn-sm bg-danger text-white mx-1"
@@ -260,7 +262,8 @@ const handleDeleteCancel = () => {
                                 openDeleteDialog(job)
                               }
                             >
-                              <FaRegTrashAlt />
+                              {/* <FaRegTrashAlt /> */}
+                              <i className="ti ti-trash"></i>
                             </button>
                           </div>
                         </td>

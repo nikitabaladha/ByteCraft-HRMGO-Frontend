@@ -39,8 +39,8 @@ const CompanySetting = () => {
             timezone: system.timezone || '',
           }); 
       } catch (error) {
-        console.error('Error fetching company settings:', error);
-        toast.error('Failed to fetch company settings');
+        // console.error('Error fetching company settings:', error);
+        // toast.error('Failed to fetch company settings');
       }
     };
 
@@ -67,11 +67,11 @@ const CompanySetting = () => {
         toast.success("Company setting successfully updated!");
       }
     } catch (error) {
-      console.error("Error updating company setting:", error);
-      toast.error(
-        error.response?.data?.message ||
-          "An error occurred while updating the company setting"
-      );
+      // console.error("Error updating company setting:", error);
+      // toast.error(
+      //   error.response?.data?.message ||
+      //     "An error occurred while updating the company setting"
+      // );
     }
   };
 

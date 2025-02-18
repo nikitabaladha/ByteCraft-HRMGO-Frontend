@@ -224,7 +224,7 @@ const LeaveSearchForm = ({
                     <div className="col-auto">
                       <button
                         type="submit"
-                        className="btn btn-sm btn-primary"
+                        className="btn btn-sm btn-primary mx-2"
                         data-bs-toggle="tooltip"
                         title="Apply"
                       >

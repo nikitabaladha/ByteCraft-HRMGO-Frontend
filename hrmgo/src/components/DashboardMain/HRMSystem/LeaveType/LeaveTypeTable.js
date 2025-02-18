@@ -1,8 +1,8 @@
 import React, { useState} from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditLeaveTypeModal from "./EditLeaveTypeModal";
 // import getAPI from "../../../../api/getAPI";
 // import { toast } from "react-toastify";
@@ -147,7 +147,8 @@ const LeaveTypeTable = ({leaveTypes, setLeaveTypes, fetchLeaveTypes}) => {
                                     title="Edit"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil text-white"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -162,7 +163,8 @@ const LeaveTypeTable = ({leaveTypes, setLeaveTypes, fetchLeaveTypes}) => {
                                       data-bs-toggle="tooltip"
                                       title="Delete">
                                       <span className="text-white">
-                                        <RiDeleteBinLine />
+                                        {/* <RiDeleteBinLine /> */}
+                                        <i className="ti ti-trash text-white"></i>
                                       </span>
                                     </Link>
                                   </form>

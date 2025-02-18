@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
 import EditBranchModal from "./EditBranchModal";
-import getAPI from "../../../../api/getAPI";
-import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog"
 
 const BranchTable = ({branches, setBranches, fetchBranches}) => {
@@ -145,7 +141,8 @@ const BranchTable = ({branches, setBranches, fetchBranches}) => {
                                     title="Edit"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i class="ti ti-pencil text-white"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -160,7 +157,9 @@ const BranchTable = ({branches, setBranches, fetchBranches}) => {
                                       data-bs-toggle="tooltip"
                                       title="Delete">
                                       <span className="text-white">
-                                        <RiDeleteBinLine />
+                                        {/* <RiDeleteBinLine />
+                                         */}
+                                         <i class="ti ti-trash text-white"></i>
                                       </span>
                                     </Link>
                                   </form>

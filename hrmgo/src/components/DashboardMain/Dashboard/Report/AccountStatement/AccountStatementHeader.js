@@ -52,7 +52,7 @@ const AccountStatementHeader = ({ transactions }) => {
             <div className="col">
               <div className="float-end ">
                 <Link
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary mx-2"
                   onclick="saveAsPDF()"
                   data-bs-toggle="tooltip"
                   title="Download"

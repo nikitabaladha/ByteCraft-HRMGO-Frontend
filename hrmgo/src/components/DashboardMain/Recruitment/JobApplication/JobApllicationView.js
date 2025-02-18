@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 import getAPI from "../../../../api/getAPI";
 import AddToJobOnboard from "./AddToJobOnboard";
 import CreateNewInterviewSchedule from "./CreateNewInterviewSchedule";
@@ -21,8 +21,8 @@ const JobApplicationView = () => {
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
-  const [skill, setSkills] = useState([]);
-  const [skillInput, setSkillInput] = useState("");
+  // const [skill, setSkills] = useState([]);
+  // const [skillInput, setSkillInput] = useState("");
   const [Notes, setNote] = useState("");
   const [applicantId, setApplicantId] = useState(null);
 
@@ -60,39 +60,39 @@ const JobApplicationView = () => {
     setShowModal(false);
   };
 
-  const handleKeyDown = (e) => {
-    if ((e.key === "Enter" || e.key === ",") && skillInput.trim() !== "") {
-      e.preventDefault();
+  // const handleKeyDown = (e) => {
+  //   if ((e.key === "Enter" || e.key === ",") && skillInput.trim() !== "") {
+  //     e.preventDefault();
 
-      if (!skill.includes(skillInput.trim())) {
-        setSkills([...skill, skillInput.trim()]);
-        setSkillInput("");
-      }
-    }
-  };
+  //     if (!skill.includes(skillInput.trim())) {
+  //       setSkills([...skill, skillInput.trim()]);
+  //       setSkillInput("");
+  //     }
+  //   }
+  // };
 
-  const handleRemoveSkill = (index) => {
-    setSkills(skill.filter((_, i) => i !== index));
-  };
+  // const handleRemoveSkill = (index) => {
+  //   setSkills(skill.filter((_, i) => i !== index));
+  // };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    if (skill.length === 0) {
-      toast("Please add at least one skill before submitting.");
-      return;
-    }
+  //   if (skill.length === 0) {
+  //     toast("Please add at least one skill before submitting.");
+  //     return;
+  //   }
 
-    try {
-      const response = await putAPI(`/update-skill/${id}`, { skill });
-      toast("Skills added successfully!");
-      console.log(response.data);
-      setSkills([]);
-    } catch (error) {
-      console.error("Error submitting skills:", error);
-      toast("Failed to add skills. Please try again.");
-    }
-  };
+  //   try {
+  //     const response = await putAPI(`/update-skill/${id}`, { skill });
+  //     toast("Skills added successfully!");
+  //     console.log(response.data);
+  //     setSkills([]);
+  //   } catch (error) {
+  //     console.error("Error submitting skills:", error);
+  //     toast("Failed to add skills. Please try again.");
+  //   }
+  // };
 
   const handleSubmitNotes = async (e) => {
     e.preventDefault();
@@ -362,8 +362,8 @@ const JobApplicationView = () => {
                       data-title="Add to Job OnBoard"
                       data-bs-original-title="Add to Job OnBoard"
                     >
-                      <FiPlus className="text-white" />
-                      Add to Job OnBoard
+                      {/* <FiPlus className="text-white" /> */}
+                      <i className="ti ti-plus"></i> Add to Job OnBoard
                     </Link>
                   </div>
                 </div>
@@ -579,28 +579,28 @@ const JobApplicationView = () => {
                     data-title="Create New Interview Schedule"
                     style={{ color: "white" }}
                   >
-                    <FiPlus className="text-white" /> Create New Interview
-                    Schedule
+                    {/* <FiPlus className="text-white" /> */}
+                    <i className="ti ti-plus"></i> Create New Interview Schedule
                   </Link>
                 </div>
               </div>
             </div>
             <div className="card-body">
-              <div className="list-group list-group-flush mb-4">
+              {/* <div className="list-group list-group-flush mb-4">
                 <div className="list-group-item px-0">
                   <div className="row align-items-center">
-                    {/* <div className="col">
+                    <div className="col">
                       <Link to="#!" className="d-block h6 text-sm mb-0">
                         What Do You Consider to Be Your Weaknesses?
                       </Link>
                       <p className="card-text text-sm text-muted mb-0">
                         nbvvhnmnnm
                       </p>
-                    </div> */}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <form onSubmit={handleSubmit}>
+              </div> */}
+              {/* <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label className="form-label">Skill Box</label>
                   <div className="d-flex flex-wrap align-items-center border p-2 rounded">
@@ -631,7 +631,7 @@ const JobApplicationView = () => {
                 <button type="submit" className="btn btn-primary mt-3">
                   Add Skills
                 </button>
-              </form>
+              </form> */}
 
               <form onSubmit={handleSubmitNotes}>
                 <div className="form-group">

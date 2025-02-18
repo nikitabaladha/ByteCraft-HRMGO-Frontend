@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // import { Link } from "react-router-dom";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditExpenseModal from "./EditExpenseModal";
-import getAPI from "../../../../api/getAPI";
+// import getAPI from "../../../../api/getAPI";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const ExpenseTable = () => {
-  const [expenses, setExpenses] = useState([]);
+const ExpenseTable = ({expenses, setExpenses, fetchExpenses}) => {
+  // const [expenses, setExpenses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [expenseToDelete, setExpenseToDelete] = useState(null);
@@ -72,21 +72,21 @@ const ExpenseTable = () => {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    const fetchExpenses = async () => {
-      try {
-        const response = await getAPI("/getall_expense", {}, true);
-        setExpenses(response.data.data);
+  //   const fetchExpenses = async () => {
+  //     try {
+  //       const response = await getAPI("/getall_expense", {}, true);
+  //       setExpenses(response.data.data);
 
-      } catch (err) {
-        console.log("Failed to fetch expenses");
+  //     } catch (err) {
+  //       console.log("Failed to fetch expenses");
 
-      }
-    };
+  //     }
+  //   };
 
-    fetchExpenses();
-  }, []);
+  //   fetchExpenses();
+  // }, []);
 
 
   return (
@@ -160,7 +160,8 @@ const ExpenseTable = () => {
                                     className="mx-3 btn btn-sm align-items-center"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -174,7 +175,8 @@ const ExpenseTable = () => {
                                     title="Delete"
                                   >
                                     <span className="text-white">
-                                      <RiDeleteBinLine />
+                                      {/* <RiDeleteBinLine /> */}
+                                      <i className="ti ti-trash"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -248,6 +250,7 @@ const ExpenseTable = () => {
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           selectedExpense={selectedExpense}
+          fetchExpenses={fetchExpenses}
         />
       )}
 

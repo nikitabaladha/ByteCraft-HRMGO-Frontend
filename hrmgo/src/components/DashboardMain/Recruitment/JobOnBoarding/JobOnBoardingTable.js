@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { TbPencil } from "react-icons/tb";
-import {  FaRegTrashAlt } from "react-icons/fa";
+// import { TbPencil } from "react-icons/tb";
+// import {  FaRegTrashAlt } from "react-icons/fa";
 import getAPI from "../../../../api/getAPI";
 import JobOnBoardingEdit from "./JobOnBoardingEdit";
 import ConfirmationDialog from "../../ConfirmationDialog";
-import { PiArrowsLeftRight } from "react-icons/pi";
-import { FiDownload } from "react-icons/fi";
+// import { PiArrowsLeftRight } from "react-icons/pi";
+// import { FiDownload } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 const JobOnBoardingTable = () => {
@@ -196,7 +196,8 @@ const JobOnBoardingTable = () => {
                                 onClick={() => handleConvertToEmployee(row)}
                               >
                                 <span className="text-white">
-                                  <PiArrowsLeftRight />
+                                  {/* <PiArrowsLeftRight /> */}
+                                  <i className="ti ti-arrows-right-left"></i>
                                 </span>
                               </button>
                             )}
@@ -205,7 +206,8 @@ const JobOnBoardingTable = () => {
                                 title="Edit"
                                 onClick={() => handleEdit(row)}
                               >
-                                <TbPencil />
+                                {/* <TbPencil /> */}
+                                <i className="ti ti-pencil"></i>
                               </button>
                               <button
                                 className="btn btn-danger btn-sm me-2"
@@ -215,24 +217,25 @@ const JobOnBoardingTable = () => {
                                   openDeleteDialog(row);
                                 }}
                               >
-                                <FaRegTrashAlt />
+                                {/* <FaRegTrashAlt /> */}
+                                <i className="ti ti-trash"></i>
                               </button>
                               {row.status === "confirm" && (
                                 <>
-                                <div>
+                                {/* <div>
                               <button
                                 className="btn btn-primary btn-sm me-2"
                                 title="OfferLetter PDF"
                               >
                                 <FiDownload />
                               </button>
-                              </div>
-                              <button
+                              </div> */}
+                              {/* <button
                                 className="btn btn-primary btn-sm me-2"
                                 title="OfferLetter DOC"
                               >
                               <FiDownload />
-                              </button>
+                              </button> */}
                               </>
                               )}
                             </div>

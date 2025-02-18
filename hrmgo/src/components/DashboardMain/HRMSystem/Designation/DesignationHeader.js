@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 import CreateDepartmentModal from "./CreateDesignationModal";
 
 const DepartmentHeader = ({fetchDesignations}) => {
@@ -33,7 +33,8 @@ const DepartmentHeader = ({fetchDesignations}) => {
                   data-bs-toggle="tooltip"
                   title="Create"
                 >
-                  <FiPlus />
+                  {/* <FiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </button>
               </div>
             </div>

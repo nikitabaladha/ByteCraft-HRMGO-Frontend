@@ -110,7 +110,7 @@ const ManageLeaveHeader = ({ addLeave }) => {
                   <TbFileExport />
                 </Link>
                 <Link
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary mx-2"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Calendar View"
                   onClick={navigateToCalendar}

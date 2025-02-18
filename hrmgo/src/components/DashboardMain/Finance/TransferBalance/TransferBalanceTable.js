@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+import React, { useState } from "react";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditTransferBalanceModal from "./EditTransferBalanceModal";
-import getAPI from "../../../../api/getAPI";
+// import getAPI from "../../../../api/getAPI";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const TransferBalanceTable = () => {
-  const [transferBalances, setTransferBalances] = useState([]);
+const TransferBalanceTable = ({transferBalances, setTransferBalances, fetchTransferBalances}) => {
+  // const [transferBalances, setTransferBalances] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [transferBalanceToDelete, setTransferBalanceToDelete] = useState(null);
@@ -70,20 +70,20 @@ const TransferBalanceTable = () => {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    const fetchTransferBalances = async () => {
-      try {
-        const response = await getAPI("/getall_transferbalance", {}, true);
-        setTransferBalances(response.data.data);
-        ;
-      } catch (err) {
-        console.log("Failed to fetch transfer balances");
+  // useEffect(() => {
+  //   const fetchTransferBalances = async () => {
+  //     try {
+  //       const response = await getAPI("/getall_transferbalance", {}, true);
+  //       setTransferBalances(response.data.data);
+  //       ;
+  //     } catch (err) {
+  //       console.log("Failed to fetch transfer balances");
 
-      }
-    };
+  //     }
+  //   };
 
-    fetchTransferBalances();
-  }, []);
+  //   fetchTransferBalances();
+  // }, []);
 
 
 
@@ -158,7 +158,8 @@ const TransferBalanceTable = () => {
                                     className="mx-3 btn btn-sm align-items-center"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -172,7 +173,8 @@ const TransferBalanceTable = () => {
                                     title="Delete"
                                   >
                                     <span className="text-white">
-                                      <RiDeleteBinLine />
+                                      {/* <RiDeleteBinLine /> */}
+                                      <i className="ti ti-trash"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -246,6 +248,7 @@ const TransferBalanceTable = () => {
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           selectedTransferBalance={selectedTransferBalance}
+          fetchTransferBalances={fetchTransferBalances}
         />
       )}
 

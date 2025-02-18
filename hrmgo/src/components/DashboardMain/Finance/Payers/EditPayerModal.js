@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import putAPI from "../../../../api/putAPI.js";
 import { toast } from "react-toastify";
 
-const EditPayerModal = ({ payer, closeModal }) => {
+const EditPayerModal = ({ payer, closeModal, fetchPayers }) => {
   const [formData, setFormData] = useState({
     payer_name: "", 
     contact_number: "",
@@ -28,6 +28,7 @@ const EditPayerModal = ({ payer, closeModal }) => {
       if (!response.hasError) {
         toast.success("Payer updated successfully");
         closeModal(); 
+        fetchPayers()
       } else {
         toast.error(`Failed to update Payer: ${response.message}`);
       }

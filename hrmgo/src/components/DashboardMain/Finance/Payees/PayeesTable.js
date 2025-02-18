@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditPayeeModal from "./EditPayeeModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
 // import getAPI from "../../../../api/getAPI";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 
 const PayeesTable = ({ payees, setPayees, fetchPayees }) => {
   // const [payees, setPayees] = useState([]);
@@ -137,7 +137,8 @@ const PayeesTable = ({ payees, setPayees, fetchPayees }) => {
                                     title="Edit"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -150,7 +151,8 @@ const PayeesTable = ({ payees, setPayees, fetchPayees }) => {
                                     title="Delete"
                                   >
                                     <span className="text-white">
-                                      <RiDeleteBinLine />
+                                      {/* <RiDeleteBinLine /> */}
+                                      <i className="ti ti-trash"></i>
                                     </span>
                                   </button>
                                 </div>

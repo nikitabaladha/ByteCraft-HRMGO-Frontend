@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import getAPI from "../../../../api/getAPI.js"; 
 import putAPI from "../../../../api/putAPI.js"; 
 
-const EditTransferBalanceModal = ({ isOpen, onClose, selectedTransferBalance }) => {
+const EditTransferBalanceModal = ({ isOpen, onClose, selectedTransferBalance, fetchTransferBalances }) => {
   const [currentDate, setCurrentDate] = useState(selectedTransferBalance?.date || null);
   const [fromAccountId, setFromAccountId] = useState(selectedTransferBalance?.fromAccountId || '');
   const [toAccountId, setToAccountId] = useState(selectedTransferBalance?.toAccountId || '');
@@ -77,6 +77,7 @@ const EditTransferBalanceModal = ({ isOpen, onClose, selectedTransferBalance }) 
       if (!response.hasError) {
         toast.success("Transfer Balance Updated Successfully");
         onClose();
+        fetchTransferBalances()
       } else {
         toast.error(`Failed to update transfer balance: ${response.message}`);
       }

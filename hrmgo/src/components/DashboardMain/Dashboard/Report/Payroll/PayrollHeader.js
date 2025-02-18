@@ -43,7 +43,7 @@ const MarkedAttendanceHeader = ({ payrollData }) => {
             <div className="col">
               <div className="float-end "></div>
               <Link
-                className="btn btn-sm btn-primary float-end"
+                className="btn btn-sm btn-primary float-end mx-2"
                 // onclick="saveAsPDF()"
                 data-bs-toggle="tooltip"
                 title="Download"

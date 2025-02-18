@@ -117,7 +117,7 @@ const MonthlyAttendanceHeader = ({ attendanceData, selectedMonthYear }) => {
             <div className="col">
               <div className="float-end ">
                 <Link
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary mx-2"
                   onClick={saveAsPDF}
                   data-bs-toggle="tooltip"
                   title="Download"

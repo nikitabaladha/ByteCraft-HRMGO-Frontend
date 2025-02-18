@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 // import getAPI from "../../../api/getAPI";
 // import { toast } from "react-toastify";
-import { HiOutlinePencil } from "react-icons/hi";
+// import { HiOutlinePencil } from "react-icons/hi";
 import ConfirmationDialog from "../ConfirmationDialog";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditCompanyPolicy from "./EditCompanyPolicy";
 
 const CompanyPolicy = ({companyPolicies, setCompanyPolicies, fetchCompanyPolicies}) => {
@@ -134,7 +134,7 @@ const CompanyPolicy = ({companyPolicies, setCompanyPolicies, fetchCompanyPolicie
                                       title="Edit Company Policy"
                                       data-bs-original-title="Edit"
                                     >
-                                      <span className="text-white">  <HiOutlinePencil /></span>
+                                      <span className="text-white">  <i class="ti ti-pencil text-white"></i></span>
                                     </Link>
                                   </div>
                                   <div className="action-btn bg-danger">
@@ -148,7 +148,8 @@ const CompanyPolicy = ({companyPolicies, setCompanyPolicies, fetchCompanyPolicie
                                       title="Delete"
                                     >
                                       <span className="text-white">
-                                        <RiDeleteBinLine />
+                                        {/* <RiDeleteBinLine /> */}
+                                        <i class="ti ti-trash text-white"></i>
                                       </span>
                                     </button>
                                   </div>

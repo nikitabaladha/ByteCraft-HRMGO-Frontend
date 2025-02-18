@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbFileExport } from "react-icons/tb";
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 import TrainingListCreateModel from "./TrainingListCreateModel";
 import * as XLSX from "xlsx";
 
@@ -91,7 +91,8 @@ const TrainingListHeader = ({ fetchTrainings, trainings }) => {
                   data-bs-toggle="tooltip"
                   title="Create New Training"
                 >
-                  <FiPlus className="text-white" />
+                  {/* <FiPlus className="text-white" /> */}
+                  <i className="ti ti-plus"></i>
                 </button>
               </div>
             </div>

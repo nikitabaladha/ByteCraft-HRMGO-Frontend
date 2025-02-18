@@ -13,7 +13,7 @@ const Meeting = () => {
         const response = await getAPI("/meeting-getall", {}, true);
         setMeetings(response.data.meetings);
       } catch (err) {
-        console.Error("Failed to fetch Meetings");
+        console.log("Failed to fetch Meetings");
 
       }
     };

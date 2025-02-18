@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "../HRMSystemSidebar";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditJobStageModal from "./EditJobStageModal";
 // import getAPI from "../../../../api/getAPI";
 // import { toast } from "react-toastify";
@@ -207,7 +207,8 @@ const SortableItem = ({ jobStage, handleEdit, openDeleteDialog }) => {
               }}
             >
               <span className="text-white">
-                <HiOutlinePencil />
+                {/* <HiOutlinePencil /> */}
+                <i className="ti ti-pencil text-white"></i>
               </span>
             </button>
           </div>
@@ -221,7 +222,8 @@ const SortableItem = ({ jobStage, handleEdit, openDeleteDialog }) => {
               className="mx-3 btn btn-sm align-items-center"
             >
               <span className="text-white">
-                <RiDeleteBinLine />
+                {/* <RiDeleteBinLine /> */}
+                <i className="ti ti-trash text-white"></i>
               </span>
             </button>
           </div>

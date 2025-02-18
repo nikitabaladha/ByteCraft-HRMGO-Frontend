@@ -1,21 +1,23 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { TbSearch, TbRefresh } from "react-icons/tb";
-import { FaRegTrashAlt } from "react-icons/fa";
-import { TbPencil } from "react-icons/tb";
+// import { TbSearch, TbRefresh } from "react-icons/tb";
+// import { FaRegTrashAlt } from "react-icons/fa";
+// import { TbPencil } from "react-icons/tb";
 import { PiDotsThreeOutlineVerticalThin } from "react-icons/pi";
-import { AiOutlineClockCircle } from "react-icons/ai";
+// import { AiOutlineClockCircle } from "react-icons/ai";
 import getAPI from "../../../../api/getAPI";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const JobApplicationMainContent = ({
-  applications,
-  setApplications,
-}) => {
+const JobApplicationMainContent = ({ applications, setApplications }) => {
   const [jobs, setJobs] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [appToDelete, setAppToDelete] = useState(null);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [selectedJob, setSelectedJob] = useState("");
+  const [filteredApplications, setFilteredApplications] =
+    useState(applications);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -31,7 +33,26 @@ const JobApplicationMainContent = ({
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted");
+
+    let filtered = applications;
+
+    if (startDate) {
+      filtered = filtered.filter(
+        (app) => new Date(app.createdAt) >= new Date(startDate)
+      );
+    }
+
+    if (endDate) {
+      filtered = filtered.filter(
+        (app) => new Date(app.createdAt) <= new Date(endDate)
+      );
+    }
+
+    if (selectedJob) {
+      filtered = filtered.filter((app) => app.jobTitle === selectedJob);
+    }
+
+    setFilteredApplications(filtered);
   };
 
   const openDeleteDialog = (appId) => {
@@ -56,6 +77,13 @@ const JobApplicationMainContent = ({
     return `${day}-${month}-${year}`;
   }
 
+  const handleReset = () => {
+    setStartDate("");
+    setEndDate("");
+    setSelectedJob("");
+    setFilteredApplications(applications);
+  };
+
   return (
     <div>
       <div className="row">
@@ -78,24 +106,28 @@ const JobApplicationMainContent = ({
                           className="month-btn form-control current_date"
                           name="start_date"
                           type="date"
-                          defaultValue="2024-11-06"
+                          value={startDate}
+                          onChange={(e) => setStartDate(e.target.value)}
                           id="start_date"
                         />
                       </div>
                     </div>
                     <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
-                      <div className="btn-box">
+                      <div className="btn-box ">
                         <label htmlFor="end_date" className="form-label">
                           End Date
                         </label>
-                        <input
-                          className="month-btn form-control current_date"
-                          autoComplete="off"
-                          name="end_date"
-                          type="date"
-                          id="end_date"
-                        />
                       </div>
+
+                      <input
+                        className="month-btn form-control current_date"
+                        autoComplete="off"
+                        name="end_date"
+                        type="date"
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                        id="end_date"
+                      />
                     </div>
                     <div className="col-xl-4 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
                       <div className="btn-box">
@@ -106,13 +138,14 @@ const JobApplicationMainContent = ({
                           className="form-control select"
                           id="job_id"
                           name="job"
-                          defaultValue=""
+                          value={selectedJob}
+                          onChange={(e) => setSelectedJob(e.target.value)}
                         >
                           <option value="" disabled>
                             All
                           </option>
                           {jobs.map((job) => (
-                            <option key={job._id} value={job._id}>
+                            <option key={job._id} value={job.title}>
                               {job.title}
                             </option>
                           ))}
@@ -122,20 +155,23 @@ const JobApplicationMainContent = ({
                     <div className="col-auto float-end ms-2 mt-4">
                       <button
                         type="submit"
-                        className="btn btn-sm btn-primary"
+                        className="btn btn-sm btn-primary mx-2"
                         data-bs-toggle="tooltip"
                         title="Apply"
                       >
-                        <TbSearch />
+                        {/* <TbSearch /> */}
+                        <i className="ti ti-search"></i>
                       </button>
-                      <a
-                        href="https://demo.workdo.io/hrmgo/job-application"
+                      <Link
+                        href="#"
                         className="btn btn-sm btn-danger"
                         data-bs-toggle="tooltip"
                         title="Reset"
+                        onClick={handleReset}
                       >
-                        <TbRefresh />
-                      </a>
+                        {/* <TbRefresh /> */}
+                        <i className="ti ti-refresh"></i>
+                      </Link>
                     </div>
                   </div>
                 </form>
@@ -164,7 +200,7 @@ const JobApplicationMainContent = ({
                       <div className="float-end">
                         <span className="btn btn-sm btn-primary btn-icon count">
                           {
-                            applications.filter(
+                            filteredApplications.filter(
                               (app) => (app.status || "Applied") === status
                             ).length
                           }
@@ -177,7 +213,7 @@ const JobApplicationMainContent = ({
                       id={`kanban-blacklist-${index + 1}`}
                       data-id={index + 1}
                     >
-                      {applications
+                      {filteredApplications
                         .filter((app) => (app.status || "Applied") === status)
                         .map((app) => (
                           <div className="card" key={app._id}>
@@ -202,7 +238,8 @@ const JobApplicationMainContent = ({
                                       to={`/dashboard/recruitment/job-application-view/${app._id}`}
                                       className="dropdown-item"
                                     >
-                                      <TbPencil />
+                                      {/* <TbPencil /> */}
+                                      <i className="ti ti-pencil"></i>
                                       <span className="ms-2">Edit</span>
                                     </Link>
                                     <Link
@@ -213,7 +250,8 @@ const JobApplicationMainContent = ({
                                         openDeleteDialog(app);
                                       }}
                                     >
-                                      <FaRegTrashAlt />
+                                      {/* <FaRegTrashAlt /> */}
+                                      <i className="ti ti-trash"></i>
                                       <span className="ms-2">Delete</span>
                                     </Link>
                                   </div>
@@ -225,7 +263,6 @@ const JobApplicationMainContent = ({
                                 <ul className="list-inline mb-0 mt-0">
                                   <li className="list-inline-item">
                                     <span className="static-rating static-rating-sm d-block">
-                                      {/* Loop through 5 to render star icons based on the rating */}
                                       {[...Array(5)].map((_, index) => (
                                         <i
                                           key={index}
@@ -241,7 +278,8 @@ const JobApplicationMainContent = ({
                                     {app.jobTitle}
                                   </li>
                                   <li className="list-inline-item">
-                                    <AiOutlineClockCircle />
+                                    {/* <AiOutlineClockCircle /> */}
+                                    <i className="ti ti-clock"></i>
                                     {`${formatDate(app.createdAt)}`}
                                   </li>
                                 </ul>

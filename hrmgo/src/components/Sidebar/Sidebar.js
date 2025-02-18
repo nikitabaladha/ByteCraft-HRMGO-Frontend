@@ -37,7 +37,7 @@ const menuConfig = [
   {
     id: "dashboard",
     label: "Dashboard",
-    iconClass: <AiOutlineHome />,
+    iconClass: "ti-home",
     link: "/dashboard/overview",
     subMenu: [
       {
@@ -83,7 +83,7 @@ const menuConfig = [
   {
     id: "staff",
     label: "Staff",
-    iconClass: <TbUsers />,
+    iconClass: "ti ti-users",
     link: "#!",
     subMenu: [
       {
@@ -108,7 +108,7 @@ const menuConfig = [
   {
     id: "employee",
     label: "Employee",
-    iconClass: <LuUser />,
+    iconClass: "ti ti-user",
     link: "/dashboard/employee",
   },
 
@@ -116,7 +116,7 @@ const menuConfig = [
   {
     id: "payroll",
     label: "Payroll",
-    iconClass: <TbReceipt />,
+    iconClass: "ti ti-receipt",
     link: "#!",
     subMenu: [
       {
@@ -136,7 +136,7 @@ const menuConfig = [
   {
     id: "timeSheet",
     label: "Timesheet",
-    iconClass: <FaRegClock />,
+    iconClass: "ti-clock",
     link: "#!",
     subMenu: [
       {
@@ -168,7 +168,7 @@ const menuConfig = [
   {
     id: "performance",
     label: "Performance",
-    iconClass: <HiCubeTransparent />,
+    iconClass: "ti-3d-cube-sphere",
     link: "#!",
     subMenu: [
       {
@@ -188,7 +188,7 @@ const menuConfig = [
   {
     id: "finance",
     label: "Finance",
-    iconClass: <LuWallet />,
+    iconClass: "ti-wallet" ,
     link: "#!",
     subMenu: [
       {
@@ -233,7 +233,7 @@ const menuConfig = [
   {
     id: "training",
     label: "Training",
-    iconClass: <TbSchool />,
+    iconClass: "ti-school",
     link: "#!",
     subMenu: [
       {
@@ -253,7 +253,7 @@ const menuConfig = [
   {
     id: "hrAdminSetup",
     label: "Hr Admin Setup",
-    iconClass: <LuUserPlus />,
+    iconClass: "ti-user-plus",
     link: "#!",
     subMenu: [
       {
@@ -306,7 +306,7 @@ const menuConfig = [
   {
     id: "recruitment",
     label: "Recruitment",
-    iconClass: <TbLicense />,
+    iconClass: "ti-license",
     link: "#!",
     subMenu: [
       {
@@ -357,7 +357,7 @@ const menuConfig = [
   {
     id: "contract",
     label: "Contracts",
-    iconClass: <TbDeviceFloppy />,
+    iconClass: "ti-device-floppy",
     link: "/dashboard/contract",
   },
 
@@ -365,7 +365,7 @@ const menuConfig = [
   {
     id: "ticket",
     label: "Ticket",
-    iconClass: <LuTicket />,
+    iconClass: "ti-ticket",
     link: "/dashboard/ticket",
   },
 
@@ -381,7 +381,7 @@ const menuConfig = [
   {
     id: "meeting",
     label: "Meeting",
-    iconClass: <MdOutlineCalendarMonth />,
+    iconClass: "ti-calendar-time",
     link: "/dashboard/meeting",
   },
 
@@ -389,7 +389,7 @@ const menuConfig = [
   {
     id: "zoomMeeting",
     label: "Zoom Meeting",
-    iconClass: <CiVideoOn />,
+    iconClass: "ti-video",
     link: "/dashboard/zoom-meeting",
   },
 
@@ -421,7 +421,7 @@ const menuConfig = [
   {
     id: "companyPolicy",
     label: "Company Policy",
-    iconClass: <TbPray />,
+    iconClass: "ti-pray",
     link: "/dashboard/company-policy",
   },
 
@@ -429,7 +429,7 @@ const menuConfig = [
   {
     id: "messenger",
     label: "Messenger",
-    iconClass: <LuMessagesSquare />,
+    iconClass: "ti-messages",
     link: "/dashboard/messenger",
   },
 
@@ -445,7 +445,7 @@ const menuConfig = [
   {
     id: "hrmSystemSetup",
     label: "HRM System Setup",
-    iconClass: <FiTable />,
+    iconClass: "ti-table",
     link: "/dashboard/hrm-system-branch",
   },
 
@@ -455,7 +455,7 @@ const menuConfig = [
   {
     id: "systemSetting",
     label: "System Setting",
-    iconClass: <IoSettingsOutline />,
+    iconClass: "ti-settings",
     link: "/dashboard/system-setting",
   },
 ];
@@ -640,7 +640,10 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                                 onClick={() => toggleMenu(menu.id)}
                               >
                                 <span className="dash-micon">
-                                  {menu.iconClass}
+                                  {/* {menu.iconClass} */}
+                                  {/* <i className={`${menu.iconClass}`}></i> */}
+                                  {/* <i className={menu.iconClass}></i> */}
+                                  <i className={`ti ${menu.iconClass}`}></i>
                                 </span>
                                 <span className="dash-mtext">{menu.label}</span>
                                 {menu.subMenu && (

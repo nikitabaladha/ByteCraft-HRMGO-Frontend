@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import ConfirmationDialog from "../ConfirmationDialog";
 import EditMeetingModal from "./EditMeetingmodal";
 
@@ -159,7 +159,8 @@ const MeetingTable = ({meetings,setMeetings,fetchMeetings}) => {
                                     onClick={() => openModal(meeting)}
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil"></i>
                                     </span>
                                   </Link>
                                 </div>
@@ -172,7 +173,8 @@ const MeetingTable = ({meetings,setMeetings,fetchMeetings}) => {
                                     onClick={() => openDeleteDialog(meeting._id)}
                                   >
                                     <span className="text-white">
-                                      <RiDeleteBinLine />
+                                      {/* <RiDeleteBinLine /> */}
+                                      <i className="ti ti-trash"></i>
                                     </span>
                                   </button>
                                 </div>

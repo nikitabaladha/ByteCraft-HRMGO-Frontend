@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TbFileExport } from "react-icons/tb";
-import { CiFileOn } from "react-icons/ci";
-import { FiPlus } from "react-icons/fi";
+// import { TbFileExport } from "react-icons/tb";
+// import { CiFileOn } from "react-icons/ci";
+// import { FiPlus } from "react-icons/fi";
 import TrainerEditModal from './TrainerEditModel';
 import * as XLSX from "xlsx";
 
@@ -72,10 +72,11 @@ const TrainerHeader = ({fetchTrainers, trainers}) => {
                   className="btn btn-sm btn-primary me-1"
                   onClick={handleExportToExcel}
                 >
-                   <TbFileExport />
+                   {/* <TbFileExport /> */}
+                   <i className="ti ti-file-export"></i>
                 </Link>
 
-                <Link
+                {/* <Link
                   to="/"
                   data-url="https://demo.workdo.io/hrmgo/import/training/file"
                   data-ajax-popup="true"
@@ -86,7 +87,7 @@ const TrainerHeader = ({fetchTrainers, trainers}) => {
                   data-bs-original-title="Import"
                 >
                   <CiFileOn />
-                </Link>
+                </Link> */}
                  <Link
                   // to="https://demo.workdo.io/hrmgo/trainer/create"
                   onClick={handleCreateClick}
@@ -96,7 +97,8 @@ const TrainerHeader = ({fetchTrainers, trainers}) => {
                   className="btn btn-sm btn-primary"
                   data-bs-original-title="Create"
                 >
-                  <FiPlus />
+                  {/* <FiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </Link>
               </div>
             </div>

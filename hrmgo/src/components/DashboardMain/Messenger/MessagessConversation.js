@@ -657,64 +657,6 @@ const Messagess = () => {
                                                   justifyContent: "center",
                                                 }}
                                               >
-                                                {/* <strong
-                                                    style={{
-                                                      color: "black",
-                                                      marginRight: "10px",
-                                                      whiteSpace: "nowrap",
-                                                      overflow: "hidden",
-                                                      textOverflow: "ellipsis",
-                                                    }}
-                                                  >
-                                                    {messageFile
-                                                      .split("/")
-                                                      .pop()}
-                                                  </strong> */}
-                                                {/* <HiOutlineDocumentDownload
-                                                    size={30}
-                                                    style={{
-                                                      cursor: "pointer",
-                                                      color: "blue",
-                                                    }}
-                                                    onClick={() => {
-                                                      fetch(
-                                                        `${process.env.REACT_APP_API_URL_FOR_IMAGE}${messageFile}`
-                                                      )
-                                                        .then((response) =>
-                                                          response.blob()
-                                                        )
-                                                        .then((blob) => {
-                                                          const url =
-                                                            window.URL.createObjectURL(
-                                                              blob
-                                                            );
-                                                          const a =
-                                                            document.createElement(
-                                                              "a"
-                                                            );
-                                                          a.style.display =
-                                                            "none";
-                                                          a.href = url;
-                                                          a.download =
-                                                            messageFile
-                                                              .split("/")
-                                                              .pop();
-                                                          document.body.appendChild(
-                                                            a
-                                                          );
-                                                          a.click();
-                                                          window.URL.revokeObjectURL(
-                                                            url
-                                                          );
-                                                        })
-                                                        .catch((error) => {
-                                                          console.error(
-                                                            "Error fetching the file:",
-                                                            error
-                                                          );
-                                                        });
-                                                    }}
-                                                  /> */}
                                               </div>
                                             </div>
                                           </div>

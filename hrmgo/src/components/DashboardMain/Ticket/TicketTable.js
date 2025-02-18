@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import getAPI from "../../../api/getAPI";
 import ConfirmationDialog from "../ConfirmationDialog";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { HiOutlineTicket } from "react-icons/hi";
-import { TbArrowBackUp } from "react-icons/tb";
+// import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlineTicket } from "react-icons/hi";
+// import { TbArrowBackUp } from "react-icons/tb";
 import ReactApexChart from "react-apexcharts";
 import { Link } from "react-router-dom";
 
@@ -155,12 +155,12 @@ const TicketDashboard = () => {
     return <div>{error}</div>;
   }
 
-  const isNewTicket = (createdAt) => {
-    const now = new Date();
-    const createdDate = new Date(createdAt);
-    const diffInMilliseconds = now - createdDate;
-    return diffInMilliseconds <= 60000;
-  };
+  // const isNewTicket = (createdAt) => {
+  //   const now = new Date();
+  //   const createdDate = new Date(createdAt);
+  //   const diffInMilliseconds = now - createdDate;
+  //   return diffInMilliseconds <= 60000;
+  // };
 
 
   return (
@@ -187,7 +187,8 @@ const TicketDashboard = () => {
                 <div className="card ticket-card">
                   <div className="card-body">
                     <div className={`badge theme-avtar bg-${item.color}`}>
-                      <HiOutlineTicket />
+                      {/* <HiOutlineTicket /> */}
+                      <i className="ti ti-ticket"></i>
                     </div>
                     <div style={{ marginTop: '10%' }}>
                       <h6 className="mb-3">{item.label}</h6>
@@ -254,9 +255,9 @@ const TicketDashboard = () => {
                   <table className="table dataTable-table" id="pc-dt-simple">
                     <thead>
                       <tr>
-                        <th style={{ width: "8.07654%" }}>
+                        {/* <th style={{ width: "8.07654%" }}>
                           New
-                        </th>
+                        </th> */}
                         <th style={{ width: "22.2416%", color: "black", textDecoration: "none" }}>
                           Title
                         </th>
@@ -287,11 +288,11 @@ const TicketDashboard = () => {
                     <tbody>
                       {paginatedTicket.map((ticket, index) => (
                         <tr key={ticket._id}>
-                          <td>
+                          {/* <td>
                             {isNewTicket(ticket.created_at) && (
                               <span style={{ color: 'green', fontSize: '20px' }}>•</span>
                             )}
-                          </td>
+                          </td> */}
 
                           <td>{ticket.title}</td>
                           <td>0{ticket.ticket_code}</td>
@@ -338,7 +339,8 @@ const TicketDashboard = () => {
                                     title="Reply"
                                   >
                                     <span className="text-white">
-                                      <TbArrowBackUp />
+                                      {/* <TbArrowBackUp /> */}
+                                      <i className="ti ti-arrow-back-up"></i>
                                     </span>
                                   </Link>
                                   {/* <a
@@ -378,7 +380,8 @@ const TicketDashboard = () => {
                                       onClick={() => openDeleteDialog(ticket._id)}
                                     >
                                       <span className="text-white">
-                                        <RiDeleteBinLine />
+                                        {/* <RiDeleteBinLine /> */}
+                                        <i className="ti ti-trash"></i>
                                       </span>
                                     </Link>
                                   </form>

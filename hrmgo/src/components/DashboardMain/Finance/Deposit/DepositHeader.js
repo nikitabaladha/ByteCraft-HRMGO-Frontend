@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { TiPlus } from "react-icons/ti";
-import { TbFileExport } from "react-icons/tb";
+// import { TiPlus } from "react-icons/ti";
+// import { TbFileExport } from "react-icons/tb";
 import DepositModal from "./DepositModal";
 import * as XLSX from "xlsx";
 import getAPI  from "../../../../api/getAPI"; 
 
-const DepositHeader = () => {
+const DepositHeader = ({fetchDeposits}) => {
   const [deposits, setDeposits] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -79,7 +79,8 @@ const DepositHeader = () => {
                   title="Export"
                   onClick={handleExportToExcel}
                 >
-                  <TbFileExport />
+                  {/* <TbFileExport /> */}
+                  <i className="ti ti-file-export"></i>
                 </button>
 
                 <button
@@ -88,14 +89,15 @@ const DepositHeader = () => {
                   title="Create"
                   onClick={handleOpenModal}
                 >
-                  <TiPlus />
+                  {/* <TiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </button>
               </div>
             </div>
           </div>
         </div>
 
-      <DepositModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      <DepositModal isOpen={isModalOpen} onClose={handleCloseModal} fetchDeposits={fetchDeposits} />
     </div>
   );
 };

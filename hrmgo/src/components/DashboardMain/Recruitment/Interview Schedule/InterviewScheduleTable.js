@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import getAPI from '../../../../api/getAPI';
-import { TbPencil } from "react-icons/tb";
-import {  FaRegTrashAlt } from "react-icons/fa";
+// import { TbPencil } from "react-icons/tb";
+// import {  FaRegTrashAlt } from "react-icons/fa";
 import InterviewScheduleEdit from './InterviewScheduleEdit';
 import ConfirmationDialog from '../../ConfirmationDialog';
 
@@ -88,7 +88,8 @@ const InterviewScheduleTable = () => {
                                         onClick={() => handleEdit(schedule)}
                                       >
                                         <span className="text-white">
-                                          <TbPencil/>
+                                          {/* <TbPencil/> */}
+                                          <i className="ti ti-pencil"></i>
                                         </span>
                                       </Link>
                                     </div>
@@ -105,7 +106,8 @@ const InterviewScheduleTable = () => {
                                           }}
                                       >
                                         <span className="text-white">
-                                          <FaRegTrashAlt/>
+                                          {/* <FaRegTrashAlt/> */}
+                                          <i className="ti ti-trash"></i>
                                         </span>
                                       </Link>
                                     </div>

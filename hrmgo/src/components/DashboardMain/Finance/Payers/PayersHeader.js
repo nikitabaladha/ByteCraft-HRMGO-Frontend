@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { TiPlus } from "react-icons/ti";
+// import { TiPlus } from "react-icons/ti";
 import CreatePayerModal from "./CreatePayerModal"; 
 
-const PayersHeader = () => {
+const PayersHeader = ({fetchPayers}) => {
   const [showModal, setShowModal] = useState(false); 
 
   const openModal = () => setShowModal(true);
@@ -32,7 +32,8 @@ const PayersHeader = () => {
                   title="Create"
                   onClick={openModal} 
                 >
-                  <TiPlus />
+                  {/* <TiPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </button>
               </div>
             </div>
@@ -42,7 +43,7 @@ const PayersHeader = () => {
 
   
       {showModal && (
-        <CreatePayerModal closeModal={closeModal} /> 
+        <CreatePayerModal closeModal={closeModal}  fetchPayers={fetchPayers} /> 
       )}
     </div>
   );

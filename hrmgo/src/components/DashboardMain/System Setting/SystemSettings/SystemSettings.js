@@ -7,8 +7,8 @@ const SystemSettings = () => {
   const [formData, setFormData] = useState({
     siteCurrency: '',
     siteCurrencySymbol: '',
-    siteDateFormat: '',
-    siteTimeFormat: '',
+    // siteDateFormat: '',
+    // siteTimeFormat: '',
     employeePrefix: '',
   });
 
@@ -21,8 +21,8 @@ const SystemSettings = () => {
           setFormData({
             siteCurrency: settings.siteCurrency || '',
             siteCurrencySymbol: settings.siteCurrencySymbol || '',
-            siteDateFormat: settings.siteDateFormat || '',
-            siteTimeFormat: settings.siteTimeFormat || '',
+            // siteDateFormat: settings.siteDateFormat || '',
+            // siteTimeFormat: settings.siteTimeFormat || '',
             employeePrefix: settings.employeePrefix || '',
           });
       } catch (error) {
@@ -53,8 +53,8 @@ const SystemSettings = () => {
         setFormData({
           siteCurrency: response.data.data.siteCurrency,
           siteCurrencySymbol: response.data.data.siteCurrencySymbol,
-          siteDateFormat: response.data.data.siteDateFormat,
-          siteTimeFormat: response.data.data.siteTimeFormat,
+          // siteDateFormat: response.data.data.siteDateFormat,
+          // siteTimeFormat: response.data.data.siteTimeFormat,
           employeePrefix: response.data.data.employeePrefix,
         });
       }
@@ -109,7 +109,7 @@ const SystemSettings = () => {
                   />
                 </div>
                 {/* Date Format */}
-                <div className="form-group col-md-4">
+                {/* <div className="form-group col-md-4">
                   <label htmlFor="site_date_format" className="col-form-label">Date Format</label>
                   <select
                     name="siteDateFormat"
@@ -121,10 +121,10 @@ const SystemSettings = () => {
                     <option >Select Format</option>
                     <option value="d-m-Y">dd-mm-yyyy</option>
                   </select>
-                </div>
+                </div> */}
 
                 {/* Time Format */}
-                <div className="form-group col-md-4">
+                {/* <div className="form-group col-md-4">
                   <label htmlFor="site_time_format" className="col-form-label">Time Format</label>
                   <select
                     name="siteTimeFormat"
@@ -136,7 +136,7 @@ const SystemSettings = () => {
                     <option >Select Format</option>
                     <option value="g:i A">10:30 PM</option>
                   </select>
-                </div>
+                </div> */}
 
                 {/* Employee Prefix */}
                 <div className="form-group col-md-4">

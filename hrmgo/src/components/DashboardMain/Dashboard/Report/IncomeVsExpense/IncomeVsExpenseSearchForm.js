@@ -88,7 +88,7 @@ const IncomeVsExpenseSearchForm = ({ onSearch }) => {
                       <div className="col-auto mt-4">
                         <button
                           type="button"
-                          className="btn btn-sm btn-primary"
+                          className="btn btn-sm btn-primary mx-2"
                           onClick={handleSearch}
                           data-bs-toggle="tooltip"
                           title=""

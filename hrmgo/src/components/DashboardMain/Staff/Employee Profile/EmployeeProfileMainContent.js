@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { TiEdit } from "react-icons/ti";
-import { FaRegTrashAlt } from "react-icons/fa";
+// import { TiEdit } from "react-icons/ti";
+// import { FaRegTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import ConfirmationDialog from "../../ConfirmationDialog";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { useState } from "react";
+// import { TbRefresh } from "react-icons/tb";
+// import { IoMdSearch } from "react-icons/io";
 
 const EmployeeProfileMainContent = ({
   employeeData,
@@ -39,6 +41,7 @@ const EmployeeProfileMainContent = ({
       prevEmployeeData.filter((employee) => employee._id !== _id)
     );
   };
+  
   return (
     <>
       <div className="row">
@@ -148,7 +151,7 @@ const EmployeeProfileMainContent = ({
                         <div className="col-auto mt-4">
                           <Link
                             href="#"
-                            className="btn btn-sm btn-primary"
+                            className="btn btn-sm btn-primary mx-2"
                             onClick={() =>
                               document
                                 .getElementById("employee_profile_filter")
@@ -158,6 +161,7 @@ const EmployeeProfileMainContent = ({
                             title="Apply"
                           >
                             <span className="btn-inner--icon">
+                              {/* <IoMdSearch /> */}
                               <i className="ti ti-search"></i>
                             </span>
                           </Link>
@@ -168,7 +172,8 @@ const EmployeeProfileMainContent = ({
                             title="Reset"
                           >
                             <span className="btn-inner--icon">
-                              <i className="ti ti-refresh text-white-off"></i>
+                             {/* <TbRefresh className="text-white-off" /> */}
+                             <i className="ti ti-trash text-white-off"></i>
                             </span>
                           </Link>
                         </div>
@@ -205,7 +210,8 @@ const EmployeeProfileMainContent = ({
                           navigateToEmployeeUpdate(event, employee)
                         }
                       >
-                        <TiEdit />
+                        {/* <TiEdit /> */}
+                        <i className="ti ti-edit"></i>
                         <span className="ms-2">Edit</span>
                       </a>
                       <form
@@ -231,7 +237,8 @@ const EmployeeProfileMainContent = ({
                             openDeleteDialog(employee);
                           }}
                         >
-                          <FaRegTrashAlt />
+                          {/* <FaRegTrashAlt /> */}
+                          <i className="ti ti-trash"></i>
                           <span className="ms-2">Delete</span>
                         </Link>
                       </form>

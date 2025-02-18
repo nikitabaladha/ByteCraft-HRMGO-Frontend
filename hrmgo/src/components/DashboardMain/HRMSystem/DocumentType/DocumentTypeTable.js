@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "../HRMSystemSidebar";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 // import { toast } from "react-toastify";
 import EditDocumentTypeModal from "./EditDocumentTypeModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
@@ -153,7 +153,8 @@ const DocumentTypeTable = ({documentTypes, setDocumentTypes, fetchDocumentTypes}
                                     onClick={() => handleEdit(documentType)}
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil text-white"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -164,7 +165,9 @@ const DocumentTypeTable = ({documentTypes, setDocumentTypes, fetchDocumentTypes}
                                     onClick={() => openDeleteDialog(documentType._id)}
                                   >
                                     <span className="text-white">
-                                      <RiDeleteBinLine />
+                                      {/* <RiDeleteBinLine />
+                                       */}
+                                       <i className="ti ti-trash text-white"></i>
                                     </span>
                                   </button>
                                 </div>

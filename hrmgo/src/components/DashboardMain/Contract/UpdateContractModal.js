@@ -39,7 +39,7 @@ const UpdateContractModal = ({ contract, onClose, updateContract }) => {
   useEffect(() => {
     const fetchContractTypeData = async () => {
       try {
-        const response = await getAPI("/contract-type", {}, true);
+        const response = await getAPI("/contract-type-get-all", {}, true);
         if (!response.hasError && Array.isArray(response.data.data)) {
           setContractTypes(response.data.data);
         } else {

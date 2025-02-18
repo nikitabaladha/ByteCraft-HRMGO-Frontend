@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
-import { HiOutlinePencil } from "react-icons/hi";
-import { RiDeleteBinLine } from "react-icons/ri";
+// import { HiOutlinePencil } from "react-icons/hi";
+// import { RiDeleteBinLine } from "react-icons/ri";
 import EditDepartmentModal from "./EditDepartmentModal";
 // import { toast } from "react-toastify";
 // import getAPI from "../../../../api/getAPI";
@@ -145,7 +145,8 @@ const DepartmentTable = ({departments, setDepartments, fetchDepartments}) => {
                                     className="mx-3 btn btn-sm align-items-center"
                                   >
                                     <span className="text-white">
-                                      <HiOutlinePencil />
+                                      {/* <HiOutlinePencil /> */}
+                                      <i className="ti ti-pencil text-white"></i>
                                     </span>
                                   </button>
                                 </div>
@@ -174,7 +175,8 @@ const DepartmentTable = ({departments, setDepartments, fetchDepartments}) => {
                                       className="mx-3 btn btn-sm align-items-center bs-pass-para"
                                     >
                                       <span className="text-white">
-                                        <RiDeleteBinLine />
+                                        {/* <RiDeleteBinLine /> */}
+                                        <i className="ti ti-trash text-white"></i>
                                       </span>
                                     </Link>
                                   </form>

@@ -130,7 +130,7 @@ const Header = ({ toggleSidebar }) => {
 
         <div className="ms-auto">
           <ul className="list-unstyled">
-            <li className="dash-h-item">
+            {/* <li className="dash-h-item">
               <Link className="dash-head-link me-0" to="/dashboard/messenger">
                 <i>
                   <FaRegCommentDots />
@@ -139,9 +139,9 @@ const Header = ({ toggleSidebar }) => {
                   0<span className="sr-only"></span>
                 </span>
               </Link>
-            </li>
+            </li> */}
 
-            <li className="dropdown dash-h-item drp-notification">
+            {/* <li className="dropdown dash-h-item drp-notification">
               <Link
                 className="dash-head-link dropdown-toggle arrow-none me-0"
                 data-bs-toggle="dropdown"
@@ -181,7 +181,7 @@ const Header = ({ toggleSidebar }) => {
                   </div>
                 </div>
               </div>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

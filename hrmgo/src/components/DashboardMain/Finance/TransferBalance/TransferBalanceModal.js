@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import getAPI from "../../../../api/getAPI.js"; 
 import postAPI from "../../../../api/postAPI.js"; 
 
-const TransferBalanceModal = ({ isOpen, onClose }) => {
+const TransferBalanceModal = ({ isOpen, onClose, fetchTransferBalances }) => {
   const [accountNames, setAccountNames] = useState([]);
   const [currentDate, setCurrentDate] = useState('');
   const [fromAccountId, setFromAccountId] = useState('');
@@ -85,6 +85,7 @@ const TransferBalanceModal = ({ isOpen, onClose }) => {
       if (!response.hasError) {
         toast.success("Transfer Balance Created Successfully");
         onClose(); 
+        fetchTransferBalances()
       } else {
         toast.error(`Failed to create transfer balance: ${response.message}`);
       }

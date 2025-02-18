@@ -4,7 +4,7 @@ import postAPI from "../../../api/postAPI";
 import getAPI from "../../../api/getAPI"; 
 import Select from "react-select"; 
 
-const ZoomMeetingModal = ({ onClose }) => {
+const ZoomMeetingModal = ({ onClose, fetchMeetings }) => {
   const [employeeNames, setEmployeeNames] = useState([]);
 
   useEffect(() => {
@@ -87,6 +87,7 @@ const ZoomMeetingModal = ({ onClose }) => {
       if (!response.hasError) {
         toast.success("Zoom Meeting Created Successfully");
         onClose(); 
+        fetchMeetings();
       } else {
         toast.error(`Failed to create Zoom meeting: ${response.message}`);
       }

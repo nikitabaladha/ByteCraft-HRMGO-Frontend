@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import postAPI from "../../../../api/postAPI";
 import getAPI from "../../../../api/getAPI.js";
 
-const DepositModal = ({ isOpen, onClose }) => {
+const DepositModal = ({ isOpen, onClose, fetchDeposits }) => {
   const [currentDate, setCurrentDate] = useState(null);
   const [accountId, setAccountId] = useState('');
   const [amount, setAmount] = useState('');
@@ -126,6 +126,7 @@ const DepositModal = ({ isOpen, onClose }) => {
       if (!response.hasError) {
         toast.success("Deposit Created Successfully");
         onClose();
+        fetchDeposits();
       } else {
         toast.error(`Failed to create deposit: ${response.message}`);
       }

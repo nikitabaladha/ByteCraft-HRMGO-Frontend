@@ -203,7 +203,7 @@ const MonthlyAttendanceSearchForm = ({
                   <div className="row">
                     <div className="col-auto mt-4">
                       <button
-                        className="btn btn-sm btn-primary"
+                        className="btn btn-sm btn-primary mx-2"
                         data-bs-toggle="tooltip"
                         title="Apply"
                         type="submit"

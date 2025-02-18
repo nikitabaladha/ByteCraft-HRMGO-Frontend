@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { FiUserCheck } from "react-icons/fi";
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 import UserCreate from './UserCreate';
 
 const UserHeader = ({fetchUsers}) => {
@@ -47,7 +47,8 @@ const handleSubmit = (event) => {
                   title="Create New User"
                   className="btn btn-sm btn-primary"
                 >
-                  <FiPlus/>
+                  {/* <FiPlus/> */}
+                  <i className="ti ti-plus"></i>
                 </Link>
               </div>
             </div>
