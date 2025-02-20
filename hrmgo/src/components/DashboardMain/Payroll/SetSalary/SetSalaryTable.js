@@ -178,7 +178,7 @@ const SetSalaryTable = () => {
                                   to={`/Dashboard/payroll/employee-set-salaryview/${employee._id}`}
                                 >
                                   {/* <TiEyeOutline className="text-white" /> */}
-                                  <i className="ti ti-trash text-white"></i>
+                                  <i className="ti ti-eye text-white"></i>
                                 </Link>
                               </div>
                             </span>

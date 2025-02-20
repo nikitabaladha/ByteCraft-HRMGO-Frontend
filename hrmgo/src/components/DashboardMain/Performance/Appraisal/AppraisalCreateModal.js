@@ -353,7 +353,7 @@ const AppraisalCreateModal = ({ closeModal, addAppraisal }) => {
                       </div>
                     </div>
                   </div>
-                  {indicatorData && (
+                  {indicatorData && ( 
                     <>
                       <div className="row">
                         <CompetencyTag indicatorData={indicatorData} />

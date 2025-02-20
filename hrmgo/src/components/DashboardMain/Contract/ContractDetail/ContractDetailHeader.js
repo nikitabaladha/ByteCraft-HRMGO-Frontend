@@ -44,7 +44,7 @@ const ContractDetailHeader = ({ contractData, copyContract }) => {
     // here i want to pass contract data to navigate
     event.preventDefault();
     navigate(`/contract/preview/${contractData.id}`, {
-      state: contractData,
+      state: {contractData},
     });
   };
 

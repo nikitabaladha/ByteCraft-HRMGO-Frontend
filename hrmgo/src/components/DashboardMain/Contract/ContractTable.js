@@ -18,7 +18,7 @@ const ContractTable = ({
   addContract,
   copyContract,
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
   const navigateToContractDetail = (event, contract) => {
     event.preventDefault();

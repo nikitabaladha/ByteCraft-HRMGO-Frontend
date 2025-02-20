@@ -219,7 +219,7 @@ const ZoomMeetingTable = ({meetings, setMeetings, fetchMeetings}) => {
                                   />
                                 ))
                               ) : (
-                                <span>No employees</span>
+                                <span></span>
                               )}
                             </div>
                           </td>

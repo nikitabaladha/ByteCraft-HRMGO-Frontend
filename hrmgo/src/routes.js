@@ -214,7 +214,7 @@ const AppRoutes = () => {
         }
       ></Route>
       <Route
-        path="/dashboard/recruitment/applyJob/:id"
+        path="/dashboard/recruitment/applyJob/:id" 
         element={
           <PrivateRoute>
             <CareerApplyJob />{" "}
