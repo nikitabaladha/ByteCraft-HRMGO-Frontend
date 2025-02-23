@@ -8,7 +8,11 @@ import EditDepartmentModal from "./EditDesignationModal";
 // import getAPI from "../../../../api/getAPI";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const DesignationTable = ({designations, setDesignations, fetchDesignations}) => {
+const DesignationTable = ({
+  designations,
+  setDesignations,
+  fetchDesignations,
+}) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedDesignation, setSelectedDesignation] = useState(null);
   // const [designations, setDesignations] = useState([]);
@@ -28,11 +32,11 @@ const DesignationTable = ({designations, setDesignations, fetchDesignations}) =>
     const searchTerm = searchQuery.toLowerCase();
     console.log(designation);
     return (
-      designation.branchId.branchName.toLowerCase().includes(searchTerm) ||
-      designation.departmentId.departmentName
-        .toLowerCase()
-        .includes(searchTerm) ||
-      designation.designationName.toLowerCase().includes(searchTerm)
+      designation?.branchId?.branchName?.toLowerCase()?.includes(searchTerm) ||
+      designation?.departmentId?.departmentName
+        ?.toLowerCase()
+        ?.includes(searchTerm) ||
+      designation?.designationName?.toLowerCase()?.includes(searchTerm)
     );
   });
 
@@ -136,11 +140,11 @@ const DesignationTable = ({designations, setDesignations, fetchDesignations}) =>
                       </tr>
                     </thead>
                     <tbody>
-                      {paginatedDesignations.map((designation) => (
-                        <tr key={designation._id}>
-                          <td>{designation.branchId.branchName}</td>
-                          <td>{designation.departmentId.departmentName}</td>
-                          <td>{designation.designationName}</td>
+                      {paginatedDesignations?.map((designation) => (
+                        <tr key={designation?.id}>
+                          <td>{designation.branchName}</td>
+                          <td>{designation?.departmentName}</td>
+                          <td>{designation?.designationName}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>

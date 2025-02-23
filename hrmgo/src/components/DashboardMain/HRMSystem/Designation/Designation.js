@@ -50,7 +50,11 @@ const HRMSystem = () => {
       if (!response?.hasError && response?.data?.data) {
         setDesignations(response.data.data);
       } else {
-        toast.error(`Failed to fetch designations: ${response?.message || "Unknown error"}`);
+        toast.error(
+          `Failed to fetch designations: ${
+            response?.message || "Unknown error"
+          }`
+        );
       }
     } catch (error) {
       toast.error("An error occurred while fetching designations.");
