@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "../HRMSystemSidebar";
-// import { HiOutlinePencil } from "react-icons/hi";
-// import { RiDeleteBinLine } from "react-icons/ri";
 import EditJobStageModal from "./EditJobStageModal";
-// import getAPI from "../../../../api/getAPI";
-// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 import {
   DndContext,
@@ -21,28 +17,20 @@ import {
   useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-const JobStageList = ({jobStages, setJobStages, fetchJobStages}) => {
+
+const JobStageList = ({ jobStages, setJobStages, fetchJobStages }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedJobStage, setSelectedJobStage] = useState(null);
-  // const [jobStages, setJobStages] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [jobStageToDelete, setJobStageToDelete] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchJobStages = async () => {
-  //     try {
-  //       const response = await getAPI("/job-stage-get-all", true);
-  //       if (!response.hasError) {
-  //         setJobStages(response.data.data);
-  //       } else {
-  //         toast.error(`Failed to fetch job stages: ${response.message}`);
-  //       }
-  //     } catch (error) {
-  //       toast.error("An error occurred while fetching job stages.");
-  //     }
-  //   };
-  //   fetchJobStages();
-  // }, []);
+  // Drag and Drop Configuration
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   const handleEdit = (jobStage) => {
     setSelectedJobStage(jobStage);
@@ -70,14 +58,6 @@ const JobStageList = ({jobStages, setJobStages, fetchJobStages}) => {
     );
     closeDeleteDialog();
   };
-
-  // **Drag and Drop Configuration**
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
 
   const onDragEnd = (event) => {
     const { active, over } = event;
@@ -142,6 +122,7 @@ const JobStageList = ({jobStages, setJobStages, fetchJobStages}) => {
           fetchJobStages={fetchJobStages}
         />
       )}
+
       {isDeleteDialogOpen && (
         <ConfirmationDialog
           onClose={closeDeleteDialog}
@@ -169,8 +150,6 @@ const SortableItem = ({ jobStage, handleEdit, openDeleteDialog }) => {
     <li
       ref={setNodeRef}
       style={style}
-      {...attributes}
-      {...listeners}
       className="list-group-item d-flex align-items-center justify-content-between"
     >
       <h6 className="mb-0">
@@ -185,6 +164,9 @@ const SortableItem = ({ jobStage, handleEdit, openDeleteDialog }) => {
           strokeLinecap="round"
           strokeLinejoin="round"
           className="feather feather-move me-3"
+          {...attributes}
+          {...listeners}
+          style={{ cursor: "grab" }} // Indicates draggable area
         >
           <polyline points="5 9 2 12 5 15"></polyline>
           <polyline points="9 5 12 2 15 5"></polyline>
@@ -207,7 +189,6 @@ const SortableItem = ({ jobStage, handleEdit, openDeleteDialog }) => {
               }}
             >
               <span className="text-white">
-                {/* <HiOutlinePencil /> */}
                 <i className="ti ti-pencil text-white"></i>
               </span>
             </button>
@@ -222,7 +203,6 @@ const SortableItem = ({ jobStage, handleEdit, openDeleteDialog }) => {
               className="mx-3 btn btn-sm align-items-center"
             >
               <span className="text-white">
-                {/* <RiDeleteBinLine /> */}
                 <i className="ti ti-trash text-white"></i>
               </span>
             </button>

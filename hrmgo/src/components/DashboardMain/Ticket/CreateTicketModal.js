@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import postAPI from "../../../api/postAPI";
 import getAPI from "../../../api/getAPI";
 
-const CreateTicketModal = ({ closeModal }) => {
+const CreateTicketModal = ({ closeModal, fetchTickets }) => {
   const [title, setTitle] = useState('');
   const [employeeId, setEmployeeId] = useState('');
   const [priority, setPriority] = useState('low');
@@ -81,6 +81,7 @@ const CreateTicketModal = ({ closeModal }) => {
       if (!response.hasError) {
         toast.success("Ticket created successfully!");
         closeModal();
+        fetchTickets()
       } else {
         toast.error(`Failed to create ticket: ${response.message}`);
       }

@@ -1,3 +1,38 @@
+// import React from "react";
+// import DesignationHeader from "./DesignationHeader";
+// import DesignationTable from "./DesignationTable";
+// import { toast } from "react-toastify";
+// import getAPI from "../../../../api/getAPI";
+// import { useState, useEffect } from "react";
+
+// const HRMSystem = () => {
+// const [designations, setDesignations] = useState([]);
+
+//     const fetchDesignations = async () => {
+//       try {
+//         const response = await getAPI("/designation-get-all", true);
+//         if (!response.hasError) {
+//           setDesignations(response.data.data);
+//         } else {
+//           toast.error(`Failed to fetch designations: ${response.message}`);
+//         }
+//       } catch (error) {
+//         toast.error("An error occurred while fetching designations.");
+//       }
+//     };
+// useEffect(() => {
+//     fetchDesignations();
+//   }, []);
+//   return (
+//     <>
+//       <DesignationHeader fetchDesignations={fetchDesignations} />
+//       <DesignationTable designations={designations} setDesignations={setDesignations} fetchDesignations={fetchDesignations} />
+//     </>
+//   );
+// };
+
+// export default HRMSystem;
+
 import React from "react";
 import DesignationHeader from "./DesignationHeader";
 import DesignationTable from "./DesignationTable";
@@ -6,27 +41,34 @@ import getAPI from "../../../../api/getAPI";
 import { useState, useEffect } from "react";
 
 const HRMSystem = () => {
-const [designations, setDesignations] = useState([]);
+  const [designations, setDesignations] = useState([]);
 
-    const fetchDesignations = async () => {
-      try {
-        const response = await getAPI("/designation-get-all", true);
-        if (!response.hasError) {
-          setDesignations(response.data.data);
-        } else {
-          toast.error(`Failed to fetch designations: ${response.message}`);
-        }
-      } catch (error) {
-        toast.error("An error occurred while fetching designations.");
+  const fetchDesignations = async () => {
+    try {
+      const response = await getAPI("/designation-get-all", true);
+      console.log("API Response:", response); // Log the response
+      if (!response?.hasError && response?.data?.data) {
+        setDesignations(response.data.data);
+      } else {
+        toast.error(`Failed to fetch designations: ${response?.message || "Unknown error"}`);
       }
-    };
-useEffect(() => {
+    } catch (error) {
+      toast.error("An error occurred while fetching designations.");
+    }
+  };
+
+  useEffect(() => {
     fetchDesignations();
   }, []);
+
   return (
     <>
       <DesignationHeader fetchDesignations={fetchDesignations} />
-      <DesignationTable designations={designations} setDesignations={setDesignations} fetchDesignations={fetchDesignations} />
+      <DesignationTable
+        designations={designations}
+        setDesignations={setDesignations}
+        fetchDesignations={fetchDesignations}
+      />
     </>
   );
 };

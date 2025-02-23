@@ -44,7 +44,7 @@ const ContractHeader = ({ addContract }) => {
                     onClick={openModal}
                   >
                     {/* <FaPlus /> */}
-                    <i className="ti ti-pencil text-white"></i>
+                    <i className="ti ti-plus text-white"></i>
                   </Link>
                 </div>
               </div>

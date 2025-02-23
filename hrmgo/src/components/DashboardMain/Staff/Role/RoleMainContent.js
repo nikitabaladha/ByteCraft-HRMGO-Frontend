@@ -138,7 +138,7 @@ const RoleMainContent = ({roles, setRoles, fetchRoles}) => {
                                   >
                                     <span className="text-white">
                                       {/* <TbPencil /> */}
-                                      <i className="ti ti-trash text-white"></i>
+                                      <i className="ti ti-pencil text-white"></i>
                                     </span>
                                   </Link>
                                 </div>

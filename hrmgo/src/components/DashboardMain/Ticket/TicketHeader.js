@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 // import { FiPlus } from "react-icons/fi";
 import CreateTicketModal from "./CreateTicketModal"; 
 
-const TicketHeader = () => {
+const TicketHeader = ({fetchTickets}) => {
   const [showModal, setShowModal] = useState(false); 
 
   const openModal = () => setShowModal(true);
@@ -47,7 +47,7 @@ const TicketHeader = () => {
           </div>
         </div>
         {showModal && (
-        <CreateTicketModal closeModal={closeModal} />
+        <CreateTicketModal closeModal={closeModal} fetchTickets={fetchTickets}/>
       )}
       </div>
     </>

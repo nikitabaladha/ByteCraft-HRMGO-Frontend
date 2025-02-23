@@ -370,6 +370,12 @@ const DELETE_CONFIG = {
     errorMessage: "Failed to delete ticket.",
     idKey: "ticketId",
   },
+  Companypolicy: {
+    getEndpoint: (id) => `/deletecompany_policy/${id}`,
+    successMessage: "Policy successfully deleted!",
+    errorMessage: "Failed to delete policy.",
+    idKey: "companyId",
+  },
 };
 
 function ConfirmationDialog({ onClose, deleteType, id, onDeleted }) {

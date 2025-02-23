@@ -138,7 +138,7 @@ const CreateJobForm = () => {
       const response = await postAPI("/create-job", formData);
       if (response.data.success) {
         console.log("Job created successfully:", response.data);
-        toast("Job created successfully!");
+        toast.success("Job created successfully!");
       }
     } catch (error) {
       toast.error("Error creating job:", error.response?.data || error.message);
