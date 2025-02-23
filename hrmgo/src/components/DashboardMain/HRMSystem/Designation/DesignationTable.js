@@ -64,23 +64,6 @@ const DesignationTable = ({
     closeDeleteDialog();
   };
 
-  // useEffect(() => {
-  //   const fetchDesignations = async () => {
-  //     try {
-  //       const response = await getAPI("/designation-get-all", true);
-  //       if (!response.hasError) {
-  //         setDesignations(response.data.data);
-  //       } else {
-  //         toast.error(`Failed to fetch designations: ${response.message}`);
-  //       }
-  //     } catch (error) {
-  //       toast.error("An error occurred while fetching designations.");
-  //     }
-  //   };
-
-  //   fetchDesignations();
-  // }, []);
-
   const handleEditClick = (designation) => {
     setSelectedDesignation(designation);
     setShowEditModal(true);
