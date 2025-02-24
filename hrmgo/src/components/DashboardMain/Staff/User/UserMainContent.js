@@ -105,15 +105,26 @@ const UserMainContent = ({ users, setUsers, fetchUsers }) => {
                         <i className="ti ti-key"></i>
                         <span className="ms-1">Reset Password</span>
                       </Link>
-                      <Link
+                      {/* <Link
                         href={`/user-login/${user.id}`}
                         className="dropdown-item"
                         onClick={() => handleCreatePassword(user)}
                       >
-                        {/* <TbRoadSign /> */}
+                        <TbRoadSign /> 
                         <i className="ti ti-road-sign"></i>
                         <span className="text-success"> Login Enable</span>
-                      </Link>
+                      </Link> */}
+                      {/* Inside UserMainContent's dropdown menu */}
+                      {user.passwordSwitch===false && (
+                        <Link
+                          href={`/user-login/${user.id}`}
+                          className="dropdown-item"
+                          onClick={() => handleCreatePassword(user)}
+                        >
+                          <i className="ti ti-road-sign"></i>
+                          <span className="text-success"> Login Enable</span>
+                        </Link>
+                      )}
                       <form
                         method="POST"
                         action={`/user/${user.id}`}
