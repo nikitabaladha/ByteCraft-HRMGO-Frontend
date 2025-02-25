@@ -1,343 +1,373 @@
-import React from "react";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useState, useEffect } from "react";
 import getAPI from "../../../../api/getAPI.js";
 import putAPI from "../../../../api/putAPI.js";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 
-import CompetencyTag from "./CompetencyTag";
-import ViewIndicator from "./ViewIndicator";
-import { useState, useEffect } from "react";
+const AppraisalUpdateModal = ({ closeModal, updateAppraisal, appraisal }) => {
+  const [branches, setBranches] = useState([]);
+  const [selectedBranch, setSelectedBranch] = useState("");
+  const [employees, setEmployees] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [indicatorData, setIndicatorData] = useState(null);
+  const [competencyRatings, setCompetencyRatings] = useState({});
+  const [remarks, setRemarks] = useState("");
 
-import "react-toastify/dist/ReactToastify.css";
-
-const AppraisalUpdateModal = ({ closeModal, appraisal, updateAppraisal }) => {
-  console.log("Appraisal", appraisal);
-
-  const [ratings, setRatings] = useState({
-    organizational: {},
-    technical: {},
-    behavioural: {},
-  });
-
+  // Initialize form data with existing appraisal
   useEffect(() => {
     if (appraisal) {
-      setRatings({
-        organizational: appraisal.appraisalCompetencies?.organizational.reduce(
-          (acc, competency) => {
-            acc[competency.name] = competency.rating || 0;
-            return acc;
-          },
-          {}
-        ),
-        technical: appraisal.appraisalCompetencies?.technical.reduce(
-          (acc, competency) => {
-            acc[competency.name] = competency.rating || 0;
-            return acc;
-          },
-          {}
-        ),
-        behavioural: appraisal.appraisalCompetencies?.behavioural.reduce(
-          (acc, competency) => {
-            acc[competency.name] = competency.rating || 0;
-            return acc;
-          },
-          {}
-        ),
-      });
+      setSelectedBranch(appraisal.branchId);
+      setSelectedEmployee(appraisal.employeeId);
+      setSelectedDate(
+        new Date(appraisal.appraisalDate).toISOString().slice(0, 7)
+      );
+      setRemarks(appraisal.remarks);
+
+      // Initialize competency ratings
+      const ratings = {};
+      Object.entries(appraisal.appraisalCompetencies).forEach(
+        ([category, comps]) => {
+          comps.forEach((comp) => {
+            const key = comp.name.toLowerCase().replace(/ /g, "_");
+            ratings[key] = comp.rating;
+          });
+        }
+      );
+      setCompetencyRatings(ratings);
     }
   }, [appraisal]);
 
-  if (!appraisal) return null;
+  // Fetch branches
+  useEffect(() => {
+    const fetchBranchData = async () => {
+      try {
+        const response = await getAPI(`/branch-get-all`, {}, true);
+        if (!response.hasError && Array.isArray(response.data.data)) {
+          setBranches(response.data.data);
+        }
+      } catch (err) {
+        console.error("Error fetching branch data:", err);
+      }
+    };
+    fetchBranchData();
+  }, []);
 
-  const handleRatingChange = (category, competencyName, rating) => {
-    setRatings((prevState) => ({
-      ...prevState,
-      [category]: {
-        ...prevState[category],
-        [competencyName]: rating,
-      },
-    }));
+  // Fetch employees when branch changes
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      if (selectedBranch) {
+        try {
+          const response = await getAPI(
+            `/employee-get-filter?branchId=${selectedBranch}`,
+            {},
+            true,
+            true
+          );
+          if (!response.hasError) {
+            setEmployees(response.data.data);
+          }
+        } catch (err) {
+          console.error("Error fetching employees:", err);
+        }
+      }
+    };
+    fetchEmployees();
+  }, [selectedBranch]);
+
+  // Fetch indicator data
+  useEffect(() => {
+    const fetchIndicatorData = async () => {
+      if (appraisal?.indicatorId) {
+        try {
+          const response = await getAPI(
+            `/indicator/${appraisal.indicatorId}`,
+            {},
+            true
+          );
+          if (!response.hasError) {
+            setIndicatorData(response.data.data);
+          }
+        } catch (err) {
+          console.error("Error fetching indicator data:", err);
+        }
+      }
+    };
+    fetchIndicatorData();
+  }, [appraisal]);
+
+  // Handle rating change
+  const handleRatingChange = (competency, rating) => {
+    const normalizedKey = competency.toLowerCase().replace(/ /g, "_");
+    setCompetencyRatings((prev) => ({ ...prev, [normalizedKey]: rating }));
   };
 
-  const renderRating = (category, name, value) => {
+  // Render star rating input
+  const renderRatingInput = (name, value, onChange, disabled = false) => {
     return (
-      <fieldset id="demo1" className="rate">
-        {[5, 4, 3, 2, 1].map((rating) => (
-          <React.Fragment key={rating}>
+      <fieldset className="rate" disabled={disabled}>
+        {[5, 4, 3, 2, 1].map((val) => (
+          <React.Fragment key={val}>
             <input
-              className="stars"
               type="radio"
-              id={`${name}-${rating}`}
-              name={`rating[${name}]`}
-              value={rating}
-              checked={value === rating}
-              onChange={() => handleRatingChange(category, name, rating)}
+              id={`${name}-${val}`}
+              name={name}
+              value={val}
+              checked={value === val}
+              onChange={() => onChange(val)}
+              disabled={disabled}
             />
             <label
               className="full"
-              htmlFor={`${name}-${rating}`}
-              title={`${rating} star${rating > 1 ? "s" : ""}`}
-            />
+              htmlFor={`${name}-${val}`}
+              title={`${val} stars`}
+            ></label>
           </React.Fragment>
         ))}
       </fieldset>
     );
   };
 
-  const handleUpdateAppraisal = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updatedCompetencies = {
-      organizational: Object.entries(ratings.organizational).map(
-        ([name, rating]) => ({ name, rating })
-      ),
-      technical: Object.entries(ratings.technical).map(([name, rating]) => ({
-        name,
-        rating,
-      })),
-      behavioural: Object.entries(ratings.behavioural).map(
-        ([name, rating]) => ({ name, rating })
-      ),
+    const appraisalCompetencies = {
+      organizational: [
+        { name: "Leadership", rating: competencyRatings.leadership || 0 },
+        {
+          name: "Project Management",
+          rating: competencyRatings.project_management || 0,
+        },
+      ],
+      technical: [
+        {
+          name: "Allocating Resources",
+          rating: competencyRatings.allocating_resources || 0,
+        },
+      ],
+      behavioural: [
+        {
+          name: "Business Process",
+          rating: competencyRatings.business_process || 0,
+        },
+        {
+          name: "Oral Communication",
+          rating: competencyRatings.oral_communication || 0,
+        },
+      ],
     };
 
-    const updatedIndicator = { appraisalCompetencies: updatedCompetencies };
+    const data = {
+      branchId: selectedBranch,
+      employeeId: selectedEmployee,
+      remarks,
+      appraisalCompetencies,
+      indicatorId: indicatorData._id,
+    };
 
     try {
-      const response = await putAPI(
-        `/appraisal/${appraisal.id}`,
-        updatedIndicator,
-        true
-      );
-
-      console.log("Updated Appraisal", response.data.data);
+      const response = await putAPI(`/appraisal/${appraisal.id}`, data, true);
 
       if (!response.hasError) {
-        // Fetch indicator data by ID after a successful update
-        try {
-          const indicatorResponse = await getAPI(
-            `/indicator/${appraisal.indicatorId}`,
-            {},
-            true,
-            true
-          );
-
-          if (
-            !indicatorResponse.hasError &&
-            indicatorResponse.data &&
-            indicatorResponse.data.data
-          ) {
-            const indicatorData = indicatorResponse.data.data;
-            console.log("Indicator Data from get by id api :", indicatorData);
-
-            const newUpdatedAppraisal = {
-              id: response.data.data._id,
-              branchId: response.data.data.branchId,
-              employeeId: response.data.data.employeeId,
-              appraisalDate: response.data.data.appraisalDate,
-              remarks: response.data.data.remarks,
-              indicatorId: response.data.data.indicatorId,
-              appraisalCompetencies: response.data.data.appraisalCompetencies,
-              createdAt: response.data.data.createdAt,
-              indicator: indicatorData,
-              branch: indicatorData.branch,
-              department: indicatorData.department,
-              designation: indicatorData.designation,
-              indicatorCompetencies: indicatorData.competencies,
-              employee: indicatorData.addedBy,
-              overAllRating: response.data.data.overAllRating,
-              targetRating: indicatorData.overAllRating,
-            };
-
-            updateAppraisal(newUpdatedAppraisal);
-            toast.success("Appraisal updated successfully!");
-            closeModal();
-          } else {
-            console.error("Unexpected response format or error in response");
-            toast.error("Failed to fetch indicator data.");
-          }
-        } catch (err) {
-          console.error("Error fetching indicator data by ID:", err);
-          toast.error("Error fetching indicator data.");
-        }
-      } else {
-        toast.error("Failed to update Appraisal.");
+        const updatedAppraisal = {
+          id: response.data.data._id,
+          branchId: response.data.data.branchId,
+          employeeId: response.data.data.employeeId,
+          appraisalDate: response.data.data.appraisalDate,
+          remarks: response.data.data.remarks,
+          indicatorId: response.data.data.indicatorId,
+          appraisalCompetencies: response.data.data.appraisalCompetencies,
+          createdAt: response.data.data.createdAt,
+          indicator: indicatorData,
+          branch: indicatorData.branch,
+          department: indicatorData.department,
+          designation: indicatorData.designation,
+          indicatorCompetencies: indicatorData.competencies,
+          employee: appraisal.employee,
+          overAllRating: response.data.data.overAllRating,
+          targetRating: indicatorData.overAllRating,
+        };
+        updateAppraisal(updatedAppraisal);
+        toast.success("Appraisal updated successfully!");
+        closeModal();
       }
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("An unexpected error occurred. Please try again.");
-      }
+      toast.error(error.response?.data?.message || "Update failed");
     }
   };
 
   return (
-    <>
-      <div
-        className="modal fade show"
-        id="commonModal"
-        tabIndex={-1}
-        aria-labelledby="exampleModalLabel"
-        style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-        aria-modal="true"
-        role="dialog"
-      >
-        <div className="modal-dialog modal-lg" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                Edit Appraisal
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                onClick={closeModal}
-              />
-            </div>
-            <div className="body">
-              <form
-                method="POST"
-                acceptCharset="UTF-8"
-                id="ratingForm"
-                className="needs-validation"
-                noValidate=""
-                onSubmit={handleUpdateAppraisal}
-              >
-                <input name="_method" type="hidden" defaultValue="PUT" />
-                <input name="_token" type="hidden" />
-                <div className="modal-body">
-                  <div className="row py-4">
-                    <div className="col-md-12">
-                      <div className="info text-sm">
-                        <strong>Branch : </strong>
-                        <span>{appraisal.branch}</span>
-                      </div>
-                    </div>
-                    <div className="col-md-12 mt-2">
-                      <div className="info text-sm font-style">
-                        <strong>Employee Name : </strong>
-                        <span>{appraisal.employee}</span>
-                      </div>
-                    </div>
-                    <div className="col-md-12 mt-3">
-                      <div className="info text-sm font-style">
-                        <strong>Appraisal Date : </strong>
+    <div
+      className="modal fade show"
+      style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+    >
+      <div className="modal-dialog modal-lg">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Edit Appraisal</h5>
+            <button
+              type="button"
+              className="btn-close"
+              onClick={closeModal}
+            ></button>
+          </div>
 
-                        <span>
+          <div className="body">
+            <form onSubmit={handleSubmit}>
+              <div className="modal-body">
+               
+                <div className="row py-4">
+                <div className="col-md-12">
+                  <div className="info text-sm">
+                    <strong>Branch: </strong>
+                    <span>{appraisal.branch}</span>
+                  </div>
+                </div>
+                <div className="col-md-12 mt-3">
+                  <div className="info text-sm font-style">
+                    <strong>Employee: </strong>
+                    <span>{appraisal.employee}</span>
+                  </div>
+                </div>
+                <div className="col-md-12 mt-3">
+                  <div className="info text-sm font-style">
+                    <strong>Appraisal Date: </strong>
+                    <span>
                           {moment(appraisal.appraisalDate).format(
                             "MMM DD, YYYY"
                           )}
                         </span>
-                      </div>
-                    </div>
                   </div>
+                </div>
+              </div>
 
-                  <div className="row">
-                    <CompetencyTag />
-                    <ViewIndicator appraisal={appraisal} />
-
-                    <div className="col-md-4">
-                      <div className="modal-header">
-                        <h5
-                          className="modal-title"
-                          id="exampleModalLabel"
-                          style={{
-                            marginBottom: "30px",
-                          }}
-                        >
-                          Appraisal
-                        </h5>
-                      </div>
-                      <div className="body">
-                        <div className="modal-body">
-                          <div className="row">
-                            {appraisal.appraisalCompetencies?.organizational?.map(
-                              (competency) => (
-                                <React.Fragment key={competency.name}>
-                                  <div className="col-md-12">
-                                    {renderRating(
-                                      "organizational",
-                                      competency.name,
-                                      ratings.organizational[competency.name] ||
-                                        competency.rating
-                                    )}
-                                  </div>
-                                </React.Fragment>
-                              )
-                            )}
-
-                            <div className="col-md-12 mt-5">
-                              <hr className="mt-0" />
-                            </div>
-                            {appraisal.appraisalCompetencies?.technical?.map(
-                              (competency) => (
-                                <React.Fragment key={competency.name}>
-                                  <div className="col-md-12">
-                                    {renderRating(
-                                      "technical",
-                                      competency.name,
-                                      ratings.technical[competency.name] ||
-                                        competency.rating
-                                    )}
-                                  </div>
-                                </React.Fragment>
-                              )
-                            )}
-
-                            <div className="col-md-12 mt-5">
-                              <hr className="mt-0" />
-                            </div>
-                            {appraisal.appraisalCompetencies?.behavioural?.map(
-                              (competency) => (
-                                <React.Fragment key={competency.name}>
-                                  <div className="col-md-12">
-                                    {renderRating(
-                                      "behavioural",
-                                      competency.name,
-                                      ratings.behavioural[competency.name] ||
-                                        competency.rating
-                                    )}
-                                  </div>
-                                </React.Fragment>
-                              )
+                {indicatorData && (
+                  <div className="row" id="stares">
+                    <div
+                      className="col-5 text-end"
+                      style={{ marginLeft: "60px" }}
+                    >
+                      <h5>Indicator</h5>
+                    </div>
+                    <div className="col-4 text-end">
+                      <h5>Appraisal</h5>
+                    </div>
+                    <div className="col-md-12 mt-3">
+                      <h6>Organizational Competencies</h6>
+                      <hr className="mt-0" />
+                    </div>
+                    {indicatorData.competencies.organizational.map((comp) => {
+                      const key = comp.name.toLowerCase().replace(/ /g, "_");
+                      return (
+                        <React.Fragment key={comp.name}>
+                          <div className="col-4">{comp.name}</div>
+                          <div className="col-4">
+                            {renderRatingInput(
+                              `indicator-${comp.name}`,
+                              comp.rating,
+                              () => {},
+                              true
                             )}
                           </div>
-                        </div>
-                      </div>
+                          <div className="col-4">
+                            {renderRatingInput(
+                              `appraisal-${comp.name}`,
+                              competencyRatings[key] || 0,
+                              (rating) => handleRatingChange(comp.name, rating)
+                            )}
+                          </div>
+                        </React.Fragment>
+                      );
+                    })}
+
+                    <div className="col-md-12 mt-3">
+                      <h6>Technical Competencies</h6>
+                      <hr className="mt-0" />
                     </div>
+                    {indicatorData.competencies.technical.map((comp) => {
+                      const key = comp.name.toLowerCase().replace(/ /g, "_");
+                      return (
+                        <React.Fragment key={comp.name}>
+                          <div className="col-4">{comp.name}</div>
+                          <div className="col-4">
+                            {renderRatingInput(
+                              `indicator-${comp.name}`,
+                              comp.rating,
+                              () => {},
+                              true
+                            )}
+                          </div>
+                          <div className="col-4">
+                            {renderRatingInput(
+                              `appraisal-${comp.name}`,
+                              competencyRatings[key] || 0,
+                              (rating) => handleRatingChange(comp.name, rating)
+                            )}
+                          </div>
+                        </React.Fragment>
+                      );
+                    })}
+
+                    <div className="col-md-12 mt-3">
+                      <h6>Behavioural Competencies</h6>
+                      <hr className="mt-0" />
+                    </div>
+                    {indicatorData.competencies.behavioural.map((comp) => {
+                      const key = comp.name.toLowerCase().replace(/ /g, "_");
+                      return (
+                        <React.Fragment key={comp.name}>
+                          <div className="col-4">{comp.name}</div>
+                          <div className="col-4">
+                            {renderRatingInput(
+                              `indicator-${comp.name}`,
+                              comp.rating,
+                              () => {},
+                              true
+                            )}
+                          </div>
+                          <div className="col-4">
+                            {renderRatingInput(
+                              `appraisal-${comp.name}`,
+                              competencyRatings[key] || 0,
+                              (rating) => handleRatingChange(comp.name, rating)
+                            )}
+                          </div>
+                        </React.Fragment>
+                      );
+                    })}
+
                   </div>
+                  
+                )}
+                 <div className="row">
+                <div className="col-md-12">
+                  <hr />
+                  <h6>Remark</h6>
                 </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    defaultValue="Cancel"
-                    className="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                    onClick={closeModal}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    defaultValue="Update"
-                    className="btn btn-primary"
-                  >
-                    Update
-                  </button>
+                <div className="col-md-12 mt-3">
+                  <p className="text-sm">{remarks}</p>
                 </div>
-              </form>
-            </div>
+              </div>
+              </div>
+
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={closeModal}
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="btn btn-primary">
+                  Update
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

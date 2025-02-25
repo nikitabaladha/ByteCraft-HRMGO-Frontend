@@ -399,10 +399,10 @@ const AppraisalTable = ({
     const searchTerm = searchQuery.toLowerCase();
     const fullName = `${appraisal.employee}`.toLowerCase();
     return (
-      appraisal.branch.toLowerCase().includes(searchTerm) ||
-      appraisal.department.toLowerCase().includes(searchTerm) ||
-      appraisal.designation.toLowerCase().includes(searchTerm) ||
-      fullName.includes(searchTerm)
+      appraisal?.branch?.toLowerCase()?.includes(searchTerm) ||
+      appraisal?.department?.toLowerCase()?.includes(searchTerm) ||
+      appraisal?.designation?.toLowerCase()?.includes(searchTerm) ||
+      fullName?.includes(searchTerm)
     );
   });
 
