@@ -14,6 +14,9 @@ const DeleteMessage = ({
   setMessages,
   conversationId,
   onClose,
+  isMobile,
+  activeStep,
+  handleClick,
 }) => {
   console.log(conversationId, "conversationId");
   console.log(messages, "messages");
@@ -48,13 +51,14 @@ const DeleteMessage = ({
     <div
       className="messenger-infoView app-scroll text-center"
       style={{
-        maxHeight: "calc(100vh - 150px)", // Adjust this value to control the height of the container
-        overflowY: "auto", // Makes the content scrollable
+        maxHeight: "calc(100vh - 150px)", 
+        overflowY: "auto", 
+        display: isMobile && activeStep !== 3 ? "none" : "block",
       }}
     >
       <nav className="text-center">
-        <Link href="#" onClick={onClose}>
-          <TiTimes />
+        <Link href="#" onClick={onClose} >
+          <TiTimes onClick={() => handleClick(2)}/>
         </Link>
       </nav>
       <div

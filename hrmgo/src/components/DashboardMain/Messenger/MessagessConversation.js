@@ -196,7 +196,7 @@ const Messagess = () => {
     }
   };
 
-  const [isVisible, setIsVisible] = useState(true);
+  const [activeStep, setActiveStep] = useState(1);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 980);
 
   useEffect(() => {
@@ -205,10 +205,8 @@ const Messagess = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const toggleVisibility = () => {
-    if (isMobile) {
-      setIsVisible((prev) => !prev);
-    }
+  const handleClick = (step) => {
+    setActiveStep((prev) => (prev === step ? step + 1 : step));
   };
 
   return (
@@ -226,7 +224,7 @@ const Messagess = () => {
                   style={{
                     height: "75vh",
                     overflowY: "auto",
-                    display: isMobile && !isVisible ? "none" : "block",
+                    display: isMobile && activeStep !== 1 ? "none" : "block",
                   }}
                 >
                   <div className="m-header">
@@ -294,7 +292,7 @@ const Messagess = () => {
                                   fetchMessages(conversationId, user)
                                 }
                               >
-                                <tbody onClick={toggleVisibility}>
+                                <tbody onClick={() => handleClick(2)}>
                                   <tr data-action={0}>
                                     <td style={{ position: "relative" }}>
                                       <div
@@ -323,10 +321,10 @@ const Messagess = () => {
                                           display: "flex",
                                         }}
                                       >
-                                        <span className="lastMessageIndicator">
+                                        {/* <span className="lastMessageIndicator">
                                           You :
                                         </span>
-                                        hi
+                                        hi */}
                                       </span>
                                     </td>
                                   </tr>
@@ -377,7 +375,7 @@ const Messagess = () => {
                   className="messenger-messagingView"
                   style={{
                     flexGrow: 1,
-                    display: isMobile && isVisible ? "none" : "block",
+                    display: isMobile && activeStep !== 2 ? "none" : "block",
                   }}
                 >
                   {messages?.receiver?.name && (
@@ -385,7 +383,7 @@ const Messagess = () => {
                       <nav className="d-flex align-items-center justify-content-between">
                         <div style={{ display: "flex" }}>
                           <Link href="#" className="show-listView">
-                            <FaArrowLeft onClick={toggleVisibility} />
+                            <FaArrowLeft  onClick={() => handleClick(1)} />
                           </Link>
                           <div
                             className="avatar av-s header-avatar"
@@ -406,7 +404,7 @@ const Messagess = () => {
                             className="show-infoSide my-lg-1 my-xl-1 mx-lg-1 mx-xl-2"
                             onClick={() => handleEdit(messages)}
                           >
-                            <FaCircleInfo />
+                            <FaCircleInfo  onClick={() => handleClick(3)}/>
                           </Link>
                         </nav>
                       </nav>
@@ -805,6 +803,9 @@ const Messagess = () => {
                     conversationId={selectedTrainee.conversationId}
                     setMessages={setMessages}
                     onClose={() => setIsModalOpen(false)}
+                    activeStep={activeStep}
+                    isMobile={isMobile}
+                    handleClick={()=>handleClick(2)}
                   />
                 )}
               </div>

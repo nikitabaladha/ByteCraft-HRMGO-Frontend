@@ -17,7 +17,7 @@ const CareerHeader = () => {
 
              <ul className="breadcrumb">
                           <li className="breadcrumb-item">
-                            <a className="text-white" style={{ fontSize:"18px"}} href="/dashboard">Home</a>
+                            <a className="text-white" style={{ fontSize:"18px", fontWeight: "bold" }} href="/dashboard">Dashboard</a>
                           </li>
                         </ul>
           </div>
