@@ -127,7 +127,6 @@ const Messagess = () => {
         `/get-message/${conversationId}?senderId=${user?.id}&&receiverId=${receiver?.receiverId}`
       );
       setMessages({ messages: response.data, receiver, conversationId });
-      console.log("messagesFile:", messages);
     } catch (error) {
       console.error("Failed to fetch data.", error);
     }
@@ -140,6 +139,22 @@ const Messagess = () => {
   const sendMessage = async (e) => {
     e.preventDefault();
 
+    const newMessage = {
+      message,
+      createdAt: new Date().toISOString(),
+      user: { id: user?.id },
+      messageFile: file ? URL.createObjectURL(file) : null,
+    };
+
+    setMessages((prev) => ({
+      ...prev,
+      messages: [...prev.messages, newMessage],
+    }));
+    setMessage("");
+    setFile(null);
+    setPreviewMessageImage(null);
+    setPreviewMessagePDF(null);
+
     try {
       const payload = new FormData();
       payload.append("conversationId", messages?.conversationId || "new");
@@ -148,10 +163,6 @@ const Messagess = () => {
       payload.append("receiverId", messages?.receiver?.receiverId);
       if (file) {
         payload.append("messageFile", file);
-      }
-
-      if (file) {
-        setIsFilePreviewOpen(true);
       }
 
       const response = await postAPI(
@@ -165,17 +176,23 @@ const Messagess = () => {
 
       if (response.hasError) {
         toast(`Failed to send message: ${response.message}`);
+
+        setMessages((prev) => ({
+          ...prev,
+          messages: prev.messages.filter((msg) => msg !== newMessage),
+        }));
         return;
       }
 
-      setMessage("");
-      setFile(null);
-      setPreviewMessageImage(null);
-      setPreviewMessagePDF(null);
       toast("Message sent successfully!");
+      fetchMessages(messages.conversationId, messages.receiver);
     } catch (error) {
       console.error("Error sending message:", error);
       toast(`An error occurred: ${error.message}`);
+      setMessages((prev) => ({
+        ...prev,
+        messages: prev.messages.filter((msg) => msg !== newMessage),
+      }));
     }
   };
 
@@ -358,7 +375,10 @@ const Messagess = () => {
                 </div>
                 <div
                   className="messenger-messagingView"
-                  style={{ flexGrow: 1 , display: isMobile && isVisible ? "none" : "block",}}
+                  style={{
+                    flexGrow: 1,
+                    display: isMobile && isVisible ? "none" : "block",
+                  }}
                 >
                   {messages?.receiver?.name && (
                     <div className="m-header m-header-messaging">
@@ -717,7 +737,12 @@ const Messagess = () => {
                           zIndex: 10,
                         }}
                       >
-                        <form onSubmit={sendMessage}>
+                        <form
+                          onSubmit={(e) => {
+                            e.preventDefault();
+                            sendMessage(e);
+                          }}
+                        >
                           <label>
                             <FaPaperclip />
                             <input
