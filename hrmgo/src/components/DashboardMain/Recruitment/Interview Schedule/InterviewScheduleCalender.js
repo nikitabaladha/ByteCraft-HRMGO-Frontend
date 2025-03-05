@@ -92,7 +92,7 @@ const InterviewScheduleCalender = () => {
                                     <input
                                         type="hidden"
                                         id="path_admin"
-                                        value="https://demo.workdo.io/hrmgo"
+                                        
                                     />
                                 </div>
                                 <div className="col-lg-6">

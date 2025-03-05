@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { TiEyeOutline } from "react-icons/ti";
-// import { RiDeleteBinLine } from "react-icons/ri";
 import ViewModal from "./Viewmodal";
 // import getAPI from "../../../api/getAPI";
 import ConfirmationDialog from "../ConfirmationDialog";
@@ -12,7 +10,7 @@ import { toast } from "react-toastify";
 import isBetween from "dayjs/plugin/isBetween";
 dayjs.extend(isBetween);
 
-const ZoomMeetingTable = ({meetings, setMeetings, fetchMeetings}) => {
+const ZoomMeetingTable = ({ meetings, setMeetings, fetchMeetings }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   // const [meetings, setMeetings] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -21,8 +19,6 @@ const ZoomMeetingTable = ({meetings, setMeetings, fetchMeetings}) => {
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  // const [dateQuery, setDateQuery] = useState(""); // Add state for date filter
-  // const [statusQuery, setStatusQuery] = useState("");
 
   const handleEntriesPerPageChange = (event) => {
     setEntriesPerPage(Number(event.target.value));
@@ -111,23 +107,6 @@ const ZoomMeetingTable = ({meetings, setMeetings, fetchMeetings}) => {
     });
   };
 
-  // useEffect(() => {
-  //   const fetchMeetings = async () => {
-  //     try {
-  //       const response = await getAPI("/getall_zoommeeting", {}, true);
-  //       const updatedMeetings = response.data.meetings.map((meeting) => ({
-  //         ...meeting,
-  //         status: meeting.status || "Waiting",
-  //       }));
-  //       setMeetings(updatedMeetings);
-  //     } catch (err) {
-  //       // console.Error("Failed to fetch Meetings");
-  //     }
-  //   };
-
-  //   fetchMeetings();
-  // }, []);
-
   useEffect(() => {
     const intervalId = setInterval(updateMeetingStatus, 60000);
 
@@ -146,36 +125,36 @@ const ZoomMeetingTable = ({meetings, setMeetings, fetchMeetings}) => {
     <div className="row">
       <div className="col-xl-12">
         <div className="card">
+          <div className="dataTable-top">
+            <div className="dataTable-dropdown d-none d-md-block">
+              <label>
+                <select
+                  className="dataTable-selector"
+                  value={entriesPerPage}
+                  onChange={handleEntriesPerPageChange}
+                >
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                </select>{" "}
+                entries per page
+              </label>
+            </div>
+            <div className="dataTable-search">
+              <input
+                className="dataTable-input"
+                placeholder="Search..."
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </div>
           <div className="card-header card-body table-border-style">
             <div className="table-responsive">
               <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                <div className="dataTable-top">
-                  <div className="dataTable-dropdown">
-                    <label>
-                      <select
-                        className="dataTable-selector"
-                        value={entriesPerPage}
-                        onChange={handleEntriesPerPageChange}
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                        <option value="25">25</option>
-                      </select>{" "}
-                      entries per page
-                    </label>
-                  </div>
-                  <div className="dataTable-search">
-                    <input
-                      className="dataTable-input"
-                      placeholder="Search..."
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                  </div>
-                </div>
                 <div className="dataTable-container">
                   <table className="table dataTable-table" id="pc-dt-simple">
                     <thead>
@@ -303,70 +282,70 @@ const ZoomMeetingTable = ({meetings, setMeetings, fetchMeetings}) => {
                     </tbody>
                   </table>
                 </div>
-                <div className="dataTable-bottom">
-                  <div className="dataTable-info">
-                    Showing{" "}
-                    {Math.min(
-                      (currentPage - 1) * entriesPerPage + 1,
-                      meetings.length
-                    )}{" "}
-                    to {Math.min(currentPage * entriesPerPage, meetings.length)}{" "}
-                    of {meetings.length} entries
-                  </div>
-                  <nav className="dataTable-pagination">
-                    <ul className="dataTable-pagination-list">
-                      {currentPage > 1 && (
-                        <li className="page-item">
-                          <button
-                            className="page-link prev-button"
-                            onClick={() => setCurrentPage(currentPage - 1)}
-                          >
-                            ‹
-                          </button>
-                        </li>
-                      )}
-
-                      {Array.from(
-                        { length: Math.ceil(meetings.length / entriesPerPage) },
-                        (_, index) => (
-                          <li
-                            key={index + 1}
-                            className={`page-item ${
-                              currentPage === index + 1 ? "active" : ""
-                            }`}
-                          >
-                            <button
-                              className="page-link"
-                              onClick={() => setCurrentPage(index + 1)}
-                              style={{
-                                backgroundColor:
-                                  currentPage === index + 1
-                                    ? "#d9d9d9"
-                                    : "transparent",
-                                color: "#6FD943",
-                              }}
-                            >
-                              {index + 1}
-                            </button>
-                          </li>
-                        )
-                      )}
-
-                      {currentPage <
-                        Math.ceil(meetings.length / entriesPerPage) && (
-                        <li className="page-item">
-                          <button
-                            className="page-link next-button"
-                            onClick={() => setCurrentPage(currentPage + 1)}
-                          >
-                            ›
-                          </button>
-                        </li>
-                      )}
-                    </ul>
-                  </nav>
-                </div>
               </div>
+            </div>
+            <div className="dataTable-bottom">
+              <div className="dataTable-info d-none d-md-block">
+                Showing{" "}
+                {Math.min(
+                  (currentPage - 1) * entriesPerPage + 1,
+                  meetings.length
+                )}{" "}
+                to {Math.min(currentPage * entriesPerPage, meetings.length)} of{" "}
+                {meetings.length} entries
+              </div>
+              <nav className="dataTable-pagination">
+                <ul className="dataTable-pagination-list">
+                  {currentPage > 1 && (
+                    <li className="page-item">
+                      <button
+                        className="page-link prev-button"
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                      >
+                        ‹
+                      </button>
+                    </li>
+                  )}
+
+                  {Array.from(
+                    { length: Math.ceil(meetings.length / entriesPerPage) },
+                    (_, index) => (
+                      <li
+                        key={index + 1}
+                        className={`page-item ${
+                          currentPage === index + 1 ? "active" : ""
+                        }`}
+                      >
+                        <button
+                          className="page-link"
+                          onClick={() => setCurrentPage(index + 1)}
+                          style={{
+                            backgroundColor:
+                              currentPage === index + 1
+                                ? "#d9d9d9"
+                                : "transparent",
+                            color: "#6FD943",
+                          }}
+                        >
+                          {index + 1}
+                        </button>
+                      </li>
+                    )
+                  )}
+
+                  {currentPage <
+                    Math.ceil(meetings.length / entriesPerPage) && (
+                    <li className="page-item">
+                      <button
+                        className="page-link next-button"
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                      >
+                        ›
+                      </button>
+                    </li>
+                  )}
+                </ul>
+              </nav>
             </div>
           </div>
         </div>

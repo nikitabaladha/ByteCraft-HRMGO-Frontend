@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import Sidebar from "../HRMSystemSidebar";
-// import { HiOutlinePencil } from "react-icons/hi";
-// import { RiDeleteBinLine } from "react-icons/ri";
-// import { toast } from "react-toastify";
 import EditDocumentTypeModal from "./EditDocumentTypeModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
 // import getAPI from "../../../../api/getAPI";
@@ -34,25 +31,6 @@ const DocumentTypeTable = ({documentTypes, setDocumentTypes, fetchDocumentTypes}
     currentPage * entriesPerPage
   );
 
-
-  // useEffect(() => {
-  //   const fetchDocumentTypes = async () => {
-  //     try {
-  //       const response = await getAPI("/document-type-get-all", true);
-  //       if (!response.hasError) {
-  //         setDocumentTypes(response.data.data);
-         
-  //       } else {
-  //         toast.error(`Failed to fetch document types: ${response.message}`);
-  //       }
-  //     } catch (error) {
-  //       toast.error("An error occurred while fetching document types.");
-  //     }
-  //   };
-
-  //   fetchDocumentTypes();
-  // }, []);
-
   const openDeleteDialog = (documentTypeId) => {
     setDocumentTypeToDelete(documentTypeId);
     setIsDeleteDialogOpen(true);
@@ -80,23 +58,16 @@ const DocumentTypeTable = ({documentTypes, setDocumentTypes, fetchDocumentTypes}
     setSelectedDocumentType(null);
   };
 
-  // const startIndex = 0;
-  // const endIndex = entriesPerPage;
-  // const paginatedData = filteredDocumentTypes.slice(startIndex, endIndex);
-
   return (
     <div className="row">
-      <div className="col-3">
-        <Sidebar />
-      </div>
+      <div className="col-12 col-md-3">
+  <Sidebar />
+</div>
 
-      <div className="col-9">
+      <div className="col-12 col-md-9">
         <div className="card">
-          <div className="card-body table-border-style">
-            <div className="table-responsive">
-              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                <div className="dataTable-top">
-                  <div className="dataTable-dropdown">
+        <div className="dataTable-top">
+                  <div className="dataTable-dropdown d-none d-md-block">
                     <label>
                       <select
                         className="dataTable-selector"
@@ -123,6 +94,10 @@ const DocumentTypeTable = ({documentTypes, setDocumentTypes, fetchDocumentTypes}
                   </div>
                 </div>
 
+          <div className="card-body table-border-style">
+            <div className="table-responsive">
+              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                
                 <div className="dataTable-container">
                   <table className="table dataTable-table">
                     <thead>
@@ -179,8 +154,11 @@ const DocumentTypeTable = ({documentTypes, setDocumentTypes, fetchDocumentTypes}
                     </tbody>
                   </table>
                 </div>
-                <div className="dataTable-bottom">
-                  <div className="dataTable-info">
+
+              </div>
+            </div>
+            <div className="dataTable-bottom">
+                  <div className="dataTable-info d-none d-md-block">
                     Showing {Math.min((currentPage - 1) * entriesPerPage + 1, documentTypes.length)}{" "}
                     to {Math.min(currentPage * entriesPerPage, documentTypes.length)}{" "}
                     of {documentTypes.length} entries
@@ -229,9 +207,6 @@ const DocumentTypeTable = ({documentTypes, setDocumentTypes, fetchDocumentTypes}
                     </ul>
                   </nav>
                 </div>
-
-              </div>
-            </div>
           </div>
         </div>
       </div>

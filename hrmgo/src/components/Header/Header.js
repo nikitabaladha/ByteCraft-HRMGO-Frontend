@@ -2,26 +2,8 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-import { IoIosArrowDown } from "react-icons/io";
-import { FiUser } from "react-icons/fi";
-import { IoPower } from "react-icons/io5";
-import { FaRegCommentDots } from "react-icons/fa";
-import { TbMessage2 } from "react-icons/tb";
-import getAPI from "../../api/getAPI";
-// import deleteAPI from "../../../../api/deleteAPI";
-import { toast } from "react-toastify";
-import { useState, useEffect } from "react";
+const Header = ({ toggleSidebar, name, imagePreview, profileImage }) => {
 
-const Header = ({ toggleSidebar }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    profile: null,
-  });
-
-  const [profileImage, setProfileImage] = useState(null);
-
-  const [imagePreview, setImagePreview] = useState("");
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userDetails");
@@ -29,36 +11,7 @@ const Header = ({ toggleSidebar }) => {
     window.location.href = "/login";
   };
 
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      try {
-        const response = await getAPI("/get-user-details", {}, true);
-        if (!response.hasError && response.data) {
-          const user = response.data.data;
-          // const profile = response.data.data;
-          const profilePath = user.profileImage.startsWith("/")
-            ? `${process.env.REACT_APP_API_URL_FOR_IMAGE}${user.profileImage}`
-            : `${process.env.REACT_APP_API_URL_FOR_IMAGE}/Images/profilePicture/default-avatar.png`;
-
-          setFormData({
-            name: user.name || "",
-            email: user.email || "",
-          });
-          setProfileImage(profilePath);
-          setImagePreview(profilePath);
-        } else {
-          toast.error("Failed to fetch User data.");
-        }
-      } catch (error) {
-        console.error("Error fetching User data:", error);
-        toast.error("An error occurred while fetching User data.");
-      }
-    };
-
-    fetchUserDetails();
-  }, []);
-
-  return (
+   return (
     <header className="dash-header transprent-bg">
       <div className="header-wrapper">
         <div className="me-auto dash-mob-drp">
@@ -90,29 +43,30 @@ const Header = ({ toggleSidebar }) => {
                 <span className="theme-avtar">
                   <img
                     alt="User Avatar"
-                    src={imagePreview}
-                    className="img-fluid rounded-circle"
-                    style={{ width: "100%" }}
+                    src={profileImage}
+                    className="img-fluid rounded border-2 border border-primary"
+            style={{ width: '100%', height: '100%' }}
                   />
                 </span>
-                <span className="hide-mob ms-2">
-                  Hi, {formData.name}
-                  <IoIosArrowDown className="drp-arrow nocolor hide-mob" />
+                <span className="ms-2">
+                  Hi, {name}
+                  <i className="ti ti-chevron-down drp-arrow nocolor"></i>
                 </span>
               </Link>
               <div className="dropdown-menu dash-h-dropdown">
                 <Link to="/dashboard/account-setting" className="dropdown-item">
-                  <FiUser />
+                  {/* <FiUser /> */}
+                  <i className="ti ti-user"></i>
                   <span>My Profile</span>
                 </Link>
 
                 <Link className="dropdown-item" onClick={handleLogout}>
-                  <IoPower />
+                  {/* <IoPower /> */}
+                  <i className="ti ti-power"></i>
                   <span>Logout</span>
                 </Link>
                 <form
                   id="logout-form"
-                  action="https://demo.workdo.io/hrmgo/logout"
                   method="POST"
                   style={{ display: "none" }}
                 >
@@ -130,58 +84,7 @@ const Header = ({ toggleSidebar }) => {
 
         <div className="ms-auto">
           <ul className="list-unstyled">
-            {/* <li className="dash-h-item">
-              <Link className="dash-head-link me-0" to="/dashboard/messenger">
-                <i>
-                  <FaRegCommentDots />
-                </i>
-                <span className="bg-danger dash-h-badge message-counter custom_messanger_counter">
-                  0<span className="sr-only"></span>
-                </span>
-              </Link>
-            </li> */}
 
-            {/* <li className="dropdown dash-h-item drp-notification">
-              <Link
-                className="dash-head-link dropdown-toggle arrow-none me-0"
-                data-bs-toggle="dropdown"
-                to="#"
-                role="button"
-                aria-haspopup="false"
-                aria-expanded="false"
-              >
-                <i>
-                  <TbMessage2 />
-                </i>
-                <span className="bg-danger dash-h-badge message-counter custom_messanger_counter">
-                  0<span className="sr-only"></span>
-                </span>
-              </Link>
-              <div className="dropdown-menu dash-h-dropdown dropdown-menu-end">
-                <div className="noti-header">
-                  <h5 className="m-0">Messages</h5>
-                  <Link
-                    to="#"
-                    className="dash-head-link mark_all_as_read_message"
-                  >
-                    Clear All
-                  </Link>
-                </div>
-                <div className="noti-body dropdown-list-message-msg">
-                  <table className="count-listOfContacts"></table>
-                </div>
-                <div className="noti-footer">
-                  <div className="d-grid">
-                    <Link
-                      to="https://demo.workdo.io/hrmgo/chats"
-                      className="btn dash-head-link justify-content-center text-primary mx-0"
-                    >
-                      View all
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </li> */}
           </ul>
         </div>
       </div>

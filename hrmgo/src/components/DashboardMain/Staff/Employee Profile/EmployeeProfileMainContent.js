@@ -54,7 +54,7 @@ const EmployeeProfileMainContent = ({
               <div className="card-body">
                 <form
                   method="GET"
-                  action="https://demo.workdo.io/hrmgo/employee-profile"
+                  
                   acceptCharset="UTF-8"
                   id="employee_profile_filter"
                 >
@@ -166,7 +166,7 @@ const EmployeeProfileMainContent = ({
                             </span>
                           </Link>
                           <Link
-                            href="https://demo.workdo.io/hrmgo/employee-profile"
+                           
                             className="btn btn-sm btn-danger"
                             data-bs-toggle="tooltip"
                             title="Reset"
@@ -204,7 +204,7 @@ const EmployeeProfileMainContent = ({
                     </button>
                     <div className="dropdown-menu dropdown-menu-end">
                       <a
-                        href={`https://demo.workdo.io/hrmgo/employee/${employee.id}/edit`}
+                        href={`https://www.hrmsync.in/employee/${employee.id}/edit`}
                         className="dropdown-item"
                         onClick={(event) =>
                           navigateToEmployeeUpdate(event, employee)
@@ -216,7 +216,7 @@ const EmployeeProfileMainContent = ({
                       </a>
                       <form
                         method="POST"
-                        action={`https://demo.workdo.io/hrmgo/employee/${employee.id}`}
+                        action={`https://www.hrmsync.in/employee/${employee.id}`}
                         id={`delete-form-${employee.id}`}
                       >
                         <input name="_method" type="hidden" value="DELETE" />
@@ -268,7 +268,7 @@ const EmployeeProfileMainContent = ({
                     <div className="d-grid">
                       <a
                         className="btn btn-outline-primary mx-5"
-                        href={`https://demo.workdo.io/hrmgo/employee/${employee.id}`}
+                        href={`https://www.hrmsync.in/employee/${employee.id}`}
                       >
                         #{employee.id}
                       </a>

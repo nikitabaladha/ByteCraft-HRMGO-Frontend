@@ -61,11 +61,11 @@ useEffect(() => {
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={onClose}></button>
           </div>
           <div className="body">
-            <form method="POST"  onSubmit={handleSubmit} action="https://demo.workdo.io/hrmgo/company-policy" acceptCharset="UTF-8" encType="multipart/form-data" className="needs-validation" noValidate>
+            <form method="POST"  onSubmit={handleSubmit} acceptCharset="UTF-8" encType="multipart/form-data" className="needs-validation" noValidate>
               <input name="_token" type="hidden" value="mk5mLbOtoudKEfEv857K3B9oUup58se2KxNTlOEa" />
               <div className="modal-body">
                 <div className="text-end">
-                  <Link to="https://demo.workdo.io/hrmgo/generate/company-policy" className="btn btn-sm btn-primary" data-size="medium" data-ajax-popup-over="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate" data-title="Generate Content With AI">
+                  <Link className="btn btn-sm btn-primary" data-size="medium" data-ajax-popup-over="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate" data-title="Generate Content With AI">
                     <i className="fas fa-robot"></i> Generate With AI
                   </Link>
                 </div>

@@ -52,11 +52,8 @@ const RoleMainContent = ({roles, setRoles, fetchRoles}) => {
     <div className="row">
       <div className="col-xl-12">
         <div className="card">
-          <div className="card-header card-body table-border-style">
-            <div className="table-responsive">
-              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                <div className="dataTable-top">
-                  <div className="dataTable-dropdown">
+        <div className="dataTable-top">
+                  <div className="dataTable-dropdown d-none d-md-block">
                     <label>
                       <select
                         className="dataTable-selector"
@@ -82,6 +79,10 @@ const RoleMainContent = ({roles, setRoles, fetchRoles}) => {
                     />
                   </div>
                 </div>
+          <div className="card-header card-body table-border-style">
+            <div className="table-responsive">
+              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                
                 <div className="dataTable-container">
                   <table className="table dataTable-table" id="pc-dt-simple">
                     <thead>
@@ -127,9 +128,7 @@ const RoleMainContent = ({roles, setRoles, fetchRoles}) => {
                                 <div className="action-btn bg-info me-2">
                                   <Link
                                     className="mx-3 btn btn-sm align-items-center"
-                                    to="#"
-                                    data-url={`https://demo.workdo.io/hrmgo/roles/$
-                                    {index + 9}/edit`}
+                                   
                                     data-ajax-popup="true"
                                     data-size="lg"
                                     data-bs-toggle="tooltip"
@@ -169,8 +168,11 @@ const RoleMainContent = ({roles, setRoles, fetchRoles}) => {
                     </tbody>
                   </table>
                 </div>
-                <div className="dataTable-bottom">
-                  <div className="dataTable-info">
+                
+              </div>
+            </div>
+            <div className="dataTable-bottom">
+                  <div className="dataTable-info d-none d-md-block">
                     Showing {" "}
                     {Math.min(
                       (currentPage - 1) * entriesPerPage + 1,
@@ -236,8 +238,6 @@ const RoleMainContent = ({roles, setRoles, fetchRoles}) => {
                     </ul>
                   </nav>
                 </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
-// import { HiOutlinePencil } from "react-icons/hi";
-// import { RiDeleteBinLine } from "react-icons/ri";
+
 import EditDeductionOptionModal from "./EditDeductionOptionModal";
-// import getAPI from "../../../../api/getAPI";
-// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
 const DeductionOptionTable = ({deductionOptions, setDeductionOptions, fetchDeductionOptions}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDeductionOption, setSelectedDeductionOption] = useState(null);
-  // const [deductionOptions, setDeductionOptions] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [deductionOptionToDelete, setDeductionOptionToDelete] = useState(null);
 
@@ -52,23 +48,6 @@ const DeductionOptionTable = ({deductionOptions, setDeductionOptions, fetchDeduc
     closeDeleteDialog();
   };
 
-  // useEffect(() => {
-  //   const fetchDeductionOptions = async () => {
-  //     try {
-  //       const response = await getAPI("/deduction-option-get-all", true);
-  //       if (!response.hasError) {
-  //         setDeductionOptions(response.data.data);
-  //       } else {
-  //         toast.error(`Failed to fetch deduction options: ${response.message}`);
-  //       }
-  //     } catch (error) {
-  //       toast.error("An error occurred while fetching deduction options.");
-  //     }
-  //   };
-
-  //   fetchDeductionOptions();
-  // }, []);
-
   const handleEdit = (deductionOption) => {
     setSelectedDeductionOption(deductionOption);
     setIsModalOpen(true);
@@ -81,17 +60,14 @@ const DeductionOptionTable = ({deductionOptions, setDeductionOptions, fetchDeduc
 
   return (
     <div className="row">
-      <div className="col-3">
-        <Sidebar />
-      </div>
+     <div className="col-12 col-md-3">
+  <Sidebar />
+</div>
 
-      <div className="col-9">
+      <div className="col-12 col-md-9">
         <div className="card">
-          <div className="card-body table-border-style">
-            <div className="table-responsive">
-              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                <div className="dataTable-top">
-                  <div className="dataTable-dropdown">
+        <div className="dataTable-top">
+                  <div className="dataTable-dropdown d-none d-md-block">
                     <label>
                       <select
                         className="dataTable-selector"
@@ -117,6 +93,10 @@ const DeductionOptionTable = ({deductionOptions, setDeductionOptions, fetchDeduc
                     />
                   </div>
                 </div>
+          <div className="card-body table-border-style">
+            <div className="table-responsive">
+              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                
                 <div className="dataTable-container">
                   <table className="table datatable dataTable-table">
                     <thead>
@@ -147,7 +127,7 @@ const DeductionOptionTable = ({deductionOptions, setDeductionOptions, fetchDeduc
                                 </div>
 
                                 <div className="action-btn bg-danger">
-                                  <form method="POST" action={`/hrmgo/deduction-option`} acceptCharset="UTF-8" id={`delete-form`}>
+                                  <form method="POST" acceptCharset="UTF-8" id={`delete-form`}>
                                     <input name="_method" type="hidden" value="DELETE" />
                                     <input name="_token" type="hidden" value="OYzJQFXWqx1d9iWbHPH2ntDxxtmt4I8jLovG1Fuv" />
                                     <Link
@@ -171,8 +151,12 @@ const DeductionOptionTable = ({deductionOptions, setDeductionOptions, fetchDeduc
                     </tbody>
                   </table>
                 </div>
-                <div className="dataTable-bottom">
-                  <div className="dataTable-info">
+               
+
+              </div>
+            </div>
+            <div className="dataTable-bottom">
+                  <div className="dataTable-info d-none d-md-block">
                     Showing {Math.min((currentPage - 1) * entriesPerPage + 1, deductionOptions.length)}{" "}
                     to {Math.min(currentPage * entriesPerPage, deductionOptions.length)}{" "}
                     of {deductionOptions.length} entries
@@ -221,9 +205,6 @@ const DeductionOptionTable = ({deductionOptions, setDeductionOptions, fetchDeduc
                     </ul>
                   </nav>
                 </div>
-
-              </div>
-            </div>
           </div>
         </div>
       </div>

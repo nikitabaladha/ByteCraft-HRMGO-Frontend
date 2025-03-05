@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 import CreateHolidayModal from "../CreateHolidayModal";
 
-import { FaPlus } from "react-icons/fa";
-import { TbListCheck } from "react-icons/tb";
+// import { FaPlus } from "react-icons/fa";
+// import { TbListCheck } from "react-icons/tb";
 
 const HolidayCalendarHeader = ({ holidays, addHoliday }) => {
   const [isCreateHolidayModalOpen, setIsCreateHolidayModalOpen] =
@@ -45,12 +45,13 @@ const HolidayCalendarHeader = ({ holidays, addHoliday }) => {
             <div className="col">
               <div className="float-end ">
                 <Link
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-primary me-2"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="List View"
                   onClick={navigateToHoliday}
                 >
-                  <TbListCheck />
+                  {/* <TbListCheck /> */}
+                  <i className="ti ti-list-check"></i>
                 </Link>
                 <Link
                   data-ajax-popup="true"
@@ -61,7 +62,8 @@ const HolidayCalendarHeader = ({ holidays, addHoliday }) => {
                   data-bs-original-title="Create"
                   onClick={openModal}
                 >
-                  <FaPlus />
+                  {/* <FaPlus /> */}
+                  <i className="ti ti-plus"></i>
                 </Link>
               </div>
             </div>

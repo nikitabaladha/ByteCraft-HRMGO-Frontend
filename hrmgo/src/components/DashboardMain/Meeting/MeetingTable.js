@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { HiOutlinePencil } from "react-icons/hi";
-// import { RiDeleteBinLine } from "react-icons/ri";
 import ConfirmationDialog from "../ConfirmationDialog";
 import EditMeetingModal from "./EditMeetingmodal";
 
@@ -88,11 +86,8 @@ const MeetingTable = ({meetings,setMeetings,fetchMeetings}) => {
     <div className="row">
       <div className="col-xl-12">
         <div className="card">
-          <div className="card-header card-body table-border-style">
-            <div className="table-responsive">
-              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                <div className="dataTable-top">
-                  <div className="dataTable-dropdown">
+        <div className="dataTable-top">
+                  <div className="dataTable-dropdown d-none d-md-block">
                     <label>
                       <select
                         className="dataTable-selector"
@@ -118,6 +113,10 @@ const MeetingTable = ({meetings,setMeetings,fetchMeetings}) => {
                     />
                   </div>
                 </div>
+          <div className="card-header card-body table-border-style">
+            <div className="table-responsive">
+              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                
                 <div className="dataTable-container">
                   <table className="table dataTable-table" id="pc-dt-simple">
                     <thead>
@@ -186,8 +185,11 @@ const MeetingTable = ({meetings,setMeetings,fetchMeetings}) => {
                     </tbody>
                   </table>
                 </div>
-                <div className="dataTable-bottom">
-                  <div className="dataTable-info">
+                
+              </div>
+            </div>
+            <div className="dataTable-bottom">
+                  <div className="dataTable-info d-none d-md-block">
                     Showing {Math.min((currentPage - 1) * entriesPerPage + 1, meetings.length)}{" "}
                     to {Math.min(currentPage * entriesPerPage, meetings.length)}{" "}
                     of {meetings.length} entries
@@ -236,8 +238,6 @@ const MeetingTable = ({meetings,setMeetings,fetchMeetings}) => {
                     </ul>
                   </nav>
                 </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

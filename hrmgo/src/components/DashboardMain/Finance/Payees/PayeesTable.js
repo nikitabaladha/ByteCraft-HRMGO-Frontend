@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-// import { HiOutlinePencil } from "react-icons/hi";
-// import { RiDeleteBinLine } from "react-icons/ri";
 import EditPayeeModal from "./EditPayeeModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
-// import getAPI from "../../../../api/getAPI";
-// import { ToastContainer } from "react-toastify";
 
 const PayeesTable = ({ payees, setPayees, fetchPayees }) => {
-  // const [payees, setPayees] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPayee, setSelectedPayee] = useState(null);
 
@@ -35,19 +30,6 @@ const PayeesTable = ({ payees, setPayees, fetchPayees }) => {
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
-
-  // useEffect(() => {
-  //   const fetchPayees = async () => {
-  //     try {
-  //       const response = await getAPI(`/getall_Payee`, {}, true);
-  //       setPayees(response.data.data);
-  //     } catch (err) {
-  //       console.log("Failed to fetch payees");
-  //     }
-  //   };
-
-  //   fetchPayees();
-  // }, []);
 
   const openModal = (payee) => {
     setSelectedPayee(payee);
@@ -81,37 +63,36 @@ const PayeesTable = ({ payees, setPayees, fetchPayees }) => {
     <div className="row">
       <div className="col-xl-12">
         <div className="card">
+          <div className="dataTable-top">
+            <div className="dataTable-dropdown d-none d-md-block">
+              <label>
+                <select
+                  className="dataTable-selector"
+                  value={entriesPerPage}
+                  onChange={handleEntriesPerPageChange}
+                >
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                </select>{" "}
+                entries per page
+              </label>
+            </div>
+            <div className="dataTable-search">
+              <input
+                className="dataTable-input"
+                placeholder="Search..."
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </div>
           <div className="card-header card-body table-border-style">
             <div className="table-responsive">
               <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                <div className="dataTable-top">
-                  <div className="dataTable-dropdown">
-                    <label>
-                      <select
-                        className="dataTable-selector"
-                        value={entriesPerPage}
-                        onChange={handleEntriesPerPageChange}
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                        <option value="25">25</option>
-                      </select>{" "}
-                      entries per page
-                    </label>
-                  </div>
-                  <div className="dataTable-search">
-                    <input
-                      className="dataTable-input"
-                      placeholder="Search..."
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                  </div>
-                </div>
-
                 <div className="dataTable-container">
                   <table className="table dataTable-table" id="pc-dt-simple">
                     <thead>
@@ -164,70 +145,69 @@ const PayeesTable = ({ payees, setPayees, fetchPayees }) => {
                     </tbody>
                   </table>
                 </div>
-                <div className="dataTable-bottom">
-                  <div className="dataTable-info">
-                    Showing{" "}
-                    {Math.min(
-                      (currentPage - 1) * entriesPerPage + 1,
-                      payees.length
-                    )}{" "}
-                    to {Math.min(currentPage * entriesPerPage, payees.length)}{" "}
-                    of {payees.length} entries
-                  </div>
-                  <nav className="dataTable-pagination">
-                    <ul className="dataTable-pagination-list">
-                      {currentPage > 1 && (
-                        <li className="page-item">
-                          <button
-                            className="page-link prev-button"
-                            onClick={() => setCurrentPage(currentPage - 1)}
-                          >
-                            ‹
-                          </button>
-                        </li>
-                      )}
-
-                      {Array.from(
-                        { length: Math.ceil(payees.length / entriesPerPage) },
-                        (_, index) => (
-                          <li
-                            key={index + 1}
-                            className={`page-item ${
-                              currentPage === index + 1 ? "active" : ""
-                            }`}
-                          >
-                            <button
-                              className="page-link"
-                              onClick={() => setCurrentPage(index + 1)}
-                              style={{
-                                backgroundColor:
-                                  currentPage === index + 1
-                                    ? "#d9d9d9"
-                                    : "transparent",
-                                color: "#6FD943",
-                              }}
-                            >
-                              {index + 1}
-                            </button>
-                          </li>
-                        )
-                      )}
-
-                      {currentPage <
-                        Math.ceil(payees.length / entriesPerPage) && (
-                        <li className="page-item">
-                          <button
-                            className="page-link next-button"
-                            onClick={() => setCurrentPage(currentPage + 1)}
-                          >
-                            ›
-                          </button>
-                        </li>
-                      )}
-                    </ul>
-                  </nav>
-                </div>
               </div>
+            </div>
+            <div className="dataTable-bottom">
+              <div className="dataTable-info d-none d-md-block">
+                Showing{" "}
+                {Math.min(
+                  (currentPage - 1) * entriesPerPage + 1,
+                  payees.length
+                )}{" "}
+                to {Math.min(currentPage * entriesPerPage, payees.length)} of{" "}
+                {payees.length} entries
+              </div>
+              <nav className="dataTable-pagination">
+                <ul className="dataTable-pagination-list">
+                  {currentPage > 1 && (
+                    <li className="page-item">
+                      <button
+                        className="page-link prev-button"
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                      >
+                        ‹
+                      </button>
+                    </li>
+                  )}
+
+                  {Array.from(
+                    { length: Math.ceil(payees.length / entriesPerPage) },
+                    (_, index) => (
+                      <li
+                        key={index + 1}
+                        className={`page-item ${
+                          currentPage === index + 1 ? "active" : ""
+                        }`}
+                      >
+                        <button
+                          className="page-link"
+                          onClick={() => setCurrentPage(index + 1)}
+                          style={{
+                            backgroundColor:
+                              currentPage === index + 1
+                                ? "#d9d9d9"
+                                : "transparent",
+                            color: "#6FD943",
+                          }}
+                        >
+                          {index + 1}
+                        </button>
+                      </li>
+                    )
+                  )}
+
+                  {currentPage < Math.ceil(payees.length / entriesPerPage) && (
+                    <li className="page-item">
+                      <button
+                        className="page-link next-button"
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                      >
+                        ›
+                      </button>
+                    </li>
+                  )}
+                </ul>
+              </nav>
             </div>
           </div>
         </div>

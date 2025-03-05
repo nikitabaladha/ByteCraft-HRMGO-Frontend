@@ -6,19 +6,25 @@ const CareerHeader = () => {
     <>
       <section className="job-banner">
         <nav className="navbar">
-          <div className="container">
+          <div className="container d-flex">
             <Link className="navbar-brand" href="#">
               <img
-                src="https://demo.workdo.io/hrmgo/storage/uploads/logo//logo-light.png?1734938390"
+                src="/storage/uploads/logo/White-Logo (2).png"
                 alt="logo"
-                style={{ width: "90px" }}
+                style={{ width: "160px", height:"55px" }} 
               />
             </Link>
+
+             <ul className="breadcrumb">
+                          <li className="breadcrumb-item">
+                            <a className="text-white" style={{ fontSize:"18px"}} href="/dashboard">Home</a>
+                          </li>
+                        </ul>
           </div>
         </nav>
         <div className="job-banner-bg">
           <img
-            src="https://demo.workdo.io/hrmgo/storage/uploads/job/banner.png"
+            src="/storage/uploads/logo/banner.png"
             alt=""
           />
         </div>

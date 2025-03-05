@@ -173,26 +173,24 @@ const TrainingListView = () => {
                   <ul className="list-group list-group-flush">
                     <li className="list-group-item" style={{ border: "0px" }}>
                       <div className="d-flex align-items-center">
-                        <a
-                          href="https://demo.workdo.io/hrmgo/storage/uploads/avatar/user-1.jpg"
+                        <Link
                           target="_blank"
                           rel="noopener noreferrer"
                         >
                           <img
-                            src="https://demo.workdo.io/hrmgo/storage/uploads/avatar/user-1.jpg"
+                            
                             alt="Avatar"
                             className="img-fluid rounded border-2 border border-primary"
                             width="55px"
                             style={{ height: "55px" }}
                           />
-                        </a>
+                        </Link>
                         <div className="media-body px-2 text-sm">
-                          <a
-                            href="https://demo.workdo.io/hrmgo/employee/eyJpdiI6IkVTY0o1cmtiRWk0Wkh4SitVNHovVGc9PSIsInZhbHVlIjoiOGtLQTc5M0pJeW1mUEsyT2llR2ZLQT09IiwibWFjIjoiYjFhNTJkY2M3ODRlNTIyOWI5MTk5NzI2NjZhZTEyZmFhYzlhZjUyOGYyZDgyOWY1ODNhMWVjNWY4MjVjMmNhYiIsInRhZyI6IiJ9"
+                          <Link
                             className="text-dark"
                           >
                             Julie Lynn
-                          </a>
+                          </Link>
                           <br />
                           Manager
                         </div>

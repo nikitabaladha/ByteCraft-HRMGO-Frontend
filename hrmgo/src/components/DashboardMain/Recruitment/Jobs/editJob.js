@@ -190,7 +190,7 @@ const EditJob = () => {
             class="btn btn-sm btn-primary"
             data-size="medium"
             data-ajax-popup-over="true"
-            data-url="https://demo.workdo.io/hrmgo/generate/job"
+          
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title=""
@@ -616,7 +616,7 @@ const EditJob = () => {
                       className="btn btn-primary btn-icon btn-sm float-end"
                       data-ajax-popup-over="true"
                       id="grammarCheck"
-                      data-url="https://demo.workdo.io/hrmgo/grammar/grammar"
+                      
                       data-bs-placement="top"
                       data-title="Grammar check with AI"
                     >

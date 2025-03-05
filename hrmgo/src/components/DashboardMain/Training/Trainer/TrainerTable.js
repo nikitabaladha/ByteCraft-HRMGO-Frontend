@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-// import { TbPencil } from "react-icons/tb";
-// import { FaRegTrashAlt, FaEye } from "react-icons/fa";
 import getAPI from "../../../../api/getAPI";
-// import deleteAPI from "../../../../api/deleteAPI";
 import { toast } from "react-toastify";
 import TraineeViewModel from "./TraineeViewModel";
 import TraineeUpdateDataModel from "./TraineeUpdateDataModel";
 import putAPI from "../../../../api/putAPI";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
-const TrainerTable = ({trainers, setTrainers, fetchTrainers}) => {
+const TrainerTable = ({ trainers, setTrainers, fetchTrainers }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedTrainee, setSelectedTrainee] = useState(null);
   const [showUpdateModal, setShowUpdateModal] = useState(false); // State for update modal
@@ -57,7 +54,7 @@ const TrainerTable = ({trainers, setTrainers, fetchTrainers}) => {
 
   const handleEditTrainee = (trainee) => {
     setSelectedTrainee(trainee);
-    setShowUpdateModal(true); 
+    setShowUpdateModal(true);
   };
 
   const openDeleteDialog = (trainer) => {
@@ -95,7 +92,7 @@ const TrainerTable = ({trainers, setTrainers, fetchTrainers}) => {
 
       if (response.data && response.data.success) {
         toast.success(response.data.message);
-        setShowUpdateModal(false); 
+        setShowUpdateModal(false);
         setTrainers((prevTrainers) =>
           prevTrainers.map((trainer) =>
             trainer.id === selectedTrainee.id
@@ -103,7 +100,7 @@ const TrainerTable = ({trainers, setTrainers, fetchTrainers}) => {
               : trainer
           )
         );
-        fetchTrainers()
+        fetchTrainers();
       } else {
         toast.error(response.data.error || "Failed to update trainee.");
       }
@@ -156,36 +153,36 @@ const TrainerTable = ({trainers, setTrainers, fetchTrainers}) => {
       <div className="row">
         <div className="col-xl-12">
           <div className="card">
+            <div className="dataTable-top">
+              <div className="dataTable-dropdown  d-none d-md-block">
+                <label>
+                  <select
+                    className="dataTable-selector"
+                    value={entriesPerPage}
+                    onChange={handleEntriesPerPageChange}
+                  >
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                  </select>{" "}
+                  entries per page
+                </label>
+              </div>
+              <div className="dataTable-search">
+                <input
+                  className="dataTable-input"
+                  placeholder="Search..."
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+            </div>
             <div className="card-header card-body table-border-style">
               <div className="table-responsive">
                 <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                  <div className="dataTable-top">
-                    <div className="dataTable-dropdown">
-                      <label>
-                        <select
-                          className="dataTable-selector"
-                          value={entriesPerPage}
-                          onChange={handleEntriesPerPageChange}
-                        >
-                          <option value="5">5</option>
-                          <option value="10">10</option>
-                          <option value="15">15</option>
-                          <option value="20">20</option>
-                          <option value="25">25</option>
-                        </select>{" "}
-                        entries per page
-                      </label>
-                    </div>
-                    <div className="dataTable-search">
-                      <input
-                        className="dataTable-input"
-                        placeholder="Search..."
-                        type="text"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                      />
-                    </div>
-                  </div>
                   <div className="dataTable-container">
                     <table className="table dataTable-table" id="pc-dt-simple">
                       <thead>
@@ -219,80 +216,74 @@ const TrainerTable = ({trainers, setTrainers, fetchTrainers}) => {
                         )}
                       </tbody>
                     </table>
-                    <div className="dataTable-bottom">
-                      <div className="dataTable-info">
-                        Showing{" "}
-                        {Math.min(
-                          (currentPage - 1) * entriesPerPage + 1,
-                          trainers.length
-                        )}{" "}
-                        to{" "}
-                        {Math.min(
-                          currentPage * entriesPerPage,
-                          trainers.length
-                        )}{" "}
-                        of {trainers.length} entries
-                      </div>
-                      <nav className="dataTable-pagination">
-                        <ul className="dataTable-pagination-list">
-                          {currentPage > 1 && (
-                            <li className="page-item">
-                              <button
-                                className="page-link prev-button"
-                                onClick={() => setCurrentPage(currentPage - 1)}
-                              >
-                                ‹
-                              </button>
-                            </li>
-                          )}
-
-                          {Array.from(
-                            {
-                              length: Math.ceil(
-                                trainers.length / entriesPerPage
-                              ),
-                            },
-                            (_, index) => (
-                              <li
-                                key={index + 1}
-                                className={`page-item ${
-                                  currentPage === index + 1 ? "active" : ""
-                                }`}
-                              >
-                                <button
-                                  className="page-link"
-                                  onClick={() => setCurrentPage(index + 1)}
-                                  style={{
-                                    backgroundColor:
-                                      currentPage === index + 1
-                                        ? "#d9d9d9"
-                                        : "transparent",
-                                    color: "#6FD943",
-                                  }}
-                                >
-                                  {index + 1}
-                                </button>
-                              </li>
-                            )
-                          )}
-
-                          {currentPage <
-                            Math.ceil(trainers.length / entriesPerPage) && (
-                            <li className="page-item">
-                              <button
-                                className="page-link next-button"
-                                onClick={() => setCurrentPage(currentPage + 1)}
-                              >
-                                ›
-                              </button>
-                            </li>
-                          )}
-                        </ul>
-                      </nav>
-                    </div>
                   </div>
                 </div>
               </div>
+              <div className="dataTable-bottom">
+                  <div className="dataTable-info d-none d-md-block">
+                    Showing{" "}
+                    {Math.min(
+                      (currentPage - 1) * entriesPerPage + 1,
+                      trainers.length
+                    )}{" "}
+                    to {Math.min(currentPage * entriesPerPage, trainers.length)}{" "}
+                    of {trainers.length} entries
+                  </div>
+                  <nav className="dataTable-pagination">
+                    <ul className="dataTable-pagination-list">
+                      {currentPage > 1 && (
+                        <li className="page-item">
+                          <button
+                            className="page-link prev-button"
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                          >
+                            ‹
+                          </button>
+                        </li>
+                      )}
+
+                      {Array.from(
+                        {
+                          length: Math.ceil(trainers.length / entriesPerPage),
+                        },
+                        (_, index) => (
+                          <li
+                            key={index + 1}
+                            className={`page-item ${
+                              currentPage === index + 1 ? "active" : ""
+                            }`}
+                          >
+                            <button
+                              className="page-link"
+                              onClick={() => setCurrentPage(index + 1)}
+                              style={{
+                                backgroundColor:
+                                  currentPage === index + 1
+                                    ? "#d9d9d9"
+                                    : "transparent",
+                                color: "#6FD943",
+                              }}
+                            >
+                              {index + 1}
+                            </button>
+                          </li>
+                        )
+                      )}
+
+                      {currentPage <
+                        Math.ceil(trainers.length / entriesPerPage) && (
+                        <li className="page-item">
+                          <button
+                            className="page-link next-button"
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                          >
+                            ›
+                          </button>
+                        </li>
+                      )}
+                    </ul>
+                  </nav>
+                </div>
             </div>
           </div>
         </div>

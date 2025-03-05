@@ -1,18 +1,10 @@
 import React, { useState } from "react";
 // import getAPI from "../../../api/getAPI";
 import ConfirmationDialog from "../ConfirmationDialog";
-// import { RiDeleteBinLine } from "react-icons/ri";
-// import { HiOutlineTicket } from "react-icons/hi";
-// import { TbArrowBackUp } from "react-icons/tb";
 import ReactApexChart from "react-apexcharts";
 import { Link } from "react-router-dom";
 
-// import { Link } from "react-router-dom";
-
 const TicketDashboard = ({tickets, setTickets, fetchTickets, loading, setLoading, error, setError, chartSeries, setChartSeries, chartOptions, setChartOptions}) => {
-  // const [tickets, setTickets] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [ticketToDelete, setTicketToDelete] = useState(null);
 
@@ -21,46 +13,6 @@ const TicketDashboard = ({tickets, setTickets, fetchTickets, loading, setLoading
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-
-
-
-  // const [chartSeries, setChartSeries] = useState([0, 0, 0]); 
-  // const [chartOptions, setChartOptions] = useState({
-  //   chart: {
-  //     type: "donut", // Change from 'pie' to 'donut'
-  //   },
-  //   labels: ["Open", "On Hold", "Closed"],
-  //   responsive: [
-  //     {
-  //       breakpoint: 400,
-  //       options: {
-  //         chart: {
-  //           width: 300,
-  //         },
-  //         legend: {
-  //           position: "bottom",
-  //         },
-  //       },
-  //     },
-  //   ],
-  //   plotOptions: {
-  //     pie: {
-  //       donut: {
-  //         size: '70%', // Adjust the size of the donut (ring) here
-  //       },
-  //     },
-  //   },
-  //   dataLabels: {
-  //     enabled: false,  // Disable data labels to prevent showing percentages
-  //   },
-
-  //   colors: ["#6ED943", "#FFA21D", "#FF3A6E"],
-
-  // });
-
-
-
-  // Initialize useNavigate hook
 
   const openDeleteDialog = (ticketId) => {
     setTicketToDelete(ticketId);
@@ -78,36 +30,6 @@ const TicketDashboard = ({tickets, setTickets, fetchTickets, loading, setLoading
     );
     closeDeleteDialog();
   };
-
-  // useEffect(() => {
-  //   // Fetch ticket data on component mount
-  //   const fetchTickets = async () => {
-  //     try {
-  //       const response = await getAPI("/ticket-getall", {}, true); 
-  //       setTickets(response.data.tickets); 
-  //       setLoading(false); 
-  //       updateChartData(response.data.tickets);
-  //     } catch (err) {
-  //       setError("Failed to fetch tickets"); 
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchTickets(); 
-  // }, []); 
-
-  // const updateChartData = (tickets) => {
-  //   const open = tickets.filter((ticket) => ticket.status === "open").length;
-  //   const onHold = tickets.filter((ticket) => ticket.status === "onhold").length;
-  //   const close = tickets.filter((ticket) => ticket.status === "close").length;
-  //   setChartSeries([open, onHold, close]);
-
-   
-  //   setChartOptions(prevOptions => ({
-  //     ...prevOptions,
-  //     labels: ["open", "onhold", "close"], 
-  //   }));
-  // };
 
   const totalTickets = tickets.length;
   const openTickets = tickets.filter(ticket => ticket.status === "open").length;
@@ -154,14 +76,6 @@ const TicketDashboard = ({tickets, setTickets, fetchTickets, loading, setLoading
   if (error) {
     return <div>{error}</div>;
   }
-
-  // const isNewTicket = (createdAt) => {
-  //   const now = new Date();
-  //   const createdDate = new Date(createdAt);
-  //   const diffInMilliseconds = now - createdDate;
-  //   return diffInMilliseconds <= 60000;
-  // };
-
 
   return (
     <div className="container">
@@ -222,11 +136,8 @@ const TicketDashboard = ({tickets, setTickets, fetchTickets, loading, setLoading
       {/* Table Section */}
       <div className="col-xl-12">
         <div className="card">
-          <div className="card-header card-body table-border-style">
-            <div className="table-responsive">
-              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                <div className="dataTable-top">
-                  <div className="dataTable-dropdown">
+        <div className="dataTable-top">
+                  <div className="dataTable-dropdown d-none d-md-block">
                     <label>
                       <select className="dataTable-selector"
                         value={entriesPerPage}
@@ -251,6 +162,10 @@ const TicketDashboard = ({tickets, setTickets, fetchTickets, loading, setLoading
                     />
                   </div>
                 </div>
+          <div className="card-header card-body table-border-style">
+            <div className="table-responsive">
+              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                
                 <div className="dataTable-container">
                   <table className="table dataTable-table" id="pc-dt-simple">
                     <thead>
@@ -343,25 +258,12 @@ const TicketDashboard = ({tickets, setTickets, fetchTickets, loading, setLoading
                                       <i className="ti ti-arrow-back-up"></i>
                                     </span>
                                   </Link>
-                                  {/* <a
-                                // href="https://demo.workdo.io/hrmgo/ticket/1/reply"
-
-                                className="mx-3 btn btn-sm align-items-center"
-                                data-bs-toggle="tooltip"
-                                data-title="Reply"
-                                title="Reply"
-                           
-                             
-                              >
-                                <span className="text-white">
-                                <TbArrowBackUp />
-                                </span>
-                              </a> */}
+                                 
                                 </div>
                                 <div className="action-btn bg-danger">
                                   <form
                                     method="POST"
-                                    action="https://demo.workdo.io/hrmgo/ticket/1"
+                                    
                                     acceptCharset="UTF-8"
                                     id="delete-form-1"
                                   >
@@ -395,8 +297,10 @@ const TicketDashboard = ({tickets, setTickets, fetchTickets, loading, setLoading
                   </table>
                 </div>
               </div>
-              <div className="dataTable-bottom">
-                <div className="dataTable-info">
+              
+            </div>
+            <div className="dataTable-bottom">
+                <div className="dataTable-info d-none d-md-block">
                   Showing {Math.min((currentPage - 1) * entriesPerPage + 1, tickets.length)}{" "}
                   to {Math.min(currentPage * entriesPerPage, tickets.length)}{" "}
                   of {tickets.length} entries
@@ -445,7 +349,6 @@ const TicketDashboard = ({tickets, setTickets, fetchTickets, loading, setLoading
                   </ul>
                 </nav>
               </div>
-            </div>
           </div>
         </div>
       </div>

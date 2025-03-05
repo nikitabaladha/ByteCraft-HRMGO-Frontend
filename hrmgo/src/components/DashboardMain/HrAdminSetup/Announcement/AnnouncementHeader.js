@@ -17,7 +17,7 @@ const AnnouncementHeader = ({ addAnnouncement }) => {
   };
   return (
     <>
-      <div className="page-header">
+      <div className="page-header"> 
         <div className="page-block">
           <div className="row align-items-center">
             <div className="col-auto">

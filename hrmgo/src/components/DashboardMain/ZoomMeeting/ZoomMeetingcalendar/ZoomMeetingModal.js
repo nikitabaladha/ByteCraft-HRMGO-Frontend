@@ -104,7 +104,7 @@ const ZoomMeetingModal = ({ onClose }) => {
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={onClose}></button>
           </div>
           <div className="modal-body">
-            <form onSubmit={handleSubmit} method="POST" action="https://demo.workdo.io/hrmgo/zoom-meeting" acceptCharset="UTF-8" encType="multipart/form-data" autoComplete="off" className="needs-validation" noValidate>
+            <form onSubmit={handleSubmit} method="POST" acceptCharset="UTF-8" encType="multipart/form-data" autoComplete="off" className="needs-validation" noValidate>
               <div className="row">
                 <div className="col-lg-6 col-md-6 col-sm-6">
                   <div className="form-group">

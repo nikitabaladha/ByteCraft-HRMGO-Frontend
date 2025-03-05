@@ -33,7 +33,7 @@ const TicketReplyHeader = () => {
                                 </h4>
                             </div>
                             <ul className="breadcrumb">
-                                <li className="breadcrumb-item"><Link to="/hrmgo/dashboard">Home</Link></li>
+                                <li className="breadcrumb-item"><Link to="/dashboard">Home</Link></li>
                                 <li className="breadcrumb-item">Zoom Meeting</li>
                             </ul>
                         </div>

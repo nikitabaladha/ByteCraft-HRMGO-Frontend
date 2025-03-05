@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { TbUsers } from "react-icons/tb";
 import { HiOutlineTicket } from "react-icons/hi";
 import { TbWallet } from "react-icons/tb";
+import { Link } from "react-router-dom";
 
 const DashboardMetrics = () => {
   const [jobs, setJobs] = useState([]);
@@ -96,7 +97,7 @@ const DashboardMetrics = () => {
                       <div className="ms-3">
                         <small className="text-muted">Total</small>
                         <h6 className="m-0">
-                          <a href="https://demo.workdo.io/hrmgo/user">Staff</a>
+                          <Link>Staff</Link>
                         </h6>
                       </div>
                     </div>
@@ -121,9 +122,9 @@ const DashboardMetrics = () => {
                       <div className="ms-3">
                         <small className="text-muted">Total</small>
                         <h6 className="m-0">
-                          <a href="https://demo.workdo.io/hrmgo/ticket">
+                          <Link>
                             Trainer
-                          </a>
+                          </Link>
                         </h6>
                       </div>
                     </div>
@@ -148,9 +149,9 @@ const DashboardMetrics = () => {
                       <div className="ms-3">
                         <small className="text-muted">Total</small>
                         <h6 className="m-0">
-                          <a href="https://demo.workdo.io/hrmgo/accountlist">
+                          <Link>
                             Account Balance
-                          </a>
+                          </Link>
                         </h6>
                       </div>
                     </div>
@@ -195,14 +196,14 @@ const DashboardMetrics = () => {
                     <div className="d-flex align-items-center">
                       <div className="badge theme-avtar bg-info">
                         <svg
-                          xmlns="https://demo.workdo.io/hrmgo/storage/uploads/job/icons/active.svg"
+                          xmlns="/storage/uploads/Icon/active.svg"
                           width="40"
                           height="40"
                           viewBox="0 0 40 40"
                         >
                           <rect width="20" height="20" fill="none"></rect>
                           <image
-                            href="https://demo.workdo.io/hrmgo/storage/uploads/job/icons/active.svg"
+                            href="/storage/uploads/Icon/active.svg"
                             x="0"
                             y="0"
                             width="40"
@@ -234,14 +235,14 @@ const DashboardMetrics = () => {
                     <div className="d-flex align-items-center">
                       <div className="badge theme-avtar bg-warning">
                         <svg
-                          xmlns="https://demo.workdo.io/hrmgo/storage/uploads/job/icons/inactive.svg"
+                          xmlns="/storage/uploads/Icon/inactive.svg"
                           width="40"
                           height="40"
                           viewBox="0 0 40 40"
                         >
                           <rect width="20" height="20" fill="none"></rect>
                           <image
-                            href="https://demo.workdo.io/hrmgo/storage/uploads/job/icons/inactive.svg"
+                            href="/storage/uploads/Icon/inactive.svg"
                             x="0"
                             y="0"
                             width="40"

@@ -43,12 +43,12 @@ const CreateOvertimeModal = ({ onClose, employee}) => {
                         <h5 className="modal-title" id="exampleModalLabel">Create Overtime</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={onClose}></button>
                     </div>
-                    <form onSubmit={handleSubmit} method="POST" action="https://demo.workdo.io/hrmgo/overtime" acceptCharset="UTF-8" className="needs-validation" noValidate>
+                    <form onSubmit={handleSubmit} method="POST" acceptCharset="UTF-8" className="needs-validation" noValidate>
                         <input name="_token" type="hidden" value="1UQqfCPtfBqtDR2dy3MAMmpeCd2m0ES7nCQxTiKw" />
                         <input name="employee_id" type="hidden" />
                         <div className="modal-body">
                             <div className="card-footer text-end">
-                                <Link href="#" className="btn btn-sm btn-primary" data-size="medium" data-ajax-popup-over="true" data-url="https://demo.workdo.io/hrmgo/generate/overtime" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate" data-title="Generate Content With AI">
+                                <Link href="#" className="btn btn-sm btn-primary" data-size="medium" data-ajax-popup-over="true"  data-bs-toggle="tooltip" data-bs-placement="top" title="Generate" data-title="Generate Content With AI">
                                     <i className="fas fa-robot"></i> Generate With AI
                                 </Link>
                             </div>

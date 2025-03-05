@@ -7,7 +7,6 @@ import ConfirmationDialog from "../../ConfirmationDialog"
 const BranchTable = ({branches, setBranches, fetchBranches}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBranch, setSelectedBranch] = useState(null);
-  // const [branches, setBranches] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [branchToDelete, setBranchToDelete] = useState(null);
 
@@ -53,23 +52,6 @@ const BranchTable = ({branches, setBranches, fetchBranches}) => {
     closeDeleteDialog();
   };
 
-  // useEffect(() => {
-  //   const fetchBranches = async () => {
-  //     try {
-  //       const response = await getAPI("/branch-get-all", true);
-  //       if (!response.hasError) {
-  //         setBranches(response.data.data);
-  //       } else {
-  //         toast.error(`Failed to fetch branches: ${response.message}`);
-  //       }
-  //     } catch (error) {
-  //       toast.error("An error occurred while fetching branches.");
-  //     }
-  //   };
-
-  //   fetchBranches();
-  // }, []);
-
   const handleEdit = (branch) => {
     setSelectedBranch(branch);
     setIsModalOpen(true);
@@ -82,17 +64,14 @@ const BranchTable = ({branches, setBranches, fetchBranches}) => {
 
   return (
     <div className="row">
-      <div className="col-3">
-        <Sidebar />
-      </div>
+      <div className="col-12 col-md-3">
+  <Sidebar />
+</div>
 
-      <div className="col-9">
+      <div className="col-12 col-md-9">
         <div className="card">
-          <div className="card-body table-border-style">
-            <div className="table-responsive">
-              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                <div className="dataTable-top">
-                  <div className="dataTable-dropdown">
+        <div className="dataTable-top">
+                  <div className="dataTable-dropdown d-none d-md-block">
                     <label>
                       <select
                         className="dataTable-selector"
@@ -118,6 +97,10 @@ const BranchTable = ({branches, setBranches, fetchBranches}) => {
                     />
                   </div>
                 </div>
+          <div className="card-body table-border-style">
+            <div className="table-responsive">
+              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                
                 <div className="dataTable-container">
                   <table className="table datatable dataTable-table">
                     <thead>
@@ -148,7 +131,7 @@ const BranchTable = ({branches, setBranches, fetchBranches}) => {
                                 </div>
 
                                 <div className="action-btn bg-danger">
-                                  <form method="POST" action={`/hrmgo/branch`} acceptCharset="UTF-8" id={`delete-form`}>
+                                  <form method="POST" acceptCharset="UTF-8" id={`delete-form`}>
                                     <input name="_method" type="hidden" value="DELETE" />
                                     <input name="_token" type="hidden" value="OYzJQFXWqx1d9iWbHPH2ntDxxtmt4I8jLovG1Fuv" />
                                     <Link
@@ -172,8 +155,11 @@ const BranchTable = ({branches, setBranches, fetchBranches}) => {
                     </tbody>
                   </table>
                 </div>
-                <div className="dataTable-bottom">
-                  <div className="dataTable-info">
+
+              </div>
+            </div>
+            <div className="dataTable-bottom">
+                  <div className="dataTable-info d-none d-md-block">
                     Showing {Math.min((currentPage - 1) * entriesPerPage + 1, branches.length)}{" "}
                     to {Math.min(currentPage * entriesPerPage, branches.length)}{" "}
                     of {branches.length} entries
@@ -223,9 +209,6 @@ const BranchTable = ({branches, setBranches, fetchBranches}) => {
                   </nav>
                 </div>
 
-
-              </div>
-            </div>
           </div>
         </div>
       </div>

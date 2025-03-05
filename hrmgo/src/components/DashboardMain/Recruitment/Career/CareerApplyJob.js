@@ -421,30 +421,6 @@ const CareerApplyJob = () => {
                         </div>
                       )
                     )}
-                  {/* <div className="form-group col-md-12">
-                    <div className="form-check custom-checkbox">
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        id="termsCheckbox"
-                        name="terms_condition_check"
-                        required
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="termsCheckbox"
-                      >
-                        Accept
-                        <a
-                          href="https://demo.workdo.io/hrmgo/terms_and_condition/5"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          terms and conditions
-                        </a>
-                      </label>
-                    </div> */}
-                  {/* </div> */}
                   <div className="col-12">
                     <div className="text-center mt-4">
                       <button type="submit" className="btn btn-primary">

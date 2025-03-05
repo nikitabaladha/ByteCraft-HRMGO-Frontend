@@ -28,23 +28,7 @@ const JobOnBoardingHeader = () => {
             <li className="breadcrumb-item">Job On-Boarding</li>
           </ul>
         </div>
-        {/* <div className="col">
-          <div className="float-end ">
-            <Link
-              to="#"
-              onClick={handleModalOpen}
-              data-url="https://demo.workdo.io/hrmgo/job-onboard/create/0"
-              data-ajax-popup="true"
-              data-title="Create New Job On-Boarding"
-              data-bs-toggle="tooltip"
-              title=""
-              className="btn btn-sm btn-primary"
-              data-bs-original-title="Create"
-            > */}
-              {/* <FiPlus classNameName="text-white" /> */}
-            {/* </Link>
-          </div> */}
-        {/* </div> */}
+       
       </div>
       {/* {isModalOpen && <JobOnBoardingCreate onClose={handleModalClose} />} */}
     </>

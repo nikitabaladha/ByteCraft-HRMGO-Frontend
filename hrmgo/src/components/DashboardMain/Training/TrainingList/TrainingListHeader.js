@@ -75,15 +75,14 @@ const TrainingListHeader = ({ fetchTrainings, trainings }) => {
             </div>
             <div className="col">
               <div className="float-end">
-                <a
-                  href="https://demo.workdo.io/hrmgo/export/training"
+                <Link
                   className="btn btn-sm btn-primary me-1"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Export"
                   onClick={handleExportToExcel}
                 >
                   <TbFileExport className="text-white" />
-                </a>
+                </Link>
 
                 <button
                   onClick={handleModalOpen}

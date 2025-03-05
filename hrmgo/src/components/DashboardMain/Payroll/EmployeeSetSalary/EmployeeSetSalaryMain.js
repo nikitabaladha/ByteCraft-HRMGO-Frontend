@@ -516,7 +516,7 @@ useEffect(() => {
                                                             <div className="action-btn bg-danger">
                                                                 <form
                                                                     method="POST"
-                                                                    action={`https://demo.workdo.io/hrmgo/allowance`}
+                                                                    
                                                                     acceptCharset="UTF-8"
                                                                     id={`delete-form`}
                                                                 >
@@ -1064,7 +1064,7 @@ useEffect(() => {
                                                             <div className="action-btn bg-danger">
                                                                 <form
                                                                     method="POST"
-                                                                    action={`https://demo.workdo.io/hrmgo/overtime`}
+                                                                    
                                                                     acceptCharset="UTF-8"
                                                                     id={`delete-form`}
                                                                 >

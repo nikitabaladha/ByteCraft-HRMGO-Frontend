@@ -14,27 +14,12 @@ const InterviewScheduleHeader = () => {
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <Link to="https://demo.workdo.io/hrmgo/dashboard">Home</Link>
+                  <Link to="/dashboard">Home</Link>
                 </li>
                 <li className="breadcrumb-item">Interview Schedule</li>
               </ul>
             </div>
-            {/* <div className="col">
-              <div className="float-end ">
-                <Link
-                  to="#"
-                  data-url="https://demo.workdo.io/hrmgo/interview-schedule/create"
-                  data-ajax-popup="true"
-                  data-title="Create New Interview Schedule"
-                  data-bs-toggle="tooltip"
-                  title=""
-                  className="btn btn-sm btn-primary"
-                  data-bs-original-title="Create"
-                > */}
-                  {/* <FiPlus/> */}
-                {/* </Link>
-              </div>
-            </div> */}
+            
           </div>
         </div>
       </div>

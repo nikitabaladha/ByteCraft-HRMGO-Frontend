@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import { TbPencil } from "react-icons/tb";
-// import { FaRegTrashAlt, FaEye } from "react-icons/fa";
 import getAPI from "../../../../api/getAPI";
 import TrainingListUpdateModel from "./TrainingListUpdateModel";
 import ConfirmationDialog from "../../ConfirmationDialog";
@@ -10,7 +8,6 @@ import { formatDate } from "../../../../js/custom";
 
 
 const TrainingListTable = ({trainings, setTrainings, fetchTrainings}) => {
-  // const [trainings, setTrainings] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState(null); 
@@ -139,11 +136,8 @@ const openDeleteDialog = (training) => {
       <div className="row">
         <div className="col-xl-12">
           <div className="card">
-            <div className="card-header card-body table-border-style">
-              <div className="table-responsive">
-                <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                  <div className="dataTable-top">
-                    <div className="dataTable-dropdown">
+          <div className="dataTable-top">
+                    <div className="dataTable-dropdown d-none d-md-block">
                       <label>
                         <select
                           className="dataTable-selector"
@@ -169,6 +163,10 @@ const openDeleteDialog = (training) => {
                       />
                     </div>
                   </div>
+            <div className="card-header card-body table-border-style">
+              <div className="table-responsive">
+                <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                  
                   <div className="dataTable-container">
                     <table className="table dataTable-table" id="pc-dt-simple">
                   <thead>
@@ -224,8 +222,11 @@ const openDeleteDialog = (training) => {
                   )}
                   </tbody>
                 </table>
-                <div className="dataTable-bottom">
-                      <div className="dataTable-info">
+                
+              </div>
+            </div>
+            <div className="dataTable-bottom">
+                      <div className="dataTable-info d-none d-md-block">
                         Showing{" "}
                         {Math.min(
                           (currentPage - 1) * entriesPerPage + 1,
@@ -295,8 +296,6 @@ const openDeleteDialog = (training) => {
                         </ul>
                       </nav>
                     </div>
-              </div>
-            </div>
           </div>
         </div>
         </div>

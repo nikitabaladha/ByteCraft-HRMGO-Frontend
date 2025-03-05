@@ -13,7 +13,7 @@ const PayslipHeader = () => {
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <Link to="/hrmgo/dashboard">Dashboard</Link>
+                  <Link to="/dashboard">Dashboard</Link>
                 </li>
                 <li className="breadcrumb-item">Payslip</li>
               </ul>

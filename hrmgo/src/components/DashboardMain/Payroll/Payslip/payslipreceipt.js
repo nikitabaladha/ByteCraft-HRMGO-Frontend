@@ -285,22 +285,13 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
                 >
                   <span className="fa fa-download"></span>
                 </Link>
-                {/* <Link
-                  title="Mail Send"
-                  href="https://demo.workdo.io/hrmgo/payslip/send/5/2024-10"
-                  className="btn btn-sm btn-warning"
-                >
-                  <span className="fa fa-paper-plane"></span>
-                </Link> */}
+               
               </div>
               <div className="invoice" id="printableArea">
                 <div className="row">
                   <div className="col-form-label">
                     <div className="invoice-number">
-                      <img
-                        alt="https://demo.workdo.io/hrmgo/storage/uploads/logo//logo-dark.png"
-                        width="170px"
-                      />
+                      
                     </div>
                     <div className="invoice-print">
                       <div className="row">

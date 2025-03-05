@@ -150,7 +150,7 @@ const EditExpenseModal = ({ isOpen, onClose, selectedExpense, fetchExpenses }) =
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={onClose}></button>
           </div>
           <div className="body">
-            <form method="POST" action="https://demo.workdo.io/hrmgo/expense" acceptCharset="UTF-8" className="needs-validation" noValidate onSubmit={handleSubmit}>
+            <form method="POST" acceptCharset="UTF-8" className="needs-validation" noValidate onSubmit={handleSubmit}>
               <div className="modal-body">
                 <div className="row">
                   {/* Account Field */}

@@ -1,4 +1,3 @@
-// HRMGO\hrmgo\src\api\putAPI.js
 
 import axiosInstance from "./axiosConfig";
 

@@ -111,7 +111,6 @@ const Login = () => {
                     <div className="d-flex flex-wrap align-items-center justify-content-between mb-4">
                       <span>
                         <Link
-                          to="https://demo.workdo.io/hrmgo/forgot-password/en"
                           tabIndex={0}
                         >
                           Forgot Your Password?

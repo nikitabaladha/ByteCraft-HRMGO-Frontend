@@ -1,4 +1,3 @@
-// ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Dashboard\Report\Leave\LeaveHeader.js
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 // import { MdOutlineFileDownload } from "react-icons/md";
@@ -79,7 +78,7 @@ const LeaveHeader = ({ leaveData }) => {
 
   return (
     <>
-      <div className="page-header">
+      {/* <div className="page-header">
         <div className="page-block">
           <div className="row align-items-center">
             <div className="col-auto">
@@ -96,7 +95,7 @@ const LeaveHeader = ({ leaveData }) => {
             <div className="col">
               <div className="float-end ">
                 <Link
-                  className="btn btn-sm btn-primary me-2"
+                  className="btn btn-sm btn-primary"
                   onClick={saveAsPDF}
                   data-bs-toggle="tooltip"
                   title="Download"
@@ -104,7 +103,6 @@ const LeaveHeader = ({ leaveData }) => {
                   style={{ marginRight: 5 }}
                 >
                   <span className="btn-inner--icon">
-                    {/* <MdOutlineFileDownload /> */}
                     <i className="ti ti-download"></i>
                   </span>
                 </Link>
@@ -114,7 +112,47 @@ const LeaveHeader = ({ leaveData }) => {
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Export"
                 >
-                  {/* <TbFileExport /> */}
+                  <i className="ti ti-file-export"></i>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> */}
+
+      <div className="page-header">
+        <div className="page-block">
+          <div className="row align-items-center">
+            <div className="col-auto">
+              <div className="page-header-title">
+                <h4 className="m-b-10">Manage Leave Report</h4>
+              </div>
+              <ul className="breadcrumb">
+                <li className="breadcrumb-item">
+                  <Link to="/dashboard">Home</Link>
+                </li>
+                <li className="breadcrumb-item">Leave Report</li>
+              </ul>
+            </div>
+            <div className="col">
+              <div className="d-flex flex-row flex-sm-row align-items-center gap-2 float-end"> 
+                <Link
+                  className="btn btn-sm btn-primary"
+                  onClick={saveAsPDF}
+                  data-bs-toggle="tooltip"
+                  title="Download"
+                  data-original-title="Download"
+                >
+                  <span className="btn-inner--icon">
+                    <i className="ti ti-download"></i>
+                  </span>
+                </Link>
+                <Link
+                  onClick={exportData}
+                  className="btn btn-sm btn-primary"
+                  data-bs-toggle="tooltip"
+                  data-bs-original-title="Export"
+                >
                   <i className="ti ti-file-export"></i>
                 </Link>
               </div>

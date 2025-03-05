@@ -60,7 +60,6 @@ const CreatePayerModal = ({ closeModal, fetchPayers }) => {
             <form
               onSubmit={handleSubmit} 
               method="POST"
-              action="https://demo.workdo.io/hrmgo/payers"
               acceptCharset="UTF-8"
               className="needs-validation"
               noValidate

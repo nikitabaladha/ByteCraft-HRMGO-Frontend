@@ -34,11 +34,8 @@ const PayrollReportTable = ({ payrollData }) => {
     <div className="row">
       <div className="col-xl-12">
         <div className="card">
-          <div className="card-header card-body table-border-style">
-            <div className="table-responsive">
-              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                <div className="dataTable-top">
-                  <div className="dataTable-dropdown">
+        <div className="dataTable-top">
+                  <div className="dataTable-dropdown d-none d-md-block">
                     <label>
                       <select
                         className="dataTable-selector"
@@ -64,6 +61,10 @@ const PayrollReportTable = ({ payrollData }) => {
                     />
                   </div>
                 </div>
+          <div className="card-header card-body table-border-style">
+            <div className="table-responsive">
+              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                
                 <div className="dataTable-container">
                   <table className="table datatable mb-0 dataTable-table" id="report-dataTable">
                     <thead>
@@ -94,8 +95,12 @@ const PayrollReportTable = ({ payrollData }) => {
                     </tbody>
                   </table>
                 </div>
-                <div className="dataTable-bottom">
-                  <div className="dataTable-info">
+                
+
+              </div>
+            </div>
+            <div className="dataTable-bottom">
+                  <div className="dataTable-info d-none d-md-block">
                     Showing {Math.min((currentPage - 1) * entriesPerPage + 1, payrollData.length)}{" "}
                     to {Math.min(currentPage * entriesPerPage, payrollData.length)}{" "}
                     of {payrollData.length} entries
@@ -144,9 +149,6 @@ const PayrollReportTable = ({ payrollData }) => {
                     </ul>
                   </nav>
                 </div>
-
-              </div>
-            </div>
           </div>
         </div>
       </div>

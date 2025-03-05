@@ -212,7 +212,7 @@ const PayslipTable = () => {
           <div className="card-body">
             <form
               method="POST"
-              action="https://demo.workdo.io/hrmgo/payslip"
+              
               acceptCharset="UTF-8"
               id="payslip_form"
             >
@@ -336,7 +336,7 @@ const PayslipTable = () => {
                   </div>
                   <form
                     method="POST"
-                    action="https://demo.workdo.io/hrmgo/export/payslip"
+                    
                     acceptCharset="UTF-8"
                     id="payslip_form"
                   // onSubmit={handleSubmit}

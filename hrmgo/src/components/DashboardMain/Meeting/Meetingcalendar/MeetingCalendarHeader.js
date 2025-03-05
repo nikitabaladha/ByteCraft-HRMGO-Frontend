@@ -33,17 +33,17 @@ const TicketReplyHeader = () => {
                                 </h4>
                             </div>
                             <ul className="breadcrumb">
-                                <li className="breadcrumb-item"><Link to="/hrmgo/dashboard">Home</Link></li>
+                                <li className="breadcrumb-item"><Link to="/dashboard">Home</Link></li>
                                 <li className="breadcrumb-item">Meeting</li>
                             </ul>
                         </div>
                         <div className="col">
-                            <div className="float-end">
+                        <div className="d-flex flex-row flex-sm-row align-items-center gap-2 float-end">
                                 <button
                                     onClick={goTolist}
                                     data-bs-toggle="tooltip"
                                     title="List View"
-                                    className="btn btn-sm btn-primary me-2"
+                                    className="btn btn-sm btn-primary"
                                 >
                                     {/* <GoListUnordered /> */}
                                     <i className="ti ti-list"></i>

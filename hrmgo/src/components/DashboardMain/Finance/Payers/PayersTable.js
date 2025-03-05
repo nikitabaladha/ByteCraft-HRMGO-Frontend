@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-// import { HiOutlinePencil } from "react-icons/hi";
-// import { RiDeleteBinLine } from "react-icons/ri";
 import EditPayerModal from "./EditPayerModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
-// import getAPI from "../../../../api/getAPI";
-// import { ToastContainer } from "react-toastify";
 
 const PayersTable = ({payers, setPayers, fetchPayers}) => {
-  // const [payers, setPayers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPayer, setSelectedPayer] = useState(null);
 
@@ -35,19 +30,6 @@ const PayersTable = ({payers, setPayers, fetchPayers}) => {
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
-
-  // useEffect(() => {
-  //   const fetchPayers = async () => {
-  //     try {
-  //       const response = await getAPI(`/getall_Payer`, {}, true);
-  //       setPayers(response.data.data);
-  //     } catch (err) {
-  //       console.log("Failed to fetch payers");
-  //     }
-  //   };
-
-  //   fetchPayers();
-  // }, []);
 
   const openModal = (payee) => {
     setSelectedPayer(payee);
@@ -80,11 +62,8 @@ const PayersTable = ({payers, setPayers, fetchPayers}) => {
     <div className="row">
       <div className="col-xl-12">
         <div className="card">
-          <div className="card-header card-body table-border-style">
-            <div className="table-responsive">
-              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                <div className="dataTable-top">
-                  <div className="dataTable-dropdown">
+        <div className="dataTable-top">
+                  <div className="dataTable-dropdown d-none d-md-block">
                     <label>
                       <select
                         className="dataTable-selector"
@@ -110,6 +89,10 @@ const PayersTable = ({payers, setPayers, fetchPayers}) => {
                     />
                   </div>
                 </div>
+          <div className="card-header card-body table-border-style">
+            <div className="table-responsive">
+              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+               
                 <div className="dataTable-container">
                   <table className="table dataTable-table" id="pc-dt-simple">
                     <thead>
@@ -163,8 +146,11 @@ const PayersTable = ({payers, setPayers, fetchPayers}) => {
                     </tbody>
                   </table>
                 </div>
-                <div className="dataTable-bottom">
-                  <div className="dataTable-info">
+                
+              </div>
+            </div>
+            <div className="dataTable-bottom">
+                  <div className="dataTable-info d-none d-md-block">
                     Showing{" "}
                     {Math.min(
                       (currentPage - 1) * entriesPerPage + 1,
@@ -226,8 +212,6 @@ const PayersTable = ({payers, setPayers, fetchPayers}) => {
                     </ul>
                   </nav>
                 </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

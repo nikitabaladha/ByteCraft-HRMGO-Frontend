@@ -1,11 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { IoIosArrowForward } from "react-icons/io";
-
+ 
 const Sidebar = () => {
     const location = useLocation();
     const [activeItem, setActiveItem] = useState(location.pathname);
-
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const sidebarRef = useRef(null);
+ 
+    useEffect(() => {
+        setActiveItem(location.pathname);
+ 
+        // Handle window resize to check if mobile view
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+ 
+        window.addEventListener('resize', handleResize);
+ 
+        // Restore scroll position
+        const savedScrollPosition = sessionStorage.getItem('sidebarScrollPosition');
+        if (savedScrollPosition && sidebarRef.current) {
+            sidebarRef.current.scrollLeft = parseInt(savedScrollPosition, 10);
+        }
+ 
+        return () => window.removeEventListener('resize', handleResize);
+    }, [location]);
+ 
+    // Save scroll position before unmounting
+    const handleScroll = () => {
+        if (sidebarRef.current) {
+            sessionStorage.setItem('sidebarScrollPosition', sidebarRef.current.scrollLeft);
+        }
+    };
+ 
     const menuItems = [
         { path: '/dashboard/hrm-system-branch', label: 'Branch' },
         { path: '/dashboard/hrm-system-department', label: 'Department' },
@@ -27,29 +55,35 @@ const Sidebar = () => {
         { path: '/dashboard/hrm-system-paymenttype', label: 'Payment Type' },
         { path: '/dashboard/hrm-system-contract_type', label: 'Contract Type' },
     ];
-
-    useEffect(() => {
-        setActiveItem(location.pathname);
-    }, [location]);
-
+ 
     return (
-        <div className="card sticky-top" style={{ top: '30px' }}>
-            <div className="list-group list-group-flush" id="useradd-sidenav">
+        <div
+            className="card sticky-top d-flex flex-column"
+            style={{ top: '30px', width: '100%', overflowX: 'auto' }}
+            ref={sidebarRef}
+            onScroll={handleScroll}
+        >
+            <div className="list-group list-group-flush d-flex flex-row flex-md-column" id="useradd-sidenav">
                 {menuItems.map((item, index) => (
-                    <Link
-                        key={index}
-                        to={item.path}
-                        className={`list-group-item list-group-item-action border-0${activeItem === item.path ? ' active' : ''}`}
-                    >
-                        {item.label}
-                        <div className="float-end">
-                              <IoIosArrowForward />
-                        </div>
-                    </Link>
+                     <Link
+                                           key={index}
+                                           to={item.path}
+                                           className={`list-group-item list-group-item-action border-0${activeItem === item.path ? ' active' : ''}`}
+                                           style={{
+                                               whiteSpace: 'nowrap',
+                                               overflow: 'visible',
+                                               flex: isMobile ? '1 1 auto' : '0 0 auto',
+                                           }}
+                                       >
+                                           {item.label}
+                                           <div className="float-end d-none d-md-block">
+                                               <IoIosArrowForward />
+                                           </div>
+                                       </Link>
                 ))}
             </div>
         </div>
     );
 };
-
+ 
 export default Sidebar;

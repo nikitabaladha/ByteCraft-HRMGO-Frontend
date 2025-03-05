@@ -41,7 +41,7 @@ const RoleHeader = ({fetchRoles}) => {
           <div className="col">
             <div className="float-end">
             <Link
-                  // to="https://demo.workdo.io/hrmgo/trainer/create"
+                 
                   onClick={handleCreateClick}
                   data-title="Create New Employee"
                   data-bs-toggle="tooltip"

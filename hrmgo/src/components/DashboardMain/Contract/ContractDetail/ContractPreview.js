@@ -147,7 +147,7 @@ const ContractPreview = () => {
                 <div
                   className="card mt-5"
                   id="printTable"
-                  style={{ marginLeft: 180, marginRight: "-57px" }}
+                  // style={{ marginLeft: 180, marginRight: "-57px" }}
                 >
                   <div className="card-body">
                     <div className="row invoice-title mt-2">

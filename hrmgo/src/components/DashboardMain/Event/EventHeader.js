@@ -30,7 +30,7 @@ const EventHeader = () => {
                                 </h4>
                             </div>
                             <ul className="breadcrumb">
-                                <li className="breadcrumb-item"><Link to="/hrmgo/dashboard">Home</Link></li>
+                                <li className="breadcrumb-item"><Link to="/dashboard">Home</Link></li>
                                 <li className="breadcrumb-item">Event</li>
                             </ul>
                         </div>

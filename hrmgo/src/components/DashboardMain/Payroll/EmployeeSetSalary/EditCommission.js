@@ -71,7 +71,7 @@ const UpdateCommissionModal = ({ onClose, commissionData, employee }) => {
                     <form onSubmit={handleSubmit}>
                         <div className="modal-body">
                             <div className="card-footer text-end">
-                                <Link href="#" className="btn btn-sm btn-primary" data-size="medium" data-ajax-popup-over="true" data-url="https://demo.workdo.io/hrmgo/generate/commission" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate" data-title="Generate Content With AI">
+                                <Link href="#" className="btn btn-sm btn-primary" data-size="medium" data-ajax-popup-over="true"  data-bs-toggle="tooltip" data-bs-placement="top" title="Generate" data-title="Generate Content With AI">
                                     <i className="fas fa-robot"></i> Generate With AI
                                 </Link>
                             </div>

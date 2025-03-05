@@ -179,6 +179,21 @@ const Messagess = () => {
     }
   };
 
+  const [isVisible, setIsVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 980);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 980);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const toggleVisibility = () => {
+    if (isMobile) {
+      setIsVisible((prev) => !prev);
+    }
+  };
+
   return (
     <>
       <div className="row">
@@ -191,7 +206,11 @@ const Messagess = () => {
               >
                 <div
                   className="messenger-listView"
-                  style={{ height: "75vh", overflowY: "auto" }}
+                  style={{
+                    height: "75vh",
+                    overflowY: "auto",
+                    display: isMobile && !isVisible ? "none" : "block",
+                  }}
                 >
                   <div className="m-header">
                     <nav>
@@ -258,7 +277,7 @@ const Messagess = () => {
                                   fetchMessages(conversationId, user)
                                 }
                               >
-                                <tbody>
+                                <tbody onClick={toggleVisibility}>
                                   <tr data-action={0}>
                                     <td style={{ position: "relative" }}>
                                       <div
@@ -339,14 +358,14 @@ const Messagess = () => {
                 </div>
                 <div
                   className="messenger-messagingView"
-                  style={{ flexGrow: 1 }}
+                  style={{ flexGrow: 1 , display: isMobile && isVisible ? "none" : "block",}}
                 >
                   {messages?.receiver?.name && (
                     <div className="m-header m-header-messaging">
                       <nav className="d-flex align-items-center justify-content-between">
                         <div style={{ display: "flex" }}>
                           <Link href="#" className="show-listView">
-                            <FaArrowLeft />
+                            <FaArrowLeft onClick={toggleVisibility} />
                           </Link>
                           <div
                             className="avatar av-s header-avatar"
@@ -656,8 +675,7 @@ const Messagess = () => {
                                                   alignItems: "center",
                                                   justifyContent: "center",
                                                 }}
-                                              >
-                                              </div>
+                                              ></div>
                                             </div>
                                           </div>
                                         )}

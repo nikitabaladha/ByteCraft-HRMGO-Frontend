@@ -1,9 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { TbSearch, TbRefresh } from "react-icons/tb";
-// import { FaRegTrashAlt } from "react-icons/fa";
-// import { TbPencil } from "react-icons/tb";
 import { PiDotsThreeOutlineVerticalThin } from "react-icons/pi";
 // import { AiOutlineClockCircle } from "react-icons/ai";
 import getAPI from "../../../../api/getAPI";
@@ -96,8 +93,8 @@ const JobApplicationMainContent = ({ applications, setApplications }) => {
                   acceptCharset="UTF-8"
                   id="application_filter"
                 >
-                  <div className="d-flex align-items-center justify-content-end">
-                    <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+                   <div className="row align-items-center justify-content-end">
+                   <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box">
                         <label htmlFor="start_date" className="form-label">
                           Start Date
@@ -112,7 +109,7 @@ const JobApplicationMainContent = ({ applications, setApplications }) => {
                         />
                       </div>
                     </div>
-                    <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+                    <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box ">
                         <label htmlFor="end_date" className="form-label">
                           End Date
@@ -129,7 +126,7 @@ const JobApplicationMainContent = ({ applications, setApplications }) => {
                         id="end_date"
                       />
                     </div>
-                    <div className="col-xl-4 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+                    <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box">
                         <label htmlFor="job" className="form-label">
                           Job
@@ -152,7 +149,9 @@ const JobApplicationMainContent = ({ applications, setApplications }) => {
                         </select>
                       </div>
                     </div>
-                    <div className="col-auto float-end ms-2 mt-4">
+                    <div className="col-auto">
+                    <div className="row">
+                      <div className="col-auto mt-4">
                       <button
                         type="submit"
                         className="btn btn-sm btn-primary mx-2"
@@ -173,6 +172,8 @@ const JobApplicationMainContent = ({ applications, setApplications }) => {
                         <i className="ti ti-refresh"></i>
                       </Link>
                     </div>
+                  </div>
+                  </div>
                   </div>
                 </form>
               </div>
@@ -285,7 +286,7 @@ const JobApplicationMainContent = ({ applications, setApplications }) => {
                                 </ul>
                                 <Link to="#" className="user-group">
                                   <img
-                                    src="https://demo.workdo.io/hrmgo/storage/uploads/avatar/avatar.png"
+                                    src={`${process.env.REACT_APP_API_URL_FOR_IMAGE}${app.profile}`}
                                     alt="Avatar"
                                     className="img-fluid rounded border-2 border border-primary"
                                     width="30px"

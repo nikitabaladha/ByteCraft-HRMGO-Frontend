@@ -57,13 +57,15 @@ const AccountStatementSearchForm = ({
   };
 
   return (
-    <div className="col-sm-12 col-lg-12 col-xl-12 col-md-12">
-      <div className="mt-2">
+    <div className="col-sm-12">
+      <div className="mt-2" id="multiCollapseExample1">
         <div className="card">
           <div className="card-body">
             <form method="GET" acceptCharset="UTF-8" id="report_acc_filter">
-              <div className="d-flex align-items-center justify-content-end">
-                <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2 month">
+       <div className="row align-items-center justify-content-end">
+                <div className="col-xl-10">
+                  <div className="row">
+                    <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                   <div className="btn-box">
                     <label htmlFor="start_month" className="form-label">
                       Start Month
@@ -78,7 +80,7 @@ const AccountStatementSearchForm = ({
                     />
                   </div>
                 </div>
-                <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2 month">
+                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                   <div className="btn-box">
                     <label htmlFor="end_month" className="form-label">
                       End Month
@@ -93,7 +95,7 @@ const AccountStatementSearchForm = ({
                     />
                   </div>
                 </div>
-                <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+   <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                   <div className="btn-box">
                     <label htmlFor="account" className="form-label">
                       Account
@@ -113,7 +115,7 @@ const AccountStatementSearchForm = ({
                     </select>
                   </div>
                 </div>
-                <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+                 <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                   <div className="btn-box">
                     <label htmlFor="type" className="form-label">
                       Type
@@ -129,10 +131,14 @@ const AccountStatementSearchForm = ({
                     </select>
                   </div>
                 </div>
-                <div className="col-auto float-end ms-2 mt-4">
+</div>
+                </div>
+                 <div className="col-auto">
+                  <div className="row">
+                    <div className="col-auto mt-4">
                   <button
                     type="button"
-                    className="btn btn-sm btn-primary me-2"
+                    className="btn btn-sm btn-primary mx-2"
                     onClick={handleSearch}
                   >
                     <span className="btn-inner--icon">
@@ -152,6 +158,8 @@ const AccountStatementSearchForm = ({
                   </button>
                 </div>
               </div>
+</div>
+                </div>
             </form>
           </div>
         </div>

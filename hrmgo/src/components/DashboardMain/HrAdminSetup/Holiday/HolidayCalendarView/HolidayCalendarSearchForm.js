@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { TbRefresh } from "react-icons/tb";
-import { IoIosSearch } from "react-icons/io";
+// import { TbRefresh } from "react-icons/tb";
+// import { IoIosSearch } from "react-icons/io";
 import getAPI from "../../../../../api/getAPI";
 
 const HolidayCalendarSearchForm = ({ onSearchResults }) => {
@@ -63,12 +63,13 @@ const HolidayCalendarSearchForm = ({ onSearchResults }) => {
   return (
     <>
       <div className="row">
-        <div className="col-sm-12 col-lg-12 col-xl-12 col-md-12">
+        <div className="col-sm-12">
+        <div className="mt-2" id="multiCollapseExample1">
           <div className="card">
             <div className="card-body">
               <form method="GET" acceptCharset="UTF-8" id="holiday_filter">
-                <div className="d-flex align-items-center justify-content-end">
-                  <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+              <div className="row align-items-center justify-content-end">
+              <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                     <div className="btn-box">
                       <label htmlFor="start_date" className="form-label">
                         Start Date
@@ -84,7 +85,7 @@ const HolidayCalendarSearchForm = ({ onSearchResults }) => {
                       />
                     </div>
                   </div>
-                  <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+                  <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                     <div className="btn-box">
                       <label htmlFor="end_date" className="form-label">
                         End Date
@@ -100,14 +101,17 @@ const HolidayCalendarSearchForm = ({ onSearchResults }) => {
                       />
                     </div>
                   </div>
-                  <div className="col-auto float-end ms-2 mt-4">
+                  <div className="col-auto">
+                    <div className="row">
+                      <div className="col-auto mt-4">
                     <button
-                      className="btn btn-sm btn-primary"
+                      className="btn btn-sm btn-primary me-2"
                       type="button"
                       onClick={handleSearch}
                     >
                       <span className="btn-inner--icon">
-                        <IoIosSearch />
+                        {/* <IoIosSearch /> */}
+                        <i className="ti ti-search"></i>
                       </span>
                     </button>
                     <button
@@ -120,15 +124,19 @@ const HolidayCalendarSearchForm = ({ onSearchResults }) => {
                       }}
                     >
                       <span className="btn-inner--icon">
-                        <TbRefresh className="text-white-off " />
+                        {/* <TbRefresh className="text-white-off " /> */}
+                        <i className="ti ti-refresh text-white-off"></i>
                       </span>
                     </button>
                   </div>
+                </div>
+                </div>
                 </div>
               </form>
             </div>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

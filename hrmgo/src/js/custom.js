@@ -1,6 +1,3 @@
-// ByteCraft-HRMGO-Frontend\hrmgo\src\Js\custom.js
-
-// Convert the duration to Month-Year format
 export function formatDuration(duration) {
   if (!duration) return "";
 

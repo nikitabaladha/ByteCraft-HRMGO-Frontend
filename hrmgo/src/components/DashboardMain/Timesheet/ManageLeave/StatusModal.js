@@ -1,5 +1,3 @@
-// ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Timesheet\ManageLeave\StatusModal.js
-
 import React from "react";
 import { useEffect } from "react";
 import putAPI from "../../../../api/putAPI.js";

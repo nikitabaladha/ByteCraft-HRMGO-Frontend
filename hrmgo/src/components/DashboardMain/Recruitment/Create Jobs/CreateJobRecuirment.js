@@ -22,7 +22,6 @@ const CreateJobRecuirment = () => {
                   className="btn btn-primary btn-icon btn-sm float-end"
                   data-ajax-popup-over="true"
                   id="grammarCheck"
-                  data-url="https://demo.workdo.io/hrmgo/grammar/grammar"
                   data-bs-placement="top"
                   data-title="Grammar check with AI"
                 >

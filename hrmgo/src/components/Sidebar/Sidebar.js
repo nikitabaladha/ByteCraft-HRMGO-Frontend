@@ -185,7 +185,7 @@ const menuConfig = [
       },
       {
         id: "payers",
-        label: "payers",
+        label: "Payers",
         link: "/dashboard/finance/payer",
       },
       {
@@ -346,14 +346,6 @@ const menuConfig = [
     link: "/dashboard/ticket",
   },
 
-  // Event
-  // {
-  //   id: "event",
-  //   label: "Event",
-  //   iconClass: <TbCalendarEvent />,
-  //   link: "/dashboard/event",
-  // },
-
   // Meeting
   {
     id: "meeting",
@@ -369,30 +361,6 @@ const menuConfig = [
     iconClass: "ti-video",
     link: "/dashboard/zoom-meeting",
   },
-
-  // Assets
-  // {
-  //   id: "assets",
-  //   label: "Assets",
-  //   iconClass: <TbMedicalCross />,
-  //   link: "/dashboard/assets",
-  // },
-
-  // Document
-  // {
-  //   id: "document",
-  //   label: "Document",
-  //   iconClass: <CiFileOn />,
-  //   link: "/dashboard/upload",
-  // },
-
-  // Email Templates
-  // {
-  //   id: "emailTemplates",
-  //   label: "Email Templates",
-  //   iconClass: <TbTemplate />,
-  //   link: "/dashboard/email-templates",
-  // },
 
   // Company Policy
   {
@@ -410,14 +378,7 @@ const menuConfig = [
     link: "/dashboard/messenger",
   },
 
-  // Notification Template
-  // {
-  //   id: "notificationTemplate",
-  //   label: "Notification Template",
-  //   iconClass: <GoBell />,
-  //   link: "/dashboard/notification-templates",
-  // },
-
+  
   // HRM System Setup
   {
     id: "hrmSystemSetup",
@@ -440,8 +401,6 @@ const menuConfig = [
 const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
-  // const [logoDark, setLogoDark] = useState(null);
-  // const [titleText, setTitleText] = useState("HRMGo");
 
   const sidebarRef = useRef(null);
   const { isDarkLayout } = useContext(ThemeContext);
@@ -530,18 +489,7 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
         <div className="navbar-wrapper" style={{ display: "block" }}>
           <div className="m-header main-logo">
             <Link to="/dashboard" className="b-brand">
-              {/* <img
-                src="/storage/uploads/logo/Black-Logo.png"
-                alt="HRMSync"
-                className="logo logo-lg"
-                style={{height: '87px', width:'300px'}}
-              />
-              <img
-               src="/storage/uploads/logo/White-Logo (1).png"
-                alt="HRMSync"
-                className="logo logo-sm"
-                style={{height: '40px', width:'147px'}}
-              /> */}
+             
               <img
                 src={
                   isDarkLayout
@@ -551,7 +499,7 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
                 alt="HRMSync"
                 className="logo"
                 style={{
-                  height: isDarkLayout ? "77px" : "77px",
+                  height: isDarkLayout ? "55px" : "55px",
                   width: isDarkLayout ? "200px" : "200px",
                 }}
               />

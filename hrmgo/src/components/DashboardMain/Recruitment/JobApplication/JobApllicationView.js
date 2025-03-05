@@ -8,8 +8,6 @@ import AddToJobOnboard from "./AddToJobOnboard";
 import CreateNewInterviewSchedule from "./CreateNewInterviewSchedule";
 import putAPI from "../../../../api/putAPI";
 import { toast } from "react-toastify";
-import { FaCrosshairs } from "react-icons/fa";
-import { FiDownload } from "react-icons/fi";
 
 const JobApplicationView = () => {
   const { id } = useParams();
@@ -59,40 +57,6 @@ const JobApplicationView = () => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
-
-  // const handleKeyDown = (e) => {
-  //   if ((e.key === "Enter" || e.key === ",") && skillInput.trim() !== "") {
-  //     e.preventDefault();
-
-  //     if (!skill.includes(skillInput.trim())) {
-  //       setSkills([...skill, skillInput.trim()]);
-  //       setSkillInput("");
-  //     }
-  //   }
-  // };
-
-  // const handleRemoveSkill = (index) => {
-  //   setSkills(skill.filter((_, i) => i !== index));
-  // };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (skill.length === 0) {
-  //     toast("Please add at least one skill before submitting.");
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await putAPI(`/update-skill/${id}`, { skill });
-  //     toast("Skills added successfully!");
-  //     console.log(response.data);
-  //     setSkills([]);
-  //   } catch (error) {
-  //     console.error("Error submitting skills:", error);
-  //     toast("Failed to add skills. Please try again.");
-  //   }
-  // };
 
   const handleSubmitNotes = async (e) => {
     e.preventDefault();
@@ -250,7 +214,7 @@ const JobApplicationView = () => {
                       {application.isArchived === false && (
                         <form
                           method="POST"
-                          action="https://demo.workdo.io/hrmgo/job-application/28"
+                         
                           acceptCharset="UTF-8"
                         >
                           <input name="_method" type="hidden" value="DELETE" />
@@ -286,12 +250,12 @@ const JobApplicationView = () => {
                 >
                   <div>
                     <Link
-                      to="https://demo.workdo.io/hrmgo/storage/uploads/avatar/avatar.png"
+                      to={`${process.env.REACT_APP_API_URL_FOR_IMAGE}${application.profile}`}
                       target="_blank"
                       className="avatar rounded-circle avatar-sm"
                     >
                       <img
-                        src="https://demo.workdo.io/hrmgo/storage/uploads/avatar/avatar.png"
+                        src={`${process.env.REACT_APP_API_URL_FOR_IMAGE}${application.profile}`}
                         className="img-fluid rounded border-2 border-primary"
                         alt="notFound"
                         width="55px"
@@ -356,7 +320,7 @@ const JobApplicationView = () => {
                     <Link
                       to="#"
                       onClick={handleCreateClick}
-                      data-url="https://demo.workdo.io/hrmgo/job-onboard/create/27"
+                      
                       data-ajax-popup="true"
                       className="btn-sm btn btn-primary"
                       data-title="Add to Job OnBoard"
@@ -481,26 +445,15 @@ const JobApplicationView = () => {
                     </dt>
                     <dd className="col-sm-8">
                       <div className="dt-buttons">
-                        <span className="text-sm action-btn bg-primary me-2">
-                          <Link
-                            to="https://demo.workdo.io/hrmgo/storage/uploads/job/resume/Screenshot 2024-09-13 101919_1733890896.png"
-                            data-bs-toggle="tooltip"
-                            data-bs-original-title="download"
-                            download=""
-                          >
-                            <span className="text-white">
-                            <FiDownload />
-                            </span>
-                          </Link>
-                        </span>
                         <div className="action-btn bg-secondary ">
                           <Link
                             className="mx-3 btn btn-sm align-items-center"
-                            to="https://demo.workdo.io/hrmgo/storage/uploads/job/resume/Screenshot 2024-09-13 101919_1733890896.png"
+                            to={`${process.env.REACT_APP_API_URL_FOR_IMAGE}${application.resume}`}
                             target="_blank"
                           >
                             <span className="text-white">
-                            <FaCrosshairs />
+                            {/* <FaCrosshairs /> */}
+                            <i className="ti ti-crosshair"></i>
                             </span>
                           </Link>
                         </div>
@@ -571,7 +524,7 @@ const JobApplicationView = () => {
                 </div>
                 <div className="col text-end">
                   <Link
-                    data-url="https://demo.workdo.io/hrmgo/interview-schedule/create/28"
+                  
                     onClick={handleOpenScheduleModal}
                     data-size="lg"
                     className="btn-sm btn btn-primary"

@@ -101,7 +101,6 @@ const HolidayImportModal = ({ onClose }) => {
                       Download sample product CSV file
                     </label>
                     <Link
-                      to="https://demo.workdo.io/hrmgo/storage/uploads/sample/sample_holidays1.csv"
                       className="btn btn-sm btn-primary"
                     >
                       <i className="ti ti-download text-white"></i> Download

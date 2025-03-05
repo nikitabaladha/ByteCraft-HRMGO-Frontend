@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import getAPI from "../../../api/getAPI";
-// import { toast } from "react-toastify";
-// import { HiOutlinePencil } from "react-icons/hi";
 import ConfirmationDialog from "../ConfirmationDialog";
 // import { RiDeleteBinLine } from "react-icons/ri";
 import EditCompanyPolicy from "./EditCompanyPolicy";
 
 const CompanyPolicy = ({companyPolicies, setCompanyPolicies, fetchCompanyPolicies}) => {
-  // const [companyPolicies, setCompanyPolicies] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedPolicy, setSelectedPolicy] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -38,24 +34,6 @@ const CompanyPolicy = ({companyPolicies, setCompanyPolicies, fetchCompanyPolicie
     setIsDeleteDialogOpen(true);
   };
 
-  // useEffect(() => {
-  //   const fetchCompanyPolicies = async () => {
-  //     try {
-  //       const response = await getAPI('/getallcompany_policy', {}, true);
-  //       if (response.data && !response.data.hasError) {
-  //         setCompanyPolicies(response.data.companyPolicies);
-  //       } else {
-  //         toast.error("Failed to fetch company policies.");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching company policies:", error);
-  //       toast.error("An error occurred while fetching company policies.");
-  //     }
-  //   };
-
-  //   fetchCompanyPolicies();
-  // }, []);
-
   const handleEntriesPerPageChange = (event) => {
     setEntriesPerPage(Number(event.target.value));
     setCurrentPage(1);
@@ -79,11 +57,8 @@ const CompanyPolicy = ({companyPolicies, setCompanyPolicies, fetchCompanyPolicie
       <div className="row">
         <div className="col-xl-12">
           <div className="card">
-            <div className="card-header card-body table-border-style">
-              <div className="table-responsive">
-                <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                  <div className="dataTable-top">
-                    <div className="dataTable-dropdown">
+          <div className="dataTable-top">
+                    <div className="dataTable-dropdown d-none d-md-block">
                       <label>
                         <select
                           className="dataTable-selector"
@@ -105,6 +80,10 @@ const CompanyPolicy = ({companyPolicies, setCompanyPolicies, fetchCompanyPolicie
                         onChange={(e) => setSearchQuery(e.target.value)} />
                     </div>
                   </div>
+            <div className="card-header card-body table-border-style">
+              <div className="table-responsive">
+                <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                  
                   <div className="dataTable-container">
                     <table className="table dataTable-table" id="pc-dt-simple">
                       <thead>
@@ -161,8 +140,11 @@ const CompanyPolicy = ({companyPolicies, setCompanyPolicies, fetchCompanyPolicie
                       </tbody>
                     </table>
                   </div>
-                  <div className="dataTable-bottom">
-                    <div className="dataTable-info">
+                 
+                </div>
+              </div>
+              <div className="dataTable-bottom">
+                    <div className="dataTable-info d-none d-md-block">
                       Showing {Math.min((currentPage - 1) * entriesPerPage + 1, filteredPolicies.length)}{" "}
                       to {Math.min(currentPage * entriesPerPage, filteredPolicies.length)}{" "}
                       of {filteredPolicies.length} entries
@@ -253,8 +235,6 @@ const CompanyPolicy = ({companyPolicies, setCompanyPolicies, fetchCompanyPolicie
                     </nav>
 
                   </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

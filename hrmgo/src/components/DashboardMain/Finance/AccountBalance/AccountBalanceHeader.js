@@ -11,7 +11,7 @@ const ManageAccountBalances = () => {
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <a href="https://demo.workdo.io/hrmgo/dashboard">Home</a>
+                  <a href="/dashboard">Home</a>
                 </li>
                 <li className="breadcrumb-item">Account Balances</li>
               </ul>

@@ -1,5 +1,3 @@
-// ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Timesheet\ManageLeave\ManageLeaveCalendarView\ManageLeaveCalendarView.js
-
 import React, { useState, useEffect } from "react";
 
 import ManageLeaveCalendarHeader from "./ManageLeaveCalendarHeader";

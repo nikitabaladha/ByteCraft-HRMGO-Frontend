@@ -152,21 +152,6 @@ const CreateJobForm = () => {
   return (
     <div>
       <div className="row">
-        <div className="text-end">
-          <Link
-            to="#"
-            className="btn btn-sm btn-primary"
-            data-size="medium"
-            data-ajax-popup-over="true"
-            data-url="https://demo.workdo.io/hrmgo/generate/job"
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            data-title="Generate Content With AI"
-            data-bs-original-title="Generate"
-          >
-            <i className="fas fa-robot"></i> Generate With AI
-          </Link>
-        </div>
         <form onSubmit={handleSubmit} className="needs-validation" noValidate>
           <div className="row mt-3">
             <div className="col-md-6">
@@ -504,6 +489,7 @@ const CreateJobForm = () => {
                           height: "250px",
                           maxHeight: "300px",
                           minHeight: "200px",
+                          marginBottom: "4.0rem"
                         }}
                       />
                     </div>
@@ -524,20 +510,6 @@ const CreateJobForm = () => {
                       </label>
                       <span className="text-danger">*</span>
 
-                      <Link
-                        href="#"
-                        data-size="md"
-                        className="btn btn-primary btn-icon btn-sm float-end"
-                        data-ajax-popup-over="true"
-                        id="grammarCheck"
-                        data-url="https://demo.workdo.io/hrmgo/grammar/grammar"
-                        data-bs-placement="top"
-                        data-title="Grammar check with AI"
-                      >
-                        <i className="ti ti-rotate"></i>{" "}
-                        <span>Grammar check with AI</span>
-                      </Link>
-
                       <ReactQuill
                         value={formData.requirement}
                         onChange={(value) =>
@@ -551,6 +523,7 @@ const CreateJobForm = () => {
                           height: "250px",
                           maxHeight: "300px",
                           minHeight: "200px",
+                          marginBottom: "4.0rem"
                         }}
                       />
                     </div>

@@ -184,7 +184,7 @@ const UserMainContent = ({ users, setUsers, fetchUsers }) => {
             onClick={handleCreateClick}
             className="btn-addnew-project border-primary"
             data-ajax-popup="true"
-            data-url="https://demo.workdo.io/hrmgo/user/create"
+            
             data-title="Create New User"
             data-bs-toggle="tooltip"
             title="Create a new user"

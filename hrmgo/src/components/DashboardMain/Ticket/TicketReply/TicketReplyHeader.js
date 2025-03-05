@@ -36,7 +36,7 @@ const TicketReplyHeader = () => {
                   <Link
                     // href="#"
                     data-size="lg"
-                    // data-url="https://demo.workdo.io/hrmgo/ticket/1/edit"
+                    
                     data-ajax-popup="true"
                     data-bs-toggle="tooltip"
                     title=""

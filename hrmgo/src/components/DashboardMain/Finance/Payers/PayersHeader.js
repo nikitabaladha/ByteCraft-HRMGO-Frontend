@@ -19,7 +19,7 @@ const PayersHeader = ({fetchPayers}) => {
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <Link to="/hrmgo/dashboard">Home</Link>
+                  <Link to="/dashboard">Home</Link>
                 </li>
                 <li className="breadcrumb-item">Payer</li> 
               </ul>

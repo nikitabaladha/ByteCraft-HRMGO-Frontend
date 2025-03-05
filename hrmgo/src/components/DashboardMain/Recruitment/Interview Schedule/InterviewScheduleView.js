@@ -101,7 +101,6 @@ const InterviewScheduleView = ({schedule, onClose}) => {
                   <Link
                   onClick={handleCreateClick}
                     to="#"
-                    data-url="https://demo.workdo.io/hrmgo/job-onboard/create/11"
                     data-ajax-popup="true"
                     className="btn btn-primary"
                   >

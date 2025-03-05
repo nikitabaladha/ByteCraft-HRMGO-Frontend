@@ -5,11 +5,6 @@ import CreateHolidayModal from "./CreateHolidayModal";
 import HolidayImportModal from "./HolidayImport";
 import * as XLSX from "xlsx";
 
-// import { FaPlus } from "react-icons/fa";
-// import { TbFileExport } from "react-icons/tb";
-// import { TbFileImport } from "react-icons/tb";
-// import { CiCalendarDate } from "react-icons/ci";
-
 const HolidayHeader = ({ holidays, addHoliday }) => {
   const [isCreateHolidayModalOpen, setIsCreateHolidayModalOpen] =
     useState(false);
@@ -25,10 +20,6 @@ const HolidayHeader = ({ holidays, addHoliday }) => {
   const closeModal = () => {
     setIsCreateHolidayModalOpen(false);
   };
-
-  // const openImportModal = () => {
-  //   setIsImportHolidayModalOpen(true);
-  // };
 
   const closeImportModal = () => {
     setIsImportHolidayModalOpen(false);
@@ -79,7 +70,7 @@ const HolidayHeader = ({ holidays, addHoliday }) => {
               </ul>
             </div>
             <div className="col">
-              <div className="float-end ">
+            <div className="d-flex flex-row flex-sm-row align-items-center gap-2 float-end">
                 {/* <Link
                   data-ajax-popup="true"
                   data-title="Import Holiday CSV file"
@@ -92,7 +83,7 @@ const HolidayHeader = ({ holidays, addHoliday }) => {
                   <TbFileImport />
                 </Link> */}
                 <Link
-                  className="btn btn-sm btn-primary me-2"
+                  className="btn btn-sm btn-primary"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Export"
                   onClick={exportHolidayData}
@@ -101,7 +92,7 @@ const HolidayHeader = ({ holidays, addHoliday }) => {
                   <i className="ti ti-file-export text-white"></i>
                 </Link>
                 <Link
-                  className="btn btn-sm btn-primary me-2"
+                  className="btn btn-sm btn-primary"
                   data-bs-toggle="tooltip"
                   data-bs-original-title="Calendar View"
                   onClick={navigateToCalendar}

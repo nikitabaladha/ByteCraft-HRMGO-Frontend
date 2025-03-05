@@ -1,7 +1,5 @@
 import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { TiPlus } from "react-icons/ti";
-// import { TbFileExport } from "react-icons/tb";
 import TransferBalanceModal from "./TransferBalanceModal"; 
 import * as XLSX from "xlsx"; 
 import getAPI  from "../../../../api/getAPI"; 
@@ -70,7 +68,7 @@ useEffect(() => {
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <Link to="/hrmgo/dashboard">Home</Link>
+                  <Link to="/dashboard">Home</Link>
                 </li>
                 <li className="breadcrumb-item">Transfer Balance</li> 
               </ul>
@@ -84,7 +82,7 @@ useEffect(() => {
                   onClick={handleExportToExcel} 
                 >
                   {/* <TbFileExport /> */}
-                  <i className="ti ti-export"></i>
+                  <i className="ti ti-file-export"></i>
                 </button>
 
                 <button

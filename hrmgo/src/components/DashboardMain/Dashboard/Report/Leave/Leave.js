@@ -1,5 +1,3 @@
-// ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Dashboard\Report\Leave\Leave.js
-
 import React, { useEffect, useState } from "react";
 import LeaveHeader from "./LeaveHeader";
 import LeaveTable from "./LeaveTable";

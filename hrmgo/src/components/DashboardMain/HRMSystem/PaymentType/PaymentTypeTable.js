@@ -1,17 +1,13 @@
 import React, { useState} from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../HRMSystemSidebar";
-// import { HiOutlinePencil } from "react-icons/hi";
-// import { RiDeleteBinLine } from "react-icons/ri";
 import EditPaymentTypeModal from "./EditPaymentTypeModal"
-// import getAPI from "../../../../api/getAPI";
-// import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
 const PaymentTypeTable = ({paymentTypes, setPaymentTypes, fetchPaymentTypes}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPaymentType, setSelectedPaymentType] = useState(null);
-  // const [paymentTypes, setPaymentTypes] = useState([]);
+ 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [paymentTypeToDelete, setPaymentTypeToDelete] = useState(null);
 
@@ -54,23 +50,6 @@ const PaymentTypeTable = ({paymentTypes, setPaymentTypes, fetchPaymentTypes}) =>
     closeDeleteDialog();
   };
 
-  // useEffect(() => {
-  //   const fetchPaymentTypes = async () => {
-  //     try {
-  //       const response = await getAPI("/payment-type-get-all", true);
-  //       if (!response.hasError) {
-  //         setPaymentTypes(response.data.data);
-  //       } else {
-  //         toast.error(`Failed to fetch payment types: ${response.message}`);
-  //       }
-  //     } catch (error) {
-  //       toast.error("An error occurred while fetching payment types.");
-  //     }
-  //   };
-
-  //   fetchPaymentTypes();
-  // }, []);
-
   const handleEdit = (paymentType) => {
     setSelectedPaymentType(paymentType);
     setIsModalOpen(true);
@@ -83,17 +62,14 @@ const PaymentTypeTable = ({paymentTypes, setPaymentTypes, fetchPaymentTypes}) =>
 
   return (
     <div className="row">
-      <div className="col-3">
-        <Sidebar />
-      </div>
+      <div className="col-md-3 col-12">
+  <Sidebar />
+</div>
 
-      <div className="col-9">
+      <div className="col-md-9 col-12">
         <div className="card">
-          <div className="card-body table-border-style">
-            <div className="table-responsive">
-              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-                <div className="dataTable-top">
-                  <div className="dataTable-dropdown">
+        <div className="dataTable-top">
+                  <div className="dataTable-dropdown d-none d-md-block">
                     <label>
                       <select
                         className="dataTable-selector"
@@ -119,6 +95,10 @@ const PaymentTypeTable = ({paymentTypes, setPaymentTypes, fetchPaymentTypes}) =>
                     />
                   </div>
                 </div>
+          <div className="card-body table-border-style">
+            <div className="table-responsive">
+              <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                
                 <div className="dataTable-container">
                   <table className="table datatable dataTable-table">
                     <thead>
@@ -149,7 +129,7 @@ const PaymentTypeTable = ({paymentTypes, setPaymentTypes, fetchPaymentTypes}) =>
                                 </div>
 
                                 <div className="action-btn bg-danger">
-                                  <form method="POST" action={`/hrmgo/payment-type`} acceptCharset="UTF-8" id={`delete-form`}>
+                                  <form method="POST" acceptCharset="UTF-8" id={`delete-form`}>
                                     <input name="_method" type="hidden" value="DELETE" />
                                     <input name="_token" type="hidden" value="OYzJQFXWqx1d9iWbHPH2ntDxxtmt4I8jLovG1Fuv" />
                                     <Link
@@ -173,8 +153,12 @@ const PaymentTypeTable = ({paymentTypes, setPaymentTypes, fetchPaymentTypes}) =>
                     </tbody>
                   </table>
                 </div>
-                <div className="dataTable-bottom">
-                  <div className="dataTable-info">
+             
+
+              </div>
+            </div>
+            <div className="dataTable-bottom">
+                  <div className="dataTable-info d-none d-md-block">
                     Showing {Math.min((currentPage - 1) * entriesPerPage + 1, paymentTypes.length)}{" "}
                     to {Math.min(currentPage * entriesPerPage, paymentTypes.length)}{" "}
                     of {paymentTypes.length} entries
@@ -223,9 +207,6 @@ const PaymentTypeTable = ({paymentTypes, setPaymentTypes, fetchPaymentTypes}) =>
                     </ul>
                   </nav>
                 </div>
-
-              </div>
-            </div>
           </div>
         </div>
       </div>

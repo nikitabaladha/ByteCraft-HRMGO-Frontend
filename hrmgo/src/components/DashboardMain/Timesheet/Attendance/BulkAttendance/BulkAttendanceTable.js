@@ -277,6 +277,4 @@ const BulkAttendanceTable = ({ attendanceData, date }) => {
 
 export default BulkAttendanceTable;
 
-// ==================================================================
 
-// ByteCraft-HRMGO-Frontend\hrmgo\src\components\DashboardMain\Timesheet\Attendance\BulkAttendance\BulkAttendanceTable.js

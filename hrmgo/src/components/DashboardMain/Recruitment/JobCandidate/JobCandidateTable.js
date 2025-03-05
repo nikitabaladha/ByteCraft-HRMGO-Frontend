@@ -65,11 +65,8 @@ const JobCandidateTable = () => {
     <div className="row">
     <div className="col-xl-12">
       <div className="card">
-        <div className="card-header card-body table-border-style">
-          <div className="table-responsive">
-            <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-              <div className="dataTable-top">
-                <div className="dataTable-dropdown">
+      <div className="dataTable-top">
+                <div className="dataTable-dropdown d-none d-md-block">
                   <label>
                     <select
                       className="dataTable-selector"
@@ -95,6 +92,10 @@ const JobCandidateTable = () => {
                   />
                 </div>
               </div>
+        <div className="card-header card-body table-border-style">
+          <div className="table-responsive">
+            <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+              
               <div className="dataTable-container">
                 <table className="table dataTable-table" id="pc-dt-simple">
                       <thead>
@@ -130,7 +131,8 @@ const JobCandidateTable = () => {
                                 </span>
                               </td>
                               <td>{`${formatDate(application.createdAt)}`}</td>
-                              <td>{application.resume ? <a href={application.resume} target="_blank" rel="noopener noreferrer">View Resume</a> : '-'}</td>
+                              <td>{application.resume ? <a href={`${process.env.REACT_APP_API_URL_FOR_IMAGE}${application.resume}`}   
+                              target="_blank" rel="noopener noreferrer">View Resume</a> : '-'}</td>
                               <td>
                                 <div className="dt-buttons">
                                   <div className="action-btn bg-warning">
@@ -160,8 +162,11 @@ const JobCandidateTable = () => {
                       </tbody>
                     </table>
                   </div>
-                  <div className="dataTable-bottom">
-                      <div className="dataTable-info">
+                  
+                </div>
+              </div>
+              <div className="dataTable-bottom">
+                      <div className="dataTable-info d-none d-md-block">
                         Showing{" "}
                         {Math.min(
                           (currentPage - 1) * entriesPerPage + 1,
@@ -231,8 +236,6 @@ const JobCandidateTable = () => {
                         </ul>
                       </nav>
                     </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

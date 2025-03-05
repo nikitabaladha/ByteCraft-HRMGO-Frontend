@@ -58,7 +58,7 @@ const ContractReport = ({
                   <h6 className="m-b-20">{data.title}</h6>
                   <h3 className={data.textClass}> {formatCost(data.value)}</h3>
                 </div>
-                <div className={`badge theme-avtar ${data.badgeClass}`}>
+                <div className={`badge theme-avtar ${data.badgeClass} d-none d-md-block`}>
                   <i className={data.iconClass} />
                 </div>
               </div>

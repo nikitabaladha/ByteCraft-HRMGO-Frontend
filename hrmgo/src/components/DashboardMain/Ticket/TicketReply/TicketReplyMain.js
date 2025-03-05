@@ -195,9 +195,9 @@ const TicketReply = () => {
                             placeholder="Enter the ticket description here"
                             style={{
                               height: "220px",
-                              maxHeight: "270px",
+                              maxHeight: "230px",
                               minHeight: "200px",
-                              marginBottom: "3.0rem",
+                              marginBottom: "6.0rem",
                             }}
                           />
 
@@ -278,7 +278,7 @@ const TicketReply = () => {
                                 className="img-fluid rounded border-2 border border-primary"
                                 width="50px"
                                 style={{ height: "50px" }}
-                                src="https://demo.workdo.io/hrmgo/storage/uploads/avatar//user-1.jpg"
+                                src="/storage/uploads/Icon/user-1.jpg"
                               />
                             </Link>
                             <h6 className="mb-0">
@@ -303,13 +303,6 @@ const TicketReply = () => {
                               : "No description available"}
                           </p>
 
-                          {/* {reply.attachment && (
-                                                        <div className="mt-3">
-                                                            <img src={`${process.env.REACT_APP_API_URL_FOR_IMAGE}${reply.attachment}`}
-                                                                alt="Reply Attachment"
-                                                                width="30%" />
-                                                        </div>
-                                                    )} */}
                         </div>
                       </div>
                     ))

@@ -76,20 +76,9 @@ const TrainerHeader = ({fetchTrainers, trainers}) => {
                    <i className="ti ti-file-export"></i>
                 </Link>
 
-                {/* <Link
-                  to="/"
-                  data-url="https://demo.workdo.io/hrmgo/import/training/file"
-                  data-ajax-popup="true"
-                  data-title="Import  employee CSV file"
-                  data-bs-toggle="tooltip"
-                  title=""
-                  className="btn btn-sm btn-primary me-1"
-                  data-bs-original-title="Import"
-                >
-                  <CiFileOn />
-                </Link> */}
+               
                  <Link
-                  // to="https://demo.workdo.io/hrmgo/trainer/create"
+                 
                   onClick={handleCreateClick}
                   data-title="Create New Employee"
                   data-bs-toggle="tooltip"

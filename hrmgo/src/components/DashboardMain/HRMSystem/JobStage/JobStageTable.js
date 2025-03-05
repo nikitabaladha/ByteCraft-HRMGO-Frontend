@@ -77,10 +77,11 @@ const JobStageList = ({ jobStages, setJobStages, fetchJobStages }) => {
 
   return (
     <div className="row">
-      <div className="col-3">
-        <Sidebar />
-      </div>
-      <div className="col-9">
+      <div className="col-12 col-md-3">
+  <Sidebar />
+</div>
+
+      <div className="col-12 col-md-9">
         <div className="card">
           <div className="card-body">
             <div className="theme-detail-card">
@@ -150,7 +151,8 @@ const SortableItem = ({ jobStage, handleEdit, openDeleteDialog }) => {
     <li
       ref={setNodeRef}
       style={style}
-      className="list-group-item d-flex align-items-center justify-content-between"
+      className="list-group-item flex-row flex-sm-row align-items-center justify-content-between"
+      // className="d-flex flex-row flex-sm-row align-items-center gap-2 float-end"
     >
       <h6 className="mb-0">
         <svg

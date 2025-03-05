@@ -13,7 +13,6 @@
 
 //     // You can add your API call here, e.g., using fetch or axios
 //     // Example:
-//     // fetch('https://demo.workdo.io/hrmgo/user-reset-password/23', {
 //     //   method: 'POST',
 //     //   headers: { 'Content-Type': 'application/json' },
 //     //   body: JSON.stringify({ password, password_confirmation: passwordConfirmation }),

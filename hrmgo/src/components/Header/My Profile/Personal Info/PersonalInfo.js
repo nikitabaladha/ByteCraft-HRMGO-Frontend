@@ -15,7 +15,7 @@ const PersonalInfo = () => {
 
   const [imagePreview, setImagePreview] = useState("");
 
-  useEffect(() => {
+  
     const fetchUserDetails = async () => {
       try {
         const response = await getAPI("/get-user-details", {}, true);
@@ -40,7 +40,7 @@ const PersonalInfo = () => {
         toast("An error occurred while fetching User data.");
       }
     };
-
+    useEffect(() => {
     fetchUserDetails();
   }, []);
 
@@ -90,6 +90,7 @@ const PersonalInfo = () => {
       });
       console.log("Personal Profile updated:", response.data);
       toast("Personal Profile updated");
+      fetchUserDetails()
     } catch (error) {
       toast.error("Error updating Personal Profile:", error);
     }

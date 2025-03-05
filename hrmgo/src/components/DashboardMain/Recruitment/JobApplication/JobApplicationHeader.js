@@ -38,7 +38,7 @@ const JobApplicationHeader = ({fetchApplications}) => {
           <div className="float-end ">
             <Link
                onClick={handleCreateClick}
-              data-url="https://demo.workdo.io/hrmgo/job-application/create"
+            
               data-ajax-popup="true"
               data-size="lg"
               data-title="Create New Job Application"

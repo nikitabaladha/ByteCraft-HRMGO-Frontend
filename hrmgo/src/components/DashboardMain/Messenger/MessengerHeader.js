@@ -2,7 +2,7 @@ import React from 'react';
 
 const MessengerHeader = () => {
   return (
-    <div className="page-header">
+    <div className="page-header d-none d-md-block">
       <div className="page-block">
         <div className="row align-items-center">
           <div className="col-auto">

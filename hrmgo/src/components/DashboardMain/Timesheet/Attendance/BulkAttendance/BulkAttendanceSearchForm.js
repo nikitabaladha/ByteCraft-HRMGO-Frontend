@@ -89,7 +89,7 @@ const BulkAttendanceSearchForm = ({
   };
 
   return (
-    <div className="col-sm-12 col-lg-12 col-xl-12 col-md-12">
+    <div className="col-sm-12">
       <div className="mt-2">
         <div className="card">
           <div className="card-body">
@@ -102,8 +102,8 @@ const BulkAttendanceSearchForm = ({
               acceptCharset="UTF-8"
               id="bulkattendance_filter"
             >
-              <div className="d-flex align-items-center justify-content-end">
-                <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+              <div className="row align-items-center justify-content-end">
+                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                   <div className="btn-box">
                     <label htmlFor="date" className="form-label">
                       Date
@@ -119,7 +119,7 @@ const BulkAttendanceSearchForm = ({
                     />
                   </div>
                 </div>
-                <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                   <div className="btn-box">
                     <label htmlFor="branch" className="form-label">
                       Branch
@@ -140,7 +140,7 @@ const BulkAttendanceSearchForm = ({
                     </select>
                   </div>
                 </div>
-                <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12 mx-2">
+                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                   <label htmlFor="department" className="form-label">
                     Department
                   </label>
@@ -161,30 +161,34 @@ const BulkAttendanceSearchForm = ({
                     </select>
                   </div>
                 </div>
-                <div className="col-auto float-end ms-2 mt-4">
-                  <button
-                    type="submit"
-                    className="btn btn-sm btn-primary mx-2"
-                    data-bs-toggle="tooltip"
-                    title="Apply"
-                  >
-                    <span className="btn-inner--icon">
-                      {/* <IoMdSearch /> */}
-                      <i className="ti ti-search text-white"></i>
-                    </span>
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-danger"
-                    data-bs-toggle="tooltip"
-                    title="Reset"
-                    onClick={onReset}
-                  >
-                    <span className="btn-inner--icon">
-                      {/* <TbRefresh className="text-white-off" /> */}
-                      <i className="ti ti-refresh text-white-off"></i>
-                    </span>
-                  </button>
+                <div className="col-auto mt-4">
+                  <div className="row">
+                    <div className="col-auto">
+                      <button
+                        type="submit"
+                        className="btn btn-sm btn-primary mx-2"
+                        data-bs-toggle="tooltip"
+                        title="Apply"
+                      >
+                        <span className="btn-inner--icon">
+                          {/* <IoMdSearch /> */}
+                          <i className="ti ti-search text-white"></i>
+                        </span>
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-danger"
+                        data-bs-toggle="tooltip"
+                        title="Reset"
+                        onClick={onReset}
+                      >
+                        <span className="btn-inner--icon">
+                          {/* <TbRefresh className="text-white-off" /> */}
+                          <i className="ti ti-refresh text-white-off"></i>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </form>
