@@ -57,6 +57,7 @@
     "react-modal": "^3.16.3",
     "react-perfect-scrollbar": "^1.5.8",
     "react-quill": "^2.0.0",
+    "react-responsive": "^10.0.1",
     "react-router-dom": "^7.1.5",
     "react-scripts": "5.0.1",
     "react-select": "^5.10.0",

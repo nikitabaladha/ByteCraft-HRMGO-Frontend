@@ -42,7 +42,7 @@ const ContractPreview = () => {
           <table>
             <tr>
               <td colspan="2" style="text-align: center;">
-                <img src="http://localhost:3000/storage/uploads/logo/Black-Logo%20(1).png" alt="Logo Dark" style="max-width: 10px; max-height: 10px;">
+                <img src="http://13.203.76.193/storage/uploads/logo/Black-Logo%20(1).png" alt="Logo Dark" style="max-width: 10px; max-height: 10px;">
              </td>
             </tr>
             <tr>
