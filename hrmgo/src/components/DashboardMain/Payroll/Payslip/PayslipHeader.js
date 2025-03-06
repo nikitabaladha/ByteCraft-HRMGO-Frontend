@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const PayslipHeader = () => {
   return (
-    <div className="dash-content">
+
       <div className="page-header">
         <div className="page-block">
           <div className="row align-items-center">
@@ -24,7 +24,6 @@ const PayslipHeader = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
