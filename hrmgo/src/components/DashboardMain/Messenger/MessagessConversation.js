@@ -19,6 +19,7 @@ import DeleteMessage from "./DeleteMessage";
 import { Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import { HiOutlineDocumentDownload } from "react-icons/hi";
+import { useMediaQuery } from "react-responsive";
 
 const Messagess = () => {
   const [user, setUser] = useState(
@@ -39,6 +40,7 @@ const Messagess = () => {
   const [previewMessagePDF, setPreviewMessagePDF] = useState(null);
   const [previewMessageImage, setPreviewMessageImage] = useState(null);
   const [isFilePreviewOpen, setIsFilePreviewOpen] = useState(false);
+  const isPhone = useMediaQuery({ maxWidth: 768 });
 
   const handleChange = (e) => {
     setFile(e.target.files[0]);
@@ -770,7 +772,7 @@ const Messagess = () => {
                                 <EmojiPicker
                                   onEmojiClick={handleEmojiClick}
                                   height={300}
-                                  width={650}
+                                  width={isPhone ? 280 : 650}
                                 />
                               </div>
                             )}
