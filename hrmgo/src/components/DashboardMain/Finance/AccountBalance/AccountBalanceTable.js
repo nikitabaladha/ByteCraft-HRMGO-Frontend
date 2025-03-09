@@ -56,7 +56,7 @@ const DataTable = () => {
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -112,15 +112,15 @@ const DataTable = () => {
                     <tbody>
                       {paginatedAccounts.map((account, index) => (
                         <tr key={index}>
-                          <td>{account.account_name}</td>
-                          <td>{`₹${new Intl.NumberFormat("en-IN").format(
+                          <td className="text-dark">{account.account_name}</td>
+                          <td className="text-dark">{`₹${new Intl.NumberFormat("en-IN").format(
                             account.initial_balance
                           )}`}</td>
                         </tr>
                       ))}
                       <tr>
                         <td className="text-left text-dark">Total</td>
-                        <td>{`₹${new Intl.NumberFormat("en-IN").format(
+                        <td className="text-dark">{`₹${new Intl.NumberFormat("en-IN").format(
                           totalBalance
                         )}`}</td>
                       </tr>
@@ -130,7 +130,7 @@ const DataTable = () => {
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min(
                   (currentPage - 1) * entriesPerPage + 1,

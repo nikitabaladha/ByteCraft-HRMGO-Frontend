@@ -385,7 +385,7 @@ const Messagess = () => {
                       <nav className="d-flex align-items-center justify-content-between">
                         <div style={{ display: "flex" }}>
                           <Link href="#" className="show-listView">
-                            <FaArrowLeft  onClick={() => handleClick(1)} />
+                            <FaArrowLeft onClick={() => handleClick(1)} />
                           </Link>
                           <div
                             className="avatar av-s header-avatar"
@@ -406,7 +406,7 @@ const Messagess = () => {
                             className="show-infoSide my-lg-1 my-xl-1 mx-lg-1 mx-xl-2"
                             onClick={() => handleEdit(messages)}
                           >
-                            <FaCircleInfo  onClick={() => handleClick(3)}/>
+                            <FaCircleInfo onClick={() => handleClick(3)} />
                           </Link>
                         </nav>
                       </nav>
@@ -742,8 +742,9 @@ const Messagess = () => {
                             e.preventDefault();
                             sendMessage(e);
                           }}
+                          className="paper-plane"
                         >
-                          <label>
+                          <label className="paper-clip">
                             <FaPaperclip />
                             <input
                               type="file"
@@ -772,7 +773,8 @@ const Messagess = () => {
                                 <EmojiPicker
                                   onEmojiClick={handleEmojiClick}
                                   height={300}
-                                  width={isPhone ? 280 : 650}
+                                  width={isPhone ? 280 : 440}
+                                  // display="none"
                                 />
                               </div>
                             )}
@@ -781,11 +783,12 @@ const Messagess = () => {
                             name="message"
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
-                            className="m-send app-scroll"
-                            placeholder="Type a message..."
+                            className="m-send app-scroll textbars"
+                            placeholder="Type a message.."
                             style={{
                               overflow: "hidden",
                               overflowWrap: "break-word",
+                              height: "44px",
                             }}
                           />
 
@@ -807,7 +810,7 @@ const Messagess = () => {
                     onClose={() => setIsModalOpen(false)}
                     activeStep={activeStep}
                     isMobile={isMobile}
-                    handleClick={()=>handleClick(2)}
+                    handleClick={() => handleClick(2)}
                   />
                 )}
               </div>

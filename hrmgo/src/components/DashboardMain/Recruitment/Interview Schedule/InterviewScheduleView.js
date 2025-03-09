@@ -60,22 +60,22 @@ const InterviewScheduleView = ({schedule, onClose}) => {
                   <h6 className="mb-2">Schedule Detail</h6>
                   <dl className="row mb-0 align-items-center">
                     <dt className="col-sm-3 h6 text-sm">Job</dt>
-                    <dd className="col-sm-9 text-sm">{schedule.applicatAppliedFor}</dd>
+                    <dd className="col-sm-9 text-sm text-dark">{schedule.applicatAppliedFor}</dd>
                     <dt className="col-sm-3 h6 text-sm">Interview On</dt>
-                    <dd className="col-sm-9 text-sm">{`${formatDate(schedule.date)}`}, {schedule.time}</dd>
+                    <dd className="col-sm-9 text-sm text-dark">{`${formatDate(schedule.date)}`}, {schedule.time}</dd>
                     <dt className="col-sm-3 h6 text-sm">Assign Employee</dt>
-                    <dd className="col-sm-9 text-sm">{schedule.interviewer}</dd>
+                    <dd className="col-sm-9 text-sm text-dark">{schedule.interviewer}</dd>
                   </dl>
                 </div>
                 <div className="modal-body">
                   <h6 className="mb-2">Candidate Detail</h6>
                   <dl className="row mb-0 align-items-center">
                     <dt className="col-sm-3 h6 text-sm">Name</dt>
-                    <dd className="col-sm-9 text-sm">{schedule.candidate}</dd>
+                    <dd className="col-sm-9 text-sm text-dark">{schedule.candidate}</dd>
                     <dt className="col-sm-3 h6 text-sm">Email</dt>
-                    <dd className="col-sm-9 text-sm">{schedule.applicantEmail}</dd>
+                    <dd className="col-sm-9 text-sm text-dark">{schedule.applicantEmail}</dd>
                     <dt className="col-sm-3 h6 text-sm">Phone</dt>
-                    <dd className="col-sm-9 text-sm">{schedule.applicantPhone}</dd>
+                    <dd className="col-sm-9 text-sm text-dark">{schedule.applicantPhone}</dd>
                   </dl>
                 </div>
                 <div className="modal-body">

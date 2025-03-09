@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { TbPencil } from "react-icons/tb";
 
 const JobView = () => {
-  const { id } = useParams(); // Extract the job ID from the URL
+  const { id } = useParams();
   const [jobDetails, setJobDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -14,7 +14,7 @@ const JobView = () => {
   useEffect(() => {
     const fetchJobDetails = async () => {
       try {
-        const response = await getAPI(`/get-all-jobs/${id}`); // Adjust the endpoint if needed
+        const response = await getAPI(`/get-all-jobs/${id}`); 
         setJobDetails(response.data.data);
         setLoading(false);
       } catch (err) {
@@ -72,7 +72,7 @@ const JobView = () => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard/recruitment/jobs">Manage Job</Link>
                 </li>
-                <li className="breadcrumb-item">Job Details</li>
+                <li className="breadcrumb-item text-dark">Job Details</li>
               </ul>
             </div>
             <div className="col text-end">

@@ -47,13 +47,11 @@ const CreateAwardModal = ({ onClose, addAward }) => {
     fetchAllAwardType();
   }, []);
 
-  // Handle form field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -71,8 +69,6 @@ const CreateAwardModal = ({ onClose, addAward }) => {
 
       if (!response.hasError) {
         toast.success("Award created successfully!");
-
-        // Find the selected employee and award type for display
         const selectedEmployee = employees.find(
           (emp) => emp._id === formData.employeeId
         );
@@ -174,7 +170,7 @@ const CreateAwardModal = ({ onClose, addAward }) => {
                 <div className="modal-body">
                   <div className="row">
                     <div className="form-group col-md-6 col-lg-6 ">
-                      <label htmlFor="employee_id" className="col-form-label">
+                      <label htmlFor="employee_id" className="col-form-label text-dark">
                         Employee
                       </label>
                       <span className="text-danger">*</span>
@@ -193,7 +189,7 @@ const CreateAwardModal = ({ onClose, addAward }) => {
                       </select>
                     </div>
                     <div className="form-group col-md-6 col-lg-6">
-                      <label htmlFor="award_type" className="col-form-label">
+                      <label htmlFor="award_type" className="col-form-label text-dark">
                         Award Type
                       </label>
                       <span className="text-danger">*</span>
@@ -214,7 +210,7 @@ const CreateAwardModal = ({ onClose, addAward }) => {
                       </select>
                     </div>
                     <div className="form-group col-md-6 col-lg-6">
-                      <label htmlFor="date" className="col-form-label">
+                      <label htmlFor="date" className="col-form-label text-dark">
                         Date
                       </label>
                       <span className="text-danger">*</span>
@@ -231,7 +227,7 @@ const CreateAwardModal = ({ onClose, addAward }) => {
                       />
                     </div>
                     <div className="form-group col-md-6 col-lg-6">
-                      <label htmlFor="gift" className="col-form-label">
+                      <label htmlFor="gift" className="col-form-label text-dark">
                         Gift
                       </label>
                       <span className="text-danger">*</span>
@@ -247,7 +243,7 @@ const CreateAwardModal = ({ onClose, addAward }) => {
                       />
                     </div>
                     <div className="form-group col-md-12">
-                      <label htmlFor="description" className="col-form-label ">
+                      <label htmlFor="description" className="col-form-label text-dark">
                         Description
                       </label>
                       <span className="text-danger">*</span>

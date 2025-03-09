@@ -7,7 +7,6 @@ import ConfirmationDialog from "../../ConfirmationDialog";
 const AwardTypeTable = ({ awardTypes, setAwardTypes, fetchAwardTypes }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAwardType, setSelectedAwardType] = useState(null);
-  // const [awardTypes, setAwardTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [awardTypeToDelete, setAwardTypeToDelete] = useState(null);
 
@@ -67,7 +66,7 @@ const AwardTypeTable = ({ awardTypes, setAwardTypes, fetchAwardTypes }) => {
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -108,7 +107,7 @@ const AwardTypeTable = ({ awardTypes, setAwardTypes, fetchAwardTypes }) => {
                     <tbody>
                       {paginatedAwardTypes.map((awardType) => (
                         <tr key={awardType._id}>
-                          <td>{awardType.awardName}</td>
+                          <td className="text-dark">{awardType.awardName}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>
@@ -169,7 +168,7 @@ const AwardTypeTable = ({ awardTypes, setAwardTypes, fetchAwardTypes }) => {
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min(
                   (currentPage - 1) * entriesPerPage + 1,

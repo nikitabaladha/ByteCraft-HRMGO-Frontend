@@ -15,31 +15,31 @@ const ContractDetailCard = ({ contractData }) => {
               <div className="row mt-3 align-items-center">
                 <h6>Contract Detail</h6>
                 <div className="col-sm-4 h6 text-sm">Employee Name</div>
-                <div className="col-sm-8 text-sm">
+                <div className="col-sm-8 text-sm text-dark">
                   {" "}
                   {contractData.employeeName || "N/A"}{" "}
                 </div>
                 <div className="col-sm-4 h6 text-sm">Subject</div>
-                <div className="col-sm-8 text-sm">
+                <div className="col-sm-8 text-sm text-dark">
                   {" "}
                   {contractData.subject || "N/A"}
                 </div>
                 <div className="col-sm-4 h6 text-sm"> Type</div>
-                <div className="col-sm-8 text-sm">
+                <div className="col-sm-8 text-sm text-dark">
                   {contractData.contractType || "N/A"}
                 </div>
                 <div className="col-sm-4 h6 text-sm">Value</div>
-                <div className="col-sm-8 text-sm">
+                <div className="col-sm-8 text-sm text-dark">
                   {" "}
                   {formatCost(contractData.value)}
                 </div>
                 <div className="col-sm-4 h6 text-sm">Start Date</div>
-                <div className="col-sm-8 text-sm">
+                <div className="col-sm-8 text-sm text-dark">
                   {" "}
                   {formatDate(contractData.startDate) || "N/A"}
                 </div>
                 <div className="col-sm-4 h6 text-sm">End Date</div>
-                <div className="col-sm-8 text-sm">
+                <div className="col-sm-8 text-sm text-dark">
                   {formatDate(contractData.endDate) || "N/A"}
                 </div>
               </div>

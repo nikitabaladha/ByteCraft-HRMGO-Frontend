@@ -80,7 +80,7 @@ const DesignationTable = ({
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -121,9 +121,9 @@ const DesignationTable = ({
                     <tbody>
                       {paginatedDesignations?.map((designation) => (
                         <tr key={designation?.id}>
-                          <td>{designation.branchName}</td>
-                          <td>{designation?.departmentName}</td>
-                          <td>{designation?.designationName}</td>
+                          <td className="text-dark">{designation.branchName}</td>
+                          <td className="text-dark">{designation?.departmentName}</td>
+                          <td className="text-dark">{designation?.designationName}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>
@@ -179,7 +179,7 @@ const DesignationTable = ({
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min(
                   (currentPage - 1) * entriesPerPage + 1,

@@ -29,7 +29,7 @@ const MeetingHeader = ({fetchMeetings}) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Zoom Meeting</li>
+                <li className="breadcrumb-item text-dark">Zoom Meeting</li>
               </ul>
             </div>
             <div className="col">

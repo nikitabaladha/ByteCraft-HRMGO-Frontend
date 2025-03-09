@@ -159,7 +159,7 @@ const ContractPreview = () => {
                         />
                       </div>
                       <div className="col-xs-12 col-sm-12 col-nd-6 col-lg-6 col-12 text-end">
-                        <h3 className="invoice-number">
+                        <h3 className="invoice-number text-dark">
                           #{contractData?.contractId}
                         </h3>
                       </div>
@@ -171,7 +171,7 @@ const ContractPreview = () => {
                             Contract Type:
                           </h6>
                           <span className="col-md-8">
-                            <span className="text-md">
+                            <span className="text-md text-dark">
                               {" "}
                               {contractData?.contractType}
                             </span>
@@ -182,7 +182,7 @@ const ContractPreview = () => {
                             Contract Value:
                           </h6>
                           <span className="col-md-8">
-                            <span className="text-md">
+                            <span className="text-md text-dark">
                               {" "}
                               {formatCost(contractData?.value)}
                             </span>
@@ -197,7 +197,7 @@ const ContractPreview = () => {
                                 Start Date:
                               </h6>
                               <span className="col-md-8">
-                                <span className="text-md">
+                                <span className="text-md text-dark">
                                   {" "}
                                   {formatDate(contractData?.startDate)}
                                 </span>
@@ -208,7 +208,7 @@ const ContractPreview = () => {
                                 End Date:
                               </h6>
                               <span className="col-md-8">
-                                <span className="text-md">
+                                <span className="text-md text-dark">
                                   {" "}
                                   {formatDate(contractData?.endDate)}
                                 </span>

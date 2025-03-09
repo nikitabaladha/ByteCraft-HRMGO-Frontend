@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-// import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import CreateComplaintModal from "./CreateComplaintModal";
 
@@ -28,7 +27,7 @@ const ComplaintHeader = ({ addComplaint }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Complaint</li>
+                <li className="breadcrumb-item text-dark">Complaint</li>
               </ul>
             </div>
             <div className="col">

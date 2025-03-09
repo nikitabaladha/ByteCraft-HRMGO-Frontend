@@ -162,7 +162,7 @@ const CreateJobApplication = ({ onClose, fetchApplications, }) => {
               <div className="row">
                 {/* Job */}
                 <div className="form-group col-md-12">
-                  <label htmlFor="job">Job</label>
+                  <label htmlFor="job" className="text-dark">Job</label>
                   <span className="text-danger">*</span>
                   <select
                     className="form-control"
@@ -181,7 +181,7 @@ const CreateJobApplication = ({ onClose, fetchApplications, }) => {
                 </div>
                 {/* Name */}
                 <div className="form-group col-md-6">
-                  <label htmlFor="name">Name</label>
+                  <label htmlFor="name" className="text-dark">Name</label>
                   <span className="text-danger">*</span>
                   <input
                     type="text"
@@ -195,7 +195,7 @@ const CreateJobApplication = ({ onClose, fetchApplications, }) => {
                 </div>
                 {/* Email */}
                 <div className="form-group col-md-6">
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email" className="text-dark">Email</label>
                   <span className="text-danger">*</span>
                   <input
                     type="email"
@@ -209,7 +209,7 @@ const CreateJobApplication = ({ onClose, fetchApplications, }) => {
                 </div>
                 {/* Phone */}
                 <div className="form-group col-md-6">
-                  <label htmlFor="phone">Phone</label>
+                  <label htmlFor="phone" className="text-dark">Phone</label>
                   <span className="text-danger">*</span>
                   <input
                     type="text"
@@ -225,7 +225,7 @@ const CreateJobApplication = ({ onClose, fetchApplications, }) => {
                 {/* Conditional Fields */}
                 {selectedJobDetails?.applicant.includes("Date of Birth") && (
                   <div className="form-group col-md-6">
-                    <label htmlFor="dob">Date of Birth</label>
+                    <label htmlFor="dob" className="text-dark">Date of Birth</label>
                     <input
                       type="date"
                       className="form-control"
@@ -238,7 +238,7 @@ const CreateJobApplication = ({ onClose, fetchApplications, }) => {
 
                 {selectedJobDetails?.applicant.includes("Gender") && (
                   <div className="form-group col-md-6">
-                    <label>Gender</label>
+                    <label className="text-dark">Gender</label>
                     <div className="d-flex">
                       <label className="form-check-label">
                         <input
@@ -266,7 +266,7 @@ const CreateJobApplication = ({ onClose, fetchApplications, }) => {
 
                 {selectedJobDetails?.applicant.includes("Address") && (
                   <div className="form-group col-md-12">
-                    <label htmlFor="address">Address</label>
+                    <label htmlFor="address" className="text-dark">Address</label>
                     <textarea
                       className="form-control"
                       name="address"
@@ -281,7 +281,7 @@ const CreateJobApplication = ({ onClose, fetchApplications, }) => {
                 <div className="row mt-3">
                   {["city", "state", "country", "zipCode"].map((field) => (
                     <div className="form-group col-md-6" key={field}>
-                      <label htmlFor={field}>
+                      <label htmlFor={field} className="text-dark">
                         {field.charAt(0).toUpperCase() + field.slice(1)}
                       </label>
                       <input
@@ -299,7 +299,7 @@ const CreateJobApplication = ({ onClose, fetchApplications, }) => {
                 {/* Visibility fields */}
                 {selectedJobDetails?.visibility.includes("Profile") && (
                   <div className="form-group col-md-6">
-                    <label htmlFor="profile">Profile</label>
+                    <label htmlFor="profile" className="text-dark">Profile</label>
                     <input
                       type="file"
                       className="form-control"
@@ -312,7 +312,7 @@ const CreateJobApplication = ({ onClose, fetchApplications, }) => {
 
                 {selectedJobDetails?.visibility.includes("Resume") && (
                   <div className="form-group col-md-6">
-                    <label htmlFor="resume">Resume</label>
+                    <label htmlFor="resume" className="text-dark">Resume</label>
                     <input
                       type="file"
                       className="form-control"
@@ -325,7 +325,7 @@ const CreateJobApplication = ({ onClose, fetchApplications, }) => {
 
                 {selectedJobDetails?.visibility.includes("Letter") && (
                   <div className="form-group col-md-12">
-                    <label htmlFor="coverLetter">Cover Letter</label>
+                    <label htmlFor="coverLetter" className="text-dark">Cover Letter</label>
                     <textarea
                       className="form-control"
                       name="coverLetter"

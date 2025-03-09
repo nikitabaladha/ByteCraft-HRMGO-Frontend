@@ -65,7 +65,7 @@ const PayeesTable = ({ payees, setPayees, fetchPayees }) => {
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -105,8 +105,8 @@ const PayeesTable = ({ payees, setPayees, fetchPayees }) => {
                     <tbody>
                       {paginatedPayees.map((payee) => (
                         <tr key={payee._id}>
-                          <td>{payee.payee_name}</td>
-                          <td>{payee.contact_number}</td>
+                          <td className="text-dark">{payee.payee_name}</td>
+                          <td className="text-dark">{payee.contact_number}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>
@@ -148,7 +148,7 @@ const PayeesTable = ({ payees, setPayees, fetchPayees }) => {
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min(
                   (currentPage - 1) * entriesPerPage + 1,

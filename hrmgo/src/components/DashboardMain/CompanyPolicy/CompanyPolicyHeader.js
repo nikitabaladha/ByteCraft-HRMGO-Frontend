@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { FiPlus } from "react-icons/fi";
 import CompanyPolicy from "./CompanyPolicyModal";
 
 
@@ -25,7 +24,7 @@ const EventHeader = ({fetchCompanyPolicies}) => {
                             </div>
                             <ul className="breadcrumb">
                                 <li className="breadcrumb-item"><Link to="/dashboard">Home</Link></li>
-                                <li className="breadcrumb-item"> Company Policy</li>
+                                <li className="breadcrumb-item text-dark"> Company Policy</li>
                             </ul>
                         </div>
                         <div className="col">

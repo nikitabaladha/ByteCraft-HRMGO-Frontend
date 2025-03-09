@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-// import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import CreateAnnouncementModal from "./CreateAnnouncementModal";
 
@@ -28,7 +27,7 @@ const AnnouncementHeader = ({ addAnnouncement }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Announcement</li>
+                <li className="breadcrumb-item text-dark">Announcement</li>
               </ul>
             </div>
             <div className="col">

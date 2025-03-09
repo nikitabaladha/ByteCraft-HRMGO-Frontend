@@ -31,31 +31,31 @@ const TraineeViewModel = ({ trainee, onClose }) => {
                   <tbody>
                     <tr>
                       <td className="text-dark fw-bold">Branch</td>
-                      <td>{trainee.branch}</td>
+                      <td className="text-dark">{trainee.branch}</td>
                     </tr>
                     <tr>
                       <td className="text-dark fw-bold">First Name</td>
-                      <td>{trainee.firstName}</td>
+                      <td className="text-dark">{trainee.firstName}</td>
                     </tr>
                     <tr>
                       <td className="text-dark fw-bold">Last Name</td>
-                      <td>{trainee.lastName}</td>
+                      <td text-dark>{trainee.lastName}</td>
                     </tr>
                     <tr>
                       <td className="text-dark fw-bold">Contact Number</td>
-                      <td>{trainee.contactNumber}</td>
+                      <td className="text-dark">{trainee.contactNumber}</td>
                     </tr>
                     <tr>
                       <td className="text-dark fw-bold">Email</td>
-                      <td>{trainee.email}</td>
+                      <td className="text-dark">{trainee.email}</td>
                     </tr>
                     <tr>
                       <td className="text-dark fw-bold">Expertise</td>
-                      <td>{trainee.expertise}</td>
+                      <td className="text-dark">{trainee.expertise}</td>
                     </tr>
                     <tr>
                       <td className="text-dark fw-bold">Address</td>
-                      <td>{trainee.address}</td>
+                      <td className="text-dark">{trainee.address}</td>
                     </tr>
                   </tbody>
                 </table>

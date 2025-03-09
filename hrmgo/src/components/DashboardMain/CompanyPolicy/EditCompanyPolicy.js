@@ -77,7 +77,7 @@ const EditPolicyModal = ({ onClose, policy, fetchCompanyPolicies }) => {
                 <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6">
                     <div className="form-group">
-                      <label htmlFor="branch" className="form-label">Branch</label><span className="text-danger">*</span>
+                      <label htmlFor="branch" className="form-label text-dark">Branch</label><span className="text-danger">*</span>
                       <div className="form-icon-user">
                         <select
                           className="form-control"
@@ -99,7 +99,7 @@ const EditPolicyModal = ({ onClose, policy, fetchCompanyPolicies }) => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6">
                     <div className="form-group">
-                      <label htmlFor="title" className="form-label">Title</label><span className="text-danger">*</span>
+                      <label htmlFor="title" className="form-label text-dark">Title</label><span className="text-danger">*</span>
                       <div className="form-icon-user">
                         <input
                           className="form-control"
@@ -116,7 +116,7 @@ const EditPolicyModal = ({ onClose, policy, fetchCompanyPolicies }) => {
                   </div>
                   <div className="col-lg-12 col-md-12 col-sm-12">
                     <div className="form-group">
-                      <label htmlFor="description" className="form-label">Description</label>
+                      <label htmlFor="description" className="form-label text-dark">Description</label>
                       <div className="form-icon-user">
                         <textarea
                           className="form-control"

@@ -28,7 +28,7 @@ const ResignationHeader = ({ addResignation }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Resignation</li>
+                <li className="breadcrumb-item text-dark">Resignation</li>
               </ul>
             </div>
             <div className="col">

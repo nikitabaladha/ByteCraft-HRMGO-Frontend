@@ -17,7 +17,7 @@ const CreateJobHeader = () => {
               <li className="breadcrumb-item">
                 <Link to="/dashboard/recruitment/jobs">Manage Job</Link>
               </li>
-              <li className="breadcrumb-item">Create Job</li>
+              <li className="breadcrumb-item text-dark">Create Job</li>
             </ul>
           </div>
           <div className="col">

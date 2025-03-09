@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-// import { FiUpload } from "react-icons/fi";
-// import { FiDownload } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import postAPI from "../../../../api/postAPI";
 import { toast } from "react-toastify";

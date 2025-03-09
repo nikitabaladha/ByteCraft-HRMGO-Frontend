@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import { FiPlus } from "react-icons/fi";
 
 const JobHeader = ({fetchJobs}) => {
   return (
@@ -15,7 +14,7 @@ const JobHeader = ({fetchJobs}) => {
                 <li class="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li class="breadcrumb-item">Manage Job</li>
+                <li class="breadcrumb-item text-dark">Manage Job</li>
               </ul>
             </div>
             <div class="col">
@@ -30,7 +29,6 @@ const JobHeader = ({fetchJobs}) => {
                   class="btn btn-sm btn-primary"
                   data-bs-original-title="Create"
                 >
-                  {/* <FiPlus className="text-white" /> */}
                   <i className="ti ti-plus"></i>
                 </Link>
               </div>

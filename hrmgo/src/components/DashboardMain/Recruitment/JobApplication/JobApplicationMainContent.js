@@ -2,7 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { PiDotsThreeOutlineVerticalThin } from "react-icons/pi";
-// import { AiOutlineClockCircle } from "react-icons/ai";
 import getAPI from "../../../../api/getAPI";
 import ConfirmationDialog from "../../ConfirmationDialog";
 
@@ -96,7 +95,7 @@ const JobApplicationMainContent = ({ applications, setApplications }) => {
                    <div className="row align-items-center justify-content-end">
                    <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box">
-                        <label htmlFor="start_date" className="form-label">
+                        <label htmlFor="start_date" className="form-label text-dark">
                           Start Date
                         </label>
                         <input
@@ -111,7 +110,7 @@ const JobApplicationMainContent = ({ applications, setApplications }) => {
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box ">
-                        <label htmlFor="end_date" className="form-label">
+                        <label htmlFor="end_date" className="form-label text-dark">
                           End Date
                         </label>
                       </div>
@@ -128,7 +127,7 @@ const JobApplicationMainContent = ({ applications, setApplications }) => {
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box">
-                        <label htmlFor="job" className="form-label">
+                        <label htmlFor="job" className="form-label text-dark">
                           Job
                         </label>
                         <select
@@ -241,7 +240,7 @@ const JobApplicationMainContent = ({ applications, setApplications }) => {
                                     >
                                       {/* <TbPencil /> */}
                                       <i className="ti ti-pencil"></i>
-                                      <span className="ms-2">Edit</span>
+                                      <span className="ms-2 text-dark">Edit</span>
                                     </Link>
                                     <Link
                                       to="#"
@@ -253,7 +252,7 @@ const JobApplicationMainContent = ({ applications, setApplications }) => {
                                     >
                                       {/* <FaRegTrashAlt /> */}
                                       <i className="ti ti-trash"></i>
-                                      <span className="ms-2">Delete</span>
+                                      <span className="ms-2 text-dark">Delete</span>
                                     </Link>
                                   </div>
                                 </div>
@@ -275,10 +274,10 @@ const JobApplicationMainContent = ({ applications, setApplications }) => {
                                     </span>
                                   </li>
 
-                                  <li className="list-inline-item text-md ">
+                                  <li className="list-inline-item text-md text-dark">
                                     {app.jobTitle}
                                   </li>
-                                  <li className="list-inline-item">
+                                  <li className="list-inline-item text-dark">
                                     {/* <AiOutlineClockCircle /> */}
                                     <i className="ti ti-clock"></i>
                                     {`${formatDate(app.createdAt)}`}

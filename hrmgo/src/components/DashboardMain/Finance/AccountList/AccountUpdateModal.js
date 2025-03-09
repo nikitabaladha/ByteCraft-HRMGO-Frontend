@@ -77,31 +77,31 @@ const AccountUpdateModal = ({ isOpen, onClose, accountData ,fetchAccounts }) => 
                 <div className="row">
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="account_name" className="col-form-label">Account Name</label>
+                      <label htmlFor="account_name" className="col-form-label text-dark">Account Name</label>
                       <input className="form-control" required name="account_name" type="text" id="account_name" value={accountName} onChange={handleChange} />
                     </div>
                   </div>
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="initial_balance" className="col-form-label">Initial Balance</label>
+                      <label htmlFor="initial_balance" className="col-form-label text-dark">Initial Balance</label>
                       <input className="form-control" required name="initial_balance" type="number" id="initial_balance" value={initialBalance} onChange={handleChange} />
                     </div>
                   </div>
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="account_number" className="col-form-label">Account Number</label>
+                      <label htmlFor="account_number" className="col-form-label text-dark">Account Number</label>
                       <input className="form-control" required name="account_number" type="text" id="account_number" value={accountNumber} onChange={handleChange} />
                     </div>
                   </div>
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="branch_code" className="col-form-label">Branch Code</label>
+                      <label htmlFor="branch_code" className="col-form-label text-dark">Branch Code</label>
                       <input className="form-control" required name="branch_code" type="text" id="branch_code" value={branchCode} onChange={handleChange} />
                     </div>
                   </div>
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="bank_branch" className="col-form-label">Bank Branch</label>
+                      <label htmlFor="bank_branch" className="col-form-label text-dark">Bank Branch</label>
                       <input className="form-control" required name="bank_branch" type="text" id="bank_branch" value={bankBranch} onChange={handleChange} />
                     </div>
                   </div>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { FaEye } from 'react-icons/fa';
 import getAPI from '../../../../api/getAPI';
 
 const JobCandidateTable = () => {
@@ -67,7 +66,7 @@ const JobCandidateTable = () => {
       <div className="card">
       <div className="dataTable-top">
                 <div className="dataTable-dropdown d-none d-md-block">
-                  <label>
+                  <label className='text-dark'>
                     <select
                       className="dataTable-selector"
                       value={entriesPerPage}
@@ -112,12 +111,12 @@ const JobCandidateTable = () => {
                       {paginatedTrainers.length > 0 ? (
                     paginatedTrainers.map((application) => (
                             <tr key={application._id}>
-                              <td>
+                              <td className='text-dark'>
                                 <Link className="btn btn-outline-primary" to="#">
                                   {application.name}
                                 </Link>
                               </td>
-                              <td>{application.jobTitle}</td>
+                              <td className='text-dark'>{application.jobTitle}</td>
                               <td>
                                 <span className="static-rating static-rating-sm d-block">
                                 {[...Array(5)].map((_, index) => (
@@ -130,8 +129,8 @@ const JobCandidateTable = () => {
                                         ))}
                                 </span>
                               </td>
-                              <td>{`${formatDate(application.createdAt)}`}</td>
-                              <td>{application.resume ? <a href={`${process.env.REACT_APP_API_URL_FOR_IMAGE}${application.resume}`}   
+                              <td className='text-dark'>{`${formatDate(application.createdAt)}`}</td>
+                              <td className='text-dark'>{application.resume ? <a href={`${process.env.REACT_APP_API_URL_FOR_IMAGE}${application.resume}`}   
                               target="_blank" rel="noopener noreferrer">View Resume</a> : '-'}</td>
                               <td>
                                 <div className="dt-buttons">
@@ -166,7 +165,7 @@ const JobCandidateTable = () => {
                 </div>
               </div>
               <div className="dataTable-bottom">
-                      <div className="dataTable-info d-none d-md-block">
+                      <div className="dataTable-info d-none d-md-block text-dark">
                         Showing{" "}
                         {Math.min(
                           (currentPage - 1) * entriesPerPage + 1,

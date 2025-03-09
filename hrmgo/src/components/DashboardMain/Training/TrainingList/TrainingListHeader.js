@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbFileExport } from "react-icons/tb";
-// import { FiPlus } from "react-icons/fi";
 import TrainingListCreateModel from "./TrainingListCreateModel";
 import * as XLSX from "xlsx";
 
@@ -70,7 +69,7 @@ const TrainingListHeader = ({ fetchTrainings, trainings }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Training List</li>
+                <li className="breadcrumb-item text-dark">Training List</li>
               </ul>
             </div>
             <div className="col">

@@ -64,7 +64,7 @@ const TraineeUpdateDataModel = ({ onClose, onSubmit, trainee }) => {
               <div className="row">
                 <div className="col-md-12">
                   <div className="form-group">
-                    <label htmlFor="branch" className="col-form-label">
+                    <label htmlFor="branch" className="col-form-label text-dark">
                       Branch
                     </label>
                     <span className="text-danger">*</span>
@@ -87,7 +87,7 @@ const TraineeUpdateDataModel = ({ onClose, onSubmit, trainee }) => {
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="firstName" className="col-form-label">
+                    <label htmlFor="firstName" className="col-form-label text-dark">
                       First Name
                     </label>
                     <span className="text-danger">*</span>
@@ -105,7 +105,7 @@ const TraineeUpdateDataModel = ({ onClose, onSubmit, trainee }) => {
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="lastName" className="col-form-label">
+                    <label htmlFor="lastName" className="col-form-label text-dark">
                       Last Name
                     </label>
                     <span className="text-danger">*</span>
@@ -123,7 +123,7 @@ const TraineeUpdateDataModel = ({ onClose, onSubmit, trainee }) => {
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="contactNumber" className="col-form-label">
+                    <label htmlFor="contactNumber" className="col-form-label text-dark">
                       Contact Number
                     </label>
                     <span className="text-danger">*</span>
@@ -145,7 +145,7 @@ const TraineeUpdateDataModel = ({ onClose, onSubmit, trainee }) => {
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="email" className="col-form-label">
+                    <label htmlFor="email" className="col-form-label text-dark">
                       Email
                     </label>
                     <span className="text-danger">*</span>
@@ -162,7 +162,7 @@ const TraineeUpdateDataModel = ({ onClose, onSubmit, trainee }) => {
                   </div>
                 </div>
                 <div className="form-group col-lg-12">
-                  <label htmlFor="expertise" className="col-form-label">
+                  <label htmlFor="expertise" className="col-form-label text-dark">
                     Expertise
                   </label>
                   <textarea
@@ -176,7 +176,7 @@ const TraineeUpdateDataModel = ({ onClose, onSubmit, trainee }) => {
                   ></textarea>
                 </div>
                 <div className="form-group col-lg-12">
-                  <label htmlFor="address" className="col-form-label">
+                  <label htmlFor="address" className="col-form-label text-dark">
                     Address
                   </label>
                   <textarea

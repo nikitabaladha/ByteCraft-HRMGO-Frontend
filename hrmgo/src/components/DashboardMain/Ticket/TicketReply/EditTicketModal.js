@@ -168,7 +168,7 @@ const EditTicketModal = ({ closeModal, ticketId }) => {
                     className="form-group col-md-6"
                     style={{ marginBottom: "1.5rem" }}
                   >
-                    <label htmlFor="title" className="col-form-label">
+                    <label htmlFor="title" className="col-form-label text-dark">
                       Subject
                     </label>
                     <span className="text-danger">*</span>
@@ -187,7 +187,7 @@ const EditTicketModal = ({ closeModal, ticketId }) => {
                     className="form-group col-md-6"
                     style={{ marginBottom: "1.5rem" }}
                   >
-                    <label htmlFor="employee_id" className="col-form-label">
+                    <label htmlFor="employee_id" className="col-form-label text-dark">
                       Ticket for Employee
                     </label>
                     <span className="text-danger">*</span>
@@ -211,7 +211,7 @@ const EditTicketModal = ({ closeModal, ticketId }) => {
                   </div>
                   {/* Priority and End Date */}
                   <div className="form-group col-md-6">
-                    <label htmlFor="priority" className="col-form-label">
+                    <label htmlFor="priority" className="col-form-label text-dark">
                       Priority
                     </label>
                     <span className="text-danger">*</span>
@@ -228,7 +228,7 @@ const EditTicketModal = ({ closeModal, ticketId }) => {
                     </select>
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="end_date" className="col-form-label">
+                    <label htmlFor="end_date" className="col-form-label text-dark">
                       End Date
                     </label>
                     <span className="text-danger">*</span>
@@ -247,7 +247,7 @@ const EditTicketModal = ({ closeModal, ticketId }) => {
                     className="form-group col-md-12"
                     style={{ marginBottom: "1.9rem" }}
                   >
-                    <label htmlFor="description" className="col-form-label">
+                    <label htmlFor="description" className="col-form-label text-dark">
                       Description
                     </label>
                     <ReactQuill
@@ -270,7 +270,7 @@ const EditTicketModal = ({ closeModal, ticketId }) => {
                     className="form-group col-md-6"
                     style={{ marginBottom: "1.5rem" }}
                   >
-                    <label htmlFor="attachment" className="form-label">
+                    <label htmlFor="attachment" className="form-label text-dark">
                       Attachments
                     </label>
                     <div class="col-sm-12 col-md-12">
@@ -325,7 +325,7 @@ const EditTicketModal = ({ closeModal, ticketId }) => {
 
                 {/* Status */}
                 <div className="form-group" style={{ marginBottom: "1.5rem" }}>
-                  <label htmlFor="status" className="col-form-label">
+                  <label htmlFor="status" className="col-form-label text-dark">
                     Status
                   </label>
                   <select

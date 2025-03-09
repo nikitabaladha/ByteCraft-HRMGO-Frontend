@@ -109,7 +109,7 @@ const ZoomMeetingModal = ({ onClose, fetchMeetings }) => {
               <div className="row">
                 <div className="col-lg-6 col-md-6 col-sm-6">
                   <div className="form-group">
-                    <label htmlFor="title" className="form-label">Title</label><span className="text-danger">*</span>
+                    <label htmlFor="title" className="form-label text-dark">Title</label><span className="text-danger">*</span>
                     <div className="form-icon-user">
                       <input className="form-control" placeholder="Enter Meeting Title" required name="title" type="text" id="title" value={formData.title} onChange={handleChange} />
                     </div>
@@ -118,7 +118,7 @@ const ZoomMeetingModal = ({ onClose, fetchMeetings }) => {
 
                 <div className="col-lg-6 col-md-6 col-sm-6">
                   <div className="form-group">
-                    <label htmlFor="user_id" className="form-label">Users</label><span className="text-danger">*</span>
+                    <label htmlFor="user_id" className="form-label text-dark">Users</label><span className="text-danger">*</span>
                     <div className="form-icon-user">
                       <Select
                         isMulti
@@ -133,7 +133,7 @@ const ZoomMeetingModal = ({ onClose, fetchMeetings }) => {
 
                 <div className="col-lg-6 col-md-6 col-sm-6">
                   <div className="form-group">
-                    <label htmlFor="start_date" className="form-label">Start Date</label><span className="text-danger">*</span>
+                    <label htmlFor="start_date" className="form-label text-dark">Start Date</label><span className="text-danger">*</span>
                     <div className="form-icon-user">
                       <input className="form-control datetime-local" required id="current_date" name="start_date" type="datetime-local" value={formData.start_date} onChange={handleDateChange} />
                     </div>
@@ -142,7 +142,7 @@ const ZoomMeetingModal = ({ onClose, fetchMeetings }) => {
 
                 <div className="col-lg-6 col-md-6 col-sm-6">
                   <div className="form-group">
-                    <label htmlFor="duration" className="form-label">Duration</label><span className="text-danger">*</span>
+                    <label htmlFor="duration" className="form-label text-dark">Duration</label><span className="text-danger">*</span>
                     <div className="form-icon-user">
                       <input className="form-control" placeholder="Enter duration" required min="0" name="duration" type="number" id="duration" value={formData.duration} onChange={handleChange} />
                     </div>
@@ -151,20 +151,13 @@ const ZoomMeetingModal = ({ onClose, fetchMeetings }) => {
 
                 <div className="col-lg-6 col-md-6 col-sm-6">
                   <div className="form-group">
-                    <label htmlFor="password" className="form-label">Password</label>
+                    <label htmlFor="password" className="form-label text-dark">Password</label>
                     <div className="form-icon-user">
                       <input className="form-control" placeholder="Enter Password" name="password" type="password" id="password" value={formData.password} onChange={handleChange} />
                     </div>
                   </div>
                 </div>
 
-                <div className="form-group col-md-6">
-                  <label htmlFor="synchronize_type" className="form-label">Synchronize in Google Calendar?</label>
-                  <div className="form-switch">
-                    <input type="checkbox" className="form-check-input mt-2" name="synchronize_type" id="switch-shadow" value="google_calender" checked={formData.synchronize_type} onChange={handleChange} />
-                    <label className="form-check-label" htmlFor="switch-shadow"></label>
-                  </div>
-                </div>
               </div>
 
               <div className="modal-footer">

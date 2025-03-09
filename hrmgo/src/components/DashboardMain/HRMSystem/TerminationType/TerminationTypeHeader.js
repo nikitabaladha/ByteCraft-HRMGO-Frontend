@@ -22,7 +22,7 @@ const TerminationTypeHeader = ({fetchTerminationTypes}) => {
                 <li className="breadcrumb-item">
                   <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Termination Type</li> 
+                <li className="breadcrumb-item text-dark">Termination Type</li> 
               </ul>
             </div>
             <div className="col">

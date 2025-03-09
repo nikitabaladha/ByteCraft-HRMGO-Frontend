@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { FiPlus } from "react-icons/fi";
 import CreateContractTypeModal from "./CreateContractTypeModal";
 
 const ContractTypeHeader = ({fetchContractTypes}) => {
@@ -22,7 +21,7 @@ const ContractTypeHeader = ({fetchContractTypes}) => {
                 <li className="breadcrumb-item">
                   <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Contract Type</li>
+                <li className="breadcrumb-item text-dark">Contract Type</li>
               </ul>
             </div>
             <div className="col">
@@ -33,7 +32,6 @@ const ContractTypeHeader = ({fetchContractTypes}) => {
                   data-bs-toggle="tooltip"
                   title="Create"
                 >
-                  {/* <FiPlus /> */}
                   <i className="ti ti-plus"></i>
                 </button>
               </div>

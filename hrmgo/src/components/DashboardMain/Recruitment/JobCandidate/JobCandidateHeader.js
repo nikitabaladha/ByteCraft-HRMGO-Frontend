@@ -14,7 +14,7 @@ const JobCandidateHeader = () => {
                   <a href="/dashboard">Home</a>
                 </li>
 
-                <li className="breadcrumb-item">Archive Application</li>
+                <li className="breadcrumb-item text-dark">Archive Application</li>
               </ul>
             </div>
             <div className="col">

@@ -43,10 +43,9 @@ const CareerJobView = () => {
 
 
   const removeHtmlTags = (text) => {
-    return text.replace(/<[^>]*>/g, ''); // Removes all HTML tags
+    return text.replace(/<[^>]*>/g, ''); 
 };
 
-// If ticket is not null, remove HTML tags from description
 const descriptionWithoutHtml = jobDetails ? removeHtmlTags(jobDetails.description) : '';
 const recuitmentWithoutHtml = jobDetails ? removeHtmlTags(jobDetails.requirement) : '';
 // const termsWithoutHtml = jobDetails ? removeHtmlTags(jobDetails.terms) : '';

@@ -179,7 +179,7 @@ const CreatePromotionModal = ({ onClose, addPromotion }) => {
                 <div className="modal-body">
                   <div className="row">
                     <div className="form-group col-md-6 col-lg-6 ">
-                      <label htmlFor="employee_id" className="col-form-label">
+                      <label htmlFor="employee_id" className="col-form-label text-dark">
                         Employee
                       </label>
                       <span className="text-danger">*</span>
@@ -201,7 +201,7 @@ const CreatePromotionModal = ({ onClose, addPromotion }) => {
                     <div className="form-group col-md-6 col-lg-6 ">
                       <label
                         htmlFor="designation_id"
-                        className="col-form-label"
+                        className="col-form-label text-dark"
                       >
                         Designation
                       </label>
@@ -224,7 +224,7 @@ const CreatePromotionModal = ({ onClose, addPromotion }) => {
                     <div className="form-group col-md-6 col-lg-6">
                       <label
                         htmlFor="promotion_title"
-                        className="col-form-label"
+                        className="col-form-label text-dark"
                       >
                         Promotion Title
                       </label>
@@ -242,7 +242,7 @@ const CreatePromotionModal = ({ onClose, addPromotion }) => {
                     </div>
 
                     <div className="form-group col-md-6 col-lg-6">
-                      <label htmlFor="promotionDate" className="col-form-label">
+                      <label htmlFor="promotionDate" className="col-form-label text-dark">
                         Promotion Date
                       </label>
                       <span className="text-danger">*</span>
@@ -261,7 +261,7 @@ const CreatePromotionModal = ({ onClose, addPromotion }) => {
                     </div>
 
                     <div className="form-group col-md-12">
-                      <label htmlFor="description" className="col-form-label ">
+                      <label htmlFor="description" className="col-form-label text-dark">
                         Description
                       </label>
                       <span className="text-danger">*</span>

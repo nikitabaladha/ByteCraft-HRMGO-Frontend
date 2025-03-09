@@ -5,11 +5,8 @@ import getAPI from "../../../../api/getAPI.js";
 
 const TrainerEditModal = ({ onClose, fetchTrainers }
 ) => {
-  // State for branches
   const [branches, setBranches] = useState([]);
   
-
-  // State for form data
   const [formData, setFormData] = useState({
     branch: "", // Default branch
     firstName: "",
@@ -94,7 +91,7 @@ const TrainerEditModal = ({ onClose, fetchTrainers }
               <div className="row">
                 <div className="col-md-12">
                   <div className="form-group">
-                    <label htmlFor="branch" className="col-form-label">
+                    <label htmlFor="branch" className="col-form-label text-dark">
                       Branch
                     </label>
                     <span className="text-danger">*</span>
@@ -118,7 +115,7 @@ const TrainerEditModal = ({ onClose, fetchTrainers }
                 {/* Other form fields remain the same */}
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="firstName" className="col-form-label">
+                    <label htmlFor="firstName" className="col-form-label text-dark">
                       First Name
                     </label>
                     <span className="text-danger">*</span>
@@ -135,7 +132,7 @@ const TrainerEditModal = ({ onClose, fetchTrainers }
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="lastName" className="col-form-label">
+                    <label htmlFor="lastName" className="col-form-label text-dark">
                       Last Name
                     </label>
                     <span className="text-danger">*</span>
@@ -152,7 +149,7 @@ const TrainerEditModal = ({ onClose, fetchTrainers }
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="contactNumber" className="form-label">
+                    <label htmlFor="contactNumber" className="form-label text-dark">
                       Contact Number
                     </label>
                     <span className="text-danger">*</span>
@@ -173,7 +170,7 @@ const TrainerEditModal = ({ onClose, fetchTrainers }
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="email" className="col-form-label">
+                    <label htmlFor="email" className="col-form-label text-dark">
                       Email
                     </label>
                     <span className="text-danger">*</span>
@@ -189,7 +186,7 @@ const TrainerEditModal = ({ onClose, fetchTrainers }
                   </div>
                 </div>
                 <div className="form-group col-lg-12">
-                  <label htmlFor="expertise" className="col-form-label">
+                  <label htmlFor="expertise" className="col-form-label text-dark">
                     Expertise
                   </label>
                   <textarea
@@ -202,7 +199,7 @@ const TrainerEditModal = ({ onClose, fetchTrainers }
                   ></textarea>
                 </div>
                 <div className="form-group col-lg-12">
-                  <label htmlFor="address" className="col-form-label">
+                  <label htmlFor="address" className="col-form-label text-dark">
                     Address
                   </label>
                   <textarea

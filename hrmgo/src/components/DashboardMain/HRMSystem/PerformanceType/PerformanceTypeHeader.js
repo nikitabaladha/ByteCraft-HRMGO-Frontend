@@ -22,7 +22,7 @@ const PerformanceTypeHeader = ({fetchPerformanceTypes}) => {
                 <li className="breadcrumb-item">
                   <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Performance Type</li>
+                <li className="breadcrumb-item text-dark">Performance Type</li>
               </ul>
             </div>
             <div className="col">

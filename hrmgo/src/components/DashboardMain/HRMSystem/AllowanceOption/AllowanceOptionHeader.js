@@ -22,7 +22,7 @@ const AllowanceOptionHeader = ({fetchAllowanceOptions}) => {
                 <li className="breadcrumb-item">
                   <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Allowance Option</li>
+                <li className="breadcrumb-item text-dark">Allowance Option</li>
               </ul>
             </div>
             <div className="col">

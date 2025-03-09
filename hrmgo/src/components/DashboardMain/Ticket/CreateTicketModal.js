@@ -128,7 +128,7 @@ const CreateTicketModal = ({ closeModal, fetchTickets }) => {
                 <div className="row">
                   {/* Ticket form fields */}
                   <div className="form-group col-md-6" style={{ marginBottom: '1.5rem' }}>
-                    <label htmlFor="title" className="col-form-label">
+                    <label htmlFor="title" className="col-form-label text-dark">
                       Subject
                     </label>
                     <span className="text-danger">*</span>
@@ -144,7 +144,7 @@ const CreateTicketModal = ({ closeModal, fetchTickets }) => {
                     />
                   </div>
                   <div className="form-group col-md-6" style={{ marginBottom: '1.5rem' }}>
-                    <label htmlFor="employee_id" className="col-form-label">
+                    <label htmlFor="employee_id" className="col-form-label text-dark">
                       Ticket for Employee
                     </label>
                     <span className="text-danger">*</span>
@@ -166,7 +166,7 @@ const CreateTicketModal = ({ closeModal, fetchTickets }) => {
                   </div>
                   {/* Priority and End Date */}
                   <div className="form-group col-md-6">
-                    <label htmlFor="priority" className="col-form-label">Priority</label><span className="text-danger">*</span>
+                    <label htmlFor="priority" className="col-form-label text-dark">Priority</label><span className="text-danger">*</span>
                     <select
                       name="priority"
                       className="form-control"
@@ -180,7 +180,7 @@ const CreateTicketModal = ({ closeModal, fetchTickets }) => {
                     </select>
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="end_date" className="col-form-label">End Date</label><span className="text-danger">*</span>
+                    <label htmlFor="end_date" className="col-form-label text-dark">End Date</label><span className="text-danger">*</span>
                     <input
                       className="form-control"
                       required
@@ -193,7 +193,7 @@ const CreateTicketModal = ({ closeModal, fetchTickets }) => {
                   </div>
                   {/* Description */}
                   <div className="form-group col-md-12" style={{ marginBottom: '1.9rem' }}>
-                    <label htmlFor="description" className="col-form-label">Description</label>
+                    <label htmlFor="description" className="col-form-label text-dark">Description</label>
                     <ReactQuill
                       value={description}
                       onChange={handleDescriptionChange}
@@ -206,7 +206,7 @@ const CreateTicketModal = ({ closeModal, fetchTickets }) => {
                 {/* File input for attachment */}
                 <div className="row">
                   <div className="form-group col-md-6" style={{ marginBottom: '1.5rem' }}>
-                    <label htmlFor="attachment" className="form-label">Attachments</label>
+                    <label htmlFor="attachment" className="form-label text-dark">Attachments</label>
                     <div class="col-sm-12 col-md-12">
                       <div class="form-group col-lg-12 col-md-12">
                         <div class="choose-file form-group">
@@ -249,7 +249,7 @@ const CreateTicketModal = ({ closeModal, fetchTickets }) => {
 
                 {/* Status */}
                 <div className="form-group" style={{ marginBottom: '1.5rem' }}>
-                  <label htmlFor="status" className="col-form-label">Status</label>
+                  <label htmlFor="status" className="col-form-label text-dark">Status</label>
                   <select
                     name="status"
                     className="form-control"

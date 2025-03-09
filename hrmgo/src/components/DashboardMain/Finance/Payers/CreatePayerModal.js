@@ -67,7 +67,7 @@ const CreatePayerModal = ({ closeModal, fetchPayers }) => {
               <div className="modal-body">
                 <div className="row">
                   <div className="form-group">
-                    <label htmlFor="payer_name" className="form-label">
+                    <label htmlFor="payer_name" className="form-label text-dark">
                       Payer Name
                     </label>
                     <span className="text-danger">*</span>
@@ -84,7 +84,7 @@ const CreatePayerModal = ({ closeModal, fetchPayers }) => {
                   </div>
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="contact_number" className="form-label">
+                      <label htmlFor="contact_number" className="form-label text-dark">
                         Contact Number
                       </label>
                       <span className="text-danger">*</span>

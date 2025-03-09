@@ -28,13 +28,13 @@ const TrainingListTable = ({trainings, setTrainings, fetchTrainings}) => {
     const formattedStartDate = formatDate(training.startDate).toLowerCase();
     const formattedEndDate = formatDate(training.endDate).toLowerCase();
     return (
-      training.branch.toLowerCase().includes(searchTerm) || // Search in branch
-      training.trainingType.toLowerCase().includes(searchTerm) || // Search in trainingType
-      training.status.toLowerCase().includes(searchTerm) || // Search in status
-      training.employee.toLowerCase().includes(searchTerm) || // Search in employee
-      training.trainer.toLowerCase().includes(searchTerm) || // Search in trainer
-      formattedStartDate.includes(searchTerm) || // Search in startDate
-      formattedEndDate.includes(searchTerm) // Search in endDate
+      training.branch.toLowerCase().includes(searchTerm) || 
+      training.trainingType.toLowerCase().includes(searchTerm) || 
+      training.status.toLowerCase().includes(searchTerm) || 
+      training.employee.toLowerCase().includes(searchTerm) || 
+      training.trainer.toLowerCase().includes(searchTerm) || 
+      formattedStartDate.includes(searchTerm) ||  
+      formattedEndDate.includes(searchTerm) 
     );
   });
 
@@ -138,7 +138,7 @@ const openDeleteDialog = (training) => {
           <div className="card">
           <div className="dataTable-top">
                     <div className="dataTable-dropdown d-none d-md-block">
-                      <label>
+                      <label className="text-dark">
                         <select
                           className="dataTable-selector"
                           value={entriesPerPage}
@@ -185,8 +185,8 @@ const openDeleteDialog = (training) => {
                   {paginatedTrainers.length > 0 ? (
                     paginatedTrainers.map((training) => (
                       <tr key={training._id}>
-                        <td>{training.branch}</td>
-                        <td>{training.trainingType}</td>
+                        <td className="text-dark">{training.branch}</td>
+                        <td className="text-dark">{training.trainingType}</td>
                         <td>
                           <span
                             className={`badge ${
@@ -202,12 +202,12 @@ const openDeleteDialog = (training) => {
                             {training.status}
                           </span>
                         </td>
-                        <td>{training.employee}</td>
-                        <td>{training.trainer}</td>
-                        <td>{`${formatDate(training.startDate)} to ${formatDate(
+                        <td className="text-dark">{training.employee}</td>
+                        <td className="text-dark">{training.trainer}</td>
+                        <td className="text-dark">{`${formatDate(training.startDate)} to ${formatDate(
                           training.endDate
                         )}`}</td>
-                        <td>{formatCost(training.trainingCost)}</td>
+                        <td className="text-dark">{formatCost(training.trainingCost)}</td>
                         <td className="Action">
                           <ActionButtons training={training} />
                         </td>
@@ -226,7 +226,7 @@ const openDeleteDialog = (training) => {
               </div>
             </div>
             <div className="dataTable-bottom">
-                      <div className="dataTable-info d-none d-md-block">
+                      <div className="dataTable-info d-none d-md-block text-dark">
                         Showing{" "}
                         {Math.min(
                           (currentPage - 1) * entriesPerPage + 1,

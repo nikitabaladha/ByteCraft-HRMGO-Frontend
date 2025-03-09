@@ -9,7 +9,7 @@ import getAPI from "../../../../api/getAPI";
 import putAPI from "../../../../api/putAPI";
 
 const EditJob = () => {
-  const { id } = useParams(); // Job ID from the URL
+  const { id } = useParams(); 
   const [formData, setFormData] = useState({
     title: "",
     branch: "",
@@ -63,7 +63,6 @@ const EditJob = () => {
       try {
         const response = await getAPI(`/get-all-jobs/${id}`, {}, true);
         if (response.data && response.data.data) {
-          // const data = await response.json();
           setFormData(response.data.data);
         } else {
           toast.error("Failed to fetch job details.");
@@ -174,31 +173,13 @@ const EditJob = () => {
                 <li class="breadcrumb-item">
                   <Link to="/dashboard/recruitment/jobs">Manage Job</Link>
                 </li>
-                <li class="breadcrumb-item">Edit Job</li>
+                <li class="breadcrumb-item text-dark">Edit Job</li>
               </ul>
             </div>
             <div class="col">
               <div class="float-end "></div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="text-end">
-          <Link
-            to="#"
-            class="btn btn-sm btn-primary"
-            data-size="medium"
-            data-ajax-popup-over="true"
-          
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title=""
-            data-title="Generate Content With AI"
-            data-bs-original-title="Generate"
-          >
-            <i class="fas fa-robot"></i> Generate With AI
-          </Link>
         </div>
       </div>
       <form onSubmit={handleSubmit} className="needs-validation">
@@ -208,7 +189,7 @@ const EditJob = () => {
               <div className="card-body">
                 <div className="row">
                   <div className="form-group col-md-12">
-                    <label htmlFor="title" className="col-form-label">
+                    <label htmlFor="title" className="col-form-label text-dark">
                       Job Title
                     </label>
                     <span className="text-danger">*</span>
@@ -224,7 +205,7 @@ const EditJob = () => {
                     />
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="branch" className="col-form-label">
+                    <label htmlFor="branch" className="col-form-label text-dark">
                       Branch
                     </label>
                     <span className="text-danger">*</span>
@@ -245,7 +226,7 @@ const EditJob = () => {
                     </select>
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="category" className="col-form-label">
+                    <label htmlFor="category" className="col-form-label text-dark">
                       Job Category
                     </label>
                     <span className="text-danger">*</span>
@@ -269,7 +250,7 @@ const EditJob = () => {
                     </select>
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="position" className="col-form-label">
+                    <label htmlFor="position" className="col-form-label text-dark">
                       No. of Positions
                     </label>
                     <span className="text-danger">*</span>
@@ -285,7 +266,7 @@ const EditJob = () => {
                     />
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="status" className="col-form-label">
+                    <label htmlFor="status" className="col-form-label text-dark">
                       Status
                     </label>
                     <span className="text-danger">*</span>
@@ -302,7 +283,7 @@ const EditJob = () => {
                     </select>
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="startDate" className="col-form-label">
+                    <label htmlFor="startDate" className="col-form-label text-dark">
                       Start Date
                     </label>
                     <input
@@ -316,7 +297,7 @@ const EditJob = () => {
                     />
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="endDate" className="col-form-label">
+                    <label htmlFor="endDate" className="col-form-label text-dark">
                       End Date
                     </label>
                     <input
@@ -330,7 +311,7 @@ const EditJob = () => {
                     />
                   </div>
                   <div className="form-group col-md-12">
-      <label className="col-form-label" htmlFor="skill">
+      <label className="col-form-label text-dark" htmlFor="skill">
         Skill Box
       </label>
       <span className="text-danger"> *</span>
@@ -361,8 +342,6 @@ const EditJob = () => {
             ></button>
           </span>
         ))}
-
-        {/* Input field for typing new skills */}
         <input
           type="text"
           className="border-0 flex-grow-1"
@@ -394,7 +373,7 @@ const EditJob = () => {
                           {["Gender"].map((type) => (
                             <label
                               key={type}
-                              className="form-check-label"
+                              className="form-check-label text-dark"
                               htmlFor={`check-${type}`}
                             >
                               <input
@@ -418,7 +397,7 @@ const EditJob = () => {
                           {["Date of Birth"].map((type) => (
                             <label
                               key={type}
-                              class="form-check-label"
+                              class="form-check-label text-dark"
                               for="check-dob"
                             >
                               <input
@@ -441,7 +420,7 @@ const EditJob = () => {
                           {["Address"].map((type) => (
                             <label
                               key={type}
-                              class="form-check-label"
+                              class="form-check-label text-dark"
                               for="check-address"
                             >
                               <input
@@ -471,12 +450,12 @@ const EditJob = () => {
                           {["Profile"].map((type) => (
                             <label
                               key={type}
-                              class="form-check-label"
+                              class="form-check-label text-dark"
                               for="check-profile"
                             >
                               <input
                                 type="checkbox"
-                                class="form-check-input"
+                                class="form-check-input "
                                 name="visibility"
                                 value={type}
                                 id={`check-${type}`}
@@ -494,7 +473,7 @@ const EditJob = () => {
                           {["Resume"].map((type) => (
                             <label
                               key={type}
-                              class="form-check-label"
+                              class="form-check-label text-dark"
                               for="check-profile"
                             >
                               <input
@@ -517,7 +496,7 @@ const EditJob = () => {
                           {["Letter"].map((type) => (
                             <label
                               key={type}
-                              class="form-check-label"
+                              class="form-check-label text-dark"
                               for="check-profile"
                             >
                               <input
@@ -540,7 +519,7 @@ const EditJob = () => {
                           {["Terms and Conditions"].map((type) => (
                             <label
                               key={type}
-                              class="form-check-label"
+                              class="form-check-label text-dark"
                               for="check-profile"
                             >
                               <input
@@ -573,7 +552,7 @@ const EditJob = () => {
               <div className="card-body ">
                 <div className="row">
                   <div className="form-group col-md-12">
-                    <label for="sescription" className="col-form-label">
+                    <label for="sescription" className="col-form-label text-dark">
                       Job Description
                     </label>
                     <span className="text-danger">*</span>
@@ -590,6 +569,7 @@ const EditJob = () => {
                         height: "250px",
                         maxHeight: "300px",
                         minHeight: "200px",
+                        marginBottom: "4.0rem"
                       }}
                     />
                   </div>
@@ -598,31 +578,15 @@ const EditJob = () => {
             </div>
           </div>
 
-          {/* <CreateJobRecuirment /> */}
-
           <div className="col-md-6">
             <div className="card card-fluid job-card">
               <div className="card-body ">
                 <div className="row">
                   <div className="form-group col-md-12">
-                    <label for="requirement" className="col-form-label">
+                    <label for="requirement" className="col-form-label text-dark">
                       Job Requirement
                     </label>
                     <span className="text-danger">*</span>
-
-                    <Link
-                      href="#"
-                      data-size="md"
-                      className="btn btn-primary btn-icon btn-sm float-end"
-                      data-ajax-popup-over="true"
-                      id="grammarCheck"
-                      
-                      data-bs-placement="top"
-                      data-title="Grammar check with AI"
-                    >
-                      <i className="ti ti-rotate"></i>{" "}
-                      <span>Grammar check with AI</span>
-                    </Link>
 
                     <ReactQuill
                       value={formData.requirement}
@@ -637,6 +601,7 @@ const EditJob = () => {
                         height: "250px",
                         maxHeight: "300px",
                         minHeight: "200px",
+                        marginBottom: "4.0rem"
                       }}
                     />
                   </div>
@@ -672,6 +637,7 @@ const EditJob = () => {
                           height: "250px",
                           maxHeight: "300px",
                           minHeight: "200px",
+                          marginBottom: "4.0rem"
                         }}
                       />
                     </div>

@@ -16,7 +16,7 @@ const InterviewScheduleHeader = () => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Interview Schedule</li>
+                <li className="breadcrumb-item text-dark">Interview Schedule</li>
               </ul>
             </div>
             

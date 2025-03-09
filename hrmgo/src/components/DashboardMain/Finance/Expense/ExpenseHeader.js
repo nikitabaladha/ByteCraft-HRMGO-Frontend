@@ -1,7 +1,5 @@
 import React, { useState,useEffect} from "react";
 import { Link } from "react-router-dom";
-// import { TiPlus } from "react-icons/ti";
-// import { TbFileExport } from "react-icons/tb";
 import ExpenseModal from "./ExpenseModal"; 
 import * as XLSX from "xlsx"; 
 import getAPI  from "../../../../api/getAPI"; 
@@ -73,7 +71,7 @@ useEffect(() => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Expense</li>
+                <li className="breadcrumb-item text-dark">Expense</li>
               </ul>
             </div>
             <div className="col">

@@ -108,7 +108,7 @@ const ContractTable = ({
           <div className="card">
             <div className="dataTable-top">
               <div className="dataTable-dropdown d-none d-md-block">
-                <label>
+                <label className="text-dark">
                   <select
                     className="dataTable-selector"
                     value={entriesPerPage}
@@ -154,18 +154,18 @@ const ContractTable = ({
                       <tbody>
                         {paginatedContracts.map((contract, index) => (
                           <tr key={contract.id}>
-                            <td className="id">
+                            <td className="id text-dark">
                               <Link className="btn btn-outline-primary">
                                 {contract.contractId}
                               </Link>
                             </td>
-                            <td>{contract.employeeName}</td>
-                            <td>{contract.subject}</td>
+                            <td className="text-dark">{contract.employeeName}</td>
+                            <td className="text-dark">{contract.subject}</td>
 
-                            <td> {formatCost(contract.value)}</td>
-                            <td>{contract.contractType}</td>
-                            <td>{formatDate(contract.startDate)}</td>
-                            <td>{formatDate(contract.endDate)}</td>
+                            <td className="text-dark"> {formatCost(contract.value)}</td>
+                            <td className="text-dark">{contract.contractType}</td>
+                            <td className="text-dark">{formatDate(contract.startDate)}</td>
+                            <td className="text-dark">{formatDate(contract.endDate)}</td>
                             <td>
                               <span
                                 className={`status_badge badge ${
@@ -252,7 +252,7 @@ const ContractTable = ({
                 </div>
               </div>
               <div className="dataTable-bottom">
-                <div className="dataTable-info d-none d-md-block">
+                <div className="dataTable-info d-none d-md-block text-dark">
                   Showing{" "}
                   {Math.min(
                     (currentPage - 1) * entriesPerPage + 1,

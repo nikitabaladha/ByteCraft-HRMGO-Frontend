@@ -130,7 +130,7 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* Branch Field */}
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="branch" className="col-form-label">
+                      <label htmlFor="branch" className="col-form-label text-dark">
                         Branch
                       </label>
                       <span className="text-danger">*</span>
@@ -155,7 +155,7 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* Trainer Option */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="trainer_option" className="col-form-label">
+                      <label htmlFor="trainer_option" className="col-form-label text-dark">
                         Trainer Option
                       </label>
                       <span className="text-danger">*</span>
@@ -177,7 +177,7 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* Training Type */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="training_type" className="col-form-label">
+                      <label htmlFor="training_type" className="col-form-label text-dark">
                         Training Type
                       </label>
                       <span className="text-danger">*</span>
@@ -199,7 +199,7 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* Trainer */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="trainer" className="col-form-label">
+                      <label htmlFor="trainer" className="col-form-label text-dark">
                         Trainer
                       </label>
                       <span className="text-danger">*</span>
@@ -224,7 +224,7 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* Training Cost */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="training_cost" className="col-form-label">
+                      <label htmlFor="training_cost" className="col-form-label text-dark">
                         Training Cost
                       </label>
                       <span className="text-danger">*</span>
@@ -245,7 +245,7 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* Employee */}
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="employee" className="form-label">
+                      <label htmlFor="employee" className="form-label text-dark">
                         Employee
                       </label>
                       <span className="text-danger">*</span>
@@ -271,7 +271,7 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* Start Date */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="start_date" className="col-form-label">
+                      <label htmlFor="start_date" className="col-form-label text-dark">
                         Start Date
                       </label>
                       <span className="text-danger">*</span>
@@ -291,7 +291,7 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* End Date */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="end_date" className="col-form-label">
+                      <label htmlFor="end_date" className="col-form-label text-dark">
                         End Date
                       </label>
                       <span className="text-danger">*</span>
@@ -310,7 +310,7 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
 
                   {/* Description */}
                   <div className="form-group col-lg-12">
-                    <label htmlFor="description" className="col-form-label">
+                    <label htmlFor="description" className="col-form-label text-dark">
                       Description
                     </label>
                     <textarea

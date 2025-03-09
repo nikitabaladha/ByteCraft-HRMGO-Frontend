@@ -7,12 +7,9 @@ const SystemSettings = () => {
   const [formData, setFormData] = useState({
     siteCurrency: '',
     siteCurrencySymbol: '',
-    // siteDateFormat: '',
-    // siteTimeFormat: '',
     employeePrefix: '',
   });
 
-  // Fetch system settings on page load
   useEffect(() => {
     const fetchSystemSettings = async () => {
       try {
@@ -21,8 +18,6 @@ const SystemSettings = () => {
           setFormData({
             siteCurrency: settings.siteCurrency || '',
             siteCurrencySymbol: settings.siteCurrencySymbol || '',
-            // siteDateFormat: settings.siteDateFormat || '',
-            // siteTimeFormat: settings.siteTimeFormat || '',
             employeePrefix: settings.employeePrefix || '',
           });
       } catch (error) {
@@ -45,16 +40,12 @@ const SystemSettings = () => {
     e.preventDefault(); 
     try {
       const response = await putAPI("/update-system-setting", formData); 
-      if (response.data.success) {
-        console.log("System settings updated successfully:", response.data);
+      if (response.data) {
         toast("System settings updated successfully!");
 
-        // Reset formData with the updated values from the response
         setFormData({
           siteCurrency: response.data.data.siteCurrency,
           siteCurrencySymbol: response.data.data.siteCurrencySymbol,
-          // siteDateFormat: response.data.data.siteDateFormat,
-          // siteTimeFormat: response.data.data.siteTimeFormat,
           employeePrefix: response.data.data.employeePrefix,
         });
       }
@@ -79,7 +70,7 @@ const SystemSettings = () => {
               <div className="row company-setting">
                 {/* Currency */}
                 <div className="form-group col-md-4">
-                  <label htmlFor="site_currency" className="col-form-label">Currency *</label>
+                  <label htmlFor="site_currency" className="col-form-label text-dark">Currency *</label>
                   <input
                     className="form-control"
                     name="siteCurrency"
@@ -88,17 +79,12 @@ const SystemSettings = () => {
                     onChange={handleChange}
                     id="site_currency"
                   />
-                  <small className="text-xs">
-                    Note: Add currency code as per three-letter ISO code.
-                    <a href="https://stripe.com/docs/currencies" target="_blank" rel="noopener noreferrer">
-                      You can find out how to do that here.
-                    </a>
-                  </small>
+                  
                 </div>
 
                 {/* Currency Symbol */}
                 <div className="form-group col-md-4">
-                  <label htmlFor="site_currency_symbol" className="col-form-label">Currency Symbol *</label>
+                  <label htmlFor="site_currency_symbol" className="col-form-label text-dark">Currency Symbol *</label>
                   <input
                     className="form-control"
                     name="siteCurrencySymbol"
@@ -108,39 +94,9 @@ const SystemSettings = () => {
                     id="site_currency_symbol"
                   />
                 </div>
-                {/* Date Format */}
-                {/* <div className="form-group col-md-4">
-                  <label htmlFor="site_date_format" className="col-form-label">Date Format</label>
-                  <select
-                    name="siteDateFormat"
-                    className="form-control"
-                    id="site_date_format"
-                    value={formData.siteDateFormat}
-                    onChange={handleChange}
-                  >
-                    <option >Select Format</option>
-                    <option value="d-m-Y">dd-mm-yyyy</option>
-                  </select>
-                </div> */}
-
-                {/* Time Format */}
-                {/* <div className="form-group col-md-4">
-                  <label htmlFor="site_time_format" className="col-form-label">Time Format</label>
-                  <select
-                    name="siteTimeFormat"
-                    className="form-control"
-                    id="site_time_format"
-                    value={formData.siteTimeFormat}
-                    onChange={handleChange}
-                  >
-                    <option >Select Format</option>
-                    <option value="g:i A">10:30 PM</option>
-                  </select>
-                </div> */}
-
-                {/* Employee Prefix */}
+               
                 <div className="form-group col-md-4">
-                  <label htmlFor="employee_prefix" className="col-form-label">Employee Prefix</label>
+                  <label htmlFor="employee_prefix" className="col-form-label text-dark">Employee Prefix</label>
                   <input
                     className="form-control"
                     name="employeePrefix"

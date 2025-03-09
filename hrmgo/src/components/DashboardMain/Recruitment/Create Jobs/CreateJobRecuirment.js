@@ -16,19 +16,6 @@ const CreateJobRecuirment = () => {
                 </label>
                 <span className="text-danger">*</span>
 
-                <Link
-                  href="#"
-                  data-size="md"
-                  className="btn btn-primary btn-icon btn-sm float-end"
-                  data-ajax-popup-over="true"
-                  id="grammarCheck"
-                  data-bs-placement="top"
-                  data-title="Grammar check with AI"
-                >
-                  <i className="ti ti-rotate"></i>{" "}
-                  <span>Grammar check with AI</span>
-                </Link>
-
                 <ReactQuill
                   value=""
                   theme="snow"

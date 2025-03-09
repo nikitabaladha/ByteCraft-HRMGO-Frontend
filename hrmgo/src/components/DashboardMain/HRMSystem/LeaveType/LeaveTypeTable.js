@@ -72,7 +72,7 @@ const LeaveTypeTable = ({ leaveTypes, setLeaveTypes, fetchLeaveTypes }) => {
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -114,8 +114,8 @@ const LeaveTypeTable = ({ leaveTypes, setLeaveTypes, fetchLeaveTypes }) => {
                     <tbody>
                       {paginatedLeaveTypes.map((leaveType) => (
                         <tr key={leaveType._id}>
-                          <td>{leaveType.leaveTypeName}</td>
-                          <td>{leaveType.daysPerYear}</td>
+                          <td className="text-dark">{leaveType.leaveTypeName}</td>
+                          <td className="text-dark">{leaveType.daysPerYear}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>

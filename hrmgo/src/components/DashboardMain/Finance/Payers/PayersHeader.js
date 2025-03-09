@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { TiPlus } from "react-icons/ti";
 import CreatePayerModal from "./CreatePayerModal"; 
 
 const PayersHeader = ({fetchPayers}) => {
@@ -21,7 +20,7 @@ const PayersHeader = ({fetchPayers}) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Payer</li> 
+                <li className="breadcrumb-item text-dark">Payer</li> 
               </ul>
             </div>
             <div className="col">

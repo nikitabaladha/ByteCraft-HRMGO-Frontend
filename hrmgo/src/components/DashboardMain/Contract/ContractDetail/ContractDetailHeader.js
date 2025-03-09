@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { MdMailOutline, MdOutlineFileDownload } from "react-icons/md";
-// import { TbCopy, TbWritingSign } from "react-icons/tb";
-// import { TiEyeOutline } from "react-icons/ti";
 import CopyContractModal from "../CopyContractModal";
 
 const ContractDetailHeader = ({ contractData, copyContract }) => {
@@ -25,23 +22,6 @@ const ContractDetailHeader = ({ contractData, copyContract }) => {
 
   const navigateToContractDetailPreview = (event, contractData) => {
     console.log("contractData from navigate function", contractData);
-
-    //   {
-    //     "contractId": "CON0000001",
-    //     "employeeName": "Shantanu Bilsare",
-    //     "subject": "vsgchx cn",
-    //     "value": 1000,
-    //     "contractType": "Express",
-    //     "contractTypeId": "67aec93eb1fd1bc413286026",
-    //     "employeeId": "67b405f6e0aa3df33b9ba70c",
-    //     "startDate": "2025-02-18T00:00:00.000Z",
-    //     "endDate": "2025-02-28T00:00:00.000Z",
-    //     "status": "Pending",
-    //     "id": "67b40bd3e0aa3df33b9ba8a8",
-    //     "description": ""
-    // }
-
-    // here i want to pass contract data to navigate
     event.preventDefault();
     navigate(`/contract/preview/${contractData.id}`, {
       state: {contractData},
@@ -68,7 +48,7 @@ const ContractDetailHeader = ({ contractData, copyContract }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard/contract">Contract</Link>
                 </li>
-                <li className="breadcrumb-item active">Contract Detail</li>
+                <li className="breadcrumb-item active text-dark">Contract Detail</li>
               </ul>
             </div>
             <div className="col">

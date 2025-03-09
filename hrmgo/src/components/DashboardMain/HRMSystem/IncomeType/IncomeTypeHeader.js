@@ -22,7 +22,7 @@ const IncomeTypeHeader = ({fetchIncomeTypes}) => {
                 <li className="breadcrumb-item">
                   <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Income Type</li>
+                <li className="breadcrumb-item text-dark">Income Type</li>
               </ul>
             </div>
             <div className="col">

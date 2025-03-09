@@ -134,7 +134,7 @@ const InterviewAddToJobOnBoard = ({
             <div className="modal-body">
               <div className="row">
                 <div className="form-group col-md-12">
-                  <label htmlFor="joining_date" className="col-form-label">
+                  <label htmlFor="joining_date" className="col-form-label text-dark">
                     Joining Date
                   </label>
                   <span className="text-danger">*</span>
@@ -150,7 +150,7 @@ const InterviewAddToJobOnBoard = ({
                 </div>
 
                 <div className="form-group col-md-6">
-                  <label htmlFor="days_of_week" className="col-form-label">
+                  <label htmlFor="days_of_week" className="col-form-label text-dark">
                     Days Of Week
                   </label>
                   <span className="text-danger">*</span>
@@ -167,7 +167,7 @@ const InterviewAddToJobOnBoard = ({
                 </div>
 
                 <div className="form-group col-md-6">
-                  <label htmlFor="salary" className="col-form-label">
+                  <label htmlFor="salary" className="col-form-label text-dark">
                     Salary
                   </label>
                   <span className="text-danger">*</span>
@@ -184,7 +184,7 @@ const InterviewAddToJobOnBoard = ({
                 </div>
 
                 <div className="form-group col-md-6">
-                  <label htmlFor="salary_type" className="col-form-label">
+                  <label htmlFor="salary_type" className="col-form-label text-dark">
                     Salary Type
                   </label>
                   <span className="text-danger">*</span>
@@ -203,7 +203,7 @@ const InterviewAddToJobOnBoard = ({
                 </div>
 
                 <div className="form-group col-md-6">
-                  <label htmlFor="salary_duration" className="col-form-label">
+                  <label htmlFor="salary_duration" className="col-form-label text-dark">
                     Salary Duration
                   </label>
                   <span className="text-danger">*</span>
@@ -222,7 +222,7 @@ const InterviewAddToJobOnBoard = ({
                 </div>
 
                 <div className="form-group col-md-6">
-                  <label htmlFor="job_type" className="col-form-label">
+                  <label htmlFor="job_type" className="col-form-label text-dark">
                     Job Type
                   </label>
                   <span className="text-danger">*</span>
@@ -241,7 +241,7 @@ const InterviewAddToJobOnBoard = ({
                 </div>
 
                 <div className="form-group col-md-6">
-                  <label htmlFor="status" className="col-form-label">
+                  <label htmlFor="status" className="col-form-label text-dark">
                     Status
                   </label>
                   <span className="text-danger">*</span>

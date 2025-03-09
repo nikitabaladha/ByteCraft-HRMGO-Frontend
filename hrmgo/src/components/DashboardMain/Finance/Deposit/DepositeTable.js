@@ -74,7 +74,7 @@ const DepositTable = ({ deposits, setDeposits, fetchDeposits }) => {
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -119,16 +119,16 @@ const DepositTable = ({ deposits, setDeposits, fetchDeposits }) => {
                     <tbody>
                       {paginatedDeposits.map((deposit) => (
                         <tr key={deposit._id}>
-                          <td>{deposit.account_name}</td>
-                          <td>{deposit.payer_name}</td>
-                          <td>{`₹${new Intl.NumberFormat("en-IN").format(
+                          <td className="text-dark">{deposit.account_name}</td>
+                          <td className="text-dark">{deposit.payer_name}</td>
+                          <td className="text-dark">{`₹${new Intl.NumberFormat("en-IN").format(
                             deposit.amount
                           )}`}</td>
-                          <td>{deposit.category}</td>
-                          <td>{deposit.ref}</td>
-                          <td>{deposit.payment_type}</td>
+                          <td className="text-dark">{deposit.category}</td>
+                          <td className="text-dark">{deposit.ref}</td>
+                          <td className="text-dark">{deposit.payment_type}</td>
                           {/* <td>{deposit.date}</td> */}
-                          <td>
+                          <td className="text-dark">
                             {new Date(deposit.date).toLocaleDateString(
                               "en-US",
                               {
@@ -180,7 +180,7 @@ const DepositTable = ({ deposits, setDeposits, fetchDeposits }) => {
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min(
                   (currentPage - 1) * entriesPerPage + 1,

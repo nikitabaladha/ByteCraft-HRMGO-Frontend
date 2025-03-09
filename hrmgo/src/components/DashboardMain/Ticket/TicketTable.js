@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import getAPI from "../../../api/getAPI";
 import ConfirmationDialog from "../ConfirmationDialog";
 import ReactApexChart from "react-apexcharts";
 import { Link } from "react-router-dom";
@@ -7,8 +6,6 @@ import { Link } from "react-router-dom";
 const TicketDashboard = ({tickets, setTickets, fetchTickets, loading, setLoading, error, setError, chartSeries, setChartSeries, chartOptions, setChartOptions}) => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [ticketToDelete, setTicketToDelete] = useState(null);
-
-  /* entries pagination */
 
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
@@ -133,12 +130,11 @@ const TicketDashboard = ({tickets, setTickets, fetchTickets, loading, setLoading
         </div>
       </div>
 
-      {/* Table Section */}
       <div className="col-xl-12">
         <div className="card">
         <div className="dataTable-top">
                   <div className="dataTable-dropdown d-none d-md-block">
-                    <label>
+                    <label className="text-dark">
                       <select className="dataTable-selector"
                         value={entriesPerPage}
                         onChange={handleEntriesPerPageChange}>
@@ -209,9 +205,9 @@ const TicketDashboard = ({tickets, setTickets, fetchTickets, loading, setLoading
                             )}
                           </td> */}
 
-                          <td>{ticket.title}</td>
-                          <td>0{ticket.ticket_code}</td>
-                          <td>{ticket.employee_name}</td>
+                          <td className="text-dark">{ticket.title}</td>
+                          <td className="text-dark">0{ticket.ticket_code}</td>
+                          <td className="text-dark">{ticket.employee_name}</td>
                           <td>
                             <div className={`status_badge text-capitalize badge bg-${ticket.priority === "medium"
                               ? "info"
@@ -224,12 +220,12 @@ const TicketDashboard = ({tickets, setTickets, fetchTickets, loading, setLoading
                               {ticket.priority}
                             </div>
                           </td>
-                          <td>{new Date(ticket.end_date).toLocaleDateString('en-US', {
+                          <td className="text-dark">{new Date(ticket.end_date).toLocaleDateString('en-US', {
                             year: 'numeric',
                             month: 'short',
                             day: 'numeric'
                           })}</td>
-                          <td>{ticket.created_by}</td>
+                          <td className="text-dark">{ticket.created_by}</td>
                           <td>
                             <div
                               className={`status_badge text-capitalize badge bg-${ticket.status === "open"

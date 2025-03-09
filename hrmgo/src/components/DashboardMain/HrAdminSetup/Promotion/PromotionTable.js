@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { TbPencil } from "react-icons/tb";
-// import { FaRegTrashAlt } from "react-icons/fa";
 
 import UpdatePromotionModal from "./UpdatePromotionModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
@@ -78,7 +76,7 @@ const PromotionTable = ({
           <div className="card">
             <div className="dataTable-top">
               <div className="dataTable-dropdown d-none d-md-block">
-                <label>
+                <label className="text-dark">
                   <select
                     className="dataTable-selector"
                     value={entriesPerPage}
@@ -121,11 +119,11 @@ const PromotionTable = ({
                       <tbody>
                         {paginatedPromotions.map((promotion) => (
                           <tr key={promotion.id}>
-                            <td>{promotion.employeeName}</td>
-                            <td>{promotion.designationName}</td>
-                            <td>{promotion.promotionTitle}</td>
-                            <td>{formatDate(promotion.promotionDate)}</td>
-                            <td>{promotion.description}</td>
+                            <td className="text-dark">{promotion.employeeName}</td>
+                            <td className="text-dark">{promotion.designationName}</td>
+                            <td className="text-dark">{promotion.promotionTitle}</td>
+                            <td className="text-dark">{formatDate(promotion.promotionDate)}</td>
+                            <td className="text-dark">{promotion.description}</td>
                             <td className="Action">
                               <div className="dt-buttons">
                                 <span>
@@ -187,7 +185,7 @@ const PromotionTable = ({
                 </div>
               </div>
               <div className="dataTable-bottom">
-                <div className="dataTable-info d-none d-md-block">
+                <div className="dataTable-info d-none d-md-block text-dark">
                   Showing{" "}
                   {Math.min(
                     (currentPage - 1) * entriesPerPage + 1,

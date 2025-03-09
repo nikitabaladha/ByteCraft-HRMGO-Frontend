@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { FiPlus } from "react-icons/fi";
 import CreateDepartmentModal from "./CreateDepartmentModal";
 
 const DepartmentHeader = ({fetchDepartments}) => {
@@ -22,7 +21,7 @@ const DepartmentHeader = ({fetchDepartments}) => {
                 <li className="breadcrumb-item">
                   <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Department</li>
+                <li className="breadcrumb-item text-dark">Department</li>
               </ul>
             </div>
             <div className="col">

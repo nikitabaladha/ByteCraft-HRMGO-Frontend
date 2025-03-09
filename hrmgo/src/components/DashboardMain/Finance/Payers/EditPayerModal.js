@@ -61,7 +61,7 @@ const EditPayerModal = ({ payer, closeModal, fetchPayers }) => {
           <form onSubmit={handleUpdate}>
             <div className="modal-body">
               <div className="form-group">
-                <label htmlFor="payer_name">Payer Name</label>
+                <label htmlFor="payer_name" className="text-dark">Payer Name</label>
                 <input
                   className="form-control"
                   name="payer_name" 
@@ -72,7 +72,7 @@ const EditPayerModal = ({ payer, closeModal, fetchPayers }) => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="contact_number">Contact Number</label>
+                <label htmlFor="contact_number" className="text-dark">Contact Number</label>
                 <input
                   className="form-control"
                   name="contact_number"

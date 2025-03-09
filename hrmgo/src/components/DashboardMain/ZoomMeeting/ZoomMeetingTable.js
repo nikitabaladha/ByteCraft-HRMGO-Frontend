@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ViewModal from "./Viewmodal";
-// import getAPI from "../../../api/getAPI";
 import ConfirmationDialog from "../ConfirmationDialog";
 import dayjs from "dayjs";
 import { HiExternalLink } from "react-icons/hi";
@@ -12,7 +11,6 @@ dayjs.extend(isBetween);
 
 const ZoomMeetingTable = ({ meetings, setMeetings, fetchMeetings }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  // const [meetings, setMeetings] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedMeeting, setSelectedMeeting] = useState(null);
 
@@ -127,7 +125,7 @@ const ZoomMeetingTable = ({ meetings, setMeetings, fetchMeetings }) => {
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -173,14 +171,14 @@ const ZoomMeetingTable = ({ meetings, setMeetings, fetchMeetings }) => {
                     <tbody>
                       {paginatedMeetings.map((meeting) => (
                         <tr key={meeting._id}>
-                          <td>{meeting.title}</td>
-                          <td>
+                          <td className="text-dark">{meeting.title}</td>
+                          <td className="text-dark">
                             {dayjs(meeting.start_date).format(
                               "YYYY-MM-DD HH:mm"
                             )}
                           </td>
-                          <td>{meeting.duration} Minute</td>
-                          <td>
+                          <td className="text-dark">{meeting.duration} Minute</td>
+                          <td className="text-dark">
                             <div className="user-group">
                               {meeting.employeeNames &&
                               meeting.employeeNames.length > 0 ? (
@@ -213,16 +211,16 @@ const ZoomMeetingTable = ({ meetings, setMeetings, fetchMeetings }) => {
                                 className="text-secondary"
                                 onClick={() => handleStartMeeting(meeting._id)}
                               >
-                                <p className="mb-0">
+                                <p className="mb-0 text-dark">
                                   <b>Start meeting</b> <HiExternalLink />
                                 </p>
                               </a>
                             ) : meeting.status === "Ended" ? (
-                              <span className="text-secondary">
+                              <span className="text-secondary text-dark">
                                 Meeting has ended
                               </span>
                             ) : (
-                              <span className="text-secondary">
+                              <span className="text-secondary text-dark">
                                 Meeting not start
                               </span>
                             )}
@@ -285,7 +283,7 @@ const ZoomMeetingTable = ({ meetings, setMeetings, fetchMeetings }) => {
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min(
                   (currentPage - 1) * entriesPerPage + 1,

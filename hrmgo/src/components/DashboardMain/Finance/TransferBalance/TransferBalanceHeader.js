@@ -70,7 +70,7 @@ useEffect(() => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Transfer Balance</li> 
+                <li className="breadcrumb-item text-dark">Transfer Balance</li> 
               </ul>
             </div>
             <div className="col">

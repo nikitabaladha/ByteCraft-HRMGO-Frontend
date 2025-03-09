@@ -7,7 +7,6 @@ import ConfirmationDialog from "../../ConfirmationDialog";
 const DepartmentTable = ({ departments, setDepartments, fetchDepartments }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
-  // const [departments, setDepartments] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [departmentToDelete, setDepartmentToDelete] = useState(null);
 
@@ -73,7 +72,7 @@ const DepartmentTable = ({ departments, setDepartments, fetchDepartments }) => {
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -113,8 +112,8 @@ const DepartmentTable = ({ departments, setDepartments, fetchDepartments }) => {
                     <tbody>
                       {paginatedDepartments.map((department) => (
                         <tr key={department._id}>
-                          <td>{department?.branchId?.branchName}</td>
-                          <td>{department?.departmentName}</td>
+                          <td className="text-dark">{department?.branchId?.branchName}</td>
+                          <td className="text-dark">{department?.departmentName}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>

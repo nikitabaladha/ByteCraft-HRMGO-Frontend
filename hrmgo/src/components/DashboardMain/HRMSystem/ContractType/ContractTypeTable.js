@@ -7,7 +7,6 @@ import ConfirmationDialog from "../../ConfirmationDialog";
 const ContractTypeTable = ({contractTypes, setContractTypes, fetchContractTypes}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedContractType, setSelectedContractType] = useState(null);
-  // const [contractTypes, setContractTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [contractTypeToDelete, setContractTypeToDelete] = useState(null);
 
@@ -71,7 +70,7 @@ const ContractTypeTable = ({contractTypes, setContractTypes, fetchContractTypes}
         <div className="card">
         <div className="dataTable-top">
                   <div className="dataTable-dropdown d-none d-md-block">
-                    <label>
+                    <label className="text-dark">
                       <select
                         className="dataTable-selector"
                         value={entriesPerPage}
@@ -111,7 +110,7 @@ const ContractTypeTable = ({contractTypes, setContractTypes, fetchContractTypes}
                     <tbody>
                       {paginatedContractTypes.map((contractType) => (
                         <tr key={contractType._id}>
-                          <td>{contractType.contractName}</td>
+                          <td className="text-dark">{contractType.contractName}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>
@@ -159,7 +158,7 @@ const ContractTypeTable = ({contractTypes, setContractTypes, fetchContractTypes}
               </div>
             </div>
             <div className="dataTable-bottom">
-                  <div className="dataTable-info d-none d-md-block">
+                  <div className="dataTable-info d-none d-md-block text-dark">
                     Showing {Math.min((currentPage - 1) * entriesPerPage + 1, contractTypes.length)}{" "}
                     to {Math.min(currentPage * entriesPerPage, contractTypes.length)}{" "}
                     of {contractTypes.length} entries

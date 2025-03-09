@@ -10,7 +10,6 @@ import getAPI from "../../../../api/getAPI";
 const TrainingListView = () => {
   const location = useLocation();
   const [siteCurrencySymbol, setCurrencySymbol] = useState("₹");
-  //   const training = location.state?.training;
   const training = location.state?.training || location.state;
 
   console.log("Location:", location);
@@ -104,7 +103,7 @@ const TrainingListView = () => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard/training">Training List</Link>
                 </li>
-                <li className="breadcrumb-item">Training Details</li>
+                <li className="breadcrumb-item text-dark">Training Details</li>
               </ul>
             </div>
             <div className="col">
@@ -122,38 +121,38 @@ const TrainingListView = () => {
                 <table className="table">
                   <tbody>
                     <tr>
-                      <td>Training Type</td>
-                      <td className="text-right">{training.trainingType}</td>
+                      <td className="text-dark">Training Type</td>
+                      <td className="text-right text-dark">{training.trainingType}</td>
                     </tr>
                     <tr>
-                      <td>Trainer</td>
-                      <td className="text-right">{training.trainer}</td>
+                      <td className="text-dark">Trainer</td>
+                      <td className="text-right text-dark">{training.trainer}</td>
                     </tr>
                     <tr>
-                      <td>Training Cost</td>
-                      <td className="text-right">
+                      <td className="text-dark">Training Cost</td>
+                      <td className="text-right text-dark">
                         {formatCost(training.trainingCost)}
                       </td>
                     </tr>
                     <tr>
-                      <td>Start Date</td>
-                      <td className="text-right">
+                      <td className="text-dark">Start Date</td>
+                      <td className="text-right text-dark">
                         {formatDate(training.startDate)}
                       </td>
                     </tr>
                     <tr>
-                      <td>End Date</td>
-                      <td className="text-right">
+                      <td className="text-dark">End Date</td>
+                      <td className="text-right text-dark">
                         {formatDate(training.endDate)}
                       </td>
                     </tr>
                     <tr>
-                      <td>Date</td>
-                      <td className="text-right">08-10-2020</td>
+                      <td className="text-dark">Date</td>
+                      <td className="text-right text-dark">08-10-2020</td>
                     </tr>
                   </tbody>
                 </table>
-                <div className="text-sm mt-4 p-2">
+                <div className="text-sm mt-4 p-2 text-dark">
                   Anabel is the sixth Frontier Brain and is in charge of Hoenn's
                   Battle Tower.
                 </div>
@@ -178,7 +177,7 @@ const TrainingListView = () => {
                           rel="noopener noreferrer"
                         >
                           <img
-                            
+                            src="/storage/uploads/Icon/user-1.jpg"
                             alt="Avatar"
                             className="img-fluid rounded border-2 border border-primary"
                             width="55px"

@@ -53,7 +53,7 @@ const JobOnBoardingEdit = ({row, onClose}) => {
               <div className="modal-body">
                 <div className="row">
                   <div className="form-group col-md-12">
-                    <label htmlFor="joining_date" className="col-form-label">Joining Date</label><span className="text-danger">*</span>
+                    <label htmlFor="joining_date" className="col-form-label text-dark">Joining Date</label><span className="text-danger">*</span>
                     <input
                       className="form-control"
                       required
@@ -66,7 +66,7 @@ const JobOnBoardingEdit = ({row, onClose}) => {
                     />
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="days_of_week" className="col-form-label">Days Of Week</label><span className="text-danger">*</span>
+                    <label htmlFor="days_of_week" className="col-form-label text-dark">Days Of Week</label><span className="text-danger">*</span>
                     <input
                       className="form-control"
                       required
@@ -80,7 +80,7 @@ const JobOnBoardingEdit = ({row, onClose}) => {
                     />
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="salary" className="col-form-label">Salary</label><span className="text-danger">*</span>
+                    <label htmlFor="salary" className="col-form-label text-dark">Salary</label><span className="text-danger">*</span>
                     <input
                       className="form-control"
                       required
@@ -94,7 +94,7 @@ const JobOnBoardingEdit = ({row, onClose}) => {
                     />
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="salary_type" className="col-form-label">Salary Type</label><span className="text-danger">*</span>
+                    <label htmlFor="salary_type" className="col-form-label text-dark">Salary Type</label><span className="text-danger">*</span>
                     <select
                       className="form-control"
                       required
@@ -108,7 +108,7 @@ const JobOnBoardingEdit = ({row, onClose}) => {
                     </select>
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="salary_duration" className="col-form-label">Salary Duration</label><span className="text-danger">*</span>
+                    <label htmlFor="salary_duration" className="col-form-label text-dark">Salary Duration</label><span className="text-danger">*</span>
                     <select
                       className="form-control"
                       required
@@ -123,7 +123,7 @@ const JobOnBoardingEdit = ({row, onClose}) => {
                     </select>
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="job_type" className="col-form-label">Job Type</label><span className="text-danger">*</span>
+                    <label htmlFor="job_type" className="col-form-label text-dark">Job Type</label><span className="text-danger">*</span>
                     <select
                       className="form-control"
                       required
@@ -137,7 +137,7 @@ const JobOnBoardingEdit = ({row, onClose}) => {
                     </select>
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="status" className="col-form-label">Status</label><span className="text-danger">*</span>
+                    <label htmlFor="status" className="col-form-label text-dark">Status</label><span className="text-danger">*</span>
                     <select
                       className="form-control"
                       required

@@ -1,16 +1,3 @@
-// import React from 'react'
-
-// const InterviewScheduleEdit = () => {
-//   return (
-//     <div>
-      
-//     </div>
-//   )
-// }
-
-// export default InterviewScheduleEdit
-
-
 import React, { useState, useEffect } from "react";
 import putAPI from "../../../../api/putAPI";
 import { toast } from "react-toastify";
@@ -106,18 +93,9 @@ const InterviewScheduleEdit = ({schedule, onClose}) => {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="modal-body">
-          <div className="text-end">
-            <button
-              type="button"
-              className="btn btn-sm btn-primary"
-              title="Generate Content With AI"
-            >
-              <i className="fas fa-robot"></i> Generate With AI
-            </button>
-          </div>
           <div className="row">
             <div className="form-group col-md-6">
-              <label htmlFor="candidate" className="col-form-label">
+              <label htmlFor="candidate" className="col-form-label text-dark">
                 Interview To
               </label>
               <span className="text-danger">*</span>
@@ -138,7 +116,7 @@ const InterviewScheduleEdit = ({schedule, onClose}) => {
               </select>
             </div>
             <div className="form-group col-md-6">
-              <label htmlFor="interviewer" className="col-form-label">
+              <label htmlFor="interviewer" className="col-form-label text-dark">
                 Interviewer
               </label>
               <span className="text-danger">*</span>
@@ -159,7 +137,7 @@ const InterviewScheduleEdit = ({schedule, onClose}) => {
               </select>
             </div>
             <div className="form-group col-md-6">
-              <label htmlFor="date" className="col-form-label">
+              <label htmlFor="date" className="col-form-label text-dark">
                 Interview Date
               </label>
               <span className="text-danger">*</span>
@@ -174,7 +152,7 @@ const InterviewScheduleEdit = ({schedule, onClose}) => {
               />
             </div>
             <div className="form-group col-md-6">
-              <label htmlFor="time" className="col-form-label">
+              <label htmlFor="time" className="col-form-label text-dark">
                 Interview Time
               </label>
               <span className="text-danger">*</span>
@@ -189,7 +167,7 @@ const InterviewScheduleEdit = ({schedule, onClose}) => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="comment" className="col-form-label">
+              <label htmlFor="comment" className="col-form-label text-dark">
                 Comment
               </label>
               <textarea
@@ -201,25 +179,6 @@ const InterviewScheduleEdit = ({schedule, onClose}) => {
                 value={formValues.comment}
                 onChange={handleInputChange}
               ></textarea>
-            </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="synchronize_type" className="form-label">
-                Synchronize in Google Calendar?
-              </label>
-              <div className="form-switch">
-                <input
-                  type="checkbox"
-                  className="form-check-input mt-2"
-                  name="synchronize_type"
-                  id="synchronize_type"
-                  checked={formValues.synchronize_type}
-                  onChange={handleInputChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor="synchronize_type"
-                ></label>
-              </div>
             </div>
           </div>
         </div>

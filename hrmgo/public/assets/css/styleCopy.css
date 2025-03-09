@@ -1,7 +1,7 @@
 body {
   margin: 0;
 }
-/*internet connection*/
+
 .internet-connection {
   display: none;
   background: rgba(0, 0, 0, 0.76);
@@ -17,12 +17,12 @@ body {
   display: none;
 }
 
-/*green background RGBA*/
+
 .successBG-rgba {
   background: rgba(54, 180, 36, 0.76) !important;
 }
 
-/* app scroll*/
+
 .app-scroll::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -76,8 +76,7 @@ body {
   width: 100%;
 }
 .messenger-messagingView .m-body {
-  /* padding-top: 15px;
-  height: calc(100% - 90px); */
+
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -130,8 +129,7 @@ body {
   text-decoration: none;
 }
 .messenger-tab {
-  /* overflow: auto;
-  height: calc(100vh - 143px); */
+  
   display: none;
   position: relative;
 }
@@ -196,7 +194,7 @@ body {
 }
 .avatar {
   text-align: center;
-  /* border-radius: 100%; */
+ 
   overflow: hidden;
   background-image: url("");
   background-repeat: no-repeat;
@@ -559,11 +557,7 @@ body {
   transition: border 0.1s;
 }
 
-/*
-  ***********************************************
-  * App Buttons
-  ***********************************************
-  */
+
 .app-btn {
   cursor: pointer;
   border: none;
@@ -634,11 +628,7 @@ body {
 .btn-disabled {
   opacity: 0.5;
 }
-/*
-  ***********************************************
-  * App Modal
-  ***********************************************
-  */
+
 .app-modal {
   display: none;
   position: fixed;
@@ -675,7 +665,7 @@ body {
   transform: scale(1);
   animation: show_modal 0.15s;
 }
-/* modal animation */
+
 @keyframes show_modal {
   from {
     transform: scale(0);
@@ -685,11 +675,7 @@ body {
   }
 }
 
-/*
-  ***********************************************
-  * Placeholder loading
-  ***********************************************
-  */
+
 .loadingPlaceholder-wrapper {
   position: relative;
 }
@@ -727,11 +713,7 @@ div.loadingPlaceholder-date {
   width: 106px;
   border-radius: 2px;
 }
-/*
-  ***********************************************
-  * Image modal box
-  ***********************************************
-  */
+
 .imageModal {
   display: none;
   position: fixed;
@@ -792,11 +774,6 @@ div.loadingPlaceholder-date {
   cursor: pointer;
 }
 
-/*
-  ***********************************************
-  * Typing (jumping) dots animation and style
-  ***********************************************
-  */
 .dot {
   width: 8px;
   height: 8px;
@@ -835,11 +812,7 @@ div.loadingPlaceholder-date {
     bottom: 0px;
   }
 }
-/*
-  *****************************************
-  * Responsive Design
-  *****************************************
-  */
+
 @media (max-width: 1060px) {
   .messenger-infoView {
     position: relative;
@@ -872,7 +845,7 @@ div.loadingPlaceholder-date {
     height: 100%;
   }
   .messenger-infoView {
-    /* display: none; */
+   
     width: 100%;
     max-width: unset;
   }
@@ -951,11 +924,11 @@ div.loadingPlaceholder-date {
 }
 
 .pb-3 {
-  padding-bottom: 0.75rem; /* 12px */
+  padding-bottom: 0.75rem; 
 }
 
 .mb-2 {
-  margin-bottom: 0.5rem; /* 8px */
+  margin-bottom: 0.5rem; 
 }
 
 .messenger textarea:focus {

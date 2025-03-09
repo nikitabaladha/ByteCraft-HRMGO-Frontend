@@ -52,7 +52,7 @@ const CareerTable = () => {
                 <div className="job-card-body">
                   <div className="d-flex mb-3 align-items-center justify-content-between">
                     {/* <img src={job.image} alt={job.title} /> */}
-                    <p>
+                    <p className='text-dark'>
                       {job.branch} <CiLocationOn />
                     </p>
                   </div>
@@ -62,7 +62,7 @@ const CareerTable = () => {
                     </a>
                   </h5>
                   <div className="d-flex mb-3 align-items-start flex-column flex-xl-row flex-md-row flex-lg-column">
-                    <span className="d-inline-block me-2">
+                    <span className="d-inline-block me-2 text-dark">
                     <TbCirclePlus /> {job.position} position{job.position > 1 ? 's' : ''} available
                     </span>
                   </div>

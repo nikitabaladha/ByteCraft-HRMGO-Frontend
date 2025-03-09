@@ -11,7 +11,6 @@ const CareerApplyJob = () => {
   const [jobDetails, setJobDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-//   const [selectedJobDetails, setSelectedJobDetails] = useState(null);
   const [formData, setFormData] = useState({
     jobTitle: "",
     name: "",
@@ -177,7 +176,7 @@ const CareerApplyJob = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="name" className="form-label">
+                      <label htmlFor="name" className="form-label text-dark">
                         Name
                       </label>
                       <span className="text-danger">*</span>
@@ -195,7 +194,7 @@ const CareerApplyJob = () => {
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="email" className="form-label">
+                      <label htmlFor="email" className="form-label text-dark">
                         Email
                       </label>
                       <span className="text-danger">*</span>
@@ -213,7 +212,7 @@ const CareerApplyJob = () => {
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="phone" className="form-label">
+                      <label htmlFor="phone" className="form-label text-dark">
                         Phone
                       </label>
                       <span className="text-danger">*</span>
@@ -237,7 +236,7 @@ const CareerApplyJob = () => {
                   {jobDetails?.applicant.includes("Date of Birth") && (
                     <div className="col-md-6">
                       <div className="form-group">
-                        <label htmlFor="dob" className="form-label">
+                        <label htmlFor="dob" className="form-label text-dark">
                           Date of Birth
                         </label>
                         <span className="text-danger">*</span>
@@ -256,7 +255,7 @@ const CareerApplyJob = () => {
 
                   {jobDetails?.applicant.includes("Gender") && (
                     <div className="form-group col-md-6">
-                      <label htmlFor="gender" className="form-label">
+                      <label htmlFor="gender" className="form-label text-dark">
                         Gender
                       </label>
                       <span className="text-danger">*</span>
@@ -300,7 +299,7 @@ const CareerApplyJob = () => {
                   )}
                   {jobDetails?.applicant.includes("Address") && (
                     <div className="form-group col-md-6">
-                      <label htmlFor="address" className="form-label">
+                      <label htmlFor="address" className="form-label text-dark">
                         Address
                       </label>
                       <textarea
@@ -318,7 +317,7 @@ const CareerApplyJob = () => {
                   <div className="row mt-3">
                     {["city", "state", "country", "zipCode"].map((field) => (
                       <div className="form-group col-md-6" key={field}>
-                        <label htmlFor={field}>
+                        <label htmlFor={field} className="text-dark">
                           {field.charAt(0).toUpperCase() + field.slice(1)}
                         </label>
                         <input
@@ -333,7 +332,7 @@ const CareerApplyJob = () => {
                     ))}
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="profile" className="col-form-label">
+                    <label htmlFor="profile" className="col-form-label text-dark">
                       Profile
                     </label>
                     <input
@@ -353,7 +352,7 @@ const CareerApplyJob = () => {
                     )}
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="resume" className="col-form-label">
+                    <label htmlFor="resume" className="col-form-label text-dark">
                       CV / Resume
                     </label>
                     <span className="text-danger">*</span>
@@ -377,7 +376,7 @@ const CareerApplyJob = () => {
 
                   {jobDetails?.visibility.includes("Letter") && (
                     <div className="form-group col-md-12">
-                      <label htmlFor="cover_letter" className="form-label">
+                      <label htmlFor="cover_letter" className="form-label text-dark">
                         Cover Letter
                       </label>
                       <textarea
@@ -400,7 +399,7 @@ const CareerApplyJob = () => {
                         >
                           <label
                             htmlFor={`customQuestion${index}`}
-                            className="form-label"
+                            className="form-label text-dark"
                           >
                             {question}
                           </label>

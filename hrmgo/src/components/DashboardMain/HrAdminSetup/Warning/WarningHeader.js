@@ -28,7 +28,7 @@ const WarningHeader = ({ addWarning }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Warning</li>
+                <li className="breadcrumb-item text-dark">Warning</li>
               </ul>
             </div>
             <div className="col">

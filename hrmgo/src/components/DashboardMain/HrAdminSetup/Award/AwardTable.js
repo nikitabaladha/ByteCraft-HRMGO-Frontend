@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { TbPencil } from "react-icons/tb";
-// import { FaRegTrashAlt } from "react-icons/fa";
 import { formatDate } from "../../../../js/custom";
 
 import UpdateAwardModal from "./UpdateAwardModal";
@@ -76,7 +74,7 @@ const AwardTable = ({
           <div className="card">
             <div className="dataTable-top">
               <div className="dataTable-dropdown d-none d-md-block">
-                <label>
+                <label className="text-dark">
                   <select
                     className="dataTable-selector"
                     value={entriesPerPage}
@@ -119,11 +117,11 @@ const AwardTable = ({
                       <tbody>
                         {paginatedAwards.map((award) => (
                           <tr key={award.id}>
-                            <td>{award.employeeName}</td>
-                            <td>{award?.awardType}</td>
-                            <td>{formatDate(award.date)}</td>
-                            <td>{award.gift}</td>
-                            <td>{award.description}</td>
+                            <td className="text-dark">{award.employeeName}</td>
+                            <td className="text-dark">{award?.awardType}</td>
+                            <td className="text-dark">{formatDate(award.date)}</td>
+                            <td className="text-dark">{award.gift}</td>
+                            <td className="text-dark">{award.description}</td>
                             <td className="Action">
                               <div className="dt-buttons">
                                 <span>
@@ -186,7 +184,7 @@ const AwardTable = ({
                 </div>
               </div>
               <div className="dataTable-bottom">
-                <div className="dataTable-info d-none d-md-block">
+                <div className="dataTable-info d-none d-md-block text-dark">
                   Showing{" "}
                   {Math.min(
                     (currentPage - 1) * entriesPerPage + 1,

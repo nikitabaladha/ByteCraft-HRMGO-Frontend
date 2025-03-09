@@ -22,7 +22,7 @@ const LoanOptionHeader = ({fetchLoanOptions}) => {
                 <li className="breadcrumb-item">
                   <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Loan Option</li>
+                <li className="breadcrumb-item text-dark">Loan Option</li>
               </ul>
             </div>
             <div className="col">

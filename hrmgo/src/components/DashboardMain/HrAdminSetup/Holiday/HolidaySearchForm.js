@@ -76,7 +76,7 @@ const HolidaySearchForm = ({ onSearchResults, resetSearch }) => {
                 <div className="row align-items-center justify-content-end">
                     <div className="col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box">
-                        <label htmlFor="start_date" className="form-label">
+                        <label htmlFor="start_date" className="form-label text-dark">
                           Start Date
                         </label>
                         <input
@@ -93,7 +93,7 @@ const HolidaySearchForm = ({ onSearchResults, resetSearch }) => {
                     </div>
                     <div className="col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box">
-                        <label htmlFor="end_date" className="form-label">
+                        <label htmlFor="end_date" className="form-label text-dark">
                           End Date
                         </label>
                         <input

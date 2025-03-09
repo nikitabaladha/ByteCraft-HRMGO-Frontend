@@ -21,7 +21,7 @@ const PayeesHeader = ({fetchPayees}) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Payee</li>
+                <li className="breadcrumb-item text-dark">Payee</li>
               </ul>
             </div>
             <div className="col">

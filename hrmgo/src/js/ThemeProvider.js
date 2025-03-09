@@ -9,14 +9,34 @@ export const ThemeProvider = ({ children }) => {
   const [isDarkLayout, setIsDarkLayout] = useState(savedLayout);
   const [activeTheme, setActiveTheme] = useState(savedTheme);
 
+  const loadStylesheets = (isDark) => {
+    const themeStylesheet = document.getElementById("theme-stylesheet");
+    const darkModeStylesheet = document.getElementById("dark-mode-stylesheet");
+    const lightModeStylesheet = document.getElementById("light-mode-stylesheet");
+
+    if (darkModeStylesheet) darkModeStylesheet.remove();
+    if (lightModeStylesheet) lightModeStylesheet.remove();
+
+    if (isDark) {
+      themeStylesheet.href = "/assets/css/style-dark.css";
+      const newDarkModeStylesheet = document.createElement("link");
+      newDarkModeStylesheet.id = "dark-mode-stylesheet";
+      newDarkModeStylesheet.rel = "stylesheet";
+      newDarkModeStylesheet.href = "/assets/css/dark-mode.css";
+      document.head.appendChild(newDarkModeStylesheet);
+    } else {
+      themeStylesheet.href = "/assets/css/style.css";
+      const newLightModeStylesheet = document.createElement("link");
+      newLightModeStylesheet.id = "light-mode-stylesheet";
+      newLightModeStylesheet.rel = "stylesheet";
+      newLightModeStylesheet.href = "/assets/css/light-mode.css";
+      document.head.appendChild(newLightModeStylesheet);
+    }
+  };
+
   useEffect(() => {
     document.body.className = savedTheme;
-    const themeStylesheet = document.getElementById("theme-stylesheet");
-    if (themeStylesheet) {
-      themeStylesheet.href = savedLayout
-        ? "/assets/css/style-dark.css"
-        : "/assets/css/style.css";
-    }
+    loadStylesheets(savedLayout);
   }, [savedTheme, savedLayout]);
 
   useEffect(() => {
@@ -24,10 +44,7 @@ export const ThemeProvider = ({ children }) => {
     localStorage.setItem("isDarkLayout", isDarkLayout);
 
     document.body.className = activeTheme;
-    const themeStylesheet = document.getElementById("theme-stylesheet");
-    themeStylesheet.href = isDarkLayout
-      ? "/assets/css/style-dark.css"
-      : "/assets/css/style.css";
+    loadStylesheets(isDarkLayout);
   }, [activeTheme, isDarkLayout]);
 
   const toggleDarkLayout = () => {
@@ -38,9 +55,13 @@ export const ThemeProvider = ({ children }) => {
     setActiveTheme(theme);
   };
 
+  const setDarkLayout = (value) => {
+    setIsDarkLayout(value);
+  };
+
   return (
     <ThemeContext.Provider
-      value={{ isDarkLayout, activeTheme, toggleDarkLayout, changeTheme }}
+      value={{ isDarkLayout, activeTheme, toggleDarkLayout, changeTheme, setDarkLayout }}
     >
       {children}
     </ThemeContext.Provider>

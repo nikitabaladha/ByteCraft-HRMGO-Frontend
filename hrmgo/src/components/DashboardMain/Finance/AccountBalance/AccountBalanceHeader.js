@@ -13,7 +13,7 @@ const ManageAccountBalances = () => {
                 <li className="breadcrumb-item">
                   <a href="/dashboard">Home</a>
                 </li>
-                <li className="breadcrumb-item">Account Balances</li>
+                <li className="breadcrumb-item text-dark">Account Balances</li>
               </ul>
             </div>
             <div className="col">

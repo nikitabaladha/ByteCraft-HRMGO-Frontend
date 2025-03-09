@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { TbRefresh } from "react-icons/tb";
-// import { IoIosSearch } from "react-icons/io";
 import getAPI from "../../../../../api/getAPI";
 
 const HolidayCalendarSearchForm = ({ onSearchResults }) => {
@@ -71,7 +69,7 @@ const HolidayCalendarSearchForm = ({ onSearchResults }) => {
               <div className="row align-items-center justify-content-end">
               <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                     <div className="btn-box">
-                      <label htmlFor="start_date" className="form-label">
+                      <label htmlFor="start_date" className="form-label text-dark">
                         Start Date
                       </label>
                       <input
@@ -87,7 +85,7 @@ const HolidayCalendarSearchForm = ({ onSearchResults }) => {
                   </div>
                   <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                     <div className="btn-box">
-                      <label htmlFor="end_date" className="form-label">
+                      <label htmlFor="end_date" className="form-label text-dark">
                         End Date
                       </label>
                       <input

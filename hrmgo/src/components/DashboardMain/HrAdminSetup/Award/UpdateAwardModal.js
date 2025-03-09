@@ -14,7 +14,6 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
   const [description, setDescription] = useState(award?.description || "");
   const [awardTypes, setAwardTypes] = useState([]);
 
-  // Fetch award types on component mount
   useEffect(() => {
     const fetchAllAwardType = async () => {
       try {
@@ -39,11 +38,9 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
     fetchAllAwardType();
   }, [award]);
 
-  // Handle form submission
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    // Prepare updated award data
     const updatedAward = {
       awardTypeId: awardTypeId || award.awardTypeId,
       date,
@@ -57,7 +54,6 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
       if (!response.hasError) {
         toast.success("Award updated successfully!");
 
-        // Find the selected award type for display
         const selectedAwardType = awardTypes.find(
           (type) => type._id === awardTypeId
         );
@@ -120,7 +116,7 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
             >
               <div className="row">
                 <div className="form-group col-md-6">
-                  <label className="col-form-label">Employee</label>
+                  <label className="col-form-label text-dark">Employee</label>
                   <input
                     className="form-control"
                     value={employeeName}
@@ -128,7 +124,7 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
                   />
                 </div>
                 <div className="form-group col-md-6">
-                  <label className="col-form-label">
+                  <label className="col-form-label text-dark">
                     Award Type <span className="text-danger">*</span>
                   </label>
                   <select
@@ -149,7 +145,7 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
                   </select>
                 </div>
                 <div className="form-group col-md-6">
-                  <label className="col-form-label">
+                  <label className="col-form-label text-dark">
                     Date <span className="text-danger">*</span>
                   </label>
                   <input
@@ -162,7 +158,7 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
                   />
                 </div>
                 <div className="form-group col-md-6">
-                  <label className="col-form-label">
+                  <label className="col-form-label text-dark">
                     Gift <span className="text-danger">*</span>
                   </label>
                   <input
@@ -174,7 +170,7 @@ const UpdateAwardModal = ({ award, onClose, updateAward }) => {
                   />
                 </div>
                 <div className="form-group col-md-12">
-                  <label className="col-form-label">
+                  <label className="col-form-label text-dark">
                     Description <span className="text-danger">*</span>
                   </label>
                   <textarea

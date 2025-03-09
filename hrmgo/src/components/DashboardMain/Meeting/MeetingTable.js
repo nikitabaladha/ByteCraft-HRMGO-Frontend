@@ -10,8 +10,6 @@ const MeetingTable = ({meetings,setMeetings,fetchMeetings}) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedMeeting, setSelectedMeeting] = useState(null);
 
-  /* entries pagination */
-
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -88,7 +86,7 @@ const MeetingTable = ({meetings,setMeetings,fetchMeetings}) => {
         <div className="card">
         <div className="dataTable-top">
                   <div className="dataTable-dropdown d-none d-md-block">
-                    <label>
+                    <label className="text-dark">
                       <select
                         className="dataTable-selector"
                         value={entriesPerPage}
@@ -130,15 +128,15 @@ const MeetingTable = ({meetings,setMeetings,fetchMeetings}) => {
                     <tbody>
                       {paginatedMeetings.map((meeting) => (
                         <tr key={meeting._id}>
-                          <td>{meeting.title}</td>
-                          <td>
+                          <td className="text-dark">{meeting.title}</td>
+                          <td className="text-dark">
                             {new Date(meeting.date).toLocaleDateString("en-US", {
                               year: "numeric",
                               month: "short",
                               day: "numeric",
                             })}
                           </td>
-                          <td>
+                          <td className="text-dark">
                             {new Date("1970-01-01T" + meeting.time)
                               .toLocaleTimeString("en-IN", {
                                 hour: "2-digit",
@@ -189,7 +187,7 @@ const MeetingTable = ({meetings,setMeetings,fetchMeetings}) => {
               </div>
             </div>
             <div className="dataTable-bottom">
-                  <div className="dataTable-info d-none d-md-block">
+                  <div className="dataTable-info d-none d-md-block text-dark">
                     Showing {Math.min((currentPage - 1) * entriesPerPage + 1, meetings.length)}{" "}
                     to {Math.min(currentPage * entriesPerPage, meetings.length)}{" "}
                     of {meetings.length} entries

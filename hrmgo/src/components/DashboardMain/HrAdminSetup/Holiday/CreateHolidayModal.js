@@ -119,7 +119,7 @@ const CreateHolidayModal = ({ onClose, addHoliday }) => {
                 <div className="modal-body">
                   <div className="row">
                     <div className="form-group col-md-12">
-                      <label htmlFor="occasion" className="col-form-label">
+                      <label htmlFor="occasion" className="col-form-label text-dark">
                         Occasion
                       </label>
                       <span className="text-danger">*</span>
@@ -135,7 +135,7 @@ const CreateHolidayModal = ({ onClose, addHoliday }) => {
                       />
                     </div>
                     <div className="form-group col-md-6">
-                      <label htmlFor="start_date" className="col-form-label">
+                      <label htmlFor="start_date" className="col-form-label text-dark">
                         Start Date
                       </label>
                       <span className="text-danger">*</span>
@@ -152,7 +152,7 @@ const CreateHolidayModal = ({ onClose, addHoliday }) => {
                       />
                     </div>
                     <div className="form-group col-md-6">
-                      <label htmlFor="end_date" className="col-form-label">
+                      <label htmlFor="end_date" className="col-form-label text-dark">
                         End Date
                       </label>
                       <span className="text-danger">*</span>
@@ -167,24 +167,6 @@ const CreateHolidayModal = ({ onClose, addHoliday }) => {
                         type="date"
                         name="endDate"
                       />
-                    </div>
-                    <div className="form-group col-md-6">
-                      <label htmlFor="synchronize_type" className="form-label">
-                        Synchroniz in Google Calendar ?
-                      </label>
-                      <div className=" form-switch">
-                        <input
-                          type="checkbox"
-                          className="form-check-input mt-2"
-                          name="synchronize_type"
-                          id="switch-shadow"
-                          defaultValue="google_calender"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="switch-shadow"
-                        />
-                      </div>
                     </div>
                   </div>
                 </div>

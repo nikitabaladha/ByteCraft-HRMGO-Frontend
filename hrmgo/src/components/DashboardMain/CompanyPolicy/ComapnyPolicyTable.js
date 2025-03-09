@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ConfirmationDialog from "../ConfirmationDialog";
-// import { RiDeleteBinLine } from "react-icons/ri";
 import EditCompanyPolicy from "./EditCompanyPolicy";
 
 const CompanyPolicy = ({companyPolicies, setCompanyPolicies, fetchCompanyPolicies}) => {
@@ -59,7 +58,7 @@ const CompanyPolicy = ({companyPolicies, setCompanyPolicies, fetchCompanyPolicie
           <div className="card">
           <div className="dataTable-top">
                     <div className="dataTable-dropdown d-none d-md-block">
-                      <label>
+                      <label className="text-dark">
                         <select
                           className="dataTable-selector"
                           value={entriesPerPage}
@@ -97,9 +96,9 @@ const CompanyPolicy = ({companyPolicies, setCompanyPolicies, fetchCompanyPolicie
                       <tbody>
                         {paginatedPolicies.map((policy) => (
                           <tr key={policy._id}>
-                            <td>{policy.branch}</td>
-                            <td>{policy.title}</td>
-                            <td>{policy.description}</td>
+                            <td className="text-dark">{policy.branch}</td>
+                            <td className="text-dark">{policy.title}</td>
+                            <td className="text-dark">{policy.description}</td>
                             <td className="Action">
                               <div className="dt-buttons">
                                 <span>
@@ -144,7 +143,7 @@ const CompanyPolicy = ({companyPolicies, setCompanyPolicies, fetchCompanyPolicie
                 </div>
               </div>
               <div className="dataTable-bottom">
-                    <div className="dataTable-info d-none d-md-block">
+                    <div className="dataTable-info d-none d-md-block text-dark">
                       Showing {Math.min((currentPage - 1) * entriesPerPage + 1, filteredPolicies.length)}{" "}
                       to {Math.min(currentPage * entriesPerPage, filteredPolicies.length)}{" "}
                       of {filteredPolicies.length} entries

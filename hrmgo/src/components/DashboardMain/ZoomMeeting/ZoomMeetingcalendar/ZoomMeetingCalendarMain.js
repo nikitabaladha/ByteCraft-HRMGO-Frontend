@@ -157,7 +157,7 @@ const MeetingCalendar = () => {
                                                         <CiCalendarDate />
                                                     </div>
                                                     <div className="ms-3">
-                                                        <h6 className=" text-primary">
+                                                        <h6 className=" text-primary text-dark">
                                                             {meeting.title}
                                                         </h6>
                                                         <div className="card-text small text-dark">

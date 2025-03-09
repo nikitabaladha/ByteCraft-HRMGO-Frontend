@@ -4,9 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 import CreateHolidayModal from "../CreateHolidayModal";
 
-// import { FaPlus } from "react-icons/fa";
-// import { TbListCheck } from "react-icons/tb";
-
 const HolidayCalendarHeader = ({ holidays, addHoliday }) => {
   const [isCreateHolidayModalOpen, setIsCreateHolidayModalOpen] =
     useState(false);
@@ -39,7 +36,7 @@ const HolidayCalendarHeader = ({ holidays, addHoliday }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Holidays List</li>
+                <li className="breadcrumb-item text-dark">Holidays List</li>
               </ul>
             </div>
             <div className="col">

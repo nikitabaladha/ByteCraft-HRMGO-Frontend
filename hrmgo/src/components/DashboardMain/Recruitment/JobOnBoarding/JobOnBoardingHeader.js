@@ -1,19 +1,7 @@
 import React from "react";
-// import { useState } from "react";
-// import { Link } from "react-router-dom";
-// import { FiPlus } from "react-icons/fi";
-// import JobOnBoardingCreate from "./JobOnBoardingCreate";
 
 const JobOnBoardingHeader = () => {
 
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // const handleModalOpen = () => {
-  //   setIsModalOpen(true);
-  // };
-
-  // const handleModalClose = () => {
-  //   setIsModalOpen(false);
   return (
     <>
       <div className="row align-items-center">
@@ -25,7 +13,7 @@ const JobOnBoardingHeader = () => {
             <li className="breadcrumb-item">
               <a href="/dashboard">Home</a>
             </li>
-            <li className="breadcrumb-item">Job On-Boarding</li>
+            <li className="breadcrumb-item text-dark">Job On-Boarding</li>
           </ul>
         </div>
        

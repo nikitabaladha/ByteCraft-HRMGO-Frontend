@@ -101,7 +101,7 @@ const EditTransferBalanceModal = ({ isOpen, onClose, selectedTransferBalance, fe
               <div className="row">
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="from_account_id" className="col-form-label">From Account</label><span className="text-danger">*</span>
+                    <label htmlFor="from_account_id" className="col-form-label text-dark">From Account</label><span className="text-danger">*</span>
                     <select className="form-control" required id="from_account_id" name="fromAccountId" value={fromAccountId} onChange={(e) => setFromAccountId(e.target.value)}>
                     <option value="">Choose From Account</option>
                       {accountNames.map((account) => (
@@ -114,7 +114,7 @@ const EditTransferBalanceModal = ({ isOpen, onClose, selectedTransferBalance, fe
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="to_account_id" className="col-form-label">To Account</label><span className="text-danger">*</span>
+                    <label htmlFor="to_account_id" className="col-form-label text-dark">To Account</label><span className="text-danger">*</span>
                     <select className="form-control" required id="to_account_id" name="toAccountId" value={toAccountId} onChange={(e) => setToAccountId(e.target.value)}>
                     <option value="">Choose To Account</option>
                       {accountNames.map((account) => (
@@ -127,7 +127,7 @@ const EditTransferBalanceModal = ({ isOpen, onClose, selectedTransferBalance, fe
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="date" className="col-form-label">Date</label><span className="text-danger">*</span>
+                    <label htmlFor="date" className="col-form-label text-dark">Date</label><span className="text-danger">*</span>
                     <div>
                     <DatePicker 
                       className="form-control d_week current_date datepicker-input" 
@@ -147,7 +147,7 @@ const EditTransferBalanceModal = ({ isOpen, onClose, selectedTransferBalance, fe
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="amount" className="col-form-label">Amount</label><span className="text-danger">*</span>
+                    <label htmlFor="amount" className="col-form-label text-dark">Amount</label><span className="text-danger">*</span>
                     <input className="form-control" required type="number" step="0.01" placeholder="Enter Amount" id="amount" name="amount" value={amount} onChange={(e) => setAmount(e.target.value)} />
                   </div>
                 </div>
@@ -166,7 +166,7 @@ const EditTransferBalanceModal = ({ isOpen, onClose, selectedTransferBalance, fe
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="referal_id" className="col-form-label">Ref#</label>
+                    <label htmlFor="referal_id" className="col-form-label text-dark">Ref#</label>
                     <input className="form-control" placeholder="Enter Ref#" id="referal_id" name="referalId" value={referalId} onChange={(e) => setReferalId(e.target.value)} />
                   </div>
                 </div>

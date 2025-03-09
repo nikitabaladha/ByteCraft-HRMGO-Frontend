@@ -22,7 +22,7 @@ const JobCategoryHeader = ({fetchJobCategories}) => {
                 <li className="breadcrumb-item">
                   <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Job Category</li>
+                <li className="breadcrumb-item text-dark">Job Category</li>
               </ul>
             </div>
             <div className="col">

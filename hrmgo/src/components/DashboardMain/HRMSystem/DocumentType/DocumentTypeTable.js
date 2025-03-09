@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import Sidebar from "../HRMSystemSidebar";
 import EditDocumentTypeModal from "./EditDocumentTypeModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
-// import getAPI from "../../../../api/getAPI";
 
 const DocumentTypeTable = ({documentTypes, setDocumentTypes, fetchDocumentTypes}) => {
-  // const [documentTypes, setDocumentTypes] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDocumentType, setSelectedDocumentType] = useState(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -68,7 +66,7 @@ const DocumentTypeTable = ({documentTypes, setDocumentTypes, fetchDocumentTypes}
         <div className="card">
         <div className="dataTable-top">
                   <div className="dataTable-dropdown d-none d-md-block">
-                    <label>
+                    <label className="text-dark">
                       <select
                         className="dataTable-selector"
                         value={entriesPerPage}
@@ -110,7 +108,7 @@ const DocumentTypeTable = ({documentTypes, setDocumentTypes, fetchDocumentTypes}
                     <tbody>
                       {paginatedDocumentTypes.map((documentType) => (
                         <tr key={documentType._id}>
-                          <td>{documentType.documentType}</td>
+                          <td className="text-dark">{documentType.documentType}</td>
                           <td>
                             <div
                               className={`badge p-2 px-3 ${documentType.isRequired === "Required" ? "bg-success" : "bg-danger"
@@ -158,7 +156,7 @@ const DocumentTypeTable = ({documentTypes, setDocumentTypes, fetchDocumentTypes}
               </div>
             </div>
             <div className="dataTable-bottom">
-                  <div className="dataTable-info d-none d-md-block">
+                  <div className="dataTable-info d-none d-md-block text-dark">
                     Showing {Math.min((currentPage - 1) * entriesPerPage + 1, documentTypes.length)}{" "}
                     to {Math.min(currentPage * entriesPerPage, documentTypes.length)}{" "}
                     of {documentTypes.length} entries

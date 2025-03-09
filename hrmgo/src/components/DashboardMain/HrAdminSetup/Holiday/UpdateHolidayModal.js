@@ -129,7 +129,7 @@ const UpdateHolidayModal = ({ holiday, onClose, updateHoliday }) => {
                 <div className="modal-body">
                   <div className="row">
                     <div className="form-group">
-                      <label htmlFor="occasion" className="col-form-label">
+                      <label htmlFor="occasion" className="col-form-label text-dark">
                         Occasion
                       </label>
                       <span className="text-danger">*</span>
@@ -147,7 +147,7 @@ const UpdateHolidayModal = ({ holiday, onClose, updateHoliday }) => {
                     </div>
                     <div className="row col-md-12">
                       <div className="form-group col-md-6">
-                        <label htmlFor="start_date" className="col-form-label">
+                        <label htmlFor="start_date" className="col-form-label text-dark">
                           Start Date
                         </label>
                         <span className="text-danger">*</span>
@@ -166,7 +166,7 @@ const UpdateHolidayModal = ({ holiday, onClose, updateHoliday }) => {
                         </div>
                       </div>
                       <div className="form-group col-md-6">
-                        <label htmlFor="end_date" className="col-form-label">
+                        <label htmlFor="end_date" className="col-form-label text-dark">
                           End Date
                         </label>
                         <span className="text-danger">*</span>

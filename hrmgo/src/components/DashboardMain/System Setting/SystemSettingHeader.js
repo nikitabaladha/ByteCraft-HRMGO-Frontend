@@ -9,13 +9,13 @@ const SystemSettingHeader = () => {
           <div className="row align-items-center">
             <div className="col-auto">
               <div className="page-header-title">
-                <h4 className="m-b-10">Settings</h4>
+                <h4 className="m-b-10 ">Settings</h4>
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Settings</li>
+                <li className="breadcrumb-item text-dark">Settings</li>
               </ul>
             </div>
             <div className="col">

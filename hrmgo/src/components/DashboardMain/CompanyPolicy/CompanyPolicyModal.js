@@ -64,15 +64,11 @@ useEffect(() => {
             <form method="POST"  onSubmit={handleSubmit} acceptCharset="UTF-8" encType="multipart/form-data" className="needs-validation" noValidate>
               <input name="_token" type="hidden" value="mk5mLbOtoudKEfEv857K3B9oUup58se2KxNTlOEa" />
               <div className="modal-body">
-                <div className="text-end">
-                  <Link className="btn btn-sm btn-primary" data-size="medium" data-ajax-popup-over="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate" data-title="Generate Content With AI">
-                    <i className="fas fa-robot"></i> Generate With AI
-                  </Link>
-                </div>
+               
                 <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6">
                     <div className="form-group">
-                      <label htmlFor="branch" className="form-label">Branch</label><span className="text-danger">*</span>
+                      <label htmlFor="branch" className="form-label text-dark">Branch</label><span className="text-danger">*</span>
                       <div className="form-icon-user">
                         <select className="form-control" 
                         required id="branch"
@@ -91,7 +87,7 @@ useEffect(() => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6">
                     <div className="form-group">
-                      <label htmlFor="title" className="form-label">Title</label><span className="text-danger">*</span>
+                      <label htmlFor="title" className="form-label text-dark">Title</label><span className="text-danger">*</span>
                       <div className="form-icon-user">
                         <input className="form-control" 
                         required placeholder="Enter Company Policy Title" 
@@ -105,7 +101,7 @@ useEffect(() => {
                   </div>
                   <div className="col-lg-12 col-md-12 col-sm-12">
                     <div className="form-group">
-                      <label htmlFor="description" className="form-label">Description</label>
+                      <label htmlFor="description" className="form-label text-dark">Description</label>
                       <div className="form-icon-user">
                         <textarea className="form-control" rows="6" 
                         placeholder="Enter Description" 

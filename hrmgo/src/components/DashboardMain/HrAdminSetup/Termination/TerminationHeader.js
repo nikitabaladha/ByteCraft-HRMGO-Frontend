@@ -28,7 +28,7 @@ const TerminationHeader = ({ addTermination }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Termination</li>
+                <li className="breadcrumb-item text-dark">Termination</li>
               </ul>
             </div>
             <div className="col">

@@ -27,7 +27,7 @@ const AwardHeader = ({ addAward }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Award</li>
+                <li className="breadcrumb-item text-dark">Award</li>
               </ul>
             </div>
             <div className="col">

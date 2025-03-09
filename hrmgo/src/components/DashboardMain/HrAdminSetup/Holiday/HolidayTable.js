@@ -74,7 +74,7 @@ const HolidayTable = ({
           <div className="card">
             <div className="dataTable-top">
               <div className="dataTable-dropdown d-none d-md-block">
-                <label>
+                <label className="text-dark">
                   <select
                     className="dataTable-selector"
                     value={entriesPerPage}
@@ -115,9 +115,9 @@ const HolidayTable = ({
                       <tbody>
                         {filteredHolidays.map((holiday) => (
                           <tr key={holiday.id}>
-                            <td>{holiday.occasion}</td>
-                            <td>{formatDate(holiday.startDate)}</td>
-                            <td>{formatDate(holiday.endDate)}</td>
+                            <td className="text-dark">{holiday.occasion}</td>
+                            <td className="text-dark">{formatDate(holiday.startDate)}</td>
+                            <td className="text-dark">{formatDate(holiday.endDate)}</td>
                             <td className="Action">
                               <div className="dt-buttons">
                                 <span>
@@ -157,7 +157,7 @@ const HolidayTable = ({
                 </div>
               </div>
               <div className="dataTable-bottom">
-                <div className="dataTable-info d-none d-md-block">
+                <div className="dataTable-info d-none d-md-block text-dark">
                   Showing{" "}
                   {Math.min(
                     (currentPage - 1) * entriesPerPage + 1,

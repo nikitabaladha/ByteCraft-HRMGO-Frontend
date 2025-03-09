@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { TbPencil } from "react-icons/tb";
-// import { FaRegTrashAlt } from "react-icons/fa";
 
 import UpdateComplaintModal from "./UpdateComplaintModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
@@ -78,7 +76,7 @@ const ComplaintTable = ({
           <div className="card">
             <div className="dataTable-top">
               <div className="dataTable-dropdown d-none d-md-block">
-                <label>
+                <label className="text-dark">
                   <select
                     className="dataTable-selector"
                     value={entriesPerPage}
@@ -121,11 +119,11 @@ const ComplaintTable = ({
                       <tbody>
                         {paginatedComplaints.map((complaint) => (
                           <tr key={complaint.id}>
-                            <td>{complaint.complaintFrom}</td>
-                            <td>{complaint.complaintAgainst}</td>
-                            <td>{complaint.title}</td>
-                            <td>{formatDate(complaint.complaintDate)}</td>
-                            <td>{complaint.description}</td>
+                            <td className="text-dark">{complaint.complaintFrom}</td>
+                            <td className="text-dark">{complaint.complaintAgainst}</td>
+                            <td className="text-dark">{complaint.title}</td>
+                            <td className="text-dark">{formatDate(complaint.complaintDate)}</td>
+                            <td className="text-dark">{complaint.description}</td>
                             <td className="Action">
                               <div className="dt-buttons">
                                 <span>
@@ -188,7 +186,7 @@ const ComplaintTable = ({
                 </div>
               </div>
               <div className="dataTable-bottom">
-                <div className="dataTable-info d-none d-md-block">
+                <div className="dataTable-info d-none d-md-block text-dark">
                   Showing{" "}
                   {Math.min(
                     (currentPage - 1) * entriesPerPage + 1,

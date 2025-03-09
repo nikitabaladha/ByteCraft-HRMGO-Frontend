@@ -20,7 +20,7 @@ const JobStageHeader = ({fetchJobStages}) => {
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <Link to="https/dashboard">Home</Link>
+                  <Link to="https/dashboard text-dark">Home</Link>
                 </li>
                 <li className="breadcrumb-item">Job Stage</li>
               </ul>

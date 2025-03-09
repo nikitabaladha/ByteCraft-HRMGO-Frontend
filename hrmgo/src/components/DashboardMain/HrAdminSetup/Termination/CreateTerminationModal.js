@@ -175,7 +175,7 @@ const CreateTerminationModal = ({ onClose, addTermination }) => {
                 <div className="modal-body">
                   <div className="row">
                     <div className="form-group col-md-6 col-lg-6 ">
-                      <label htmlFor="employee_id" className="col-form-label">
+                      <label htmlFor="employee_id" className="col-form-label text-dark">
                         Employee Name
                       </label>
                       <span className="text-danger">*</span>
@@ -196,7 +196,7 @@ const CreateTerminationModal = ({ onClose, addTermination }) => {
                     <div className="form-group col-md-6 col-lg-6">
                       <label
                         htmlFor="Termination_type"
-                        className="col-form-label"
+                        className="col-form-label text-dark"
                       >
                         Termination Type
                       </label>
@@ -218,7 +218,7 @@ const CreateTerminationModal = ({ onClose, addTermination }) => {
                       </select>
                     </div>
                     <div className="form-group col-md-6 col-lg-6">
-                      <label htmlFor="noticeDate" className="col-form-label">
+                      <label htmlFor="noticeDate" className="col-form-label text-dark">
                         Notice Date
                       </label>
                       <span className="text-danger">*</span>
@@ -237,7 +237,7 @@ const CreateTerminationModal = ({ onClose, addTermination }) => {
                     <div className="form-group col-md-6 col-lg-6">
                       <label
                         htmlFor="terminationDate"
-                        className="col-form-label"
+                        className="col-form-label text-dark"
                       >
                         Termination Date
                       </label>
@@ -255,7 +255,7 @@ const CreateTerminationModal = ({ onClose, addTermination }) => {
                     </div>
 
                     <div className="form-group col-md-12">
-                      <label htmlFor="description" className="col-form-label ">
+                      <label htmlFor="description" className="col-form-label text-dark">
                         Description
                       </label>
                       <span className="text-danger">*</span>

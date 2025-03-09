@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import getAPI from '../../../../api/getAPI';
-// import { TbPencil } from "react-icons/tb";
-// import {  FaRegTrashAlt } from "react-icons/fa";
 import InterviewScheduleEdit from './InterviewScheduleEdit';
 import ConfirmationDialog from '../../ConfirmationDialog';
 
@@ -48,8 +46,8 @@ const InterviewScheduleTable = () => {
 
   function formatDate(dateString) {
     const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, "0"); // Ensures 2 digits for the day
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Ensures 2 digits for the month
+    const day = String(date.getDate()).padStart(2, "0"); 
+    const month = String(date.getMonth() + 1).padStart(2, "0"); 
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
   }
@@ -70,7 +68,7 @@ const InterviewScheduleTable = () => {
                         <div className="px-3">
                           <div className="row align-items-center">
                             <div className="col ml-n2 text-sm mb-0 fc-event-title-container">
-                              <h5 className="card-text small text-primary">{schedule.candidate}</h5>
+                              <h5 className="card-text small text-primary text-dark">{schedule.candidate}</h5>
                               <div className="card-text small text-dark">{schedule.applicatAppliedFor}</div>
                               <div className="card-text small text-dark">{`${formatDate(schedule.date)}`}, {schedule.time}</div>
                             </div>

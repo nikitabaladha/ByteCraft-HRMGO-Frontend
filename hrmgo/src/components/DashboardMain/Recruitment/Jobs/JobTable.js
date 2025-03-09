@@ -72,7 +72,7 @@ const JobTable = ({ jobs, setJobs, fetchJobs }) => {
                       <HiOutlineBriefcase />
                     </div>
                     <div className="ms-3">
-                      <small className="text-muted">Total</small>
+                      <small className="text-muted text-dark">Total</small>
                       <h6 className="m-0">Jobs</h6>
                     </div>
                   </div>
@@ -110,7 +110,7 @@ const JobTable = ({ jobs, setJobs, fetchJobs }) => {
                       </svg>
                     </div>
                     <div className="ms-3">
-                      <small className="text-muted">Active</small>
+                      <small className="text-muted text-dark">Active</small>
                       <h6 className="m-0">Jobs</h6>
                     </div>
                   </div>
@@ -149,7 +149,7 @@ const JobTable = ({ jobs, setJobs, fetchJobs }) => {
                       </svg>
                     </div>
                     <div className="ms-3">
-                      <small className="text-muted">Inactive</small>
+                      <small className="text-muted text-dark">Inactive</small>
                       <h6 className="m-0">Jobs</h6>
                     </div>
                   </div>
@@ -168,7 +168,7 @@ const JobTable = ({ jobs, setJobs, fetchJobs }) => {
           <div className="card">
             <div className="dataTable-top">
               <div className="dataTable-dropdown d-none d-md-block">
-                <label>
+                <label className="text-dark">
                   <select
                     className="dataTable-selector"
                     value={entriesPerPage}
@@ -213,10 +213,10 @@ const JobTable = ({ jobs, setJobs, fetchJobs }) => {
                         {paginatedTrainers.length > 0 ? (
                           paginatedTrainers.map((job) => (
                             <tr key={job._id}>
-                              <td>{job.branch}</td>
-                              <td>{job.title}</td>
-                              <td>{`${formatDate(job.startDate)}`}</td>
-                              <td>{`${formatDate(job.endDate)}`}</td>
+                              <td className="text-dark">{job.branch}</td>
+                              <td className="text-dark">{job.title}</td>
+                              <td className="text-dark">{`${formatDate(job.startDate)}`}</td>
+                              <td className="text-dark">{`${formatDate(job.endDate)}`}</td>
                               <td>
                                 <span
                                   className={`badge p-2 px-3 ${
@@ -228,7 +228,7 @@ const JobTable = ({ jobs, setJobs, fetchJobs }) => {
                                   {job.status}
                                 </span>
                               </td>
-                              <td>{`${formatDate(job.createdAt)}`}</td>
+                              <td className="text-dark">{`${formatDate(job.createdAt)}`}</td>
                               <td>
                                 <div className="d-flex">
                                   <Link
@@ -272,7 +272,7 @@ const JobTable = ({ jobs, setJobs, fetchJobs }) => {
                 </div>
               </div>
               <div className="dataTable-bottom">
-                <div className="dataTable-info d-none d-md-block">
+                <div className="dataTable-info d-none d-md-block text-dark">
                   Showing{" "}
                   {Math.min(
                     (currentPage - 1) * entriesPerPage + 1,

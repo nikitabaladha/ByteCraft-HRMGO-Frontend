@@ -11,7 +11,6 @@ const PayslipTypeTable = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPayslipType, setSelectedPayslipType] = useState(null);
-  // const [payslipTypes, setPayslipTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [payslipTypeToDelete, setPayslipTypeToDelete] = useState(null);
 
@@ -73,7 +72,7 @@ const PayslipTypeTable = ({
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -114,7 +113,7 @@ const PayslipTypeTable = ({
                     <tbody>
                       {paginatedPayslipTypes.map((payslipType) => (
                         <tr key={payslipType._id}>
-                          <td>{payslipType.payslipType}</td>
+                          <td className="text-dark">{payslipType.payslipType}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>
@@ -175,7 +174,7 @@ const PayslipTypeTable = ({
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min(
                   (currentPage - 1) * entriesPerPage + 1,

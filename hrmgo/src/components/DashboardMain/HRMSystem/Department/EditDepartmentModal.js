@@ -74,7 +74,7 @@ const EditDepartmentModal = ({ closeModal, department, fetchDepartments }) => {
                                 <div className="row">
                                     <div className="col-lg-12 col-md-12 col-sm-12">
                                         <div className="form-group">
-                                            <label htmlFor="branch_id" className="form-label">Branch</label><span className="text-danger">*</span>
+                                            <label htmlFor="branch_id" className="form-label text-dark">Branch</label><span className="text-danger">*</span>
                                             <div className="form-icon-user">
                                                 <select
                                                     className="form-control"
@@ -97,7 +97,7 @@ const EditDepartmentModal = ({ closeModal, department, fetchDepartments }) => {
 
                                     <div className="col-lg-12 col-md-12 col-sm-12">
                                         <div className="form-group">
-                                            <label htmlFor="department_name" className="form-label">Name</label><span className="text-danger">*</span>
+                                            <label htmlFor="department_name" className="form-label text-dark">Name</label><span className="text-danger">*</span>
                                             <div className="form-icon-user">
                                                 <input
                                                     className="form-control"

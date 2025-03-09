@@ -51,7 +51,7 @@ const ContractReport = ({
     <>
       {contractData.map((data, index) => (
         <div className="col-xl-3 col-6" key={index}>
-          <div className="card comp-card">
+          <div className="card ">
             <div className="card-body">
               <div className="row align-items-center">
                 <div className="col">
@@ -59,7 +59,7 @@ const ContractReport = ({
                   <h3 className={data.textClass}> {formatCost(data.value)}</h3>
                 </div>
                 <div className={`badge theme-avtar ${data.badgeClass} d-none d-md-block`}>
-                  <i className={data.iconClass} />
+                  <i className={data.iconClass} style={{paddingTop: "5px"}} />
                 </div>
               </div>
             </div>

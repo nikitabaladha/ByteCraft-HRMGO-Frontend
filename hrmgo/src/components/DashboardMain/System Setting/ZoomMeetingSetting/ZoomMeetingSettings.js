@@ -59,7 +59,7 @@ const ZoomMeetingSettings = () => {
             <div className="row">
               {/* Zoom Account ID */}
               <div className="col-lg-6 col-md-6 col-sm-12 form-group">
-                <label htmlFor="zoom_account_id" className="col-form-label">
+                <label htmlFor="zoom_account_id" className="col-form-label text-dark">
                   Zoom Account ID
                 </label>
                 <div className="input-group">
@@ -84,7 +84,7 @@ const ZoomMeetingSettings = () => {
 
               {/* Zoom Client ID */}
               <div className="col-lg-6 col-md-6 col-sm-12 form-group">
-                <label htmlFor="zoom_client_id" className="col-form-label">
+                <label htmlFor="zoom_client_id" className="col-form-label text-dark">
                   Zoom Client ID
                 </label>
                 <div className="input-group">
@@ -109,7 +109,7 @@ const ZoomMeetingSettings = () => {
 
               {/* Zoom Client Secret */}
               <div className="col-lg-6 col-md-6 col-sm-12 form-group">
-                <label htmlFor="zoom_client_secret" className="col-form-label">
+                <label htmlFor="zoom_client_secret" className="col-form-label text-dark">
                   Zoom Client Secret Key
                 </label>
                 <div className="input-group">

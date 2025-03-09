@@ -2,7 +2,7 @@ import React from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { TiTimes } from "react-icons/ti";
-import { useState} from "react";
+import { useState } from "react";
 import ConfirmationDialog from "../ConfirmationDialog";
 // import getAPI from "../../../api/getAPI";
 import { Worker } from "@react-pdf-viewer/core";
@@ -22,11 +22,10 @@ const DeleteMessage = ({
   console.log(messages, "messages");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedTrainee, setSelectedTrainee] = useState(null);
-  // const [selectedConversationId, setSelectedConversationId] = useState(null);
 
   const openDeleteDialog = (conversationId) => {
     console.log("conversationId to delete:", conversationId);
-    setSelectedTrainee(conversationId); // Set the conversationId directly
+    setSelectedTrainee(conversationId);
     setIsDeleteDialogOpen(true);
   };
 
@@ -47,18 +46,26 @@ const DeleteMessage = ({
     setSelectedTrainee(null);
   };
 
+  // Check if there are any photos or PDFs in the messages
+  const hasPhotos = messages?.messages?.some(
+    (msg) => msg.messageFile && !msg.messageFile.endsWith(".pdf")
+  );
+  const hasPDFs = messages?.messages?.some(
+    (msg) => msg.messageFile && msg.messageFile.endsWith(".pdf")
+  );
+
   return (
     <div
       className="messenger-infoView app-scroll text-center"
       style={{
-        maxHeight: "calc(100vh - 150px)", 
-        overflowY: "auto", 
+        maxHeight: "calc(100vh - 150px)",
+        overflowY: "auto",
         display: isMobile && activeStep !== 3 ? "none" : "block",
       }}
     >
       <nav className="text-center">
-        <Link href="#" onClick={onClose} >
-          <TiTimes onClick={() => handleClick(2)}/>
+        <Link href="#" onClick={onClose}>
+          <TiTimes onClick={() => handleClick(2)} />
         </Link>
       </nav>
       <div
@@ -69,18 +76,19 @@ const DeleteMessage = ({
       ></div>
       <p className="info-name">{messages?.receiver?.name}</p>
       <p className="info-name">{messages?.receiver?.role}</p>
-      <div className="messenger-infoView-btns mx-2">
+      <div className="messenger-infoView-btns">
         <Link
           href="#"
           className="danger delete-conversation"
-          style={{ display: "inline" }}
+          style={{ display: "flex", justifyContent: "center" }}
           onClick={(e) => {
             e.preventDefault();
             openDeleteDialog(conversationId);
           }}
         >
           <div className="d-flex align-items-center mr-4">
-            <FaRegTrashAlt size={25} className="ms-4" />
+            {/* <FaRegTrashAlt size={25} className="ms-4" /> */}
+            <i className="ti ti-trash" style={{ fontSize: "30px" }}></i>
             <span className="ms-4">Delete Conversation</span>
           </div>
         </Link>
@@ -92,12 +100,12 @@ const DeleteMessage = ({
         {/* Shared Photos Section */}
         <div className="shared-photos-section">
           <p className="section-title">Shared Photos</p>
-          {messages?.messages?.length > 0 ? (
+          {hasPhotos ? (
             <div
               className="photos-container"
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(2, 1fr)", // 2 columns
+                gridTemplateColumns: "repeat(2, 1fr)",
                 gap: "10px",
                 overflowY: "auto",
                 maxHeight: "300px",
@@ -136,7 +144,7 @@ const DeleteMessage = ({
         {/* Shared PDFs Section */}
         <div className="shared-pdfs-section" style={{ marginTop: "20px" }}>
           <p className="section-title">Shared PDFs</p>
-          {messages?.messages?.length > 0 ? (
+          {hasPDFs ? (
             <div
               className="pdf-container"
               style={{

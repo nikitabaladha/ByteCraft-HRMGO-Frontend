@@ -152,7 +152,7 @@ const UpdateResignationModal = ({
               <div className="modal-body">
                 <div className="row">
                   <div className="form-group col-md-12 col-lg-12 ">
-                    <label htmlFor="employee_id" className="col-form-label">
+                    <label htmlFor="employee_id" className="col-form-label text-dark">
                       Employee
                     </label>
                     <select
@@ -168,7 +168,7 @@ const UpdateResignationModal = ({
                   </div>
 
                   <div className="form-group col-md-6 col-lg-6">
-                    <label htmlFor="resignationDate" className="col-form-label">
+                    <label htmlFor="resignationDate" className="col-form-label text-dark">
                       Resignation Date
                     </label>
                     <span className="text-danger">*</span>
@@ -184,7 +184,7 @@ const UpdateResignationModal = ({
                   </div>
 
                   <div className="form-group col-md-6 col-lg-6">
-                    <label htmlFor="lastWorkingDay" className="col-form-label">
+                    <label htmlFor="lastWorkingDay" className="col-form-label text-dark">
                       Last Working Day
                     </label>
                     <span className="text-danger">*</span>
@@ -200,7 +200,7 @@ const UpdateResignationModal = ({
                   </div>
 
                   <div className="form-group col-md-12">
-                    <label htmlFor="reason" className="col-form-label">
+                    <label htmlFor="reason" className="col-form-label text-dark">
                       Reason
                     </label>
                     <span className="text-danger">*</span>

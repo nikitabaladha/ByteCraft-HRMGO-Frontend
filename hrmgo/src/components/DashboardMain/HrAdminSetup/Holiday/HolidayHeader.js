@@ -66,22 +66,12 @@ const HolidayHeader = ({ holidays, addHoliday }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Holidays List</li>
+                <li className="breadcrumb-item text-dark">Holidays List</li>
               </ul>
             </div>
             <div className="col">
             <div className="d-flex flex-row flex-sm-row align-items-center gap-2 float-end">
-                {/* <Link
-                  data-ajax-popup="true"
-                  data-title="Import Holiday CSV file"
-                  data-bs-toggle="tooltip"
-                  title=""
-                  className="btn btn-sm btn-primary me-2"
-                  data-bs-original-title="Import"
-                  onClick={openImportModal}
-                >
-                  <TbFileImport />
-                </Link> */}
+               
                 <Link
                   className="btn btn-sm btn-primary"
                   data-bs-toggle="tooltip"

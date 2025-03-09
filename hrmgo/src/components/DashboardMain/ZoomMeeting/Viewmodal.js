@@ -57,23 +57,23 @@ const ZoomMeetingModal = ({ meeting, onClose }) => {
                 <tbody>
                   <tr>
                     <td className="text-dark fw-bold">Name</td>
-                    <td>{meeting.title}</td>
+                    <td className='text-dark'>{meeting.title}</td>
                   </tr>
                   <tr>
                     <td className="text-dark fw-bold">Meeting Id</td>
-                    <td>{meeting.meeting_code}</td>
+                    <td className='text-dark'>{meeting.meeting_code}</td>
                   </tr>
                   <tr>
                     <td className="text-dark fw-bold">User</td>
-                    <td>{meeting.employeeNames.join(' ')}</td>
+                    <td className='text-dark'>{meeting.employeeNames.join(' ')}</td>
                   </tr>
                   <tr>
                     <td className="text-dark fw-bold">Start Date</td>
-                    <td>{new Date(meeting.start_date).toLocaleDateString('en-CA')}</td>
+                    <td className='text-dark '>{new Date(meeting.start_date).toLocaleDateString('en-CA')}</td>
                   </tr>
                   <tr>
                     <td className="text-dark fw-bold">Duration</td>
-                    <td>{meeting.duration}</td>
+                    <td className='text-dark'>{meeting.duration}</td>
                   </tr>
                   <tr>
                     <td className="text-dark fw-bold">Start URL</td>
@@ -84,7 +84,7 @@ const ZoomMeetingModal = ({ meeting, onClose }) => {
                               className="text-secondary"
                               onClick={() => handleStartMeeting(meeting._id)}  
                             >
-                              <p className="mb-0">
+                              <p className="mb-0 text-dark">
                                 <b>Start meeting</b> <HiExternalLink />
                               </p>
                             </a>

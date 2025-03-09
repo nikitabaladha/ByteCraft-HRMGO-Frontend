@@ -9,7 +9,7 @@ import ConfirmationDialog from "../../ConfirmationDialog";
 const TrainerTable = ({ trainers, setTrainers, fetchTrainers }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedTrainee, setSelectedTrainee] = useState(null);
-  const [showUpdateModal, setShowUpdateModal] = useState(false); // State for update modal
+  const [showUpdateModal, setShowUpdateModal] = useState(false); 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const [entriesPerPage, setEntriesPerPage] = useState(10);
@@ -155,7 +155,7 @@ const TrainerTable = ({ trainers, setTrainers, fetchTrainers }) => {
           <div className="card">
             <div className="dataTable-top">
               <div className="dataTable-dropdown  d-none d-md-block">
-                <label>
+                <label className="text-dark">
                   <select
                     className="dataTable-selector"
                     value={entriesPerPage}
@@ -198,10 +198,10 @@ const TrainerTable = ({ trainers, setTrainers, fetchTrainers }) => {
                         {paginatedTrainers.length > 0 ? (
                           paginatedTrainers.map((trainer) => (
                             <tr key={trainer.id}>
-                              <td>{trainer.branch}</td>
-                              <td>{`${trainer.firstName} ${trainer.lastName}`}</td>
-                              <td>{trainer.contactNumber}</td>
-                              <td>{trainer.email}</td>
+                              <td className="text-dark">{trainer.branch}</td>
+                              <td className="text-dark">{`${trainer.firstName} ${trainer.lastName}`}</td>
+                              <td className="text-dark">{trainer.contactNumber}</td>
+                              <td className="text-dark">{trainer.email}</td>
                               <td>
                                 <ActionButtons trainer={trainer} />
                               </td>
@@ -220,7 +220,7 @@ const TrainerTable = ({ trainers, setTrainers, fetchTrainers }) => {
                 </div>
               </div>
               <div className="dataTable-bottom">
-                  <div className="dataTable-info d-none d-md-block">
+                  <div className="dataTable-info d-none d-md-block text-dark">
                     Showing{" "}
                     {Math.min(
                       (currentPage - 1) * entriesPerPage + 1,

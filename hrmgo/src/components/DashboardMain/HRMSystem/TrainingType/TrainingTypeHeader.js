@@ -22,7 +22,7 @@ const TrainingTypeHeader = ({fetchTrainingTypes}) => {
                 <li className="breadcrumb-item">
                   <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Training Type</li>
+                <li className="breadcrumb-item text-dark">Training Type</li>
               </ul>
             </div>
             <div className="col">

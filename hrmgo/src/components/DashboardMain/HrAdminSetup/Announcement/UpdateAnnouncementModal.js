@@ -240,7 +240,7 @@ const UpdateAnnouncementModal = ({
                   <div className="row">
                     <div className="col-md-6">
                       <div className="form-group">
-                        <label htmlFor="title" className="col-form-label">
+                        <label htmlFor="title" className="col-form-label text-dark">
                           Announcement Title
                         </label>
                         <span className="text-danger">*</span>
@@ -258,7 +258,7 @@ const UpdateAnnouncementModal = ({
                     </div>
                     <div className="col-md-6">
                       <div className="form-group">
-                        <label htmlFor="branch_id" className="col-form-label">
+                        <label htmlFor="branch_id" className="col-form-label text-dark">
                           Branch
                         </label>
                         <span className="text-danger">*</span>
@@ -283,7 +283,7 @@ const UpdateAnnouncementModal = ({
                       <div className="form-group">
                         <label
                           htmlFor="department_id"
-                          className="col-form-label"
+                          className="col-form-label text-dark"
                         >
                           Department
                         </label>
@@ -307,7 +307,7 @@ const UpdateAnnouncementModal = ({
                     </div>
                     <div className="col-md-6">
                       <div className="form-group">
-                        <label htmlFor="employee_id" className="col-form-label">
+                        <label htmlFor="employee_id" className="col-form-label text-dark">
                           Employee
                         </label>
                         <Select
@@ -325,7 +325,7 @@ const UpdateAnnouncementModal = ({
                     </div>
                     <div className="col-md-6">
                       <div className="form-group">
-                        <label htmlFor="start_date" className="col-form-label">
+                        <label htmlFor="start_date" className="col-form-label text-dark">
                           Start Date
                         </label>
                         <span className="text-danger">*</span>
@@ -343,7 +343,7 @@ const UpdateAnnouncementModal = ({
                     </div>
                     <div className="col-md-6">
                       <div className="form-group">
-                        <label htmlFor="end_date" className="col-form-label">
+                        <label htmlFor="end_date" className="col-form-label text-dark">
                           End Date
                         </label>
                         <span className="text-danger">*</span>
@@ -361,7 +361,7 @@ const UpdateAnnouncementModal = ({
                     </div>
                     <div className="col-md-12">
                       <div className="form-group">
-                        <label htmlFor="description" className="col-form-label">
+                        <label htmlFor="description" className="col-form-label text-dark">
                           Announcement Description
                         </label>
                         <span className="text-danger">*</span>

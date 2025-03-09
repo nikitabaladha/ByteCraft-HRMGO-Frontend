@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { FiPlus } from "react-icons/fi";
-// import { CiCalendarDate } from "react-icons/ci";
 import MeetingModal from "./MeetingModal";
 import { useNavigate } from "react-router-dom";
 
@@ -29,7 +27,7 @@ const MeetingHeader = ({fetchMeetings}) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Meeting</li>
+                <li className="breadcrumb-item text-dark">Meeting</li>
               </ul>
             </div>
             <div className="col">

@@ -88,7 +88,7 @@ const TerminationTable = ({
           <div className="card">
             <div className="dataTable-top">
               <div className="dataTable-dropdown d-none d-md-block">
-                <label>
+                <label className="text-dark">
                   <select
                     className="dataTable-selector"
                     value={entriesPerPage}
@@ -131,10 +131,10 @@ const TerminationTable = ({
                       <tbody>
                         {paginatedTerminations.map((termination) => (
                           <tr key={termination.id}>
-                            <td>{termination.employeeName}</td>
-                            <td>{termination.terminationType}</td>
-                            <td>{formatDate(termination.noticeDate)}</td>
-                            <td>{formatDate(termination.terminationDate)}</td>
+                            <td className="text-dark">{termination.employeeName}</td>
+                            <td className="text-dark">{termination.terminationType}</td>
+                            <td className="text-dark">{formatDate(termination.noticeDate)}</td>
+                            <td className="text-dark">{formatDate(termination.terminationDate)}</td>
 
                             <div className="dt-buttons">
                               <div className="action-btn bg-warning">
@@ -217,7 +217,7 @@ const TerminationTable = ({
                 </div>
               </div>
               <div className="dataTable-bottom">
-                <div className="dataTable-info d-none d-md-block">
+                <div className="dataTable-info d-none d-md-block text-dark">
                   Showing{" "}
                   {Math.min(
                     (currentPage - 1) * entriesPerPage + 1,

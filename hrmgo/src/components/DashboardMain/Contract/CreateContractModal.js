@@ -170,7 +170,7 @@ const CreateContractModal = ({ contracts, onClose, addContract }) => {
                 <div className="modal-body">
                   <div className="row">
                     <div className="col-md-6 form-group">
-                      <label htmlFor="employeeId" className="col-form-label">
+                      <label htmlFor="employeeId" className="col-form-label text-dark">
                         Employee Name
                       </label>
                       <span className="text-danger">*</span>
@@ -189,7 +189,7 @@ const CreateContractModal = ({ contracts, onClose, addContract }) => {
                       </select>
                     </div>
                     <div className="col-md-6 form-group">
-                      <label htmlFor="subject" className="col-form-label">
+                      <label htmlFor="subject" className="col-form-label text-dark">
                         Subject
                       </label>
                       <span className="text-danger">*</span>
@@ -204,7 +204,7 @@ const CreateContractModal = ({ contracts, onClose, addContract }) => {
                       />
                     </div>
                     <div className="col-md-6 form-group">
-                      <label htmlFor="value" className="col-form-label">
+                      <label htmlFor="value" className="col-form-label text-dark">
                         Value
                       </label>
                       <span className="text-danger">*</span>
@@ -222,7 +222,7 @@ const CreateContractModal = ({ contracts, onClose, addContract }) => {
                     <div className="col-md-6 form-group">
                       <label
                         htmlFor="contractTypeId"
-                        className="col-form-label"
+                        className="col-form-label text-dark"
                       >
                         Contract Type
                       </label>
@@ -242,7 +242,7 @@ const CreateContractModal = ({ contracts, onClose, addContract }) => {
                       </select>
                     </div>
                     <div className="form-group col-md-6">
-                      <label htmlFor="startDate" className="col-form-label">
+                      <label htmlFor="startDate" className="col-form-label text-dark">
                         Start Date
                       </label>
                       <span className="text-danger">*</span>
@@ -256,7 +256,7 @@ const CreateContractModal = ({ contracts, onClose, addContract }) => {
                       />
                     </div>
                     <div className="form-group col-md-6">
-                      <label htmlFor="endDate" className="col-form-label">
+                      <label htmlFor="endDate" className="col-form-label text-dark">
                         Due Date
                       </label>
                       <span className="text-danger">*</span>

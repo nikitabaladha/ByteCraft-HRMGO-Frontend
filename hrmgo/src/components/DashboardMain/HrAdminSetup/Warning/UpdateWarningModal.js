@@ -141,7 +141,7 @@ const UpdateWarningModal = ({ warning, onClose, updateWarning }) => {
               <div className="modal-body">
                 <div className="row">
                   <div className="form-group col-md-6 col-lg-6">
-                    <label htmlFor="employee_id" className="col-form-label">
+                    <label htmlFor="employee_id" className="col-form-label text-dark">
                       Warning By
                     </label>
                     <select
@@ -157,7 +157,7 @@ const UpdateWarningModal = ({ warning, onClose, updateWarning }) => {
                   <div className="form-group col-md-6 col-lg-6">
                     <label
                       htmlFor="warningAgainstId"
-                      className="col-form-label"
+                      className="col-form-label text-dark"
                     >
                       Warning To
                     </label>
@@ -179,7 +179,7 @@ const UpdateWarningModal = ({ warning, onClose, updateWarning }) => {
                     </select>
                   </div>
                   <div className="form-group col-md-6 col-lg-6">
-                    <label htmlFor="subject" className="col-form-label">
+                    <label htmlFor="subject" className="col-form-label text-dark">
                       Subject
                     </label>
                     <span className="text-danger">*</span>
@@ -193,7 +193,7 @@ const UpdateWarningModal = ({ warning, onClose, updateWarning }) => {
                     />
                   </div>
                   <div className="form-group col-md-6 col-lg-6">
-                    <label htmlFor="date" className="col-form-label">
+                    <label htmlFor="date" className="col-form-label text-dark">
                       Warning Date
                     </label>
                     <span className="text-danger">*</span>
@@ -210,7 +210,7 @@ const UpdateWarningModal = ({ warning, onClose, updateWarning }) => {
                     />
                   </div>
                   <div className="form-group col-md-12">
-                    <label htmlFor="description" className="col-form-label">
+                    <label htmlFor="description" className="col-form-label text-dark">
                       Description
                     </label>
                     <span className="text-danger">*</span>

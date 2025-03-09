@@ -177,10 +177,12 @@ const UserMainContent = ({ users, setUsers, fetchUsers }) => {
                 <small>{user.email}</small>
               </div>
             </div>
+           
           </div>
+          
         ))}
-        <div className="col-xl-3 col-lg-4 col-sm-6">
-          <button
+         <div className="col-xl-3 col-lg-4 col-sm-6">
+          <a
             onClick={handleCreateClick}
             className="btn-addnew-project border-primary"
             data-ajax-popup="true"
@@ -195,7 +197,7 @@ const UserMainContent = ({ users, setUsers, fetchUsers }) => {
             </div>
             <h6 className="mt-4 mb-2">New User</h6>
             <p className="text-muted text-center">Click here to add new user</p>
-          </button>
+          </a>
         </div>
       </div>
       {isDeleteDialogOpen && (

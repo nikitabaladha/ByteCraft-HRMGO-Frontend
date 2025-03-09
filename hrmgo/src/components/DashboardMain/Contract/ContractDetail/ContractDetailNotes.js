@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { FaRegTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import ConfirmationDialog from "../../ConfirmationDialog";
@@ -12,10 +11,9 @@ const ContractDetailNotes = ({ notes, setNotes }) => {
   const [noteText, setNoteText] = useState("");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedNote, setSelectedNote] = useState(null);
-  const [userAvatar, setUserAvatar] = useState(""); // State to hold user avatar
+  const [userAvatar, setUserAvatar] = useState(""); 
   const { id: contractId } = useParams();
 
-  // Fetch user details including avatar when the component mounts
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -25,7 +23,7 @@ const ContractDetailNotes = ({ notes, setNotes }) => {
           const profilePath = user.profileImage.startsWith("/")
             ? `${process.env.REACT_APP_API_URL_FOR_IMAGE}${user.profileImage}`
             : `${process.env.REACT_APP_API_URL_FOR_IMAGE}/Images/profilePicture/default-avatar.png`;
-          setUserAvatar(profilePath); // Set the user avatar
+          setUserAvatar(profilePath); 
         } else {
           toast.error("Failed to fetch User data.");
         }
@@ -38,7 +36,6 @@ const ContractDetailNotes = ({ notes, setNotes }) => {
     fetchUserDetails();
   }, []);
 
-  // Fetch notes with user avatars when the component mounts
   useEffect(() => {
     const fetchNotesWithAvatars = async () => {
       try {
@@ -70,7 +67,6 @@ const ContractDetailNotes = ({ notes, setNotes }) => {
         }
       } catch (error) {
         console.error("Error fetching notes:", error);
-        // toast.error("An error occurred while fetching notes.");
       }
     };
 

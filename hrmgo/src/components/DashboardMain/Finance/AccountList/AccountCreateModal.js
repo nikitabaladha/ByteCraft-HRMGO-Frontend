@@ -109,7 +109,7 @@ const AccountCreateModal = ({ isOpen, onClose,fetchAccounts}) => {
                 <div className="row">
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="account_name" className="col-form-label">
+                      <label htmlFor="account_name" className="col-form-label text-dark">
                         Account Name
                         </label><span className="text-danger">*</span>
                       <select
@@ -132,7 +132,7 @@ const AccountCreateModal = ({ isOpen, onClose,fetchAccounts}) => {
                   </div>
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="initial_balance" className="col-form-label">
+                      <label htmlFor="initial_balance" className="col-form-label text-dark">
                         Initial Balance
                       </label><span className="text-danger">*</span>
                       <input
@@ -149,7 +149,7 @@ const AccountCreateModal = ({ isOpen, onClose,fetchAccounts}) => {
                   </div>
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="account_number" className="col-form-label">
+                      <label htmlFor="account_number" className="col-form-label text-dark">
                         Account Number
                       </label><span className="text-danger">*</span>
                       <input
@@ -166,7 +166,7 @@ const AccountCreateModal = ({ isOpen, onClose,fetchAccounts}) => {
                   </div>
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="branch_code" className="col-form-label">
+                      <label htmlFor="branch_code" className="col-form-label text-dark">
                         IFSC Code
                       </label><span className="text-danger">*</span>
                       <input
@@ -183,7 +183,7 @@ const AccountCreateModal = ({ isOpen, onClose,fetchAccounts}) => {
                   </div>
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="bank_branch" className="col-form-label">
+                      <label htmlFor="bank_branch" className="col-form-label text-dark">
                         Bank Name
                       </label><span className="text-danger">*</span>
                       <input

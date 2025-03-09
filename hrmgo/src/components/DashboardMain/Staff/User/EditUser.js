@@ -12,22 +12,17 @@ const EditUser = ({ user, onClose, fetchUsers }) => {
 
   const [roles, setRoles] = useState([]);
 
-  useEffect(() => {
-    const fetchRoles = async () => {
-      try {
-        const response = await getAPI("/get-all-roles");
-        if (response && !response.hasError) {
-          setRoles(response.data.roles || []);
-        } else {
-          toast.error(`Failed to fetch roles: ${response.message}`);
-        }
-      } catch (error) {
-        console.error("Error fetching roles:", error);
-        toast.error("An error occurred while fetching roles.");
-      }
-    };
-    fetchRoles();
-  }, []);
+  const fetchRoles = async () => {
+    try {
+      const response = await getAPI(`/get-all-roles`, {}, true);
+      setRoles(response.data.data);
+    } catch (error) {
+      console.error("Failed to fetch Roles.", error);
+    }
+  };
+  useEffect(() => {   
+  fetchRoles();
+}, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -75,7 +75,7 @@ const EditBranchModal = ({ closeModal, branch, fetchBranches }) => {
                 <div className="row">
                   <div className="col-lg-12 col-md-12 col-sm-12">
                     <div className="form-group">
-                      <label htmlFor="name" className="form-label">
+                      <label htmlFor="name" className="form-label text-dark">
                         Name
                       </label>
                       <span className="text-danger">*</span>

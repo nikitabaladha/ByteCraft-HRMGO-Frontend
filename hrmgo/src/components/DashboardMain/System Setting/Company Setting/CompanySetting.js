@@ -39,15 +39,14 @@ const CompanySetting = () => {
             timezone: system.timezone || '',
           }); 
       } catch (error) {
-        // console.error('Error fetching company settings:', error);
-        // toast.error('Failed to fetch company settings');
+     
       }
     };
 
     const allTimezones = moment.tz.names();
     setTimezones(allTimezones);
 
-    fetchCompanySettings(); // Fetch data on component mount
+    fetchCompanySettings(); 
   }, []);
 
   const handleInputChange = (e) => {
@@ -62,16 +61,16 @@ const CompanySetting = () => {
     e.preventDefault();
     try {
       const response = await putAPI("/update-company-setting", formData);
-      if (response.data.success) {
-        console.log("Company setting successfully updated:", response.data);
-        toast.success("Company setting successfully updated!");
+      console.log("abcd", response.data);
+      if (response.data) {
+        toast("Company setting successfully updated!");
       }
     } catch (error) {
-      // console.error("Error updating company setting:", error);
-      // toast.error(
-      //   error.response?.data?.message ||
-      //     "An error occurred while updating the company setting"
-      // );
+      console.error("Error updating company setting:", error);
+      toast.error(
+        error.response?.data?.message ||
+          "An error occurred while updating the company setting"
+      );
     }
   };
 
@@ -85,7 +84,7 @@ const CompanySetting = () => {
           <div className="card-body">
             <div className="row">
               <div className="form-group col-md-4">
-                <label htmlFor="company_name" className="col-form-label">Company Name *</label>
+                <label htmlFor="company_name" className="col-form-label text-dark">Company Name *</label>
                 <input
                   className="form-control"
                   placeholder="Enter Company Name"
@@ -96,7 +95,7 @@ const CompanySetting = () => {
                 />
               </div>
               <div className="form-group col-md-4">
-                <label htmlFor="company_address" className="col-form-label">Address</label>
+                <label htmlFor="company_address" className="col-form-label text-dark">Address</label>
                 <input
                   className="form-control"
                   placeholder="Enter Address"
@@ -107,7 +106,7 @@ const CompanySetting = () => {
                 />
               </div>
               <div className="form-group col-md-4">
-                <label htmlFor="company_city" className="col-form-label">City</label>
+                <label htmlFor="company_city" className="col-form-label text-dark">City</label>
                 <input
                   className="form-control"
                   placeholder="Enter City"
@@ -118,7 +117,7 @@ const CompanySetting = () => {
                 />
               </div>
               <div className="form-group col-md-4">
-                <label htmlFor="company_state" className="col-form-label">State</label>
+                <label htmlFor="company_state" className="col-form-label text-dark">State</label>
                 <input
                   className="form-control"
                   placeholder="Enter State"
@@ -129,7 +128,7 @@ const CompanySetting = () => {
                 />
               </div>
               <div className="form-group col-md-4">
-                <label htmlFor="company_zipcode" className="col-form-label">Zip/Post Code</label>
+                <label htmlFor="company_zipcode" className="col-form-label text-dark">Zip/Post Code</label>
                 <input
                   className="form-control"
                   placeholder="Enter Zip/Post Code"
@@ -140,7 +139,7 @@ const CompanySetting = () => {
                 />
               </div>
               <div className="form-group col-md-4">
-                <label htmlFor="company_country" className="col-form-label">Country</label>
+                <label htmlFor="company_country" className="col-form-label text-dark">Country</label>
                 <input
                   className="form-control"
                   placeholder="Enter Country"
@@ -151,7 +150,7 @@ const CompanySetting = () => {
                 />
               </div>
               <div className="form-group col-md-4">
-                <label htmlFor="company_telephone" className="col-form-label">Telephone</label>
+                <label htmlFor="company_telephone" className="col-form-label text-dark">Telephone</label>
                 <input
                   className="form-control"
                   placeholder="Enter Telephone"
@@ -164,7 +163,7 @@ const CompanySetting = () => {
               <div className="col-md-6">
                 <div className="row">
                   <div className="form-group col-md-6">
-                    <label htmlFor="company_start_time" className="col-form-label">Company Start Time *</label>
+                    <label htmlFor="company_start_time" className="col-form-label text-dark">Company Start Time *</label>
                     <input
                       className="form-control"
                       name="company_start_time"
@@ -174,7 +173,7 @@ const CompanySetting = () => {
                     />
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="company_end_time" className="col-form-label">Company End Time *</label>
+                    <label htmlFor="company_end_time" className="col-form-label text-dark">Company End Time *</label>
                     <input
                       className="form-control"
                       name="company_end_time"

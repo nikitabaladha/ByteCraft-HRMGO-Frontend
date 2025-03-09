@@ -11,7 +11,6 @@ const AllowanceOptionTable = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAllowanceOption, setSelectedAllowanceOption] = useState(null);
-  // const [allowanceOptions, setAllowanceOptions] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [allowanceOptionToDelete, setAllowanceOptionToDelete] = useState(null);
 
@@ -76,7 +75,7 @@ const AllowanceOptionTable = ({
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -117,7 +116,7 @@ const AllowanceOptionTable = ({
                     <tbody>
                       {paginatedAllowanceOptions.map((allowanceOption) => (
                         <tr key={allowanceOption._id}>
-                          <td>{allowanceOption.allowanceName}</td>
+                          <td className="text-dark">{allowanceOption.allowanceName}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>
@@ -177,7 +176,7 @@ const AllowanceOptionTable = ({
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min(
                   (currentPage - 1) * entriesPerPage + 1,

@@ -74,7 +74,7 @@ const ExpenseTable = ({expenses, setExpenses, fetchExpenses}) => {
         <div className="card">
         <div className="dataTable-top">
                   <div className="dataTable-dropdown d-none d-md-block">
-                    <label>
+                    <label className="text-dark">
                       <select
                         className="dataTable-selector"
                         value={entriesPerPage}
@@ -120,13 +120,13 @@ const ExpenseTable = ({expenses, setExpenses, fetchExpenses}) => {
                     <tbody>
                       {paginatedExpenses.map((expense) => (
                         <tr key={expense._id}>
-                          <td>{expense.account_name}</td>
-                          <td>{expense.payee_name}</td>
-                          <td>{`₹${new Intl.NumberFormat('en-IN').format(expense.amount)}`}</td>
-                          <td>{expense.category}</td>
-                          <td>{expense.ref}</td>
-                          <td>{expense.payment_type}</td>
-                          <td>{new Date(expense.date).toLocaleDateString('en-US', {
+                          <td className="text-dark">{expense.account_name}</td>
+                          <td className="text-dark">{expense.payee_name}</td>
+                          <td className="text-dark">{`₹${new Intl.NumberFormat('en-IN').format(expense.amount)}`}</td>
+                          <td className="text-dark">{expense.category}</td>
+                          <td className="text-dark">{expense.ref}</td>
+                          <td className="text-dark">{expense.payment_type}</td>
+                          <td className="text-dark">{new Date(expense.date).toLocaleDateString('en-US', {
                             year: 'numeric',
                             month: 'short',
                             day: 'numeric'
@@ -173,7 +173,7 @@ const ExpenseTable = ({expenses, setExpenses, fetchExpenses}) => {
               </div>
             </div>
             <div className="dataTable-bottom">
-                  <div className="dataTable-info d-none d-md-block">
+                  <div className="dataTable-info d-none d-md-block text-dark">
                     Showing {Math.min((currentPage - 1) * entriesPerPage + 1, expenses.length)}{" "}
                     to {Math.min(currentPage * entriesPerPage, expenses.length)}{" "}
                     of {expenses.length} entries

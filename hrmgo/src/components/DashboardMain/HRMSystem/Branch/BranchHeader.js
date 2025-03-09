@@ -21,7 +21,7 @@ const BranchHeader = ({fetchBranches}) => {
                 <li className="breadcrumb-item">
                   <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Branch</li>
+                <li className="breadcrumb-item text-dark">Branch</li>
               </ul>
             </div>
             <div className="col">

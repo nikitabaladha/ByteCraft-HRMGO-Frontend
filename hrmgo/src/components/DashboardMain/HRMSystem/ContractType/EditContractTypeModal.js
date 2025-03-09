@@ -24,7 +24,7 @@ const EditContractTypeModal = ({ closeModal, contractType, fetchContractTypes })
         };
 
         try {
-            const response = await putAPI(`/update-contract-type/${contractType._id}`, contractTypeData, true); // Adjust the endpoint for contract type
+            const response = await putAPI(`/update-contract-type/${contractType._id}`, contractTypeData, true); 
 
             if (!response.hasError) {
                 toast.success("Contract type updated successfully");
@@ -52,7 +52,7 @@ const EditContractTypeModal = ({ closeModal, contractType, fetchContractTypes })
                                 <div className="row">
                                     <div className="col-lg-12 col-md-12 col-sm-12">
                                         <div className="form-group">
-                                            <label htmlFor="name" className="form-label">Name</label><span className="text-danger">*</span>
+                                            <label htmlFor="name" className="form-label text-dark">Name</label><span className="text-danger">*</span>
                                             <div className="form-icon-user">
                                                 <input
                                                     className="form-control"

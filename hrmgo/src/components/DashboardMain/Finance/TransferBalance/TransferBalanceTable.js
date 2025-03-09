@@ -83,7 +83,7 @@ const TransferBalanceTable = ({
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -127,9 +127,9 @@ const TransferBalanceTable = ({
                     <tbody>
                       {paginatedTransferBalances.map((transferBalance) => (
                         <tr key={transferBalance._id}>
-                          <td>{transferBalance.fromAccountId}</td>
-                          <td>{transferBalance.toAccountId}</td>
-                          <td>
+                          <td className="text-dark">{transferBalance.fromAccountId}</td>
+                          <td className="text-dark">{transferBalance.toAccountId}</td>
+                          <td className="text-dark">
                             {new Date(transferBalance.date).toLocaleDateString(
                               "en-US",
                               {
@@ -139,11 +139,11 @@ const TransferBalanceTable = ({
                               }
                             )}
                           </td>
-                          <td>{`₹${new Intl.NumberFormat("en-IN").format(
+                          <td className="text-dark">{`₹${new Intl.NumberFormat("en-IN").format(
                             transferBalance.amount
                           )}`}</td>
-                          <td>{transferBalance.paymentTypeId}</td>
-                          <td>{transferBalance.referalId}</td>
+                          <td className="text-dark">{transferBalance.paymentTypeId}</td>
+                          <td className="text-dark">{transferBalance.referalId}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>

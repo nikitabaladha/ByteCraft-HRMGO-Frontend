@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-// import { FiPlus } from "react-icons/fi";
 import getAPI from "../../../../api/getAPI";
 import AddToJobOnboard from "./AddToJobOnboard";
 import CreateNewInterviewSchedule from "./CreateNewInterviewSchedule";
@@ -19,8 +18,6 @@ const JobApplicationView = () => {
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
-  // const [skill, setSkills] = useState([]);
-  // const [skillInput, setSkillInput] = useState("");
   const [Notes, setNote] = useState("");
   const [applicantId, setApplicantId] = useState(null);
 
@@ -29,7 +26,6 @@ const JobApplicationView = () => {
       try {
         const response = await getAPI(`/get-application/${id}`);
         setApplication(response.data.application);
-        // setStatus(response.data.status)
       } catch (error) {
         console.error("Error fetching application:", error);
       } finally {
@@ -51,7 +47,7 @@ const JobApplicationView = () => {
   const handleCreateClick = () => {
     setApplicantId(id);
     console.log("application id", id);
-    setShowModal(true); // Show the modal
+    setShowModal(true); 
   };
 
   const handleCloseModal = () => {
@@ -165,7 +161,7 @@ const JobApplicationView = () => {
                     Archive Application
                   </Link>
                 </li>
-                <li className="breadcrumb-item">Job Application</li>
+                <li className="breadcrumb-item text-dark">Job Application</li>
               </ul>
             </div>
             <div className="col">
@@ -181,7 +177,7 @@ const JobApplicationView = () => {
             <div className="card-header">
               <div className="row">
                 <div className="col-auto">
-                  <h6 className="text-muted">Basic Details</h6>
+                  <h6 className="text-muted text-dark">Basic Details</h6>
                 </div>
                 <div className="col text-end">
                   <ul className="list-inline mb-0">
@@ -271,7 +267,7 @@ const JobApplicationView = () => {
               </h5>
 
               <div className="py-2 my-4 border-top">
-                <div className="row align-items-center my-3">
+                <div className="row align-items-center my-3 text-dark">
                   {[
                     { value: "Applied", label: "Applied" },
                     { value: "Phone Screen", label: "Phone Screen" },
@@ -313,7 +309,7 @@ const JobApplicationView = () => {
             <div className="card-header">
               <div className="row">
                 <div className="col-auto">
-                  <h6 className="text-muted">Basic Information</h6>
+                  <h6 className="text-muted text-dark">Basic Information</h6>
                 </div>
                 <div className="col text-end">
                   <div className="col-12 text-end">
@@ -339,7 +335,7 @@ const JobApplicationView = () => {
                   <span className="h6 text-sm mb-0">Phone</span>
                 </dt>
                 <dd className="col-sm-8">
-                  <span className="text-sm">{application.phone}</span>
+                  <span className="text-sm text-dark">{application.phone}</span>
                 </dd>
                 {application.dob && (
                   <>
@@ -347,7 +343,7 @@ const JobApplicationView = () => {
                       <span className="h6 text-sm mb-0">DOB</span>
                     </dt>
                     <dd className="col-sm-8">
-                      <span className="text-sm">{`${formatDate(
+                      <span className="text-sm text-dark">{`${formatDate(
                         application.dob
                       )}`}</span>
                     </dd>
@@ -359,7 +355,7 @@ const JobApplicationView = () => {
                       <span className="h6 text-sm mb-0">Gender</span>
                     </dt>
                     <dd className="col-sm-8">
-                      <span className="text-sm">{application.gender}</span>
+                      <span className="text-sm text-dark">{application.gender}</span>
                     </dd>
                   </>
                 )}
@@ -369,7 +365,7 @@ const JobApplicationView = () => {
                       <span className="h6 text-sm mb-0">Branch</span>
                     </dt>
                     <dd className="col-sm-8">
-                      <span className="text-sm">{application.branch}</span>
+                      <span className="text-sm text-dark">{application.branch}</span>
                     </dd>
                   </>
                 )}
@@ -379,7 +375,7 @@ const JobApplicationView = () => {
                       <span className="h6 text-sm mb-0">Address</span>
                     </dt>
                     <dd className="col-sm-8">
-                      <span className="text-sm">{application.address}</span>
+                      <span className="text-sm text-dark">{application.address}</span>
                     </dd>
                   </>
                 )}
@@ -389,7 +385,7 @@ const JobApplicationView = () => {
                       <span className="h6 text-sm mb-0">City</span>
                     </dt>
                     <dd className="col-sm-8">
-                      <span className="text-sm">{application.city}</span>
+                      <span className="text-sm text-dark">{application.city}</span>
                     </dd>
                   </>
                 )}
@@ -399,7 +395,7 @@ const JobApplicationView = () => {
                       <span className="h6 text-sm mb-0">State</span>
                     </dt>
                     <dd className="col-sm-8">
-                      <span className="text-sm">{application.state}</span>
+                      <span className="text-sm text-dark">{application.state}</span>
                     </dd>
                   </>
                 )}
@@ -409,7 +405,7 @@ const JobApplicationView = () => {
                       <span className="h6 text-sm mb-0">Country</span>
                     </dt>
                     <dd className="col-sm-8">
-                      <span className="text-sm">{application.country}</span>
+                      <span className="text-sm text-dark">{application.country}</span>
                     </dd>
                   </>
                 )}
@@ -419,7 +415,7 @@ const JobApplicationView = () => {
                       <span className="h6 text-sm mb-0">Zip Code</span>
                     </dt>
                     <dd className="col-sm-8">
-                      <span className="text-sm">{application.zipCode}</span>
+                      <span className="text-sm text-dark">{application.zipCode}</span>
                     </dd>
                   </>
                 )}
@@ -427,14 +423,14 @@ const JobApplicationView = () => {
                   <span className="h6 text-sm mb-0">Applied For</span>
                 </dt>
                 <dd className="col-sm-8">
-                  <span className="text-sm">{application.jobTitle}</span>
+                  <span className="text-sm text-dark">{application.jobTitle}</span>
                 </dd>
 
                 <dt className="col-sm-3">
                   <span className="h6 text-sm mb-0">Applied at</span>
                 </dt>
                 <dd className="col-sm-8">
-                  <span className="text-sm">{`${formatDate(
+                  <span className="text-sm text-dark">{`${formatDate(
                     application.createdAt
                   )}`}</span>
                 </dd>
@@ -467,7 +463,7 @@ const JobApplicationView = () => {
                       <span className="h6 text-sm mb-0">Cover Letter:</span>
                     </dt>
                     <dd className="col-sm-9">
-                      <span className="text-sm">{application.coverLetter}</span>
+                      <span className="text-sm text-dark">{application.coverLetter}</span>
                     </dd>
                   </>
                 )}
@@ -520,7 +516,7 @@ const JobApplicationView = () => {
             <div className="card-header">
               <div className="row">
                 <div className="col">
-                  <h6 className="text-muted">Additional Details</h6>
+                  <h6 className="text-muted text-dark">Additional Details</h6>
                 </div>
                 <div className="col text-end">
                   <Link
@@ -539,56 +535,10 @@ const JobApplicationView = () => {
               </div>
             </div>
             <div className="card-body">
-              {/* <div className="list-group list-group-flush mb-4">
-                <div className="list-group-item px-0">
-                  <div className="row align-items-center">
-                    <div className="col">
-                      <Link to="#!" className="d-block h6 text-sm mb-0">
-                        What Do You Consider to Be Your Weaknesses?
-                      </Link>
-                      <p className="card-text text-sm text-muted mb-0">
-                        nbvvhnmnnm
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-              {/* <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label className="form-label">Skill Box</label>
-                  <div className="d-flex flex-wrap align-items-center border p-2 rounded">
-                    {skill.map((skills, index) => (
-                      <span
-                        key={index}
-                        className="badge bg-primary text-white me-2 mb-2"
-                      >
-                        {skills}
-                        <button
-                          type="button"
-                          className="btn-close btn-close-white ms-2"
-                          aria-label="Close"
-                          onClick={() => handleRemoveSkill(index)}
-                        ></button>
-                      </span>
-                    ))}
-                    <input
-                      type="text"
-                      value={skillInput}
-                      onChange={(e) => setSkillInput(e.target.value)}
-                      onKeyDown={handleKeyDown}
-                      placeholder="Type a skill and press Enter or Comma"
-                      className="border-0 flex-grow-1"
-                    />
-                  </div>
-                </div>
-                <button type="submit" className="btn btn-primary mt-3">
-                  Add Skills
-                </button>
-              </form> */}
 
               <form onSubmit={handleSubmitNotes}>
                 <div className="form-group">
-                  <label className="form-label">Applicant Notes</label>
+                  <label className="form-label text-dark">Applicant Notes</label>
                   <textarea
                     name="note"
                     className="form-control"

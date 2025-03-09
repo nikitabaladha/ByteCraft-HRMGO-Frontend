@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { TiPlus } from "react-icons/ti";
-// import { TbFileExport } from "react-icons/tb";
 import DepositModal from "./DepositModal";
 import * as XLSX from "xlsx";
 import getAPI  from "../../../../api/getAPI"; 
@@ -68,7 +66,7 @@ const DepositHeader = ({fetchDeposits}) => {
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
-                <li className="breadcrumb-item">Deposit</li>
+                <li className="breadcrumb-item text-dark">Deposit</li>
               </ul>
             </div>
             <div className="col">

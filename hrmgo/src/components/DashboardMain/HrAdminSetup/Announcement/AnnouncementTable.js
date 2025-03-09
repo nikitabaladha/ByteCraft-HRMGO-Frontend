@@ -80,7 +80,7 @@ const AnnouncementTable = ({
           <div className="card">
             <div className="dataTable-top">
               <div className="dataTable-dropdown d-none d-md-block">
-                <label>
+                <label className="text-dark">
                   <select
                     className="dataTable-selector"
                     value={entriesPerPage}
@@ -122,11 +122,11 @@ const AnnouncementTable = ({
                       <tbody>
                         {paginatedAnnouncements.map((announcement) => (
                           <tr key={announcement.id}>
-                            <td>{announcement.title}</td>
-                            <td>{formatDate(announcement.startDate)}</td>
-                            <td>{formatDate(announcement.endDate)}</td>
+                            <td className="text-dark">{announcement.title}</td>
+                            <td className="text-dark">{formatDate(announcement.startDate)}</td>
+                            <td className="text-dark">{formatDate(announcement.endDate)}</td>
 
-                            <td>{announcement.description}</td>
+                            <td className="text-dark">{announcement.description}</td>
                             <td className="Action">
                               <div className="dt-buttons">
                                 <span>

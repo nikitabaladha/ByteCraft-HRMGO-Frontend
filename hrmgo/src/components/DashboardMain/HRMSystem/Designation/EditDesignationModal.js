@@ -31,7 +31,6 @@ const EditDesignationModal = ({ closeModal, designation, fetchDesignations }) =>
             setDepartmentId(designation.departmentId._id);
             setDesignationName(designation.designationName);
 
-            // Fetch departments after the designation is loaded
             const fetchDepartments = async () => {
                 if (designation.branchId) {
                     try {
@@ -116,7 +115,7 @@ const EditDesignationModal = ({ closeModal, designation, fetchDesignations }) =>
                                 <div className="row">
                                     <div className="col-lg-12 col-md-12 col-sm-12">
                                         <div className="form-group">
-                                            <label htmlFor="branch_id" className="form-label">Branch</label><span className="text-danger">*</span>
+                                            <label htmlFor="branch_id" className="form-label text-dark">Branch</label><span className="text-danger">*</span>
                                             <div className="form-icon-user">
                                                 <select
                                                     className="form-control"
@@ -139,7 +138,7 @@ const EditDesignationModal = ({ closeModal, designation, fetchDesignations }) =>
 
                                     <div className="col-lg-12 col-md-12 col-sm-12">
                                         <div className="form-group">
-                                            <label htmlFor="department_id" className="form-label">Department</label><span className="text-danger">*</span>
+                                            <label htmlFor="department_id" className="form-label text-dark">Department</label><span className="text-danger">*</span>
                                             <div className="form-icon-user">
                                                 <select
                                                     className="form-control"
@@ -162,7 +161,7 @@ const EditDesignationModal = ({ closeModal, designation, fetchDesignations }) =>
 
                                     <div className="col-lg-12 col-md-12 col-sm-12">
                                         <div className="form-group">
-                                            <label htmlFor="designation_name" className="form-label">Designation Name</label><span className="text-danger">*</span>
+                                            <label htmlFor="designation_name" className="form-label text-dark">Designation Name</label><span className="text-danger">*</span>
                                             <div className="form-icon-user">
                                                 <input
                                                     className="form-control"

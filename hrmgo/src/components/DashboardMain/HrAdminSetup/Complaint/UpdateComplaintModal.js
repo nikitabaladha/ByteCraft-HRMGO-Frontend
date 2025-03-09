@@ -168,7 +168,7 @@ const UpdateComplaintModal = ({ complaint, onClose, updateComplaint }) => {
               <div className="modal-body">
                 <div className="row">
                   <div className="form-group col-md-6 col-lg-6">
-                    <label htmlFor="employee_id" className="col-form-label">
+                    <label htmlFor="employee_id" className="col-form-label text-dark">
                       Complaint From
                     </label>
                     <select
@@ -185,7 +185,7 @@ const UpdateComplaintModal = ({ complaint, onClose, updateComplaint }) => {
                   <div className="form-group col-md-6 col-lg-6">
                     <label
                       htmlFor="complaintAgainstId"
-                      className="col-form-label"
+                      className="col-form-label text-dark"
                     >
                       Complaint Against
                     </label>
@@ -207,7 +207,7 @@ const UpdateComplaintModal = ({ complaint, onClose, updateComplaint }) => {
                     </select>
                   </div>
                   <div className="form-group col-md-6 col-lg-6">
-                    <label htmlFor="title" className="col-form-label">
+                    <label htmlFor="title" className="col-form-label text-dark">
                       Complaint Title
                     </label>
                     <span className="text-danger">*</span>
@@ -221,7 +221,7 @@ const UpdateComplaintModal = ({ complaint, onClose, updateComplaint }) => {
                     />
                   </div>
                   <div className="form-group col-md-6 col-lg-6">
-                    <label htmlFor="date" className="col-form-label">
+                    <label htmlFor="date" className="col-form-label text-dark">
                       Complaint Date
                     </label>
                     <span className="text-danger">*</span>
@@ -241,7 +241,7 @@ const UpdateComplaintModal = ({ complaint, onClose, updateComplaint }) => {
                   </div>
 
                   <div className="form-group col-md-12">
-                    <label htmlFor="description" className="col-form-label">
+                    <label htmlFor="description" className="col-form-label text-dark">
                       Description
                     </label>
                     <span className="text-danger">*</span>

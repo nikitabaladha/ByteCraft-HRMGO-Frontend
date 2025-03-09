@@ -7,7 +7,6 @@ import ConfirmationDialog from "../../ConfirmationDialog";
 const PerformanceTypeTable = ({performanceTypes, setPerformanceTypes, fetchPerformanceTypes}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPerformanceType, setSelectedPerformanceType] = useState(null);
-  // const [performanceTypes, setPerformanceTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [performanceTypeToDelete, setPerformanceTypeToDelete] = useState(null);
 
@@ -70,7 +69,7 @@ const PerformanceTypeTable = ({performanceTypes, setPerformanceTypes, fetchPerfo
         <div className="card">
         <div className="dataTable-top">
                   <div className="dataTable-dropdown d-none d-md-block">
-                    <label>
+                    <label className="text-dark">
                       <select
                         className="dataTable-selector"
                         value={entriesPerPage}
@@ -110,7 +109,7 @@ const PerformanceTypeTable = ({performanceTypes, setPerformanceTypes, fetchPerfo
                     <tbody>
                       {paginatedPerformanceTypes.map((performanceType) => (
                         <tr key={performanceType._id}>
-                          <td>{performanceType.performanceName}</td>
+                          <td className="text-dark">{performanceType.performanceName}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>
@@ -157,7 +156,7 @@ const PerformanceTypeTable = ({performanceTypes, setPerformanceTypes, fetchPerfo
               </div>
             </div>
             <div className="dataTable-bottom">
-                  <div className="dataTable-info d-none d-md-block">
+                  <div className="dataTable-info d-none d-md-block text-dark">
                     Showing {Math.min((currentPage - 1) * entriesPerPage + 1, filteredPerformanceTypes.length)}{" "}
                     to {Math.min(currentPage * entriesPerPage, filteredPerformanceTypes.length)}{" "}
                     of {filteredPerformanceTypes.length} entries

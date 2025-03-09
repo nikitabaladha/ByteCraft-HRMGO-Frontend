@@ -157,7 +157,7 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
                     <div className="form-group col-md-6 col-lg-6 ">
                       <label
                         htmlFor="complaintFrom_id"
-                        className="col-form-label"
+                        className="col-form-label text-dark"
                       >
                         Complaint From
                       </label>
@@ -180,7 +180,7 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
                     <div className="form-group col-md-6 col-lg-6 ">
                       <label
                         htmlFor="complaintAgainst_id"
-                        className="col-form-label"
+                        className="col-form-label text-dark"
                       >
                         Complaint To
                       </label>
@@ -203,7 +203,7 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
                     <div className="form-group col-md-6 col-lg-6">
                       <label
                         htmlFor="complaint_title"
-                        className="col-form-label"
+                        className="col-form-label text-dark"
                       >
                         Title
                       </label>
@@ -221,7 +221,7 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
                     </div>
 
                     <div className="form-group col-md-6 col-lg-6">
-                      <label htmlFor="date" className="col-form-label">
+                      <label htmlFor="date" className="col-form-label text-dark">
                         Complaint Date
                       </label>
                       <span className="text-danger">*</span>
@@ -243,7 +243,7 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
                     </div>
 
                     <div className="form-group col-md-12">
-                      <label htmlFor="description" className="col-form-label ">
+                      <label htmlFor="description" className="col-form-label text-dark">
                         Description
                       </label>
                       <span className="text-danger">*</span>

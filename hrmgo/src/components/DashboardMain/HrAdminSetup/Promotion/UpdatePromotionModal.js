@@ -147,7 +147,7 @@ const UpdatePromotionModal = ({ promotion, onClose, updatePromotion }) => {
                     </select>
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="designation_id" className="col-form-label">
+                    <label htmlFor="designation_id" className="col-form-label text-dark">
                       Designation <span className="text-danger">*</span>
                     </label>
                     <select
@@ -168,7 +168,7 @@ const UpdatePromotionModal = ({ promotion, onClose, updatePromotion }) => {
                     </select>
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="promotion_title" className="col-form-label">
+                    <label htmlFor="promotion_title" className="col-form-label text-dark">
                       Promotion Title <span className="text-danger">*</span>
                     </label>
                     <input
@@ -180,7 +180,7 @@ const UpdatePromotionModal = ({ promotion, onClose, updatePromotion }) => {
                     />
                   </div>
                   <div className="form-group col-md-6">
-                    <label htmlFor="promotionDate" className="col-form-label">
+                    <label htmlFor="promotionDate" className="col-form-label text-dark">
                       Date <span className="text-danger">*</span>
                     </label>
                     <input
@@ -193,7 +193,7 @@ const UpdatePromotionModal = ({ promotion, onClose, updatePromotion }) => {
                     />
                   </div>
                   <div className="form-group col-md-12">
-                    <label htmlFor="description" className="col-form-label">
+                    <label htmlFor="description" className="col-form-label text-dark">
                       Description <span className="text-danger">*</span>
                     </label>
                     <textarea

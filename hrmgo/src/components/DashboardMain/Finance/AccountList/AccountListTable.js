@@ -4,12 +4,10 @@ import ConfirmationDialog from "../../ConfirmationDialog.js";
 import AccountUpdateModal from "./AccountUpdateModal.js";
 
 const ManageAccount = ({ accounts, setAccounts, fetchAccounts }) => {
-  // const [accounts, setAccounts] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [accountToDelete, setAccountToDelete] = useState(null);
-  // const [selectedAccount, setSelectedAccount] = useState(null);
 
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
@@ -69,7 +67,7 @@ const ManageAccount = ({ accounts, setAccounts, fetchAccounts }) => {
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -112,13 +110,13 @@ const ManageAccount = ({ accounts, setAccounts, fetchAccounts }) => {
                     <tbody>
                       {paginatedAccounts.map((account) => (
                         <tr key={account._id}>
-                          <td>{account.account_name}</td>
-                          <td>{`₹${new Intl.NumberFormat("en-IN").format(
+                          <td className="text-dark">{account.account_name}</td>
+                          <td className="text-dark">{`₹${new Intl.NumberFormat("en-IN").format(
                             account.initial_balance
                           )}`}</td>
-                          <td>{account.account_number}</td>
-                          <td>{account.branch_code}</td>
-                          <td>{account.bank_branch}</td>
+                          <td className="text-dark">{account.account_number}</td>
+                          <td className="text-dark">{account.branch_code}</td>
+                          <td className="text-dark">{account.bank_branch}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>
@@ -161,7 +159,7 @@ const ManageAccount = ({ accounts, setAccounts, fetchAccounts }) => {
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min(
                   (currentPage - 1) * entriesPerPage + 1,

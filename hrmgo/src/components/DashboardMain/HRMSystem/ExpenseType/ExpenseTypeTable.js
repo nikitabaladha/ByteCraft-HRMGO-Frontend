@@ -11,7 +11,6 @@ const ExpenseTypeTable = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedExpenseType, setSelectedExpenseType] = useState(null);
-  // const [expenseTypes, setExpenseTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [expenseTypeToDelete, setExpenseTypeToDelete] = useState(null);
 
@@ -114,7 +113,7 @@ const ExpenseTypeTable = ({
                     <tbody>
                       {paginatedExpenseTypes.map((expenseType) => (
                         <tr key={expenseType._id}>
-                          <td>{expenseType.expenseName}</td>
+                          <td className="text-dark">{expenseType.expenseName}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>
@@ -158,7 +157,7 @@ const ExpenseTypeTable = ({
                                       title="Delete"
                                     >
                                       <span className="text-white">
-                                        {/* <RiDeleteBinLine /> */}
+                                        
                                         <i className="ti ti-trash text-white"></i>
                                       </span>
                                     </Link>
@@ -175,7 +174,7 @@ const ExpenseTypeTable = ({
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min(
                   (currentPage - 1) * entriesPerPage + 1,

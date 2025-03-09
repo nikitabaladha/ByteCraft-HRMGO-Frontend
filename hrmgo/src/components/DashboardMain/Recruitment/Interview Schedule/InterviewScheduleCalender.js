@@ -10,10 +10,6 @@ import InterviewScheduleView from "./InterviewScheduleView";
 
 const InterviewScheduleCalender = () => {
     const [schedules, setSchedules] = useState([]);
-    // const [filteredMeetings, setFilteredMeetings] = useState([]);
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState("");
-    // const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
     const [selectedMeeting, setSelectedMeeting] = useState(null);
 
     useEffect(() => {
@@ -29,17 +25,7 @@ const InterviewScheduleCalender = () => {
         fetchSchedules();
       }, []);
 
-    // useEffect(() => {
-      
-    //     const filtered = schedules.filter((schedule) => {
-    //         const meetingDate = new Date(schedule.date);
-    //         return meetingDate.getMonth() === currentMonth;
-    //     });
-    //     setFilteredMeetings(filtered);
-    // }, [schedules, currentMonth]);
-
-  
-    const events = schedules.map((schedule, index) => ({
+   const events = schedules.map((schedule, index) => ({
         id: `schedule-${index}`,
         title: schedule.applicatAppliedFor,
         date: schedule.date,
@@ -75,10 +61,6 @@ const InterviewScheduleCalender = () => {
         );
         
     };
-
-    // const handleDateChange = (dateInfo) => {
-    //     setCurrentMonth(dateInfo.view.currentStart.getMonth());
-    // };
 
     return (
         <div className="dash-content">

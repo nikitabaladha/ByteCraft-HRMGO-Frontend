@@ -7,7 +7,6 @@ import ConfirmationDialog from "../../ConfirmationDialog";
 const LoanOptionTable = ({ loanOptions, setLoanOptions, fetchLoanOptions }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLoanOption, setSelectedLoanOption] = useState(null);
-  // const [loanOptions, setLoanOptions] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [loanOptionToDelete, setLoanOptionToDelete] = useState(null);
 
@@ -70,7 +69,7 @@ const LoanOptionTable = ({ loanOptions, setLoanOptions, fetchLoanOptions }) => {
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -111,7 +110,7 @@ const LoanOptionTable = ({ loanOptions, setLoanOptions, fetchLoanOptions }) => {
                     <tbody>
                       {paginatedLoanOptions.map((loanOption) => (
                         <tr key={loanOption._id}>
-                          <td>{loanOption.loanName}</td>
+                          <td className="text-dark">{loanOption.loanName}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>
@@ -172,7 +171,7 @@ const LoanOptionTable = ({ loanOptions, setLoanOptions, fetchLoanOptions }) => {
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min(
                   (currentPage - 1) * entriesPerPage + 1,

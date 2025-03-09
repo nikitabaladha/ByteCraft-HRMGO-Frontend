@@ -22,7 +22,7 @@ const PaymentTypeHeader = ({fetchPaymentTypes}) => {
                 <li className="breadcrumb-item">
                   <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Payment Type</li>
+                <li className="breadcrumb-item text-dark">Payment Type</li>
               </ul>
             </div>
             <div className="col">

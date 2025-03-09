@@ -1,9 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { TbFileExport } from "react-icons/tb";
-// import { CiFileOn } from "react-icons/ci";
-// import { FiPlus } from "react-icons/fi";
 import TrainerEditModal from './TrainerEditModel';
 import * as XLSX from "xlsx";
 
@@ -60,7 +57,7 @@ const TrainerHeader = ({fetchTrainers, trainers}) => {
                 <li className="breadcrumb-item">
                 <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Trainer</li>
+                <li className="breadcrumb-item text-dark">Trainer</li>
               </ul>
             </div>
             <div className="col">

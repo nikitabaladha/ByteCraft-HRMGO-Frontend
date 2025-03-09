@@ -153,7 +153,7 @@ const DepositModal = ({ isOpen, onClose, fetchDeposits }) => {
                   {/* Account Field */}
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="account_id" className="col-form-label">Account</label><span className="text-danger">*</span>
+                      <label htmlFor="account_id" className="col-form-label text-dark">Account</label><span className="text-danger">*</span>
                       <select className="form-control" required id="account_id" name="account_id" onChange={(e) => setAccountId(e.target.value)}>
                       <option value="">Choose  Account Name</option>
                         {accountNames.map((account) => (
@@ -168,7 +168,7 @@ const DepositModal = ({ isOpen, onClose, fetchDeposits }) => {
                   {/* Amount Field */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="amount" className="col-form-label">Amount</label><span className="text-danger">*</span>
+                      <label htmlFor="amount" className="col-form-label text-dark">Amount</label><span className="text-danger">*</span>
                       <input className="form-control" required placeholder="Amount" step="0.01" name="amount" type="number" id="amount" onChange={(e) => setAmount(e.target.value)} />
                     </div>
                   </div>
@@ -176,7 +176,7 @@ const DepositModal = ({ isOpen, onClose, fetchDeposits }) => {
                   {/* Date Field */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="date" className="col-form-label">Date</label><span className="text-danger">*</span>
+                      <label htmlFor="date" className="col-form-label text-dark">Date</label><span className="text-danger">*</span>
                       <div>
                         <DatePicker
                           className="form-control d_week current_date datepicker-input"
@@ -198,7 +198,7 @@ const DepositModal = ({ isOpen, onClose, fetchDeposits }) => {
                   {/* Category Field */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="income_category_id" className="col-form-label">Category</label><span className="text-danger">*</span>
+                      <label htmlFor="income_category_id" className="col-form-label text-dark">Category</label><span className="text-danger">*</span>
                       <select className="form-control" required id="income_category_id" name="income_category_id" onChange={(e) => setCategory(e.target.value)}>
                         <option value="">Choose a Category</option>
                         {incomeCategories.map((category) => (
@@ -213,7 +213,7 @@ const DepositModal = ({ isOpen, onClose, fetchDeposits }) => {
                   {/* Payer Field */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="payer_id" className="col-form-label">Payer</label>
+                      <label htmlFor="payer_id" className="col-form-label text-dark">Payer</label>
                       <select className="form-control" id="payer_id" name="payer_id" onChange={(e) => setPayerId(e.target.value)}>
                       <option value="">Choose a payer</option>
                         {payerNames.map((payer) => (
@@ -228,7 +228,7 @@ const DepositModal = ({ isOpen, onClose, fetchDeposits }) => {
                   {/* Payment Method Field */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="payment_type_id" className="col-form-label">Payment Method</label><span className="text-danger">*</span>
+                      <label htmlFor="payment_type_id" className="col-form-label text-dark">Payment Method</label><span className="text-danger">*</span>
                       <select className="form-control" required id="payment_type_id" name="payment_type_id" onChange={(e) => setPaymentTypeId(e.target.value)}>
                         <option value="">Choose Payment Method</option>
                         {paymentTypes.map((type) => (
@@ -243,7 +243,7 @@ const DepositModal = ({ isOpen, onClose, fetchDeposits }) => {
                   {/* Ref# Field */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="referal_id" className="col-form-label">Ref#</label>
+                      <label htmlFor="referal_id" className="col-form-label text-dark">Ref#</label>
                       <input className="form-control" placeholder="Enter Ref#" name="referal_id" type="text" id="referal_id" onChange={(e) => setRefId(e.target.value)} />
                     </div>
                   </div>
@@ -251,7 +251,7 @@ const DepositModal = ({ isOpen, onClose, fetchDeposits }) => {
                   {/* Description Field */}
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="description" className="col-form-label">Description</label>
+                      <label htmlFor="description" className="col-form-label text-dark">Description</label>
                       <textarea className="form-control" placeholder="Description" rows="3" name="description" id="description" onChange={(e) => setDescription(e.target.value)}></textarea>
                     </div>
                   </div>

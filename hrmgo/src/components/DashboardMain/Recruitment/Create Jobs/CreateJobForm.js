@@ -30,7 +30,7 @@ const CreateJobForm = () => {
   useEffect(() => {
     const fetchBranches = async () => {
       try {
-        const response = await getAPI(`/branch-get-all`, {}, true); // Replace with your actual API endpoint
+        const response = await getAPI(`/branch-get-all`, {}, true); 
         if (response.data && response.data.data) {
           setBranches(response.data.data);
         } else {
@@ -44,7 +44,7 @@ const CreateJobForm = () => {
 
     const fetchJobCategory = async () => {
       try {
-        const response = await getAPI(`/get-all-job-categories`, {}, true); // Replace with your actual API endpoint
+        const response = await getAPI(`/get-all-job-categories`, {}, true); 
         if (response.data && response.data.data) {
           setJobCategory(response.data.data);
         } else {
@@ -159,7 +159,7 @@ const CreateJobForm = () => {
                 <div className="card-body">
                   <div className="row">
                     <div className="form-group col-md-12">
-                      <label htmlFor="title" className="col-form-label">
+                      <label htmlFor="title" className="col-form-label text-dark">
                         Job Title
                       </label>
                       <span className="text-danger">*</span>
@@ -175,7 +175,7 @@ const CreateJobForm = () => {
                       />
                     </div>
                     <div className="form-group col-md-6">
-                      <label htmlFor="branch" className="col-form-label">
+                      <label htmlFor="branch" className="col-form-label text-dark">
                         Branch
                       </label>
                       <span className="text-danger">*</span>
@@ -196,7 +196,7 @@ const CreateJobForm = () => {
                       </select>
                     </div>
                     <div className="form-group col-md-6">
-                      <label htmlFor="category" className="col-form-label">
+                      <label htmlFor="category" className="col-form-label text-dark">
                         Job Category
                       </label>
                       <span className="text-danger">*</span>
@@ -220,7 +220,7 @@ const CreateJobForm = () => {
                       </select>
                     </div>
                     <div className="form-group col-md-6">
-                      <label htmlFor="position" className="col-form-label">
+                      <label htmlFor="position" className="col-form-label text-dark">
                         No. of Positions
                       </label>
                       <span className="text-danger">*</span>
@@ -236,7 +236,7 @@ const CreateJobForm = () => {
                       />
                     </div>
                     <div className="form-group col-md-6">
-                      <label htmlFor="status" className="col-form-label">
+                      <label htmlFor="status" className="col-form-label text-dark">
                         Status
                       </label>
                       <span className="text-danger">*</span>
@@ -253,7 +253,7 @@ const CreateJobForm = () => {
                       </select>
                     </div>
                     <div className="form-group col-md-6">
-                      <label htmlFor="startDate" className="col-form-label">
+                      <label htmlFor="startDate" className="col-form-label text-dark">
                         Start Date
                       </label>
                       <input
@@ -267,7 +267,7 @@ const CreateJobForm = () => {
                       />
                     </div>
                     <div className="form-group col-md-6">
-                      <label htmlFor="endDate" className="col-form-label">
+                      <label htmlFor="endDate" className="col-form-label text-dark">
                         End Date
                       </label>
                       <input
@@ -283,7 +283,7 @@ const CreateJobForm = () => {
                     
                         
                     <div className="form-group col-md-12">
-      <label className="col-form-label" htmlFor="skill">
+      <label className="col-form-label text-dark" htmlFor="skill">
         Skill Box
       </label>
       <span className="text-danger"> *</span>
@@ -342,7 +342,7 @@ const CreateJobForm = () => {
                         <div className="my-4">
                           <div className="form-check custom-checkbox">
                             <label
-                              className="form-check-label"
+                              className="form-check-label text-dark"
                               htmlFor="check-gender"
                             >
                               <input
@@ -358,7 +358,7 @@ const CreateJobForm = () => {
                           </div>
                           <div className="form-check custom-checkbox">
                             <label
-                              className="form-check-label"
+                              className="form-check-label text-dark"
                               htmlFor="check-dob"
                             >
                               <input
@@ -374,7 +374,7 @@ const CreateJobForm = () => {
                           </div>
                           <div className="form-check custom-checkbox">
                             <label
-                              className="form-check-label"
+                              className="form-check-label text-dark"
                               htmlFor="check-address"
                             >
                               <input
@@ -397,7 +397,7 @@ const CreateJobForm = () => {
                         <div className="my-4">
                           <div className="form-check custom-checkbox">
                             <label
-                              className="form-check-label"
+                              className="form-check-label text-dark"
                               htmlFor="check-profile"
                             >
                               <input
@@ -418,7 +418,7 @@ const CreateJobForm = () => {
                             >
                               <input
                                 type="checkbox"
-                                className="form-check-input"
+                                className="form-check-input text-dark"
                                 name="visibility"
                                 value="Resume"
                                 id="check-resume"
@@ -434,7 +434,7 @@ const CreateJobForm = () => {
                             >
                               <input
                                 type="checkbox"
-                                className="form-check-input"
+                                className="form-check-input text-dark"
                                 name="visibility"
                                 value="Letter"
                                 id="check-letter"
@@ -445,7 +445,7 @@ const CreateJobForm = () => {
                           </div>
                           <div className="form-check custom-checkbox">
                             <label
-                              className="form-check-label"
+                              className="form-check-label text-dark"
                               htmlFor="check-terms"
                             >
                               <input
@@ -472,7 +472,7 @@ const CreateJobForm = () => {
                 <div className="card-body ">
                   <div className="row">
                     <div className="form-group col-md-12">
-                      <label for="sescription" className="col-form-label">
+                      <label for="sescription" className="col-form-label text-dark">
                         Job Description
                       </label>
                       <span className="text-danger">*</span>
@@ -505,7 +505,7 @@ const CreateJobForm = () => {
                 <div className="card-body ">
                   <div className="row">
                     <div className="form-group col-md-12">
-                      <label for="requirement" className="col-form-label">
+                      <label for="requirement" className="col-form-label text-dark">
                         Job Requirement
                       </label>
                       <span className="text-danger">*</span>

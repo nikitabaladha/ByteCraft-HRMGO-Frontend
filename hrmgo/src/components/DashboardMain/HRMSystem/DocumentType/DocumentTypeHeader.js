@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { FiPlus } from "react-icons/fi";
 import CreateDocumentTypeModal from "./CreateDocumentTypeModal"; 
 
 const DocumentTypeHeader = ({fetchDocumentTypes}) => {
@@ -22,7 +21,7 @@ const DocumentTypeHeader = ({fetchDocumentTypes}) => {
                 <li className="breadcrumb-item">
                   <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Document Type</li> 
+                <li className="breadcrumb-item text-dark">Document Type</li> 
               </ul>
             </div>
             <div className="col">
@@ -33,7 +32,6 @@ const DocumentTypeHeader = ({fetchDocumentTypes}) => {
                   data-bs-toggle="tooltip"
                   title="Create"
                 >
-                  {/* <FiPlus /> */}
                   <i className="ti ti-plus"></i>
                 </button>
               </div>

@@ -36,8 +36,6 @@ const CreateResignationModal = ({ onClose, addResignation }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Frontend validation for resignationDate and lastWorkingDay
     if (formData.resignationDate >= formData.lastWorkingDay) {
       toast.error("Resignation date must be before the last working day.");
       return;
@@ -153,7 +151,7 @@ const CreateResignationModal = ({ onClose, addResignation }) => {
                 <div className="modal-body">
                   <div className="row">
                     <div className="form-group col-md-12 col-lg-12">
-                      <label htmlFor="employee_id" className="col-form-label">
+                      <label htmlFor="employee_id" className="col-form-label text-dark">
                         Employee
                       </label>
                       <span className="text-danger">*</span>
@@ -176,7 +174,7 @@ const CreateResignationModal = ({ onClose, addResignation }) => {
                     <div className="form-group col-md-6 col-lg-6">
                       <label
                         htmlFor="resignationDate"
-                        className="col-form-label"
+                        className="col-form-label text-dark"
                       >
                         Resignation Date
                       </label>
@@ -194,7 +192,7 @@ const CreateResignationModal = ({ onClose, addResignation }) => {
                     <div className="form-group col-md-6 col-lg-6">
                       <label
                         htmlFor="lastWorkingDay"
-                        className="col-form-label"
+                        className="col-form-label text-dark"
                       >
                         Last Working Day
                       </label>
@@ -210,7 +208,7 @@ const CreateResignationModal = ({ onClose, addResignation }) => {
                     </div>
 
                     <div className="form-group col-md-12">
-                      <label htmlFor="reason" className="col-form-label">
+                      <label htmlFor="reason" className="col-form-label text-dark">
                         Reason
                       </label>
                       <span className="text-danger">*</span>

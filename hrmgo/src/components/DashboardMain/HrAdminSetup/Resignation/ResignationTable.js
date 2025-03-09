@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { TbPencil } from "react-icons/tb";
-// import { FaRegTrashAlt } from "react-icons/fa";
 
 import UpdateResignationModal from "./UpdateResignationModal";
 import ConfirmationDialog from "../../ConfirmationDialog";
@@ -92,7 +90,7 @@ const ResignationTable = ({
           <div className="card">
             <div className="dataTable-top">
               <div className="dataTable-dropdown d-none d-md-block">
-                <label>
+                <label className="text-dark">
                   <select
                     className="dataTable-selector"
                     value={entriesPerPage}
@@ -134,10 +132,10 @@ const ResignationTable = ({
                       <tbody>
                         {paginatedResignations.map((resignation) => (
                           <tr key={resignation.id}>
-                            <td>{resignation.employeeName}</td>
-                            <td>{formatDate(resignation.resignationDate)}</td>
-                            <td>{formatDate(resignation.lastWorkingDay)}</td>
-                            <td>{resignation.reason}</td>
+                            <td className="text-dark">{resignation.employeeName}</td>
+                            <td className="text-dark">{formatDate(resignation.resignationDate)}</td>
+                            <td className="text-dark">{formatDate(resignation.lastWorkingDay)}</td>
+                            <td className="text-dark">{resignation.reason}</td>
                             <td className="Action">
                               <div className="dt-buttons">
                                 <span>
@@ -200,7 +198,7 @@ const ResignationTable = ({
                 </div>
               </div>
               <div className="dataTable-bottom">
-                <div className="dataTable-info d-none d-md-block">
+                <div className="dataTable-info d-none d-md-block text-dark">
                   Showing{" "}
                   {Math.min(
                     (currentPage - 1) * entriesPerPage + 1,

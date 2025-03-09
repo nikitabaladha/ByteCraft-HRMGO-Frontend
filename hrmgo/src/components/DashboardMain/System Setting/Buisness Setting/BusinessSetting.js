@@ -48,7 +48,7 @@ const BusinessSetting = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-sm-4">
+                  <div className="col-sm-4"> 
                     <h6>Layout Settings</h6>
                     <hr className="my-2" />
                     <div className="form-check form-switch mt-2">
@@ -61,8 +61,8 @@ const BusinessSetting = () => {
                         onChange={toggleDarkLayout}
                       />
                       <label
-                        className="form-check-label f-w-600 pl-1 ms-2"
-                        htmlFor="cust-darklayout"
+                        className="form-check-label f-w-600 pl-1 ms-2 text-dark"
+                        htmlFor="cust-darklayout "
                       >
                         Dark Layout
                       </label>

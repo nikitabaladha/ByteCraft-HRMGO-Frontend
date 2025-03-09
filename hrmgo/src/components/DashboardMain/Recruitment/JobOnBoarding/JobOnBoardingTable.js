@@ -111,7 +111,7 @@ const JobOnBoardingTable = () => {
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -156,11 +156,11 @@ const JobOnBoardingTable = () => {
                       {paginatedTrainers.length > 0 ? (
                         paginatedTrainers.map((row) => (
                           <tr key={row._id}>
-                            <td>{row.applicantName}</td>
-                            <td>{row.applicatAppliedFor}</td>
-                            <td>{row.jobBranch}</td>
-                            <td>{`${formatDate(row.applicationCreatedAt)}`}</td>
-                            <td>{`${formatDate(row.joining_date)}`}</td>
+                            <td className="text-dark">{row.applicantName}</td>
+                            <td className="text-dark">{row.applicatAppliedFor}</td>
+                            <td className="text-dark">{row.jobBranch}</td>
+                            <td className="text-dark">{`${formatDate(row.applicationCreatedAt)}`}</td>
+                            <td className="text-dark">{`${formatDate(row.joining_date)}`}</td>
                             <td>
                               <span
                                 className={`badge p-2 px-3 ${
@@ -227,7 +227,7 @@ const JobOnBoardingTable = () => {
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min((currentPage - 1) * entriesPerPage + 1, data.length)}{" "}
                 to {Math.min(currentPage * entriesPerPage, data.length)} of{" "}

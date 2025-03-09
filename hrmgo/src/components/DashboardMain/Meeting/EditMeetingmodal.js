@@ -85,7 +85,7 @@ const EditMeetingModal = ({ closeModal, meeting,fetchMeetings}) => {
               <div className="row">
                 <div className="col-lg-12 col-md-12 col-sm-12">
                   <div className="form-group">
-                    <label htmlFor="title" className="form-label">Meeting Title</label><span className="text-danger">*</span>
+                    <label htmlFor="title" className="form-label text-dark">Meeting Title</label><span className="text-danger">*</span>
                     <input
                       className="form-control"
                       required
@@ -101,7 +101,7 @@ const EditMeetingModal = ({ closeModal, meeting,fetchMeetings}) => {
 
                 <div className="col-lg-6 col-md-6 col-sm-6">
                   <div className="form-group">
-                    <label htmlFor="date" className="form-label">Meeting Date</label><span className="text-danger">*</span>
+                    <label htmlFor="date" className="form-label text-dark">Meeting Date</label><span className="text-danger">*</span>
                     <input
                       className="form-control"
                       required
@@ -116,7 +116,7 @@ const EditMeetingModal = ({ closeModal, meeting,fetchMeetings}) => {
 
                 <div className="col-lg-6 col-md-6 col-sm-6">
                   <div className="form-group">
-                    <label htmlFor="time" className="form-label">Meeting Time</label><span className="text-danger">*</span>
+                    <label htmlFor="time" className="form-label text-dark">Meeting Time</label><span className="text-danger">*</span>
                     <input
                       className="form-control"
                       required
@@ -131,7 +131,7 @@ const EditMeetingModal = ({ closeModal, meeting,fetchMeetings}) => {
 
                 <div className="col-lg-12 col-md-12 col-sm-12">
                   <div className="form-group">
-                    <label htmlFor="note" className="form-label">Meeting Note</label>
+                    <label htmlFor="note" className="form-label text-dark">Meeting Note</label>
                     <textarea
                       className="form-control"
                       rows="3"

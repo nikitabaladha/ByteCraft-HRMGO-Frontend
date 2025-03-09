@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-// import { FiPlus } from "react-icons/fi";
 import CreateJobApplication from "./CreateJobApplicationModal";
 
 const JobApplicationHeader = ({fetchApplications}) => {
@@ -31,7 +30,7 @@ const JobApplicationHeader = ({fetchApplications}) => {
             <li className="breadcrumb-item">
               <Link to="/dashboard">Home</Link>
             </li>
-            <li className="breadcrumb-item">Job Application</li>
+            <li className="breadcrumb-item text-dark">Job Application</li>
           </ul>
         </div>
         <div className="col">

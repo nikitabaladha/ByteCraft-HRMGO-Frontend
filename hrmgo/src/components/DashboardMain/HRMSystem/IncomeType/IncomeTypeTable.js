@@ -7,7 +7,6 @@ import ConfirmationDialog from "../../ConfirmationDialog";
 const IncomeTypeTable = ({incomeTypes, setIncomeTypes, fetchIncomeTypes}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedIncomeType, setSelectedIncomeType] = useState(null);
-  // const [incomeTypes, setIncomeTypes] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [incomeTypeToDelete, setIncomeTypeToDelete] = useState(null);
 
@@ -69,7 +68,7 @@ const IncomeTypeTable = ({incomeTypes, setIncomeTypes, fetchIncomeTypes}) => {
       <div className="col-12 col-md-9">
         <div className="card">
         <div className="dataTable-top">
-                  <div className="dataTable-dropdown d-none d-md-block">
+                  <div className="dataTable-dropdown d-none d-md-block text-dark">
                     <label>
                       <select
                         className="dataTable-selector"
@@ -110,7 +109,7 @@ const IncomeTypeTable = ({incomeTypes, setIncomeTypes, fetchIncomeTypes}) => {
                     <tbody>
                       {paginatedIncomeTypes.map((incomeType) => (
                         <tr key={incomeType._id}>
-                          <td>{incomeType.incomeName}</td>
+                          <td className="text-dark">{incomeType.incomeName}</td>
                           <td className="Action">
                             <div className="dt-buttons">
                               <span>
@@ -158,7 +157,7 @@ const IncomeTypeTable = ({incomeTypes, setIncomeTypes, fetchIncomeTypes}) => {
               </div>
             </div>
             <div className="dataTable-bottom">
-                  <div className="dataTable-info d-none d-md-block">
+                  <div className="dataTable-info d-none d-md-block text-dark">
                     Showing {Math.min((currentPage - 1) * entriesPerPage + 1, incomeTypes.length)}{" "}
                     to {Math.min(currentPage * entriesPerPage, incomeTypes.length)}{" "}
                     of {incomeTypes.length} entries

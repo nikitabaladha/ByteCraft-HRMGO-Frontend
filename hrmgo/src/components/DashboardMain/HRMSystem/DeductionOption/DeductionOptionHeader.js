@@ -22,7 +22,7 @@ const DeductionOptionHeader = ({fetchDeductionOptions}) => {
                 <li className="breadcrumb-item">
                   <Link to="https/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Tax Deduction Option</li>
+                <li className="breadcrumb-item text-dark">Tax Deduction Option</li>
               </ul>
             </div>
             <div className="col">
