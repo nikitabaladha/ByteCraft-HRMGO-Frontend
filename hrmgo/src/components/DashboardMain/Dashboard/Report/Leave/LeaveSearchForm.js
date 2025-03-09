@@ -114,7 +114,7 @@ const LeaveSearchForm = ({
                 <div className="col-xl-10">
                   <div className="row">
                     <div className="col-3">
-                      <label className="form-label">Type</label> <br />
+                      <label className="form-label text-dark">Type</label> <br />
                       <div className="form-check form-check-inline form-group">
                         <input
                           type="radio"
@@ -125,7 +125,7 @@ const LeaveSearchForm = ({
                           checked={searchType === "monthly"}
                           onChange={() => setSearchType("monthly")}
                         />
-                        <label className="form-check-label" htmlFor="monthly">
+                        <label className="form-check-label text-dark" htmlFor="monthly">
                           Monthly
                         </label>
                       </div>
@@ -139,14 +139,14 @@ const LeaveSearchForm = ({
                           checked={searchType === "yearly"}
                           onChange={() => handleTypeChange("yearly")}
                         />
-                        <label className="form-check-label" htmlFor="yearly">
+                        <label className="form-check-label text-dark" htmlFor="yearly">
                           Yearly
                         </label>
                       </div>
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box">
-                        <label htmlFor="month" className="form-label">
+                        <label htmlFor="month" className="form-label text-dark">
                           {searchType === "monthly" ? "Month" : "Year"}
                         </label>
                         <input
@@ -168,7 +168,7 @@ const LeaveSearchForm = ({
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box">
-                        <label htmlFor="branch" className="form-label">
+                        <label htmlFor="branch" className="form-label text-dark">
                           Branch
                         </label>
                         <select
@@ -189,7 +189,7 @@ const LeaveSearchForm = ({
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="form-icon-user" id="department_div">
-                        <label htmlFor="department" className="form-label">
+                        <label htmlFor="department" className="form-label text-dark">
                           Department
                         </label>
                         <div className="btn-box">

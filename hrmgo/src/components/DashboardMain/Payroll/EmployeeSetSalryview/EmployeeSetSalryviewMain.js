@@ -233,12 +233,12 @@ const EmployeeSetSalary = () => {
                                 <tbody>
                                     {allowances.map((allowance, index) => (
                                         <tr key={index}>
-                                            <td>{allowance.employeeName}</td>
-                                            <td>{allowance.allowanceOption}</td>
-                                            <td>{allowance.title}</td>
-                                            <td>{allowance.type}</td>
-                                            <td>{formatAllowance(allowance)}</td>
-                                            <td>{`₹${new Intl.NumberFormat('en-IN').format(allowance.amount)}`}</td>
+                                            <td className='text-dark'>{allowance.employeeName}</td>
+                                            <td className='text-dark'>{allowance.allowanceOption}</td>
+                                            <td className='text-dark'>{allowance.title}</td>
+                                            <td className='text-dark'>{allowance.type}</td>
+                                            <td className='text-dark'>{formatAllowance(allowance)}</td>
+                                            <td className='text-dark'>{`₹${new Intl.NumberFormat('en-IN').format(allowance.amount)}`}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -274,11 +274,11 @@ const EmployeeSetSalary = () => {
                                 <tbody>
                                     {commissions.map((commission, index) => (
                                         <tr key={index}>
-                                            <td>{commission.employeeName}</td>
-                                            <td>{commission.title}</td>
-                                            <td>{commission.type}</td>
-                                            <td>{formatCommission(commission)}</td>
-                                            <td>{`₹${new Intl.NumberFormat('en-IN').format(commission.amount)}`}</td>
+                                            <td className='text-dark'>{commission.employeeName}</td>
+                                            <td className='text-dark'>{commission.title}</td>
+                                            <td className='text-dark'>{commission.type}</td>
+                                            <td className='text-dark'>{formatCommission(commission)}</td>
+                                            <td className='text-dark'>{`₹${new Intl.NumberFormat('en-IN').format(commission.amount)}`}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -314,11 +314,11 @@ const EmployeeSetSalary = () => {
                                 <tbody>
                                     {loans.map((loan, index) => (
                                         <tr key={index}>
-                                            <td>{loan.employeeName}</td>
-                                            <td>{loan.title}</td>
-                                            <td>{loan.type}</td>
-                                            <td>{formatLoan(loan)}</td>
-                                            <td>{`₹${new Intl.NumberFormat('en-IN').format(loan.amount)}`}</td>
+                                            <td className='text-dark'>{loan.employeeName}</td>
+                                            <td className='text-dark'>{loan.title}</td>
+                                            <td className='text-dark'>{loan.type}</td>
+                                            <td className='text-dark'>{formatLoan(loan)}</td>
+                                            <td className='text-dark'>{`₹${new Intl.NumberFormat('en-IN').format(loan.amount)}`}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -352,11 +352,11 @@ const EmployeeSetSalary = () => {
                             <tbody>
                                 {taxes.map((tax, index) => (
                                     <tr key={index}>
-                                        <td>{tax.employeeName}</td>
-                                        <td>{tax.title}</td>
-                                        <td>{tax.type}</td>
-                                        <td>{formatTax(tax)}</td>
-                                        <td>{`₹${new Intl.NumberFormat('en-IN').format(tax.amount)}`}</td>
+                                        <td className='text-dark'>{tax.employeeName}</td>
+                                        <td className='text-dark'>{tax.title}</td>
+                                        <td className='text-dark'>{tax.type}</td>
+                                        <td className='text-dark'>{formatTax(tax)}</td>
+                                        <td className='text-dark'>{`₹${new Intl.NumberFormat('en-IN').format(tax.amount)}`}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -392,11 +392,11 @@ const EmployeeSetSalary = () => {
                             <tbody>
                                 {otherPayments.map((deduction, index) => (
                                     <tr key={index}>
-                                        <td>{deduction.employeeName}</td>
-                                        <td>{deduction.title}</td>
-                                        <td>{deduction.type}</td>
-                                        <td>{formatOtherpayment(deduction)}</td>
-                                        <td>{`₹${new Intl.NumberFormat('en-IN').format(deduction.amount)}`}</td>
+                                        <td className='text-dark'>{deduction.employeeName}</td>
+                                        <td className='text-dark'>{deduction.title}</td>
+                                        <td className='text-dark'>{deduction.type}</td>
+                                        <td className='text-dark'>{formatOtherpayment(deduction)}</td>
+                                        <td className='text-dark'>{`₹${new Intl.NumberFormat('en-IN').format(deduction.amount)}`}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -432,11 +432,11 @@ const EmployeeSetSalary = () => {
                             <tbody>
                                 {overtimes.map((overtime, index) => (
                                     <tr key={index}>
-                                         <td>{overtime.employeeName}</td>
-                                                <td>{overtime.title}</td>
-                                                <td>{overtime.numberOfDays}</td>
-                                                <td>{overtime.hours}</td>
-                                                <td>{`₹${new Intl.NumberFormat('en-IN').format(overtime.amount)}`}</td>
+                                         <td className='text-dark'>{overtime.employeeName}</td>
+                                                <td className='text-dark'>{overtime.title}</td>
+                                                <td className='text-dark'>{overtime.numberOfDays}</td>
+                                                <td className='text-dark'>{overtime.hours}</td>
+                                                <td className='text-dark'>{`₹${new Intl.NumberFormat('en-IN').format(overtime.amount)}`}</td>
                                     </tr>
                                 ))}
                             </tbody>

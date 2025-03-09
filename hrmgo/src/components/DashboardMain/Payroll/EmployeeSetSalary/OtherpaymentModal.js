@@ -60,7 +60,7 @@ const CreateOtherPaymentModal = ({ onClose, employee }) => {
                         <div className="modal-body">
                             <div className="row">
                                 <div className="form-group col-md-12">
-                                    <label htmlFor="title" className="col-form-label">Title</label><span className="text-danger">*</span>
+                                    <label htmlFor="title" className="col-form-label text-dark">Title</label><span className="text-danger">*</span>
                                     <input
                                         className="form-control"
                                         required
@@ -73,7 +73,7 @@ const CreateOtherPaymentModal = ({ onClose, employee }) => {
                                     />
                                 </div>
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="type" className="col-form-label">Type</label><span className="text-danger">*</span>
+                                    <label htmlFor="type" className="col-form-label text-dark">Type</label><span className="text-danger">*</span>
                                     <select
                                         className="form-control"
                                         required
@@ -87,7 +87,7 @@ const CreateOtherPaymentModal = ({ onClose, employee }) => {
                                     </select>
                                 </div>
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="amount" className="col-form-label">Amount</label><span className="text-danger">*</span>
+                                    <label htmlFor="amount" className="col-form-label text-dark">Amount</label><span className="text-danger">*</span>
                                     <input
                                         className="form-control"
                                         required

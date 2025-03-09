@@ -293,7 +293,7 @@ const CreateEmployee = ({ addEmployee }) => {
                 <li className="breadcrumb-item">
                   <Link>Employee</Link>
                 </li>
-                <li className="breadcrumb-item">Create Employee</li>
+                <li className="breadcrumb-item text-dark">Create Employee</li>
               </ul>
             </div>
           </div>
@@ -322,7 +322,7 @@ const CreateEmployee = ({ addEmployee }) => {
                     <div className="card-body">
                       <div className="row">
                         <div className="form-group col-md-6">
-                          <label htmlFor="name" className="form-label">
+                          <label htmlFor="name" className="form-label text-dark">
                             Name <span className="text-danger">*</span>
                           </label>
                           <input
@@ -338,7 +338,7 @@ const CreateEmployee = ({ addEmployee }) => {
                         </div>
                         <div className="col-md-6">
                           <div className="form-group">
-                            <label htmlFor="phone" className="form-label">
+                            <label htmlFor="phone" className="form-label text-dark">
                               Phone <span className="text-danger">*</span>
                             </label>
                             <input
@@ -359,7 +359,7 @@ const CreateEmployee = ({ addEmployee }) => {
                         </div>
                         <div className="col-md-6">
                           <div className="form-group">
-                            <label htmlFor="dateOf" className="form-label">
+                            <label htmlFor="dateOf" className="form-label text-dark">
                               Date of Birth{" "}
                               <span className="text-danger">*</span>
                             </label>
@@ -380,7 +380,7 @@ const CreateEmployee = ({ addEmployee }) => {
                         </div>
                         <div className="col-md-6">
                           <div className="form-group">
-                            <label htmlFor="gender" className="form-label">
+                            <label htmlFor="gender" className="form-label text-dark">
                               Gender <span className="text-danger">*</span>
                             </label>
                             <div className="d-flex radio-check">
@@ -422,7 +422,7 @@ const CreateEmployee = ({ addEmployee }) => {
                           </div>
                         </div>
                         <div className="form-group col-md-6">
-                          <label htmlFor="email" className="form-label">
+                          <label htmlFor="email" className="form-label text-dark">
                             Email <span className="text-danger">*</span>
                           </label>
                           <input
@@ -437,7 +437,7 @@ const CreateEmployee = ({ addEmployee }) => {
                           />
                         </div>
                         <div className="form-group col-md-6">
-                          <label htmlFor="password" className="form-label">
+                          <label htmlFor="password" className="form-label text-dark">
                             Password <span className="text-danger">*</span>
                           </label>
                           <input
@@ -452,7 +452,7 @@ const CreateEmployee = ({ addEmployee }) => {
                           />
                         </div>
                         <div className="form-group col-md-12">
-                          <label htmlFor="address" className="form-label">
+                          <label htmlFor="address" className="form-label text-dark">
                             Address <span className="text-danger">*</span>
                           </label>
                           <textarea
@@ -478,7 +478,7 @@ const CreateEmployee = ({ addEmployee }) => {
                     <div className="card-body">
                       <div className="row">
                         <div className="form-group col-md-6">
-                          <label htmlFor="branch" className="form-label">
+                          <label htmlFor="branch" className="form-label text-dark">
                             Branch <span className="text-danger">*</span>
                           </label>
                           <select
@@ -497,7 +497,7 @@ const CreateEmployee = ({ addEmployee }) => {
                           </select>
                         </div>
                         <div className="form-group col-md-6">
-                          <label htmlFor="department" className="form-label">
+                          <label htmlFor="department" className="form-label text-dark">
                             Department <span className="text-danger">*</span>
                           </label>
                           <select
@@ -519,7 +519,7 @@ const CreateEmployee = ({ addEmployee }) => {
                           </select>
                         </div>
                         <div className="form-group col-md-6">
-                          <label htmlFor="designation" className="form-label">
+                          <label htmlFor="designation" className="form-label text-dark">
                             Designation <span className="text-danger">*</span>
                           </label>
                           <select
@@ -543,7 +543,7 @@ const CreateEmployee = ({ addEmployee }) => {
                         </div>
                         <div className="col-md-6">
                           <div className="form-group">
-                            <label htmlFor="company_doj" className="form-label">
+                            <label htmlFor="company_doj" className="form-label text-dark">
                               Company Date Of Joining{" "}
                               <span className="text-danger">*</span>
                             </label>
@@ -580,7 +580,7 @@ const CreateEmployee = ({ addEmployee }) => {
                           <div className="float-left col-4">
                             <label
                               htmlFor="document"
-                              className="float-left pt-1 form-label"
+                              className="float-left pt-1 form-label text-dark"
                             >
                               Certificate
                             </label>
@@ -623,7 +623,7 @@ const CreateEmployee = ({ addEmployee }) => {
                           <div className="float-left col-4">
                             <label
                               htmlFor="document"
-                              className="float-left pt-1 form-label"
+                              className="float-left pt-1 form-label text-dark"
                             >
                               Resume
                             </label>
@@ -663,7 +663,7 @@ const CreateEmployee = ({ addEmployee }) => {
                           <div className="float-left col-4">
                             <label
                               htmlFor="document"
-                              className="float-left pt-1 form-label"
+                              className="float-left pt-1 form-label text-dark"
                             >
                               Photo
                             </label>
@@ -711,7 +711,7 @@ const CreateEmployee = ({ addEmployee }) => {
                         <div className="form-group col-md-6">
                           <label
                             htmlFor="account_holder_name"
-                            className="form-label"
+                            className="form-label text-dark"
                           >
                             Account Holder Name
                           </label>
@@ -728,7 +728,7 @@ const CreateEmployee = ({ addEmployee }) => {
                         <div className="form-group col-md-6">
                           <label
                             htmlFor="account_number"
-                            className="form-label"
+                            className="form-label text-dark"
                           >
                             Account Number
                           </label>
@@ -743,7 +743,7 @@ const CreateEmployee = ({ addEmployee }) => {
                           />
                         </div>
                         <div className="form-group col-md-6">
-                          <label htmlFor="bank_name" className="form-label">
+                          <label htmlFor="bank_name" className="form-label text-dark">
                             Bank Name
                           </label>
                           <input
@@ -759,7 +759,7 @@ const CreateEmployee = ({ addEmployee }) => {
                         <div className="form-group col-md-6">
                           <label
                             htmlFor="bank_identifier_code"
-                            className="form-label"
+                            className="form-label text-dark"
                           >
                             Bank Identifier Code
                           </label>
@@ -776,7 +776,7 @@ const CreateEmployee = ({ addEmployee }) => {
                         <div className="form-group col-md-6">
                           <label
                             htmlFor="branch_location"
-                            className="form-label"
+                            className="form-label text-dark"
                           >
                             Branch Location
                           </label>
@@ -791,7 +791,7 @@ const CreateEmployee = ({ addEmployee }) => {
                           />
                         </div>
                         <div className="form-group col-md-6">
-                          <label htmlFor="tax_payer_id" className="form-label">
+                          <label htmlFor="tax_payer_id" className="form-label text-dark">
                             Tax Payer Id
                           </label>
                           <input

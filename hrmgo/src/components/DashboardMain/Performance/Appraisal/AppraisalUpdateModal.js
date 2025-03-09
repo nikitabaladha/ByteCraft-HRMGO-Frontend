@@ -220,20 +220,20 @@ const AppraisalUpdateModal = ({ closeModal, updateAppraisal, appraisal }) => {
                 <div className="row py-4">
                 <div className="col-md-12">
                   <div className="info text-sm">
-                    <strong>Branch: </strong>
-                    <span>{appraisal.branch}</span>
+                    <strong className="text-dark">Branch: </strong>
+                    <span className="text-dark">{appraisal.branch}</span>
                   </div>
                 </div>
                 <div className="col-md-12 mt-3">
                   <div className="info text-sm font-style">
-                    <strong>Employee: </strong>
-                    <span>{appraisal.employee}</span>
+                    <strong className="text-dark">Employee: </strong>
+                    <span className="text-dark">{appraisal.employee}</span>
                   </div>
                 </div>
                 <div className="col-md-12 mt-3">
                   <div className="info text-sm font-style">
-                    <strong>Appraisal Date: </strong>
-                    <span>
+                    <strong className="text-dark">Appraisal Date: </strong>
+                    <span className="text-dark">
                           {moment(appraisal.appraisalDate).format(
                             "MMM DD, YYYY"
                           )}
@@ -261,7 +261,7 @@ const AppraisalUpdateModal = ({ closeModal, updateAppraisal, appraisal }) => {
                       const key = comp.name.toLowerCase().replace(/ /g, "_");
                       return (
                         <React.Fragment key={comp.name}>
-                          <div className="col-4">{comp.name}</div>
+                          <div className="col-4 text-dark">{comp.name}</div>
                           <div className="col-4">
                             {renderRatingInput(
                               `indicator-${comp.name}`,
@@ -289,7 +289,7 @@ const AppraisalUpdateModal = ({ closeModal, updateAppraisal, appraisal }) => {
                       const key = comp.name.toLowerCase().replace(/ /g, "_");
                       return (
                         <React.Fragment key={comp.name}>
-                          <div className="col-4">{comp.name}</div>
+                          <div className="col-4 text-dark">{comp.name}</div>
                           <div className="col-4">
                             {renderRatingInput(
                               `indicator-${comp.name}`,
@@ -317,7 +317,7 @@ const AppraisalUpdateModal = ({ closeModal, updateAppraisal, appraisal }) => {
                       const key = comp.name.toLowerCase().replace(/ /g, "_");
                       return (
                         <React.Fragment key={comp.name}>
-                          <div className="col-4">{comp.name}</div>
+                          <div className="col-4 text-dark">{comp.name}</div>
                           <div className="col-4">
                             {renderRatingInput(
                               `indicator-${comp.name}`,

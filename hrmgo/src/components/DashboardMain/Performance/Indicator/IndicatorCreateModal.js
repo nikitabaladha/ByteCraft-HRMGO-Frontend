@@ -235,7 +235,7 @@ const IndicatorCreateModal = ({ onClose, addIndicator }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="form-group">
-                        <label htmlFor="branch_id" className="form-label">
+                        <label htmlFor="branch_id" className="form-label text-dark">
                           Select Branch
                         </label>
                         <span className="text-danger">*</span>
@@ -257,7 +257,7 @@ const IndicatorCreateModal = ({ onClose, addIndicator }) => {
                     </div>
                     <div className="col-md-6">
                       <div className="form-group">
-                        <label htmlFor="department_id" className="form-label">
+                        <label htmlFor="department_id" className="form-label text-dark">
                           Select Department
                         </label>
                         <span className="text-danger">*</span>
@@ -279,7 +279,7 @@ const IndicatorCreateModal = ({ onClose, addIndicator }) => {
                     </div>
                     <div className="col-md-6">
                       <div className="form-group">
-                        <label htmlFor="designation_id" className="form-label">
+                        <label htmlFor="designation_id" className="form-label text-dark">
                           Select Designation
                         </label>
                         <span className="text-danger">*</span>

@@ -91,7 +91,7 @@ const DataTable = () => {
                         <th data-sortable="">
                           <Link
                             to="#"
-                            className="dataTable-sorter"
+                            className="dataTable-sorter text dark"
                             style={{ color: "black" }}
                           >
                             Account Name
@@ -100,7 +100,7 @@ const DataTable = () => {
                         <th width="200px" data-sortable="">
                           <Link
                             to="#"
-                            className="dataTable-sorter"
+                            className="dataTable-sorter text dark"
                             style={{ color: "black" }}
                           >
                             Initial Balance

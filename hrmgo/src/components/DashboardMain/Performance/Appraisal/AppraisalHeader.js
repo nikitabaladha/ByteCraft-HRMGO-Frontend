@@ -27,7 +27,7 @@ const AppraisalHeader = ({ addAppraisal }) => {
                 <li className="breadcrumb-item">
                   <Link to="">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Appraisal</li>
+                <li className="breadcrumb-item text-dark">Appraisal</li>
               </ul>
             </div>
             <div className="col">

@@ -25,7 +25,7 @@ const CompetencyRating = ({ onRatingChange }) => {
         <hr className="mt-0" />
       </div>
 
-      <div className="col-6">Leadership</div>
+      <div className="col-6 text-dark">Leadership</div>
       <div className="col-6">
         <fieldset className="rate">
           {[5, 4, 3, 2, 1].map((star) => (
@@ -58,7 +58,7 @@ const CompetencyRating = ({ onRatingChange }) => {
         </fieldset>
       </div>
 
-      <div className="col-6">Project Management</div>
+      <div className="col-6 text-dark">Project Management</div>
       <div className="col-6">
         <fieldset className="rate">
           {[5, 4, 3, 2, 1].map((star) => (
@@ -96,7 +96,7 @@ const CompetencyRating = ({ onRatingChange }) => {
         <hr className="mt-0" />
       </div>
 
-      <div className="col-6">Allocating Resources</div>
+      <div className="col-6 text-dark">Allocating Resources</div>
       <div className="col-6">
         <fieldset className="rate">
           {[5, 4, 3, 2, 1].map((star) => (
@@ -134,7 +134,7 @@ const CompetencyRating = ({ onRatingChange }) => {
         <hr className="mt-0" />
       </div>
 
-      <div className="col-6">Business Process</div>
+      <div className="col-6 text-dark">Business Process</div>
       <div className="col-6">
         <fieldset className="rate">
           {[5, 4, 3, 2, 1].map((star) => (
@@ -167,7 +167,7 @@ const CompetencyRating = ({ onRatingChange }) => {
         </fieldset>
       </div>
 
-      <div className="col-6">Oral Communication</div>
+      <div className="col-6 text-dark">Oral Communication</div>
       <div className="col-6">
         <fieldset className="rate">
           {[5, 4, 3, 2, 1].map((star) => (

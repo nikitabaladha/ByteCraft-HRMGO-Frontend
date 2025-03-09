@@ -15,7 +15,7 @@ const BulkAttendanceHeader = () => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Bulk Attendance</li>
+                <li className="breadcrumb-item text-dark">Bulk Attendance</li>
               </ul>
             </div>
             <div className="col">

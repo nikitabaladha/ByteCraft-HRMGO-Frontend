@@ -37,7 +37,7 @@ const AttendanceTable = ({ attendanceData, selectedMonthYear }) => {
               <tbody>
                 {employees.map((employee) => (
                   <tr key={employee.employeeId}>
-                    <td>{employee.employeeName}</td>
+                    <td className="text-dark">{employee.employeeName}</td>
                     {Array.from({ length: totalDaysInMonth }, (_, index) => {
                       const dateString = `${monthName} ${String(
                         index + 1

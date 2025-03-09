@@ -8,7 +8,7 @@ const DashboardMainHeader = () => {
           <div className="row align-items-center">
             <div className="col-auto">
               <div className="page-header-title">
-                <h4 className="m-b-10">Dashboard</h4>
+                <h4 className="m-b-10 ">Dashboard</h4>
               </div>
               <ul className="breadcrumb"></ul>
             </div>

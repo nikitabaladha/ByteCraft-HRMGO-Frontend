@@ -1,13 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import { TiEdit } from "react-icons/ti";
-// import { FaRegTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import ConfirmationDialog from "../../ConfirmationDialog";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { useState } from "react";
-// import { TbRefresh } from "react-icons/tb";
-// import { IoMdSearch } from "react-icons/io";
 
 const EmployeeProfileMainContent = ({
   employeeData,
@@ -239,7 +235,7 @@ const EmployeeProfileMainContent = ({
                         >
                           {/* <FaRegTrashAlt /> */}
                           <i className="ti ti-trash"></i>
-                          <span className="ms-2">Delete</span>
+                          <span className="ms-2 text-dark text-dark">Delete</span>
                         </Link>
                       </form>
                     </div>

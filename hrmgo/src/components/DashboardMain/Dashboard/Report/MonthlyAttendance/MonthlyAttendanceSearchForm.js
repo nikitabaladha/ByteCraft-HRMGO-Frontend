@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import getAPI from "../../../../../api/getAPI.js";
 import { Link } from "react-router-dom";
-// import { IoIosSearch } from "react-icons/io";
-// import { TbRefresh } from "react-icons/tb";
 import Select from "react-select";
 
 const MonthlyAttendanceSearchForm = ({
@@ -117,7 +115,7 @@ const MonthlyAttendanceSearchForm = ({
                   <div className="row">
                     <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box">
-                        <label htmlFor="month" className="form-label">
+                        <label htmlFor="month" className="form-label text-dark">
                           Month
                         </label>
                         <input
@@ -134,7 +132,7 @@ const MonthlyAttendanceSearchForm = ({
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box">
-                        <label htmlFor="branch" className="form-label">
+                        <label htmlFor="branch" className="form-label text-dark">
                           Branch
                         </label>
                         <select
@@ -155,7 +153,7 @@ const MonthlyAttendanceSearchForm = ({
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box" id="department_div">
-                        <label htmlFor="department" className="form-label">
+                        <label htmlFor="department" className="form-label text-dark">
                           Department
                         </label>
                         <select
@@ -179,7 +177,7 @@ const MonthlyAttendanceSearchForm = ({
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box" id="employee_div">
-                        <label htmlFor="employee" className="form-label">
+                        <label htmlFor="employee" className="form-label text-dark">
                           Employee
                         </label>
                         <Select

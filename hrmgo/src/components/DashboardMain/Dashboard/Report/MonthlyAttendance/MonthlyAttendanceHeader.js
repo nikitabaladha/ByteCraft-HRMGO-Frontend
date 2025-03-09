@@ -109,7 +109,7 @@ const MonthlyAttendanceHeader = ({ attendanceData, selectedMonthYear }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">
+                <li className="breadcrumb-item text-dark">
                   Manage Monthly Attendance Report
                 </li>
               </ul>

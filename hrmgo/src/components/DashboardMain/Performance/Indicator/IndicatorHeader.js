@@ -28,7 +28,7 @@ const IndicatorHeader = ({ addIndicator }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Indicator</li>
+                <li className="breadcrumb-item text-dark">Indicator</li>
               </ul>
             </div>
             <div className="col">

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
 import putAPI from '../../../../api/putAPI'; 
 import getAPI from '../../../../api/getAPI';
 
@@ -97,15 +96,9 @@ const UpdateLoanModal = ({ onClose, employee, loanData}) => {
                         <input name="_token" type="hidden" value="PBlEztkrXr5o6EoYBvViDCeTKfO8flRfCVfW4G5R" />
                         <input name="employee_id" type="hidden" />
                         <div className="modal-body">
-                            <div className="card-footer text-end">
-                                <Link href="#" className="btn btn-sm btn-primary" data-size="medium" data-ajax-popup-over="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate" data-title="Generate Content With AI">
-                                    <i className="fas fa-robot"></i> Generate With AI
-                                </Link>
-                            </div>
-
                             <div className="row">
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="title" className="col-form-label">Title</label><span className="text-danger">*</span>
+                                    <label htmlFor="title" className="col-form-label text-dark">Title</label><span className="text-danger">*</span>
                                     <input
                                         className="form-control"
                                         required
@@ -119,7 +112,7 @@ const UpdateLoanModal = ({ onClose, employee, loanData}) => {
                                 </div>
 
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="loan_option" className="col-form-label">Loan Options</label><span className="text-danger">*</span>
+                                    <label htmlFor="loan_option" className="col-form-label text-dark">Loan Options</label><span className="text-danger">*</span>
                                     <select
                                         className="form-control"
                                         required
@@ -138,7 +131,7 @@ const UpdateLoanModal = ({ onClose, employee, loanData}) => {
                                 </div>
 
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="type" className="col-form-label">Type</label><span className="text-danger">*</span>
+                                    <label htmlFor="type" className="col-form-label text-dark">Type</label><span className="text-danger">*</span>
                                     <select
                                         className="form-control"
                                         required
@@ -153,7 +146,7 @@ const UpdateLoanModal = ({ onClose, employee, loanData}) => {
                                 </div>
 
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="amount" className="col-form-label">Loan Amount</label><span className="text-danger">*</span>
+                                    <label htmlFor="amount" className="col-form-label text-dark">Loan Amount</label><span className="text-danger">*</span>
                                     <input
                                         className="form-control"
                                         required
@@ -168,7 +161,7 @@ const UpdateLoanModal = ({ onClose, employee, loanData}) => {
                                 </div>
 
                                 <div className="form-group col-md-12">
-                                    <label htmlFor="reason" className="col-form-label">Reason</label><span className="text-danger">*</span>
+                                    <label htmlFor="reason" className="col-form-label text-dark">Reason</label><span className="text-danger">*</span>
                                     <textarea
                                         className="form-control"
                                         rows="3"

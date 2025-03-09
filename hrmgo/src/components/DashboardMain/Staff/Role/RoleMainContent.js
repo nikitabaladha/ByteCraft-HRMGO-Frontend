@@ -54,7 +54,7 @@ const RoleMainContent = ({roles, setRoles, fetchRoles}) => {
         <div className="card">
         <div className="dataTable-top">
                   <div className="dataTable-dropdown d-none d-md-block">
-                    <label>
+                    <label className="text-dark">
                       <select
                         className="dataTable-selector"
                         value={entriesPerPage}
@@ -108,7 +108,7 @@ const RoleMainContent = ({roles, setRoles, fetchRoles}) => {
                       {paginatedTrainers.length > 0 ? (
                         paginatedTrainers.map((role, index) => (
                           <tr key={index}>
-                            <td>{role.name}</td>
+                            <td className="text-dark">{role.name}</td>
                             <td style={{ whiteSpace: "inherit" }}>
                               {role.permissions.map((permission, i) =>
                                 permission.actions.map((action, j) => (
@@ -172,7 +172,7 @@ const RoleMainContent = ({roles, setRoles, fetchRoles}) => {
               </div>
             </div>
             <div className="dataTable-bottom">
-                  <div className="dataTable-info d-none d-md-block">
+                  <div className="dataTable-info d-none d-md-block text-dark">
                     Showing {" "}
                     {Math.min(
                       (currentPage - 1) * entriesPerPage + 1,

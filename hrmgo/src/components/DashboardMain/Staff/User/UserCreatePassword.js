@@ -78,7 +78,7 @@ const UserCreatePassword = ({ user, onClose }) => {
             >
               <div className="row">
                 <div className="form-group">
-                  <label htmlFor="password" className="col-form-label">
+                  <label htmlFor="password" className="col-form-label text-dark">
                     Password
                   </label>
                   <span className="text-danger">*</span>
@@ -96,7 +96,7 @@ const UserCreatePassword = ({ user, onClose }) => {
                 <div className="form-group">
                   <label
                     htmlFor="password-confirmation"
-                    className="col-form-label"
+                    className="col-form-label text-dark"
                   >
                     Confirm Password
                   </label>

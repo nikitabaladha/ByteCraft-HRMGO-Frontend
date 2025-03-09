@@ -37,7 +37,7 @@ const MarkedAttendanceHeader = ({ payrollData }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Payroll Report</li>
+                <li className="breadcrumb-item text-dark">Payroll Report</li>
               </ul>
             </div>
             <div className="col">

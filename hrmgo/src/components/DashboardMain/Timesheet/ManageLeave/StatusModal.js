@@ -79,32 +79,32 @@ const StatusModal = ({ leave, onClose, onStatusUpdate }) => {
               <table className="table modal-table">
                 <tbody>
                   <tr>
-                    <th>Employee</th>
-                    <td>{leave.employeeName}</td>
+                    <th className="text-dark">Employee</th>
+                    <td className="text-dark">{leave.employeeName}</td>
                   </tr>
                   <tr>
-                    <th>Leave Type</th>
-                    <td>{leave.leaveType}</td>
+                    <th className="text-dark">Leave Type</th>
+                    <td className="text-dark">{leave.leaveType}</td>
                   </tr>
                   <tr>
-                    <th>Applied On</th>
-                    <td>{leave.appliedOn}</td>
+                    <th className="text-dark">Applied On</th>
+                    <td className="text-dark">{leave.appliedOn}</td>
                   </tr>
                   <tr>
-                    <th>Start Date</th>
-                    <td>{leave.startDate}</td>
+                    <th className="text-dark">Start Date</th>
+                    <td className="text-dark">{leave.startDate}</td>
                   </tr>
                   <tr>
-                    <th>End Date</th>
-                    <td>{leave.endDate}</td>
+                    <th className="text-dark">End Date</th>
+                    <td className="text-dark">{leave.endDate}</td>
                   </tr>
                   <tr>
-                    <th>Leave Reason</th>
-                    <td>{leave.reason}</td>
+                    <th className="text-dark">Leave Reason</th>
+                    <td className="text-dark">{leave.reason}</td>
                   </tr>
                   <tr>
-                    <th>Status</th>
-                    <td>{leave.status}</td>
+                    <th className="text-dark">Status</th>
+                    <td className="text-dark">{leave.status}</td>
                   </tr>
                 </tbody>
               </table>

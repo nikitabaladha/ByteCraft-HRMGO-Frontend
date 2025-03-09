@@ -36,7 +36,7 @@ const PayrollReportTable = ({ payrollData }) => {
         <div className="card">
         <div className="dataTable-top">
                   <div className="dataTable-dropdown d-none d-md-block">
-                    <label>
+                    <label className='text-dark'>
                       <select
                         className="dataTable-selector"
                         value={entriesPerPage}
@@ -80,11 +80,11 @@ const PayrollReportTable = ({ payrollData }) => {
                     <tbody>
                       {paginatedPayrollData.map((item) => (
                         <tr key={item.employee_id}>
-                          <td><span className="btn btn-outline-primary">#{item.employeeId}</span></td>
-                          <td>{item.employeeName}</td>
-                          <td>{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(item.salary)}</td>
-                          <td>{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(item.grandTotal)}</td>
-                          <td>{new Date(item.Date).toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit' })}</td>
+                          <td className='text-dark'><span className="btn btn-outline-primary">#{item.employeeId}</span></td>
+                          <td className='text-dark'>{item.employeeName}</td>
+                          <td className='text-dark'>{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(item.salary)}</td>
+                          <td className='text-dark'>{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(item.grandTotal)}</td>
+                          <td className='text-dark'>{new Date(item.Date).toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit' })}</td>
                           <td>
                             <div className={`badge ${item.status === 'unpaid' ? 'bg-danger' : 'bg-success'} p-2 px-3`} style={{ width: "69px" }}>
                               <span className="text-white">{item.status}</span>
@@ -100,7 +100,7 @@ const PayrollReportTable = ({ payrollData }) => {
               </div>
             </div>
             <div className="dataTable-bottom">
-                  <div className="dataTable-info d-none d-md-block">
+                  <div className="dataTable-info d-none d-md-block text-dark">
                     Showing {Math.min((currentPage - 1) * entriesPerPage + 1, payrollData.length)}{" "}
                     to {Math.min(currentPage * entriesPerPage, payrollData.length)}{" "}
                     of {payrollData.length} entries

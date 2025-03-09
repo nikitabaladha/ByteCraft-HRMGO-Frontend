@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import putAPI from '../../../../api/putAPI'; 
 import getAPI from '../../../../api/getAPI';
-import { Link } from 'react-router-dom';
 
 const UpdateAllowanceModal = ({ onClose, allowanceData, employee}) => {
     const [allowanceOption, setAllowanceOption] = useState('');
@@ -94,15 +93,10 @@ const UpdateAllowanceModal = ({ onClose, allowanceData, employee}) => {
                     </div>
                     <form onSubmit={handleSubmit}>
                         <div className="modal-body">
-                            <div className="card-footer text-end">
-                                <Link href="#" className="btn btn-sm btn-primary" data-size="medium" data-ajax-popup-over="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate" data-title="Generate Content With AI">
-                                    <i className="fas fa-robot"></i> Generate With AI
-                                </Link>
-                            </div>
 
                             <div className="row">
                                 <div className="form-group">
-                                    <label htmlFor="allowance_option" className="col-form-label">Allowance Options</label><span className="text-danger">*</span>
+                                    <label htmlFor="allowance_option" className="col-form-label text-dark">Allowance Options</label><span className="text-danger">*</span>
                                     <select
                                         className="form-control"
                                         required
@@ -122,7 +116,7 @@ const UpdateAllowanceModal = ({ onClose, allowanceData, employee}) => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="title" className="col-form-label">Title</label><span className="text-danger">*</span>
+                                    <label htmlFor="title" className="col-form-label text-dark">Title</label><span className="text-danger">*</span>
                                     <input
                                         className="form-control"
                                         required
@@ -136,7 +130,7 @@ const UpdateAllowanceModal = ({ onClose, allowanceData, employee}) => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="type" className="col-form-label">Type</label><span className="text-danger">*</span>
+                                    <label htmlFor="type" className="col-form-label text-dark">Type</label><span className="text-danger">*</span>
                                     <select
                                         className="form-control"
                                         required
@@ -151,7 +145,7 @@ const UpdateAllowanceModal = ({ onClose, allowanceData, employee}) => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="amount" className="col-form-label">Amount</label><span className="text-danger">*</span>
+                                    <label htmlFor="amount" className="col-form-label text-dark">Amount</label><span className="text-danger">*</span>
                                     <input
                                         className="form-control"
                                         required

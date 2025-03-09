@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import getAPI from "../../../../../api/getAPI.js";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-// import { TbRefresh } from "react-icons/tb";
-// import { IoMdSearch } from "react-icons/io";
-// import { FaRegFile } from "react-icons/fa";
 
 const MarkedAttendanceSearchForm = ({
   onDataFetched,
@@ -128,7 +125,7 @@ const MarkedAttendanceSearchForm = ({
                 <div className="col-xl-10">
                   <div className="row">
                     <div className="col-3">
-                      <label className="form-label">Type</label> <br />
+                      <label className="form-label text-dark">Type</label> <br />
                       <div className="form-check form-check-inline form-group">
                         <input
                           type="radio"
@@ -139,7 +136,7 @@ const MarkedAttendanceSearchForm = ({
                           checked={searchType === "monthly"}
                           onChange={() => setSearchType("monthly")}
                         />
-                        <label className="form-check-label" htmlFor="monthly">
+                        <label className="form-check-label text-dark" htmlFor="monthly">
                           Monthly
                         </label>
                       </div>
@@ -153,7 +150,7 @@ const MarkedAttendanceSearchForm = ({
                           checked={searchType === "daily"}
                           onChange={() => setSearchType("daily")}
                         />
-                        <label className="form-check-label" htmlFor="daily">
+                        <label className="form-check-label text-dark" htmlFor="daily">
                           Daily
                         </label>
                       </div>
@@ -182,7 +179,7 @@ const MarkedAttendanceSearchForm = ({
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="btn-box">
-                        <label htmlFor="branch" className="form-label">
+                        <label htmlFor="branch" className="form-label text-dark">
                           Branch
                         </label>
                         <select
@@ -203,7 +200,7 @@ const MarkedAttendanceSearchForm = ({
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                       <div className="form-icon-user" id="department_div">
-                        <label htmlFor="department" className="form-label">
+                        <label htmlFor="department" className="form-label text-dark">
                           Department
                         </label>
                         <div className="btn-box">

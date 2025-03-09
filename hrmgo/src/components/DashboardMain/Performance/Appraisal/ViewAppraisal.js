@@ -72,7 +72,7 @@ const ViewAppraisal = ({ appraisal }) => {
               </div>
               {appraisal.appraisalCompetencies?.technical?.map((competency) => (
                 <React.Fragment key={competency.name}>
-                  <div className="col-md-12">
+                  <div className="col-md-12 ">
                     {renderRating(
                       competency.name,
                       competency.rating,

@@ -187,14 +187,14 @@ const IndicatorUpdateModal = ({ onClose, indicator, updateIndicator }) => {
                   </div>
                   <div className="col-md-12 mt-2">
                     <div className="info text-sm font-style">
-                      <strong>Department : </strong>
-                      <span>{indicator.department}</span>
+                      <strong className="text-dark">Department : </strong>
+                      <span className="text-dark">{indicator.department}</span>
                     </div>
                   </div>
                   <div className="col-md-12 mt-3">
                     <div className="info text-sm font-style">
-                      <strong>Designation : </strong>
-                      <span>{indicator.designation}</span>
+                      <strong className="text-dark">Designation : </strong>
+                      <span className="text-dark">{indicator.designation}</span>
                     </div>
                   </div>
                 </div>
@@ -206,7 +206,7 @@ const IndicatorUpdateModal = ({ onClose, indicator, updateIndicator }) => {
                   </div>
                   {indicator.competencies?.organizational?.map((competency) => (
                     <React.Fragment key={competency.name}>
-                      <div className="col-6">{competency.name}</div>
+                      <div className="col-6 text-dark">{competency.name}</div>
                       <div className="col-6">
                         {renderRating(
                           "organizational",
@@ -224,7 +224,7 @@ const IndicatorUpdateModal = ({ onClose, indicator, updateIndicator }) => {
                   </div>
                   {indicator.competencies?.technical?.map((competency) => (
                     <React.Fragment key={competency.name}>
-                      <div className="col-6">{competency.name}</div>
+                      <div className="col-6 text-dark">{competency.name}</div>
                       <div className="col-6">
                         {renderRating(
                           "technical",
@@ -242,7 +242,7 @@ const IndicatorUpdateModal = ({ onClose, indicator, updateIndicator }) => {
                   </div>
                   {indicator.competencies?.behavioural?.map((competency) => (
                     <React.Fragment key={competency.name}>
-                      <div className="col-6">{competency.name}</div>
+                      <div className="col-6 text-dark">{competency.name}</div>
                       <div className="col-6">
                         {renderRating(
                           "behavioural",

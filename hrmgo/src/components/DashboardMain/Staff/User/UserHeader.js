@@ -1,19 +1,17 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { FiUserCheck } from "react-icons/fi";
-// import { FiPlus } from "react-icons/fi";
 import UserCreate from './UserCreate';
 
 const UserHeader = ({fetchUsers}) => {
     const [showModal, setShowModal] = useState(false);
 
 const handleCreateClick = () => {
-  setShowModal(true); // Show the modal
+  setShowModal(true); 
 };
 
 const handleCloseModal = () => {
-  setShowModal(false); // Hide the modal
+  setShowModal(false); 
 };
 
 const handleSubmit = (event) => {
@@ -33,7 +31,7 @@ const handleSubmit = (event) => {
                 <li className="breadcrumb-item">
                   <a href="/dashboard">Home</a>
                 </li>
-                <li className="breadcrumb-item">Users</li>
+                <li className="breadcrumb-item text-dark">Users</li>
               </ul>
             </div>
             <div className="col">

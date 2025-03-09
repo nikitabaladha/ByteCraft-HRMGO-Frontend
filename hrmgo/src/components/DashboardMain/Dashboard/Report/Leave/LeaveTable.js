@@ -43,7 +43,7 @@ const LeaveTable = ({
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -90,9 +90,9 @@ const LeaveTable = ({
                               {employee.employeeId}
                             </Link>
                           </td>
-                          <td>{employee.employeeName}</td>
+                          <td className="text-dark">{employee.employeeName}</td>
 
-                          <td>
+                          <td className="text-dark">
                             <div className="btn btn-sm btn-info rounded">
                               {employee.approvedLeaves}
                               <Link
@@ -108,7 +108,7 @@ const LeaveTable = ({
                               </Link>
                             </div>
                           </td>
-                          <td>
+                          <td className="text-dark">
                             <div className="btn btn-sm btn-danger rounded">
                               {employee.rejectedLeaves}
                               <Link
@@ -124,7 +124,7 @@ const LeaveTable = ({
                               </Link>
                             </div>
                           </td>
-                          <td>
+                          <td className="text-dark">
                             <div className="m-view-btn btn btn-sm btn-warning rounded">
                               {employee.pendingLeaves}
                               <Link
@@ -148,7 +148,7 @@ const LeaveTable = ({
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min(
                   (currentPage - 1) * entriesPerPage + 1,

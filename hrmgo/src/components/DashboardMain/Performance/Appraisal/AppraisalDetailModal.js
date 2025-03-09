@@ -76,20 +76,20 @@ const AppraisalDetailModal = ({ appraisal, closeModal }) => {
               <div className="row py-4">
                 <div className="col-md-12">
                   <div className="info text-sm">
-                    <strong>Branch: </strong>
-                    <span>{branch}</span>
+                    <strong className="text-dark">Branch: </strong>
+                    <span className="text-dark">{branch}</span>
                   </div>
                 </div>
                 <div className="col-md-12 mt-3">
                   <div className="info text-sm font-style">
-                    <strong>Employee: </strong>
-                    <span>{employee}</span>
+                    <strong className="text-dark">Employee: </strong>
+                    <span className="text-dark">{employee}</span>
                   </div>
                 </div>
                 <div className="col-md-12 mt-3">
                   <div className="info text-sm font-style">
-                    <strong>Appraisal Date: </strong>
-                    <span>
+                    <strong className="text-dark">Appraisal Date: </strong>
+                    <span className="text-dark">
                                               {moment(appraisal.appraisalDate).format(
                                                 "MMM DD, YYYY"
                                               )}
@@ -112,7 +112,7 @@ const AppraisalDetailModal = ({ appraisal, closeModal }) => {
                 </div>
                 {indicatorCompetencies.organizational.map((comp) => (
                   <React.Fragment key={comp.name}>
-                    <div className="col-4">{comp.name}</div>
+                    <div className="col-4 text-dark">{comp.name}</div>
                     <div className="col-4">
                       <RatingComponent
                         name={`indicator-${comp.name}`}
@@ -137,7 +137,7 @@ const AppraisalDetailModal = ({ appraisal, closeModal }) => {
                 </div>
                 {indicatorCompetencies.technical.map((comp) => (
                   <React.Fragment key={comp.name}>
-                    <div className="col-4">{comp.name}</div>
+                    <div className="col-4 text-dark">{comp.name}</div>
                     <div className="col-4">
                       <RatingComponent
                         name={`indicator-${comp.name}`}
@@ -162,7 +162,7 @@ const AppraisalDetailModal = ({ appraisal, closeModal }) => {
                 </div>
                 {indicatorCompetencies.behavioural.map((comp) => (
                   <React.Fragment key={comp.name}>
-                    <div className="col-4">{comp.name}</div>
+                    <div className="col-4 text-dark">{comp.name}</div>
                     <div className="col-4">
                       <RatingComponent
                         name={`indicator-${comp.name}`}

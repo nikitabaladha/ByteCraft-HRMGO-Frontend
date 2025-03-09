@@ -46,9 +46,9 @@ const Attendance = () => {
               <tbody className="list">
                 {holidays.map((holiday, index) => (
                   <tr key={index}>
-                    <td>{holiday.occasion}</td>
-                    <td>{formatDate(holiday.startDate)}</td>
-                    <td>{formatDate(holiday.endDate)}</td>
+                    <td className="text-dark">{holiday.occasion}</td>
+                    <td className="text-dark">{formatDate(holiday.startDate)}</td>
+                    <td className="text-dark">{formatDate(holiday.endDate)}</td>
                   </tr>
                 ))}
               </tbody>

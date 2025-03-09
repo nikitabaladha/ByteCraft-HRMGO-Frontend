@@ -17,7 +17,7 @@ const EmployeeSetSalaryHeader = () => {
                 <li className="breadcrumb-item">
                 <Link to="/dashboard/payroll/set-salary">Set Salary</Link>
                 </li>
-                <li className="breadcrumb-item">Employee Set Salary</li>
+                <li className="breadcrumb-item text-dark">Employee Set Salary</li>
               </ul>
             </div>
             <div className="col">

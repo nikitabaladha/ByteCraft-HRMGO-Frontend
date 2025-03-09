@@ -1,9 +1,5 @@
-//components/DashboardMain/Report/IncomeVsExpense/IncomeVsExpenseHeader.js
-
 import React from "react";
 import { Link } from "react-router-dom";
-// import { MdOutlineFileDownload } from "react-icons/md";
-// import { TbFileExport } from "react-icons/tb";
 import * as XLSX from "xlsx";
 
 const AccountStatementHeader = ({ transactions }) => {
@@ -46,7 +42,7 @@ const AccountStatementHeader = ({ transactions }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Account Statement Report</li>
+                <li className="breadcrumb-item text-dark">Account Statement Report</li>
               </ul>
             </div>
             <div className="col">

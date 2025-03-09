@@ -38,7 +38,7 @@ const ManageLeaveCalendarHeader = ({ addLeave }) => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Leave</li>
+                <li className="breadcrumb-item text-dark">Leave</li>
               </ul>
             </div>
             <div className="col">

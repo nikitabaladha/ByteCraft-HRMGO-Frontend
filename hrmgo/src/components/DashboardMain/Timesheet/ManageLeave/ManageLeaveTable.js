@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
-// import { HiOutlineTrash } from "react-icons/hi2";
-// import { TbPencil, TbCaretRight } from "react-icons/tb";
 import StatusModal from "./StatusModal";
 
 import UpdateModal from "./UpdateModal.js";
@@ -115,7 +113,7 @@ const ManageLeaveTable = ({
         <div className="card">
           <div className="dataTable-top ">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -161,13 +159,13 @@ const ManageLeaveTable = ({
                     <tbody>
                       {filteredLeaves.map((leave) => (
                         <tr key={leave.id}>
-                          <td>{leave.employeeName}</td>
-                          <td>{leave.leaveType}</td>
-                          <td>{formatDate(leave.appliedOn)}</td>
-                          <td>{formatDate(leave.startDate)}</td>
-                          <td>{formatDate(leave.endDate)}</td>
-                          <td>{leave.totalDays}</td>
-                          <td>{leave.reason}</td>
+                          <td className="text-dark">{leave.employeeName}</td>
+                          <td className="text-dark">{leave.leaveType}</td>
+                          <td className="text-dark">{formatDate(leave.appliedOn)}</td>
+                          <td className="text-dark">{formatDate(leave.startDate)}</td>
+                          <td className="text-dark">{formatDate(leave.endDate)}</td>
+                          <td className="text-dark">{leave.totalDays}</td>
+                          <td className="text-dark">{leave.reason}</td>
                           <td>
                             <div
                               className={`badge bg-${getStatusColor(
@@ -247,7 +245,7 @@ const ManageLeaveTable = ({
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min(
                   (currentPage - 1) * entriesPerPage + 1,

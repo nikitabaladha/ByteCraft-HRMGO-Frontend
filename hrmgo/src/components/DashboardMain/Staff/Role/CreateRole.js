@@ -743,7 +743,7 @@ const CreateRole = ({ onClose, fetchRoles,  }) => {
           <form onSubmit={handleSubmit} className="needs-validation" noValidate>
             <div className="modal-body">
               <div className="form-group mb-3">
-                <label htmlFor="name" className="form-label">
+                <label htmlFor="name" className="form-label text-dark">
                   Name <span className="text-danger">*</span>
                 </label>
                 <input
@@ -777,7 +777,7 @@ const CreateRole = ({ onClose, fetchRoles,  }) => {
                   <tbody>
                     {modules.map((module) => (
                       <tr key={module.name}>
-                        <td>
+                        <td className="text-dark">
                           <input
                             type="checkbox"
                             className="form-check-input"
@@ -790,8 +790,8 @@ const CreateRole = ({ onClose, fetchRoles,  }) => {
                             }
                           />
                         </td>
-                        <td>{module.name}</td>
-                        <td>
+                        <td className="text-dark">{module.name}</td>
+                        <td className="text-dark">
                           <div className="row">
                             {module.permissions.map((permission) => (
                               <div className="col-md-3" key={permission.id}>

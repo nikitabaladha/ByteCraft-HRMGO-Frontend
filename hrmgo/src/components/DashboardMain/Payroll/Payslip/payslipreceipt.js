@@ -345,12 +345,12 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
                                 </tr>
                                 {combinedData.map((item, index) => (
                                   <tr key={index}>
-                                    <td>{item.name === 'allowance' ? 'Allowance' : item.name === 'commission' ? 'Commission'
+                                    <td className="text-dark">{item.name === 'allowance' ? 'Allowance' : item.name === 'commission' ? 'Commission'
                                       : item.name === 'overtime' ? 'Overtime' : item.name === 'Basicsalary' ? 'Basic salary' : 'other'}</td>
-                                    <td>{item.title || "-"}</td>
-                                    <td>{item.type || "-"}</td>
-                                    <td>{formatAllowanceOrCommission(item) || "-"}</td>
-                                    <td className="text-right">
+                                    <td className="text-dark">{item.title || "-"}</td>
+                                    <td className="text-dark">{item.type || "-"}</td>
+                                    <td className="text-dark">{formatAllowanceOrCommission(item) || "-"}</td>
+                                    <td className="text-right text-dark">
                                       {item.salary ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(item.salary) : (item.amount ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(item.amount) : "-")}
                                     </td>
                                   </tr>
@@ -372,12 +372,12 @@ const Payslipreceipt = ({ isOpen, onClose, payslip }) => {
                                     </tr>
                                     {combinededuction.map((item1, index) => (
                                       <tr key={index}>
-                                        <td>{item1.name === 'loan' ? 'Loan ' : item1.name === 'otherpayment' ? 'Others '
+                                        <td className="text-dark">{item1.name === 'loan' ? 'Loan ' : item1.name === 'otherpayment' ? 'Others '
                                           : item1.name === 'tax' ? 'Taxes' : 'Other'}</td>
-                                        <td>{item1.title || "-"}</td>
-                                        <td>{item1.type || "-"}</td>
-                                        <td>{formatAllowanceOrCommission(item1) || "-"}</td>
-                                        <td className="text-right">
+                                        <td className="text-dark">{item1.title || "-"}</td>
+                                        <td className="text-dark">{item1.type || "-"}</td>
+                                        <td className="text-dark">{formatAllowanceOrCommission(item1) || "-"}</td>
+                                        <td className="text-right text-dark">
                                           {item1.amount ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(item1.amount) : "-"}
                                         </td>
                                       </tr>

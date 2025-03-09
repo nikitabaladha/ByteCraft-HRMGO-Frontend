@@ -15,7 +15,7 @@ const EmployeeProfileHeader = () => {
                 <li className="breadcrumb-item">
                   <a href="/dashboard">Home</a>
                 </li>
-                <li className="breadcrumb-item">Employee Profile</li>
+                <li className="breadcrumb-item text-dark">Employee Profile</li>
               </ul>
             </div>
             <div className="col">

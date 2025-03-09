@@ -34,7 +34,7 @@ const RoleHeader = ({fetchRoles}) => {
               <li className="breadcrumb-item">
                 <Link to="/dashboard">Home</Link>
               </li>
-              <li className="breadcrumb-item">Role</li>
+              <li className="breadcrumb-item text-dark">Role</li>
             </ul>
           </div>
           {/* Button Section */}

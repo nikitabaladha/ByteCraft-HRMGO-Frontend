@@ -265,7 +265,7 @@ return (
               <div className="row">
                 <div className="col-md-12">
                   <div className="form-group">
-                    <label className="col-form-label">
+                    <label className="col-form-label text-dark">
                       Select Branch<span className="text-danger">*</span>
                     </label>
                     <select
@@ -285,7 +285,7 @@ return (
 
                 <div className="col-md-6 mt-2">
                   <div className="form-group">
-                    <label className="form-label">
+                    <label className="form-label text-dark">
                       Employee<span className="text-danger">*</span>
                     </label>
                     <select
@@ -307,7 +307,7 @@ return (
 
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label htmlFor="appraisal_date" className="col-form-label">
+                    <label htmlFor="appraisal_date" className="col-form-label text-dark">
                       Select Month
                     </label>
                     <span className="text-danger">*</span>
@@ -326,7 +326,7 @@ return (
 
                 <div className="col-md-12">
                   <div className="form-group">
-                    <label htmlFor="remark" className="col-form-label">
+                    <label htmlFor="remark" className="col-form-label text-dark">
                       Remarks
                     </label>
                     <textarea
@@ -362,7 +362,7 @@ return (
                     const normalizedKey = comp.name.toLowerCase().replace(/ /g, "_");
                     return (
                       <React.Fragment key={comp.name}>
-                        <div className="col-4">{comp.name}</div>
+                        <div className="col-4 text-dark">{comp.name}</div>
                         <div className="col-4">
                           <RatingComponent
                             name={`indicator-${comp.name}`}
@@ -392,7 +392,7 @@ return (
                     const normalizedKey = comp.name.toLowerCase().replace(/ /g, "_");
                     return (
                       <React.Fragment key={comp.name}>
-                        <div className="col-4">{comp.name}</div>
+                        <div className="col-4 text-dark">{comp.name}</div>
                         <div className="col-4">
                           <RatingComponent
                             name={`indicator-${comp.name}`}
@@ -422,7 +422,7 @@ return (
                     const normalizedKey = comp.name.toLowerCase().replace(/ /g, "_");
                     return (
                       <React.Fragment key={comp.name}>
-                        <div className="col-4">{comp.name}</div>
+                        <div className="col-4 text-dark">{comp.name}</div>
                         <div className="col-4">
                           <RatingComponent
                             name={`indicator-${comp.name}`}

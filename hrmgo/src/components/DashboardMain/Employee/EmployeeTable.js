@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
-
-// import { TbPencil } from "react-icons/tb";
-// import { FaRegTrashAlt } from "react-icons/fa";
 import { formatDate } from "../../../js/custom";
 import { useNavigate } from "react-router-dom";
 import ConfirmationDialog from "../ConfirmationDialog";
 
-// from main page data is passing to the table
 const EmployeeTable = ({
   employeeData,
   setEmployeeData,
@@ -82,7 +78,7 @@ const EmployeeTable = ({
           <div className="card">
             <div className="dataTable-top">
               <div className="dataTable-dropdown d-none d-md-block">
-                <label>
+                <label className="text-dark">
                   <select
                     className="dataTable-selector"
                     value={entriesPerPage}
@@ -132,12 +128,12 @@ const EmployeeTable = ({
                                 #{employee.id}
                               </Link>
                             </td>
-                            <td>{employee.name}</td>
-                            <td>{employee.email}</td>
-                            <td>{employee.branchName}</td>
-                            <td>{employee.departmentName}</td>
-                            <td>{employee.designationName}</td>
-                            <td>{formatDate(employee.dateOfJoining)}</td>
+                            <td className="text-dark">{employee.name}</td>
+                            <td className="text-dark">{employee.email}</td>
+                            <td className="text-dark">{employee.branchName}</td>
+                            <td className="text-dark">{employee.departmentName}</td>
+                            <td className="text-dark">{employee.designationName}</td>
+                            <td className="text-dark">{formatDate(employee.dateOfJoining)}</td>
                             <td className="Action">
                               <span>
                                 <div className="action-btn bg-info ms-2">
@@ -188,7 +184,7 @@ const EmployeeTable = ({
                 </div>
               </div>
               <div className="dataTable-bottom ">
-                <div className="dataTable-info d-none d-md-block">
+                <div className="dataTable-info d-none d-md-block text-dark">
                   Showing{" "}
                   {Math.min(
                     (currentPage - 1) * entriesPerPage + 1,

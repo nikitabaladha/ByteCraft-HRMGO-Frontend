@@ -79,7 +79,7 @@ const EditUser = ({ user, onClose, fetchUsers }) => {
               >
                 <div className="row">
                   <div className="form-group">
-                    <label htmlFor="name" className="col-form-label">
+                    <label htmlFor="name" className="col-form-label text-dark">
                       Name
                     </label>
                     <span className="text-danger">*</span>
@@ -95,7 +95,7 @@ const EditUser = ({ user, onClose, fetchUsers }) => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="email" className="col-form-label">
+                    <label htmlFor="email" className="col-form-label text-dark">
                       Email
                     </label>
                     <span className="text-danger">*</span>
@@ -111,7 +111,7 @@ const EditUser = ({ user, onClose, fetchUsers }) => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="role" className="col-form-label">
+                    <label htmlFor="role" className="col-form-label text-dark">
                       User Role
                     </label>
                     <span className="text-danger">*</span>

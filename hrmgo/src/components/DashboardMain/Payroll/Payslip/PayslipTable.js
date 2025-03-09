@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { TbReportMoney, TbCurrencyDollar } from "react-icons/tb";
-// import { HiOutlinePencil } from "react-icons/hi";
-// import { RiDeleteBinLine } from "react-icons/ri";
 import BulkpaymentModal from "./bulkpaymentmodel.js";
 import Payslipreceipt from "./payslipreceipt.js";
 import * as XLSX from "xlsx";
@@ -213,7 +211,7 @@ const PayslipTable = () => {
                 <div className="row align-items-center justify-content-end">
                   <div className="col-lg-3 col-md-6 col-sm-12 col-12">
                     <div className="btn-box">
-                      <label htmlFor="month" className="form-label">
+                      <label htmlFor="month" className="form-label text-dark">
                         Select Month
                       </label>
                       <select
@@ -248,7 +246,7 @@ const PayslipTable = () => {
                   </div>
                   <div className="col-lg-3 col-md-6 col-sm-12 col-12">
                     <div className="btn-box">
-                      <label htmlFor="year" className="form-label">
+                      <label htmlFor="year" className="form-label text-dark">
                         Select Year
                       </label>
                       <select
@@ -399,28 +397,28 @@ const PayslipTable = () => {
                     )
                     .map((row) => (
                       <tr key={row._id}>
-                        <td>
+                        <td className="text-dark">
                           <button className="btn btn-outline-primary">
                             {row.id}
                           </button>
                         </td>
-                        <td>{row.name}</td>
-                        <td>{row.payrollType}</td>
-                        <td>{`₹${
+                        <td className="text-dark">{row.name}</td>
+                        <td className="text-dark">{row.payrollType}</td>
+                        <td className="text-dark">{`₹${
                           typeof row.salary === "number"
                             ? new Intl.NumberFormat("en-IN", {
                                 maximumFractionDigits: 2,
                               }).format(row.salary)
                             : "0.00"
                         }`}</td>
-                        <td>{`₹${
+                        <td className="text-dark">{`₹${
                           typeof row.netSalary === "number"
                             ? new Intl.NumberFormat("en-IN", {
                                 maximumFractionDigits: 2,
                               }).format(row.netSalary)
                             : "0.00"
                         }`}</td>
-                        <td>
+                        <td >
                           <span
                             className={`badge ${
                               row.status === "paid"

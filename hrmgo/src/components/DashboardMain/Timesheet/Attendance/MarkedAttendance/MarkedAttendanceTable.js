@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
-// import { HiOutlineTrash } from "react-icons/hi2";
-// import { TbPencil } from "react-icons/tb";
 import ConfirmationDialog from "../../../ConfirmationDialog";
 
 const MarkedAttendanceTable = ({
@@ -72,7 +70,7 @@ const MarkedAttendanceTable = ({
           <div className="card">
             <div className="dataTable-top">
               <div className="dataTable-dropdown d-none d-md-block">
-                <label>
+                <label className="text-dark">
                   <select
                     className="dataTable-selector"
                     value={entriesPerPage}
@@ -119,15 +117,15 @@ const MarkedAttendanceTable = ({
                       <tbody>
                         {filteredAttendance.map((attendance) => (
                           <tr key={attendance.id}>
-                            <td>{attendance.employeeName}</td>
-                            <td>{attendance.date}</td>
-                            <td>{attendance.status}</td>
-                            <td>{attendance.hours}</td>
-                            <td>{attendance.clockIn}</td>
-                            <td>{attendance.clockOut}</td>
-                            <td>{attendance.late}</td>
-                            <td>{attendance.earlyLeaving}</td>
-                            <td>{attendance.overtime}</td>
+                            <td className="text-dark">{attendance.employeeName}</td>
+                            <td className="text-dark">{attendance.date}</td>
+                            <td className="text-dark">{attendance.status}</td>
+                            <td className="text-dark">{attendance.hours}</td>
+                            <td className="text-dark">{attendance.clockIn}</td>
+                            <td className="text-dark">{attendance.clockOut}</td>
+                            <td className="text-dark">{attendance.late}</td>
+                            <td className="text-dark">{attendance.earlyLeaving}</td>
+                            <td className="text-dark">{attendance.overtime}</td>
                             <td className="Action">
                               <span>
                                 <div className="action-btn bg-danger ms-2">
@@ -163,7 +161,7 @@ const MarkedAttendanceTable = ({
                 </div>
               </div>
               <div className="dataTable-bottom">
-                <div className="dataTable-info d-none d-md-block">
+                <div className="dataTable-info d-none d-md-block text-dark">
                   Showing{" "}
                   {Math.min(
                     (currentPage - 1) * entriesPerPage + 1,

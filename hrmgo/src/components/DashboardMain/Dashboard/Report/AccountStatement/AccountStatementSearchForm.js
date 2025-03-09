@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { IoIosSearch } from "react-icons/io";
-// import { TbRefresh } from "react-icons/tb";
 import getAPI from "../../../../../api/getAPI";
 import { toast } from "react-toastify";
 
@@ -67,7 +65,7 @@ const AccountStatementSearchForm = ({
                   <div className="row">
                     <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                   <div className="btn-box">
-                    <label htmlFor="start_month" className="form-label">
+                    <label htmlFor="start_month" className="form-label text-dark">
                       Start Month
                     </label>
                     <input
@@ -82,7 +80,7 @@ const AccountStatementSearchForm = ({
                 </div>
                 <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                   <div className="btn-box">
-                    <label htmlFor="end_month" className="form-label">
+                    <label htmlFor="end_month" className="form-label text-dark">
                       End Month
                     </label>
                     <input
@@ -97,7 +95,7 @@ const AccountStatementSearchForm = ({
                 </div>
    <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                   <div className="btn-box">
-                    <label htmlFor="account" className="form-label">
+                    <label htmlFor="account" className="form-label text-dark">
                       Account
                     </label>
                     <select
@@ -117,7 +115,7 @@ const AccountStatementSearchForm = ({
                 </div>
                  <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                   <div className="btn-box">
-                    <label htmlFor="type" className="form-label">
+                    <label htmlFor="type" className="form-label text-dark">
                       Type
                     </label>
                     <select

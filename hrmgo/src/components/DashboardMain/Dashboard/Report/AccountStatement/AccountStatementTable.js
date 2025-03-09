@@ -42,7 +42,7 @@ const AccountStatementTable = ({ transactions }) => {
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -83,8 +83,8 @@ const AccountStatementTable = ({ transactions }) => {
                       {paginatedTransactions.map(
                         (transaction, transactionIndex) => (
                           <tr key={transactionIndex}>
-                            <td>{transaction.account_name}</td>
-                            <td>
+                            <td className="text-dark">{transaction.account_name}</td>
+                            <td className="text-dark">
                               {new Date(transaction.date).toLocaleDateString(
                                 "en-IN",
                                 {
@@ -94,7 +94,7 @@ const AccountStatementTable = ({ transactions }) => {
                                 }
                               )}
                             </td>
-                            <td>{`₹${transaction.amount.toLocaleString(
+                            <td className="text-dark">{`₹${transaction.amount.toLocaleString(
                               "en-IN"
                             )}`}</td>
                           </tr>
@@ -106,7 +106,7 @@ const AccountStatementTable = ({ transactions }) => {
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min(
                   (currentPage - 1) * entriesPerPage + 1,

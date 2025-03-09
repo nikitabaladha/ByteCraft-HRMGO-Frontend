@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
 import putAPI from '../../../../api/putAPI';
 
 const EditOvertimeModal = ({ onClose, employee, overtimeData}) => {
@@ -56,15 +55,10 @@ const EditOvertimeModal = ({ onClose, employee, overtimeData}) => {
                         <input name="_token" type="hidden" value="1UQqfCPtfBqtDR2dy3MAMmpeCd2m0ES7nCQxTiKw" />
                         <input name="employee_id" type="hidden" />
                         <div className="modal-body">
-                            <div className="card-footer text-end">
-                                <Link href="#" className="btn btn-sm btn-primary" data-size="medium" data-ajax-popup-over="true"  data-bs-toggle="tooltip" data-bs-placement="top" title="Generate" data-title="Generate Content With AI">
-                                    <i className="fas fa-robot"></i> Generate With AI
-                                </Link>
-                            </div>
 
                             <div className="row">
                                 <div className="form-group col-md-12">
-                                    <label htmlFor="title" className="col-form-label">Overtime Title</label><span className="text-danger">*</span>
+                                    <label htmlFor="title" className="col-form-label text-dark">Overtime Title</label><span className="text-danger">*</span>
                                     <input
                                         className="form-control"
                                         required
@@ -77,7 +71,7 @@ const EditOvertimeModal = ({ onClose, employee, overtimeData}) => {
                                     />
                                 </div>
                                 <div className="form-group col-md-4">
-                                    <label htmlFor="number_of_days" className="col-form-label">Number of days</label><span className="text-danger">*</span>
+                                    <label htmlFor="number_of_days" className="col-form-label text-dark">Number of days</label><span className="text-danger">*</span>
                                     <input
                                         className="form-control"
                                         required
@@ -91,7 +85,7 @@ const EditOvertimeModal = ({ onClose, employee, overtimeData}) => {
                                     />
                                 </div>
                                 <div className="form-group col-md-4">
-                                    <label htmlFor="hours" className="col-form-label">Hours</label><span className="text-danger">*</span>
+                                    <label htmlFor="hours" className="col-form-label text-dark">Hours</label><span className="text-danger">*</span>
                                     <input
                                         className="form-control"
                                         required
@@ -105,7 +99,7 @@ const EditOvertimeModal = ({ onClose, employee, overtimeData}) => {
                                     />
                                 </div>
                                 <div className="form-group col-md-4">
-                                    <label htmlFor="rate" className="col-form-label">Rate</label><span className="text-danger">*</span>
+                                    <label htmlFor="rate" className="col-form-label text-dark">Rate</label><span className="text-danger">*</span>
                                     <input
                                         className="form-control"
                                         required

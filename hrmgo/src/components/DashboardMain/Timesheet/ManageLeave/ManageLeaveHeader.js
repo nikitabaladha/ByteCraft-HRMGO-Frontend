@@ -2,9 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
-// import { TbFileExport } from "react-icons/tb";
-// import { CiCalendarDate } from "react-icons/ci";
-// import { FiPlus } from "react-icons/fi";
 import CreateModal from "./CreateModal";
 import * as XLSX from "xlsx";
 import getAPI from "../../../../api/getAPI";
@@ -96,7 +93,7 @@ const ManageLeaveHeader = ({ addLeave }) => {
                 <li className="breadcrumb-item">
                   <Link href="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">Leave </li>
+                <li className="breadcrumb-item text-dark">Leave </li>
               </ul>
             </div>
             <div className="col">

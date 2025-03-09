@@ -86,7 +86,7 @@ const UserCreate = ({ onClose, fetchUsers }) => {
               <form noValidate onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="form-group">
-                    <label htmlFor="name" className="col-form-label">
+                    <label htmlFor="name" className="col-form-label text-dark">
                       Name
                     </label>
                     <span className="text-danger">*</span>
@@ -102,7 +102,7 @@ const UserCreate = ({ onClose, fetchUsers }) => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="email" className="col-form-label">
+                    <label htmlFor="email" className="col-form-label text-dark">
                       Email
                     </label>
                     <span className="text-danger">*</span>
@@ -118,7 +118,7 @@ const UserCreate = ({ onClose, fetchUsers }) => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="role" className="col-form-label">
+                    <label htmlFor="role" className="col-form-label text-dark">
                       User Role
                     </label>
                     <span className="text-danger">*</span>
@@ -158,7 +158,7 @@ const UserCreate = ({ onClose, fetchUsers }) => {
                   {formData.passwordSwitch && (
                     <div className="col-md-12">
                       <div className="form-group">
-                        <label htmlFor="password" className="form-label">
+                        <label htmlFor="password" className="form-label text-dark">
                           Password
                         </label>
                         <span className="text-danger">*</span>

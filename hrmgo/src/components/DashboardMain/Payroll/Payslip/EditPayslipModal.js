@@ -49,15 +49,15 @@ const EditPayslipModal = ({ isOpen, onClose, payslip }) => {
           <div className="modal-body">
             <div className="row px-3">
               <div className="col-md-4 mb-3">
-                <h5 className="emp-title mb-0">Employee</h5>
+                <h5 className="emp-title mb-0 text-dark">Employee</h5>
                 <h5 className="emp-title black-text">#{payslip?.id || "N/A"}</h5>
               </div>
               <div className="col-md-4 mb-3">
-                <h5 className="emp-title mb-0">Basic Salary</h5>
+                <h5 className="emp-title mb-0 text-dark">Basic Salary</h5>
                 <h5 className="emp-title black-text">${payslip?.salary || "N/A"}</h5>
               </div>
               <div className="col-md-4 mb-3">
-                <h5 className="emp-title mb-0">Payroll Month</h5>
+                <h5 className="emp-title mb-0 text-dark">Payroll Month</h5>
                 <h5 className="emp-title black-text">
                   {payslip?.payDate ? formatPayDate(payslip.payDate) : "N/A"}
                 </h5>
@@ -100,7 +100,7 @@ const EditPayslipModal = ({ isOpen, onClose, payslip }) => {
                             <div className="card bg-none mb-0">
                               <div className="row px-3">
                                 <div className="col-md-12 form-group">
-                                  <label className="col-form-label">Allowance Options</label>
+                                  <label className="col-form-label text-dark">Allowance Options</label>
                                   <select
                                     className="form-control"
                                     required

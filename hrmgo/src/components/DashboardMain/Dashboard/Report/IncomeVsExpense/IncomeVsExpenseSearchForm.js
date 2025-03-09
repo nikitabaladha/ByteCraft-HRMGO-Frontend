@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// import { TbRefresh } from "react-icons/tb";
-// import { IoIosSearch } from "react-icons/io";
-
 const IncomeVsExpenseSearchForm = ({ onSearch, onReset }) => {
   const [startMonth, setStartMonth] = useState("");
   const [endMonth, setEndMonth] = useState("");
@@ -58,7 +55,7 @@ const IncomeVsExpenseSearchForm = ({ onSearch, onReset }) => {
                       </div>
                       <div className="col-lg-3 col-md-6 col-sm-12 col-12">
                         <div className="btn-box">
-                          <label htmlFor="start_month" className="form-label">
+                          <label htmlFor="start_month" className="form-label text-dark">
                             Start Month
                           </label>
                           <input
@@ -75,7 +72,7 @@ const IncomeVsExpenseSearchForm = ({ onSearch, onReset }) => {
                       </div>
                       <div className="col-lg-3 col-md-6 col-sm-12 col-12">
                         <div className="btn-box">
-                          <label htmlFor="end_month" className="form-label">
+                          <label htmlFor="end_month" className="form-label text-dark">
                             End Month
                           </label>
                           <input

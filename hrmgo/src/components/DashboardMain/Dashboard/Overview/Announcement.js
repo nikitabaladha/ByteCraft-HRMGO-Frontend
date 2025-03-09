@@ -57,12 +57,12 @@ const Announcement = () => {
                                 #{employee.id}
                               </Link>
                             </td>
-                            <td>{employee.name}</td>
-                            <td>{employee.email}</td>
-                            <td>{employee.branchName}</td>
-                            <td>{employee.departmentName}</td>
-                            <td>{employee.designationName}</td>
-                            <td>{formatDate(employee.dateOfJoining)}</td>
+                            <td className="text-dark">{employee.name}</td>
+                            <td className="text-dark">{employee.email}</td>
+                            <td className="text-dark">{employee.branchName}</td>
+                            <td className="text-dark">{employee.departmentName}</td>
+                            <td className="text-dark">{employee.designationName}</td>
+                            <td className="text-dark">{formatDate(employee.dateOfJoining)}</td>
                     </tr>
                   ))}
                 </tbody>

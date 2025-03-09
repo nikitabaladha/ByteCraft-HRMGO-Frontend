@@ -189,7 +189,7 @@ const CreateModal = ({ onClose, addLeave }) => {
               <div className="modal-body">
                 <div className="row">
                   <div className="form-group col-md-12 col-lg-12">
-                    <label htmlFor="employee_id" className="col-form-label">
+                    <label htmlFor="employee_id" className="col-form-label text-dark">
                       Employee
                     </label>
                     <span className="text-danger">*</span>
@@ -213,7 +213,7 @@ const CreateModal = ({ onClose, addLeave }) => {
                 <div className="row">
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="leave_type_id" className="col-form-label">
+                      <label htmlFor="leave_type_id" className="col-form-label text-dark">
                         Leave Type
                       </label>
                       <span className="text-danger">*</span>
@@ -239,7 +239,7 @@ const CreateModal = ({ onClose, addLeave }) => {
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="start_date" className="col-form-label">
+                      <label htmlFor="start_date" className="col-form-label text-dark">
                         Start Date
                       </label>
                       <span className="text-danger">*</span>
@@ -255,7 +255,7 @@ const CreateModal = ({ onClose, addLeave }) => {
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="end_date" className="col-form-label">
+                      <label htmlFor="end_date" className="col-form-label text-dark">
                         End Date
                       </label>
                       <span className="text-danger">*</span>
@@ -274,7 +274,7 @@ const CreateModal = ({ onClose, addLeave }) => {
                 <div className="row">
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="leave_reason" className="col-form-label">
+                      <label htmlFor="leave_reason" className="col-form-label text-dark">
                         Leave Reason
                       </label>
                       <span className="text-danger">*</span>
@@ -291,24 +291,6 @@ const CreateModal = ({ onClose, addLeave }) => {
                   </div>
                 </div>
 
-                <div className="form-group col-md-6">
-                  <label htmlFor="synchronize_type" className="form-label">
-                    Synchronize in Google Calendar ?
-                  </label>
-                  <div className=" form-switch">
-                    <input
-                      type="checkbox"
-                      className="form-check-input mt-2"
-                      name="synchronize_type"
-                      id="switch-shadow"
-                      defaultValue="google_calender"
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="switch-shadow"
-                    />
-                  </div>
-                </div>
               </div>
               <div className="modal-footer">
                 <button

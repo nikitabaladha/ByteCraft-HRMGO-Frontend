@@ -163,25 +163,10 @@ const Test = () => {
                   value="GBvNGWkGCp8zRBlborkdKlqAui0HjjScE6HMSdiN"
                 />
                 <div className="modal-body">
-                  <div className="card-footer text-end">
-                    <a
-                      href="#"
-                      className="btn btn-sm btn-primary"
-                      data-size="medium"
-                      data-ajax-popup-over="true"
-                     
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="Generate"
-                      data-title="Generate Content With AI"
-                    >
-                      <i className="fas fa-robot"></i> Generate With AI
-                    </a>
-                  </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="form-group">
-                        <label htmlFor="branch" className="col-form-label">
+                        <label htmlFor="branch" className="col-form-label text-dark">
                           Select Branch
                         </label>
                         <span className="text-danger">*</span>
@@ -208,7 +193,7 @@ const Test = () => {
                     </div>
                     <div className="col-md-6 mt-2">
                       <div className="form-group">
-                        <label htmlFor="employee" className="form-label">
+                        <label htmlFor="employee" className="form-label text-dark">
                           Employee
                         </label>
                         <span className="text-danger">*</span>
@@ -234,7 +219,7 @@ const Test = () => {
                       <div className="form-group">
                         <label
                           htmlFor="appraisal_date"
-                          className="col-form-label"
+                          className="col-form-label text-dark"
                         >
                           Select Month
                         </label>
@@ -251,7 +236,7 @@ const Test = () => {
                     </div>
                     <div className="col-md-12">
                       <div className="form-group">
-                        <label htmlFor="remark" className="col-form-label">
+                        <label htmlFor="remark" className="col-form-label text-dark">
                           Remarks
                         </label>
                         <textarea
@@ -272,7 +257,7 @@ const Test = () => {
                     >
                       <h5>Indicator</h5>
                     </div>
-                    <div className="col-4 text-end">
+                    <div className="col-4 text-end ">
                       <h5>Appraisal</h5>
                     </div>
                     <div className="col-md-12 mt-3">

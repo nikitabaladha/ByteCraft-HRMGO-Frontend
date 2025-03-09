@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import getAPI from "../../../../api/getAPI.js";
-// import { TiEyeOutline } from "react-icons/ti";
-// import { HiOutlinePencil } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
 const SetSalaryTable = () => {
   const [employeeData, setEmployeeData] = useState([]);
-  // const [viewModeId] = useState(null);
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -88,7 +85,7 @@ const SetSalaryTable = () => {
         <div className="card">
           <div className="dataTable-top">
             <div className="dataTable-dropdown d-none d-md-block">
-              <label>
+              <label className="text-dark">
                 <select
                   className="dataTable-selector"
                   value={entriesPerPage}
@@ -136,9 +133,9 @@ const SetSalaryTable = () => {
                               {employee.id}
                             </Link>
                           </td>
-                          <td>{employee.name}</td>
-                          <td>{employee.payrollType}</td>
-                          <td>
+                          <td className="text-dark">{employee.name}</td>
+                          <td className="text-dark">{employee.payrollType}</td>
+                          <td className="text-dark">
                             {`₹${
                               typeof employee.salary === "number"
                                 ? new Intl.NumberFormat("en-IN", {
@@ -148,7 +145,7 @@ const SetSalaryTable = () => {
                             }`}
                           </td>
 
-                          <td>
+                          <td className="text-dark">
                             {`₹${
                               typeof employee.netSalary === "number"
                                 ? new Intl.NumberFormat("en-IN", {
@@ -166,7 +163,7 @@ const SetSalaryTable = () => {
                                 to={`/Dashboard/payroll/employee-set-salary/${employee._id}`}
                               >
                                 <span className="text-white">
-                                  {/* <HiOutlinePencil /> */}
+                                  
                                   <i className="ti ti-pencil"></i>
                                 </span>
                               </Link>
@@ -177,7 +174,7 @@ const SetSalaryTable = () => {
                                   title="View"
                                   to={`/Dashboard/payroll/employee-set-salaryview/${employee._id}`}
                                 >
-                                  {/* <TiEyeOutline className="text-white" /> */}
+                                 
                                   <i className="ti ti-eye text-white"></i>
                                 </Link>
                               </div>
@@ -191,7 +188,7 @@ const SetSalaryTable = () => {
               </div>
             </div>
             <div className="dataTable-bottom">
-              <div className="dataTable-info d-none d-md-block">
+              <div className="dataTable-info d-none d-md-block text-dark">
                 Showing{" "}
                 {Math.min(
                   (currentPage - 1) * entriesPerPage + 1,

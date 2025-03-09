@@ -95,7 +95,7 @@ const DashboardMetrics = () => {
                         <TbUsers />
                       </div>
                       <div className="ms-3">
-                        <small className="text-muted">Total</small>
+                        <small className="text-muted text-dark">Total</small>
                         <h6 className="m-0">
                           <Link>Staff</Link>
                         </h6>
@@ -120,7 +120,7 @@ const DashboardMetrics = () => {
                         <HiOutlineTicket />
                       </div>
                       <div className="ms-3">
-                        <small className="text-muted">Total</small>
+                        <small className="text-muted text-dark">Total</small>
                         <h6 className="m-0">
                           <Link>
                             Trainer
@@ -147,7 +147,7 @@ const DashboardMetrics = () => {
                         <TbWallet />
                       </div>
                       <div className="ms-3">
-                        <small className="text-muted">Total</small>
+                        <small className="text-muted text-dark">Total</small>
                         <h6 className="m-0">
                           <Link>
                             Account Balance
@@ -175,7 +175,7 @@ const DashboardMetrics = () => {
                         <HiOutlineBriefcase />
                       </div>
                       <div className="ms-3">
-                        <small className="text-muted">Total</small>
+                        <small className="text-muted text-dark">Total</small>
                         <h6 className="m-0">Jobs</h6>
                       </div>
                     </div>
@@ -212,7 +212,7 @@ const DashboardMetrics = () => {
                         </svg>
                       </div>
                       <div className="ms-3">
-                        <small className="text-muted">Active</small>
+                        <small className="text-muted text-dark">Active</small>
                         <h6 className="m-0">Jobs</h6>
                       </div>
                     </div>
@@ -251,7 +251,7 @@ const DashboardMetrics = () => {
                         </svg>
                       </div>
                       <div className="ms-3">
-                        <small className="text-muted">Inactive</small>
+                        <small className="text-muted text-dark">Inactive</small>
                         <h6 className="m-0">Jobs</h6>
                       </div>
                     </div>

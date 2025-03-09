@@ -768,7 +768,7 @@ const EditRole = ({ role, onClose, fetchRoles }) => {
                   <tbody>
                     {Object.keys(permissions).map((module) => (
                       <tr key={module}>
-                        <td>
+                        <td className="text-dark">
                           <input
                             type="checkbox"
                             className="form-check-input"
@@ -785,8 +785,8 @@ const EditRole = ({ role, onClose, fetchRoles }) => {
                             }}
                           />
                         </td>
-                        <td>{module}</td>
-                        <td>
+                        <td className="text-dark">{module}</td>
+                        <td className="text-dark">
                           <div className="row">
                             {Object.keys(permissions[module]).map((perm) => (
                               <div

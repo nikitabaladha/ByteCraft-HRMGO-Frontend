@@ -50,7 +50,7 @@ const IncomeVsExpenseHeader = () => {
                 <li className="breadcrumb-item">
                   <Link to="/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item">
+                <li className="breadcrumb-item text-dark">
                   Manage Income Vs Expense Report
                 </li>
               </ul>

@@ -158,7 +158,7 @@ const BulkAttendanceTable = ({ attendanceData, date }) => {
                 <tbody>
                   {localAttendanceData.map((employee) => (
                     <tr key={employee.id}>
-                      <td className="Id">
+                      <td className="Id text-dark">
                         <input
                           type="hidden"
                           name="employee_id[]"
@@ -168,9 +168,9 @@ const BulkAttendanceTable = ({ attendanceData, date }) => {
                           {employee.id}
                         </Link>
                       </td>
-                      <td>{employee.name}</td>
-                      <td>{employee.branchName}</td>
-                      <td> {employee.departmentName}</td>
+                      <td className="text-dark">{employee.name}</td>
+                      <td className="text-dark">{employee.branchName}</td>
+                      <td className="text-dark"> {employee.departmentName}</td>
                       <td>
                         <div className="row">
                           <div className="col-md-1">
