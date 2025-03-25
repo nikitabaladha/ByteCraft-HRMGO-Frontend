@@ -23,6 +23,7 @@ const CreateEmployee = ({ addEmployee }) => {
     bankIdentifierCode: "",
     branchLocation: "",
     taxPayerId: "",
+    newEmployeeToggle: false,
   });
 
   const [branches, setBranches] = useState([]);
@@ -36,6 +37,26 @@ const CreateEmployee = ({ addEmployee }) => {
   const [imagePreview, setImagePreview] = useState("");
   const [certificatePreview, setCertificatePreview] = useState("");
   const [resumePreview, setResumePreview] = useState("");
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await getAPI("/get-email-notification");
+        const mappedData = {
+          newEmployeeToggle: response.data.data.newEmployee || false, 
+        };
+        console.log("newEmployeeToggle", mappedData)
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ...mappedData,
+        }));
+      } catch (err) {
+        toast.error("Error fetching email notification settings:", err);
+      }
+    };
+    fetchSettings();
+  }, []);
+
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
@@ -232,6 +253,7 @@ const CreateEmployee = ({ addEmployee }) => {
           branchLocation: response.data.data.branchLocation,
           taxPayerId: response.data.data.taxPayerId,
           dateOfBirth: response.data.data.dateOfBirth,
+          newEmployeeToggle: formData.newEmployeeToggle,
         };
 
         addEmployee(newEmployee);
@@ -254,6 +276,7 @@ const CreateEmployee = ({ addEmployee }) => {
           bankIdentifierCode: "",
           branchLocation: "",
           taxPayerId: "",
+          newEmployeeToggle: formData.newEmployeeToggle,
         });
         setEmployeePhoto(null);
         setEmployeeCertificate(null);
@@ -288,10 +311,10 @@ const CreateEmployee = ({ addEmployee }) => {
               </div>
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <Link>Home</Link>
+                  <Link to="https/dashboard">Home</Link>
                 </li>
                 <li className="breadcrumb-item">
-                  <Link>Employee</Link>
+                  <Link to="/dashboard/employee">Employee</Link>
                 </li>
                 <li className="breadcrumb-item text-dark">Create Employee</li>
               </ul>

@@ -760,7 +760,7 @@ const Messagess = () => {
                               onClick={() =>
                                 setShowEmojiPicker((prev) => !prev)
                               }
-                              style={{ cursor: "pointer", margin: "10px 8px" }}
+                              style={{ cursor: "pointer", margin: "10px 8px",  }}
                             />
                             {showEmojiPicker && (
                               <div
@@ -768,6 +768,7 @@ const Messagess = () => {
                                   position: "absolute",
                                   zIndex: 10,
                                   bottom: "50px",
+                                  
                                 }}
                               >
                                 <EmojiPicker

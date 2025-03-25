@@ -1,11 +1,9 @@
 import React from "react";
-import { TbMoon } from "react-icons/tb";
-import { LuSunMedium } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../../js/ThemeProvider";
-import { FaRegCommentDots } from "react-icons/fa";
-import { TbMessage2 } from "react-icons/tb";
+
+
 
 const Header = ({ toggleSidebar, name, imagePreview, profileImage }) => {
   const { isDarkLayout, toggleDarkLayout } = useContext(ThemeContext);
@@ -98,12 +96,12 @@ const Header = ({ toggleSidebar, name, imagePreview, profileImage }) => {
                   toggleDarkLayout();
                 }}
               >
-                <i className={isDarkLayout ? "ti ti-sun" : "ti ti-moon"}></i>
+                <i className={isDarkLayout ? "ti ti-sun text-dark" : "ti ti-moon text-dark"}></i>
               </Link>
             </li>
             <li className="dash-h-item">
-              <Link className="dash-head-link me-0">
-                <i className="ti ti-message-circle"> </i>
+              <Link className="dash-head-link me-0" to="/dashboard/messenger">
+                <i className="ti ti-message-circle text-dark"> </i>
                 <span className="bg-danger dash-h-badge message-counter custom_messanger_counter">
                   0<span className="sr-only"></span>
                 </span>
@@ -119,7 +117,7 @@ const Header = ({ toggleSidebar, name, imagePreview, profileImage }) => {
                 aria-haspopup="false"
                 aria-expanded="false"
               >
-                <i className="ti ti-message-2"> </i>
+                <i className="ti ti-message-2 text-dark"> </i>
                 <span className="bg-danger dash-h-badge message-counter custom_messanger_counter">
                   0<span className="sr-only"></span>
                 </span>

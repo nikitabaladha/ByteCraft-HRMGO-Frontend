@@ -271,7 +271,7 @@ const UpdateEmployee = ({ updateEmployee }) => {
                   <Link to="/dashboard">Home</Link>
                 </li>
                 <li className="breadcrumb-item">
-                  <Link to="">Employee</Link>
+                  <Link to="/dashboard/employee">Employee</Link>
                 </li>
                 <li className="breadcrumb-item text-dark">Edit Employee</li>
               </ul>

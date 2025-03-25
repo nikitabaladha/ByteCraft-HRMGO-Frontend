@@ -96,9 +96,7 @@ const DashboardMetrics = () => {
                       </div>
                       <div className="ms-3">
                         <small className="text-muted text-dark">Total</small>
-                        <h6 className="m-0">
-                          <Link>Staff</Link>
-                        </h6>
+                        <h6 className="m-0">Staff</h6>
                       </div>
                     </div>
                   </div>
@@ -121,11 +119,7 @@ const DashboardMetrics = () => {
                       </div>
                       <div className="ms-3">
                         <small className="text-muted text-dark">Total</small>
-                        <h6 className="m-0">
-                          <Link>
-                            Trainer
-                          </Link>
-                        </h6>
+                        <h6 className="m-0">Trainer</h6>
                       </div>
                     </div>
                   </div>
@@ -148,11 +142,7 @@ const DashboardMetrics = () => {
                       </div>
                       <div className="ms-3">
                         <small className="text-muted text-dark">Total</small>
-                        <h6 className="m-0">
-                          <Link>
-                            Account Balance
-                          </Link>
-                        </h6>
+                        <h6 className="m-0">Account Balance</h6>
                       </div>
                     </div>
                   </div>

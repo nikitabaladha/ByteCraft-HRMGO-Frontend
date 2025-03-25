@@ -19,6 +19,7 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
   const [branches, setBranches] = useState([]);
   const [trainers, setTrainers] = useState([]);
   const [employeeData, setEmployeeData] = useState([]);
+  const [trainingTypes, setTrainingTypes] = useState([]);
   
 
   useEffect(() => {
@@ -67,6 +68,24 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
           toast.error("An error occurred while fetching trainers.");
         }
       };
+
+   
+      const fetchTrainingTypes = async () => {
+        try {
+          const response = await getAPI("/training-type-get-all", true);
+          if (!response.hasError) {
+            setTrainingTypes(response.data.data);
+          } else {
+            toast.error(`Failed to fetch training types: ${response.message}`);
+          }
+        } catch (error) {
+          toast.error("An error occurred while fetching training types.");
+        }
+      };
+  
+      
+      fetchTrainingTypes();
+
   
       fetchTrainers();
   
@@ -168,8 +187,12 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                         onChange={handleChange}
                       >
                         <option value="">Select Trainer Option</option>
-                        <option value="Internal">Internal</option>
-                        <option value="External">External</option>
+                        {trainingTypes.map((trainingType) => (
+                          <option key={trainingType.value} value={trainingType.branchName}>
+                            {trainingType.trainingName
+                            }
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>

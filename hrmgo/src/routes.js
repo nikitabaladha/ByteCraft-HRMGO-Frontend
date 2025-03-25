@@ -40,7 +40,7 @@ import ContractPreview from "./components/DashboardMain/Contract/ContractDetail/
 
 // Aakash routes
 
-import UpdateEmployee from "./components/DashboardMain/Staff/Employee Profile/UpdateEmployee.js";
+// import UpdateEmployee from "./components/DashboardMain/Staff/Employee Profile/UpdateEmployee.js";
 
 import TrainingList from "./components/DashboardMain/Training/TrainingList/TrainingList.js";
 
@@ -163,6 +163,20 @@ import ContractType from "./components/DashboardMain/HRMSystem/ContractType/Cont
 import JobCategory from "./components/DashboardMain/HRMSystem/JobCategory/JobCategory.js";
 
 import Payslip from "./components/DashboardMain/Payroll/Payslip/Payslip.js";
+import EmailTemplates from "./components/DashboardMain/Templates/Email Templates/EmailTemplates.js";
+import NewUser from "./components/DashboardMain/Templates/All Templates/New User/NewUser.js";
+import NewEmployee from "./components/DashboardMain/Templates/All Templates/New Employee/NewEmployee.js";
+import NewPayroll from "./components/DashboardMain/Templates/All Templates/New Payroll/NewPayroll.js";
+import NewTicket from "./components/DashboardMain/Templates/All Templates/New Ticket/NewTicket.js";
+import NewAward from "./components/DashboardMain/Templates/All Templates/New Award/NewAward.js";
+import EmpTransfer from "./components/DashboardMain/Templates/All Templates/Employee Transfer/EmpTransfer.js";
+import EmpResignation from "./components/DashboardMain/Templates/All Templates/Employee Resignation/EmpResignation.js";
+import EmployeePromotion from "./components/DashboardMain/Templates/All Templates/Employee Promotion/EmployeePromotion.js";
+import EmployeeCompaint from "./components/DashboardMain/Templates/All Templates/Employee Compaint/EmployeeCompaint.js";
+import EmpWarning from "./components/DashboardMain/Templates/All Templates/Employee Warining/EmpWarning.js";
+import EmpTermination from "./components/DashboardMain/Templates/All Templates/Employee Termination/EmpTermination.js";
+import LeaveStatus from "./components/DashboardMain/Templates/All Templates/Leave Status/LeaveStatus.js";
+import ContractTemplates from "./components/DashboardMain/Templates/All Templates/Contract Templates/ContractTemplates.js";
 
 // import HRMSystemSetting from "./components/DashboardMain/HRMSystemSetting/HRMSystemSetting.js";
 
@@ -278,7 +292,25 @@ const AppRoutes = () => {
         </Route>
         <Route path="contract" element={<Contract />} />
         <Route path="contract/:id" element={<ContractDetail />} />
+
         {/* Aakash routes */}
+
+        <Route path="/dashboard/email-templates" element={<EmailTemplates/>}></Route>
+        <Route path="/dashboard/email-templates/new-user" element={<NewUser/>}></Route>
+        <Route path="/dashboard/email-templates/new-employee" element={<NewEmployee/>}></Route>
+        <Route path="/dashboard/email-templates/new-payroll" element={<NewPayroll/>}></Route>
+        <Route path="/dashboard/email-templates/new-ticket" element={<NewTicket/>}></Route>
+        <Route path="/dashboard/email-templates/new-award" element={<NewAward/>}></Route>
+        <Route path="/dashboard/email-templates/employee-transfer" element={<EmpTransfer/>}></Route>
+        <Route path="/dashboard/email-templates/employee-resignation" element={<EmpResignation/>}></Route>
+        <Route path="/dashboard/email-templates/employee-promotion" element={<EmployeePromotion/>}></Route>
+        <Route path="/dashboard/email-templates/employee-complaints" element={<EmployeeCompaint/>}></Route>
+        <Route path="/dashboard/email-templates/employee-warning" element={<EmpWarning/>}></Route>
+        <Route path="/dashboard/email-templates/employee-termination" element={<EmpTermination/>}></Route>
+        <Route path="/dashboard/email-templates/leave-status" element={<LeaveStatus/>}></Route>
+        <Route path="/dashboard/email-templates/contract" element={<ContractTemplates/>}></Route>
+
+
         <Route path="/dashboard/training" element={<TrainingList />}></Route>
         <Route
           path="/dashboard/trainingList-View/:id"
@@ -340,6 +372,7 @@ const AppRoutes = () => {
           element={<EmployeeProfile />}
         ></Route>
         <Route path="/dashboard/messenger" element={<Messenger />}></Route>
+
         {/* Shantanu */}
         <Route path="payroll/payslip" element={<Payslip />} />
 

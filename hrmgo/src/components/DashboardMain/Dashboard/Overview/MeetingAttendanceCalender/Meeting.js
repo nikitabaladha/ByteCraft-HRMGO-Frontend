@@ -35,15 +35,15 @@ const Meeting = () => {
             <tbody className="list">
               {meetings.map((meeting) => (
                 <tr key={meeting._id}>
-                  <td>{meeting.title}</td>
-                  <td>
+                  <td className="text-dark">{meeting.title}</td>
+                  <td className="text-dark">
                     {new Date(meeting.date).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "short",
                       day: "numeric",
                     })}
                   </td>
-                  <td>
+                  <td className="text-dark">
                     {new Date("1970-01-01T" + meeting.time)
                       .toLocaleTimeString("en-IN", {
                         hour: "2-digit",

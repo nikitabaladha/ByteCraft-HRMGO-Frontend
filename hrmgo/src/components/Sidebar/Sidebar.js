@@ -378,7 +378,20 @@ const menuConfig = [
     link: "/dashboard/messenger",
   },
 
-  
+  {
+    id: "Templates",
+    label: "Templates",
+    iconClass: "ti-receipt",
+    link: "#!",
+    subMenu: [
+      {
+        id: "emailTemplates",
+        label: "Email Templates",
+        link: "/dashboard/email-templates",
+      },
+    ],
+  },
+
   // HRM System Setup
   {
     id: "hrmSystemSetup",
@@ -489,7 +502,6 @@ const Sidebar = ({ sidebarVisible, toggleSidebar }) => {
         <div className="navbar-wrapper" style={{ display: "block" }}>
           <div className="m-header main-logo">
             <Link to="/dashboard" className="b-brand">
-             
               <img
                 src={
                   isDarkLayout
