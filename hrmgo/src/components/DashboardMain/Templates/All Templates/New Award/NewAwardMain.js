@@ -19,6 +19,7 @@ const NewAwardMain = () => {
         const mappedData = {
           mail_from_name: response.data.mailFromName || "",
         };
+        console.log("mappedData", mappedData)
         setFormData(mappedData);
       } catch (err) {
         toast.error("Error fetching email settings:", err);
@@ -47,7 +48,7 @@ const NewAwardMain = () => {
       try {
         const response = await getAPI("/get-new-award-content");
         const mappedData = {
-          mail_from_name: response.data.mailFromName || "",
+          // mail_from_name: response.data.mailFromName || "",
           subject: response.data.subject || "New Award",
           content: response.data.content || "",
         };

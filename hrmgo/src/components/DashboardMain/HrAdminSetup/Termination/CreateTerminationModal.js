@@ -13,7 +13,27 @@ const CreateTerminationModal = ({ onClose, addTermination }) => {
     noticeDate: new Date().toISOString().split("T")[0],
     terminationDate: new Date().toISOString().split("T")[0],
     description: "",
+    EmpTerminationToggle: false,
   });
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await getAPI("/get-email-notification");
+        const mappedData = {
+          EmpTerminationToggle: response.data.data.employeeTermination || false, 
+        };
+        console.log("EmpTerminationToggle", mappedData)
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ...mappedData,
+        }));
+      } catch (err) {
+        toast.error("Error fetching email notification settings:", err);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   useEffect(() => {
     const fetchEmployeeData = async () => {
@@ -63,6 +83,7 @@ const CreateTerminationModal = ({ onClose, addTermination }) => {
           noticeDate: formData.noticeDate,
           terminationDate: formData.terminationDate,
           description: formData.description,
+          EmpTerminationToggle: formData.EmpTerminationToggle
         },
         true
       );

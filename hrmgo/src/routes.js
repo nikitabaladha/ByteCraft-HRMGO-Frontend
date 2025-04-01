@@ -169,7 +169,7 @@ import NewEmployee from "./components/DashboardMain/Templates/All Templates/New 
 import NewPayroll from "./components/DashboardMain/Templates/All Templates/New Payroll/NewPayroll.js";
 import NewTicket from "./components/DashboardMain/Templates/All Templates/New Ticket/NewTicket.js";
 import NewAward from "./components/DashboardMain/Templates/All Templates/New Award/NewAward.js";
-import EmpTransfer from "./components/DashboardMain/Templates/All Templates/Employee Transfer/EmpTransfer.js";
+// import EmpTransfer from "./components/DashboardMain/Templates/All Templates/Employee Transfer/EmpTransfer.js";
 import EmpResignation from "./components/DashboardMain/Templates/All Templates/Employee Resignation/EmpResignation.js";
 import EmployeePromotion from "./components/DashboardMain/Templates/All Templates/Employee Promotion/EmployeePromotion.js";
 import EmployeeCompaint from "./components/DashboardMain/Templates/All Templates/Employee Compaint/EmployeeCompaint.js";
@@ -301,7 +301,7 @@ const AppRoutes = () => {
         <Route path="/dashboard/email-templates/new-payroll" element={<NewPayroll/>}></Route>
         <Route path="/dashboard/email-templates/new-ticket" element={<NewTicket/>}></Route>
         <Route path="/dashboard/email-templates/new-award" element={<NewAward/>}></Route>
-        <Route path="/dashboard/email-templates/employee-transfer" element={<EmpTransfer/>}></Route>
+        {/* <Route path="/dashboard/email-templates/employee-transfer" element={<EmpTransfer/>}></Route> */}
         <Route path="/dashboard/email-templates/employee-resignation" element={<EmpResignation/>}></Route>
         <Route path="/dashboard/email-templates/employee-promotion" element={<EmployeePromotion/>}></Route>
         <Route path="/dashboard/email-templates/employee-complaints" element={<EmployeeCompaint/>}></Route>

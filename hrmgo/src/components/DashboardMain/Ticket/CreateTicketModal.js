@@ -14,7 +14,29 @@ const CreateTicketModal = ({ closeModal, fetchTickets }) => {
   const [status, setStatus] = useState('close');
   const [endDate, setEndDate] = useState('2024-12-02');
   const [employeeNames, setEmployeeNames] = useState([]);
+  const [formData, setFormData] = useState({
+    newTicketToggle: false,
+    });
+  
 
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await getAPI("/get-email-notification");
+        const mappedData = {
+          newTicketToggle: response.data.data.newTicket || false, 
+        };
+        console.log("newTicketToggle", mappedData)
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ...mappedData,
+        }));
+      } catch (err) {
+        toast.error("Error fetching email notification settings:", err);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   useEffect(() => {
     const fetchEmployeeNames = async () => {
@@ -58,6 +80,7 @@ const CreateTicketModal = ({ closeModal, fetchTickets }) => {
     ticketData.append('description', description);
     ticketData.append('status', status);
     ticketData.append('end_date', endDate);
+    ticketData.append('newTicketToggle', formData.newTicketToggle);
 
 
     if (attachment) {
@@ -89,6 +112,7 @@ const CreateTicketModal = ({ closeModal, fetchTickets }) => {
       toast.error("An error occurred while creating the ticket.");
     }
   };
+
 
   return (
     <div

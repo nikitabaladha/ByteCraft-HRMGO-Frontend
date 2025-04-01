@@ -13,7 +13,28 @@ const CreateAwardModal = ({ onClose, addAward }) => {
     date: new Date().toISOString().split("T")[0],
     gift: "",
     description: "",
+    newAwardToggle: false,
   });
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await getAPI("/get-email-notification");
+        const mappedData = {
+          newAwardToggle: response.data.data.newAward || false, 
+        };
+        console.log("newAwardToggle", mappedData)
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ...mappedData,
+        }));
+      } catch (err) {
+        toast.error("Error fetching email notification settings:", err);
+      }
+    };
+    fetchSettings();
+  }, []);
+
 
   useEffect(() => {
     const fetchEmployeeData = async () => {
@@ -63,6 +84,7 @@ const CreateAwardModal = ({ onClose, addAward }) => {
           date: formData.date,
           gift: formData.gift,
           description: formData.description,
+          newAwardToggle: formData.newAwardToggle,
         },
         true
       );

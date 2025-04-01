@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import getAPI from "../../../../api/getAPI.js";
 import postAPI from "../../../../api/postAPI.js";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css"
 
 const CreateComplaintModal = ({ onClose, addComplaint }) => {
   const [employees, setEmployees] = useState([]);
@@ -12,7 +12,28 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
     title: "",
     complaintDate: new Date().toISOString().split("T")[0],
     description: "",
+    EmployeeComplaintToggle: false,
   });
+
+    useEffect(() => {
+        const fetchSettings = async () => {
+          try {
+            const response = await getAPI("/get-email-notification");
+            const mappedData = {
+              EmployeeComplaintToggle: response.data.data.employeeComplaints || false, 
+            };
+            console.log("EmpComplaintsToggle", mappedData)
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              ...mappedData,
+            }));
+          } catch (err) {
+            toast.error("Error fetching email notification settings:", err);
+          }
+        };
+        fetchSettings();
+      }, []);
+    
 
   useEffect(() => {
     const fetchEmployeeData = async () => {
@@ -47,6 +68,7 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
           title: formData.title,
           complaintDate: formData.complaintDate,
           description: formData.description,
+          EmployeeComplaintToggle: formData.EmployeeComplaintToggle
         },
         true
       );
@@ -70,6 +92,8 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
           complaintAgainst: complaintAgainstName,
           complaintFrom: complaintFromName,
           complaintAgainstId: response.data.data.complaintAgainstId,
+          // EmployeeComplaintToggle: response.EmployeeComplaintToggle
+          
         };
 
         addComplaint(newComplaint);
@@ -80,6 +104,7 @@ const CreateComplaintModal = ({ onClose, addComplaint }) => {
           title: "",
           complaintDate: new Date().toISOString().split("T")[0],
           description: "",
+          // EmployeeComplaintToggle: formData.EmployeeComplaintToggle
         });
         onClose();
       } else {

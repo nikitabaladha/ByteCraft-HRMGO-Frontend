@@ -13,7 +13,27 @@ const CreatePromotionModal = ({ onClose, addPromotion }) => {
     promotionTitle: "",
     promotionDate: new Date().toISOString().split("T")[0],
     description: "",
+    EmpPromotionToggle: false,
   });
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await getAPI("/get-email-notification");
+        const mappedData = {
+          EmpPromotionToggle: response.data.data.employeePromotion || false, 
+        };
+        console.log("EmpPromotionToggle", mappedData)
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ...mappedData,
+        }));
+      } catch (err) {
+        toast.error("Error fetching email notification settings:", err);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   useEffect(() => {
     const fetchEmployeeData = async () => {
@@ -68,6 +88,7 @@ const CreatePromotionModal = ({ onClose, addPromotion }) => {
           promotionTitle: formData.promotionTitle,
           promotionDate: formData.promotionDate,
           description: formData.description,
+          EmpPromotionToggle: formData.EmpPromotionToggle
         },
         true
       );
@@ -94,6 +115,7 @@ const CreatePromotionModal = ({ onClose, addPromotion }) => {
           promotionDate: response.data.data.promotionDate,
           description: response.data.data.description,
           designationName,
+          // EmpPromotionToggle: response.EmpPromotionToggle
         };
 
         addPromotion(newPromotion);
@@ -104,6 +126,7 @@ const CreatePromotionModal = ({ onClose, addPromotion }) => {
           promotionTitle: "",
           promotionDate: new Date().toISOString().split("T")[0], // Reset to current date
           description: "",
+          // EmpPromotionToggle: formData.EmpPromotionToggle
         });
         onClose();
       } else {

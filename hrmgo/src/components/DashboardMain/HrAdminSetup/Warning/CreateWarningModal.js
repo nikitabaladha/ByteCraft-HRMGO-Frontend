@@ -12,7 +12,27 @@ const CreateWarningModal = ({ onClose, addWarning }) => {
     subject: "",
     warningDate: new Date().toISOString().split("T")[0],
     description: "",
+    EmpWarningToggle: false,
   });
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await getAPI("/get-email-notification");
+        const mappedData = {
+          EmpWarningToggle: response.data.data.employeeWarning || false, 
+        };
+        console.log("EmpWarningToggle", mappedData)
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ...mappedData,
+        }));
+      } catch (err) {
+        toast.error("Error fetching email notification settings:", err);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   useEffect(() => {
     const fetchEmployeeData = async () => {
@@ -47,6 +67,7 @@ const CreateWarningModal = ({ onClose, addWarning }) => {
           subject: formData.subject,
           warningDate: formData.warningDate,
           description: formData.description,
+          EmpWarningToggle: formData.EmpWarningToggle
         },
         true
       );

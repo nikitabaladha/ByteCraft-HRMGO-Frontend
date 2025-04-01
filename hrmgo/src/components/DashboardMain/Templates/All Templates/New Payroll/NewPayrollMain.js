@@ -154,10 +154,6 @@ const NewPayrollMain = () => {
                       Employee Name:{" "}
                       <span className="text-primary">{`{name}`}</span>
                     </p>
-                    {/* <p className="col-6">
-                      Password:{" "}
-                      <span className="text-primary">{`{employee_password}`}</span>
-                    </p> */}
                     <p className="col-6">
                       Employee Email:{" "}
                       <span className="text-primary">{`{payslip_email}`}</span>

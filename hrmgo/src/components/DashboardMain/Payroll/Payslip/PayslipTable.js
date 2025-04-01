@@ -19,11 +19,33 @@ const PayslipTable = () => {
   const [employeeIdToDelete, setEmployeeIdToDelete] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
+  const [formData, setFormData] = useState({
+    newPayrollToggle: false,
+  });
 
-  const openDeleteDialog = (employeeId) => {
-    setEmployeeIdToDelete(employeeId);
-    setIsDeleteDialogOpen(true);
-  };
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await getAPI("/get-email-notification");
+        const mappedData = {
+          newPayrollToggle: response.data.data.newPayroll || false,
+        };
+        console.log("newPayrollToggle", mappedData);
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ...mappedData,
+        }));
+      } catch (err) {
+        toast.error("Error fetching email notification settings:", err);
+      }
+    };
+    fetchSettings();
+  }, []);
+
+  // const openDeleteDialog = (employeeId) => {
+  //   setEmployeeIdToDelete(employeeId);
+  //   setIsDeleteDialogOpen(true);
+  // };
 
   const closeDeleteDialog = () => {
     setIsDeleteDialogOpen(false);
@@ -181,20 +203,52 @@ const PayslipTable = () => {
 
   const handleGeneratePayslip = async () => {
     try {
-      await putAPI("/updategenratepayslipdate", { payDate: new Date() }, true);
-      const updatedData = payrollData.map((row) => ({
-        ...row,
-        payDate: new Date(),
-      }));
-      setPayrollData(updatedData);
+      const response = await putAPI(
+        "/updategenratepayslipdate",
+        {
+          payDate: new Date().toISOString(),
+          newPayrollToggle: formData.newPayrollToggle,
+        },
+        true
+      );
 
-      toast.success("Payslips generated successfully for all employees!");
+      if (!response.data.success) {
+        throw new Error(response.data.message || "Failed to generate payslips");
+      }
+
+      // Refresh data after successful generation
+      const employeeResponse = await getAPI(`/employee-get-all`, {}, true);
+      const employeeList = employeeResponse.data.data;
+
+      const salaryList = await Promise.all(
+        employeeList.map(async (employee) => {
+          const salaryResponse = await getAPI(
+            `/getemployeedatabyid/${employee._id}`,
+            {},
+            true
+          );
+          return salaryResponse.data.data;
+        })
+      );
+
+      const mergedData = employeeList.map((employee) => {
+        const salaryInfo = salaryList.find(
+          (salary) => salary?.salary?.employeeId === employee._id
+        );
+        return {
+          ...employee,
+          ...(salaryInfo?.salary || {}),
+          netSalary: salaryInfo?.salary?.grandTotal || 0,
+        };
+      });
+
+      setPayrollData(mergedData);
+      toast.success(response.data.message);
     } catch (err) {
-      console.error("Error generating payslips:", err);
-      toast.error("Payslip alraedy genrated.");
+      console.error("Payslip generation error:", err);
+      toast.error(err.message || "Failed to generate payslips");
     }
   };
-  
 
   return (
     <div className="row">
@@ -289,92 +343,112 @@ const PayslipTable = () => {
       <div className="col-12">
         <div className="card">
           <div className="card-header">
-  <div className="row">
-    <div className="col-md-4">
-      <h5>Find Employee Payslip</h5>
-    </div>
-    <div className="col-md-8">
-      <div
-        className="d-flex flex-wrap align-items-center justify-content-end"
-        style={{ gap: "10px" }} // Space between items
-      >
-        {/* Month Dropdown */}
-        <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12">
-          <div className="btn-box">
-            <select
-              className="form-control month_date"
-              name="month"
-              onChange={handleMonthChange}
-            >
-              <option value="--">--</option>
-              <option value="01">JAN</option>
-              <option value="02">FEB</option>
-              <option value="03">MAR</option>
-              <option value="04">APR</option>
-              <option value="05">MAY</option>
-              <option value="06">JUN</option>
-              <option value="07">JUL</option>
-              <option value="08">AUG</option>
-              <option value="09">SEP</option>
-              <option value="10">OCT</option>
-              <option value="11" selected>NOV</option>
-              <option value="12">DEC</option>
-            </select>
+            <div className="row">
+              <div className="col-md-4">
+                <h5>Find Employee Payslip</h5>
+              </div>
+              <div className="col-md-8">
+                <div
+                  className="d-flex flex-wrap align-items-center justify-content-end"
+                  style={{ gap: "10px" }} // Space between items
+                >
+                  {/* Month Dropdown */}
+                  <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12">
+                    <div className="btn-box">
+                      <select
+                        className="form-control month_date"
+                        name="month"
+                        onChange={handleMonthChange}
+                      >
+                        <option value="--">--</option>
+                        <option value="01">JAN</option>
+                        <option value="02">FEB</option>
+                        <option value="03">MAR</option>
+                        <option value="04">APR</option>
+                        <option value="05">MAY</option>
+                        <option value="06">JUN</option>
+                        <option value="07">JUL</option>
+                        <option value="08">AUG</option>
+                        <option value="09">SEP</option>
+                        <option value="10">OCT</option>
+                        <option value="11" selected>
+                          NOV
+                        </option>
+                        <option value="12">DEC</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Year Dropdown */}
+                  <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12">
+                    <div className="btn-box">
+                      <select
+                        className="form-control year_date"
+                        name="year"
+                        onChange={handleYearChange}
+                      >
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024" selected>
+                          2024
+                        </option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                        <option value="2029">2029</option>
+                        <option value="2030">2030</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <form method="POST" acceptCharset="UTF-8" id="payslip_form">
+                    <input
+                      name="_token"
+                      type="hidden"
+                      value="Lp81DxPCUuxJdGJZpGF0iIzfmIUj0a4dOX7ZDogF"
+                    />
+                    <input
+                      type="hidden"
+                      name="filter_month"
+                      className="filter_month"
+                    />
+                    <input
+                      type="hidden"
+                      name="filter_year"
+                      className="filter_year"
+                    />
+                  </form>
+
+                  {/* Export Button */}
+                  <input
+                    type="submit"
+                    value="Export"
+                    className="btn btn-primary"
+                    style={{ width: "30%", maxWidth: "200px" }} // Responsive width
+                    onClick={handleExportToExcel}
+                  />
+
+                  {/* Bulk Payment Button */}
+                  <div className="float-end">
+                    <input
+                      onClick={openModal}
+                      type="button"
+                      value="Bulk Payment"
+                      className="btn btn-primary"
+                      style={{
+                        width: "100%",
+                        maxWidth: "200px",
+                        marginLeft: "5px",
+                      }}
+                      id="bulk_payment"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-
-        {/* Year Dropdown */}
-        <div className="col-xl-2 col-lg-3 col-md-6 col-sm-12 col-12">
-          <div className="btn-box">
-            <select
-              className="form-control year_date"
-              name="year"
-              onChange={handleYearChange}
-            >
-              <option value="2021">2021</option>
-              <option value="2022">2022</option>
-              <option value="2023">2023</option>
-              <option value="2024" selected>2024</option>
-              <option value="2025">2025</option>
-              <option value="2026">2026</option>
-              <option value="2027">2027</option>
-              <option value="2028">2028</option>
-              <option value="2029">2029</option>
-              <option value="2030">2030</option>
-            </select>
-          </div>
-        </div>
-
-        <form method="POST" acceptCharset="UTF-8" id="payslip_form">
-          <input name="_token" type="hidden" value="Lp81DxPCUuxJdGJZpGF0iIzfmIUj0a4dOX7ZDogF" />
-          <input type="hidden" name="filter_month" className="filter_month" />
-          <input type="hidden" name="filter_year" className="filter_year" />
-        </form>
-
-        {/* Export Button */}
-        <input
-          type="submit"
-          value="Export"
-          className="btn btn-primary"
-          style={{ width: "30%", maxWidth: "200px" }} // Responsive width
-          onClick={handleExportToExcel}
-        />
-
-        {/* Bulk Payment Button */}
-        <div className="float-end">
-          <input
-            onClick={openModal}
-            type="button"
-            value="Bulk Payment"
-            className="btn btn-primary"
-            style={{ width: "100%", maxWidth: "200px", marginLeft: "5px" }}
-            id="bulk_payment"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
           <div className="card-body">
             <div className="table-responsive">
@@ -418,7 +492,7 @@ const PayslipTable = () => {
                               }).format(row.netSalary)
                             : "0.00"
                         }`}</td>
-                        <td >
+                        <td>
                           <span
                             className={`badge ${
                               row.status === "paid"
@@ -465,14 +539,14 @@ const PayslipTable = () => {
                                 <i className="ti ti-pencil"></i>
                               </Link>
                             )}
-                            <button
+                            {/* <button
                               className="btn-sm btn btn-danger"
                               title="Delete"
                               onClick={() => openDeleteDialog(row._id)}
-                            >
+                            > */}
                               {/* <RiDeleteBinLine /> */}
-                              <i className="ti ti-trash"></i>
-                            </button>
+                              {/* <i className="ti ti-trash"></i>
+                            </button> */}
                           </div>
                         </td>
                       </tr>

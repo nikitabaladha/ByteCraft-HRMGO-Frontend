@@ -9,11 +9,14 @@ const StatusModal = ({ leave, onClose, onStatusUpdate }) => {
   const navigate = useNavigate();
   const handleUpdateStatus = async (status) => {
     try {
+      const requestBody = {
+        status,
+        LeaveStatusToggle: true // Always send email for both Approved and Rejected
+      };
+
       const response = await putAPI(
         `/manage-leave-update-status/${leave.id}`,
-        {
-          status,
-        },
+        requestBody,
         {},
         true
       );
@@ -23,7 +26,7 @@ const StatusModal = ({ leave, onClose, onStatusUpdate }) => {
         onStatusUpdate(leave.id, status);
         onClose();
         toast.success(`Leave status successfully updated to ${status}`);
-
+        
         navigate("/dashboard/time-sheet/manage-leave");
       } else {
         console.error("Error updating leave status:", response.message);
@@ -31,10 +34,9 @@ const StatusModal = ({ leave, onClose, onStatusUpdate }) => {
       }
     } catch (error) {
       console.error("Error while updating leave status:", error);
-      toast.error(`"An error occurred while updating the status."}`);
+      toast.error("An error occurred while updating the status.");
     }
   };
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       const modalContent = document.querySelector(".modal-content");

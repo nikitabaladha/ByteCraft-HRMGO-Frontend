@@ -15,7 +15,27 @@ const CreateContractModal = ({ contracts, onClose, addContract }) => {
     value: "",
     startDate: new Date().toISOString().split("T")[0],
     endDate: new Date().toISOString().split("T")[0],
+    contractToggle: false,
   });
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await getAPI("/get-email-notification");
+        const mappedData = {
+          contractToggle: response.data.data.contract || false, 
+        };
+        console.log("contractToggle", mappedData)
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ...mappedData,
+        }));
+      } catch (err) {
+        toast.error("Error fetching email notification settings:", err);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   useEffect(() => {
     if (contracts) {
@@ -81,6 +101,7 @@ const CreateContractModal = ({ contracts, onClose, addContract }) => {
           endDate: formData.endDate,
           subject: formData.subject,
           value: formData.value,
+          contractToggle: formData.contractToggle
         },
 
         true

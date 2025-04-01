@@ -21,42 +21,42 @@ const EmailTemplatesMainContent = () => {
       path: "/dashboard/email-templates/new-ticket",
     },
     { id: 5, name: "New Award", path: "/dashboard/email-templates/new-award" },
+    // {
+    //   id: 6,
+    //   name: "Employee Transfer",
+    //   path: "/dashboard/email-templates/employee-transfer",
+    // },
     {
       id: 6,
-      name: "Employee Transfer",
-      path: "/dashboard/email-templates/employee-transfer",
-    },
-    {
-      id: 7,
       name: "Employee Resignation",
       path: "/dashboard/email-templates/employee-resignation",
     },
     {
-      id: 8,
+      id: 7,
       name: "Employee Promotion",
       path: "/dashboard/email-templates/employee-promotion",
     },
     {
-      id: 9,
+      id: 8,
       name: "Employee Complaints",
       path: "/dashboard/email-templates/employee-complaints",
     },
     {
-      id: 10,
+      id: 9,
       name: "Employee Warning",
       path: "/dashboard/email-templates/employee-warning",
     },
     {
-      id: 11,
+      id: 10,
       name: "Employee Termination",
       path: "/dashboard/email-templates/employee-termination",
     },
     {
-      id: 12,
+      id: 11,
       name: "Leave Status",
       path: "/dashboard/email-templates/leave-status",
     },
-    { id: 13, name: "Contract", path: "/dashboard/email-templates/contract" },
+    { id: 12, name: "Contract", path: "/dashboard/email-templates/contract" },
   ];
 
   const [entriesPerPage, setEntriesPerPage] = useState(10);

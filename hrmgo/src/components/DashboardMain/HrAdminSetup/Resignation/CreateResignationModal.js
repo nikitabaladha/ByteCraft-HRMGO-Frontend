@@ -11,8 +11,28 @@ const CreateResignationModal = ({ onClose, addResignation }) => {
     resignationDate: new Date().toISOString().split("T")[0],
     lastWorkingDay: new Date().toISOString().split("T")[0],
     reason: "",
+    EmpResignationToggle: false,
   });
 
+   useEffect(() => {
+      const fetchSettings = async () => {
+        try {
+          const response = await getAPI("/get-email-notification");
+          const mappedData = {
+            EmpResignationToggle: response.data.data.employeeResignation || false, 
+          };
+          console.log("newAwardToggle", mappedData)
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            ...mappedData,
+          }));
+        } catch (err) {
+          toast.error("Error fetching email notification settings:", err);
+        }
+      };
+      fetchSettings();
+    }, []);
+  
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
@@ -49,6 +69,7 @@ const CreateResignationModal = ({ onClose, addResignation }) => {
           resignationDate: formData.resignationDate,
           lastWorkingDay: formData.lastWorkingDay,
           reason: formData.reason,
+          EmpResignationToggle: formData.EmpResignationToggle
         },
         true
       );
