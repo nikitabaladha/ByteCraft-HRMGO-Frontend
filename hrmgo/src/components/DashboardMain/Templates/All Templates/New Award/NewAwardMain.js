@@ -122,11 +122,11 @@ const NewAwardMain = () => {
                           id="mail_from_name"
                         />
                       </div>
-                      <div className="col-12 text-end">
+                      {/* <div className="col-12 text-end">
                         <button type="submit" className="btn btn-primary">
                           Save
                         </button>
-                      </div>
+                      </div> */}
                     </div>
                   </form>
                 </div>

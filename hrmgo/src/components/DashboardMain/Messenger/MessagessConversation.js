@@ -123,16 +123,50 @@ const Messagess = () => {
     }
   };
 
-  const fetchMessages = async (conversationId, receiver) => {
-    try {
-      const response = await getAPI(
-        `/get-message/${conversationId}?senderId=${user?.id}&&receiverId=${receiver?.receiverId}`
-      );
-      setMessages({ messages: response.data, receiver, conversationId });
-    } catch (error) {
-      console.error("Failed to fetch data.", error);
+//   const fetchMessages = async (conversationId, receiver) => {
+//   try {
+//     const response = await getAPI(
+//       `/get-message/${conversationId}?senderId=${user?.id}&&receiverId=${receiver?.receiverId}`
+//     );
+//     setMessages({ messages: response.data, receiver, conversationId });
+    
+//     // Mark messages as read when opening conversation
+//     if (conversationId && receiver?.receiverId === user?.id) {
+//       await postAPI("/messages/mark-as-read", {
+//         conversationId,
+//         userId: user?.id
+//       });
+//     }
+//   } catch (error) {
+//     console.error("Failed to fetch data.", error);
+//   }
+// };
+
+// In the fetchMessages function, add this after setting the messages:
+const fetchMessages = async (conversationId, receiver) => {
+  try {
+    const response = await getAPI(
+      `/get-message/${conversationId}?senderId=${user?.id}&&receiverId=${receiver?.receiverId}`
+    );
+    setMessages({ messages: response.data, receiver, conversationId });
+    
+    // Mark messages as read when opening conversation
+    if (conversationId && receiver?.receiverId !== user?.id) {
+      await postAPI("/messages/mark-as-read", {
+        conversationId,
+        userId: user?.id
+      });
+      
+      // Emit event to update unread count
+      socket.emit("messagesRead", {
+        conversationId,
+        userId: user?.id
+      });
     }
-  };
+  } catch (error) {
+    console.error("Failed to fetch data.", error);
+  }
+};
 
   useEffect(() => {
     messageRef?.current?.scrollIntoView({ behaviour: "smooth" });

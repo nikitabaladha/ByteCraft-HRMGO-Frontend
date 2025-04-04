@@ -1,19 +1,167 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useContext } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { ThemeContext } from "../../js/ThemeProvider";
-
-
+import getAPI from "../../api/getAPI";
+import { io } from "socket.io-client";
+// import postAPI from "../../api/postAPI";
 
 const Header = ({ toggleSidebar, name, imagePreview, profileImage }) => {
   const { isDarkLayout, toggleDarkLayout } = useContext(ThemeContext);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [socket, setSocket] = useState(null);
+  const user = JSON.parse(localStorage.getItem("userDetails"));
+  const location = useLocation(); // Use React Router's location instead of window.location
+  const [currentConversationId, setCurrentConversationId] = useState(null);
+
+  // const fetchUnreadCount = useCallback(async () => {
+  //   try {
+  //     const response = await getAPI(`/unread-messages/${user?.id}`);
+  //     setUnreadCount(response.data.count);
+  //   } catch (error) {
+  //     console.error("Failed to fetch unread count", error);
+  //   }
+  // }, [user?.id]);
+
+  // useEffect(() => {
+  //   setSocket(io("http://localhost:3030"));
+  // }, []);
+
+  const fetchUnreadCount = useCallback(async () => {
+    try {
+      const response = await getAPI(`/unread-messages/${user?.id}`);
+      setUnreadCount(response.data.count);
+    } catch (error) {
+      console.error("Failed to fetch unread count", error);
+    }
+  }, [user?.id]);
+
+  useEffect(() => {
+    const newSocket = io("http://localhost:3030");
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect(); // Cleanup on unmount
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   if (!socket || !user?.id) return;
+
+  //   socket.emit("addUser", user.id);
+
+  //   const handleNewMessage = (data) => {
+  //     // Only increment count if not in messenger or different conversation
+  //     if (
+  //       !location.pathname.includes("/dashboard/messenger") ||
+  //       data.conversationId !== currentConversationId
+  //     ) {
+  //       fetchUnreadCount();
+  //     }
+  //   };
+
+  //   socket.on("getMessage", handleNewMessage);
+  //   socket.on("messagesRead", fetchUnreadCount);
+
+  //   return () => {
+  //     socket.off("getMessage", handleNewMessage);
+  //     socket.off("messagesRead", fetchUnreadCount);
+  //   };
+  // }, [
+  //   socket,
+  //   user?.id,
+  //   currentConversationId,
+  //   fetchUnreadCount,
+  //   location.pathname,
+  // ]);
+
+  useEffect(() => {
+    if (!socket || !user?.id) return;
+
+    socket.emit("addUser", user.id);
+
+    const handleNewMessage = (data) => {
+      if (
+        !location.pathname.includes("/dashboard/messenger") ||
+        data.conversationId !== currentConversationId
+      ) {
+        fetchUnreadCount();
+      }
+    };
+
+    const handleMessagesRead = () => {
+      fetchUnreadCount(); // Immediately update count when messages are read
+    };
+
+    socket.on("getMessage", handleNewMessage);
+    socket.on("messagesRead", handleMessagesRead);
+
+    return () => {
+      socket.off("getMessage", handleNewMessage);
+      socket.off("messagesRead", handleMessagesRead);
+    };
+  }, [socket, user?.id, currentConversationId, fetchUnreadCount, location.pathname]);
+
+  useEffect(() => {
+    if (location.pathname.includes("/dashboard/messenger")) {
+      // Extract conversationId from URL or state
+      const searchParams = new URLSearchParams(location.search);
+      const id = searchParams.get("conversationId"); // Adjust based on your routing
+      setCurrentConversationId(id);
+    } else {
+      setCurrentConversationId(null);
+    }
+  }, [location]);
+
+  useEffect(() => {
+    fetchUnreadCount();
+    const interval = setInterval(fetchUnreadCount, 30000);
+    return () => clearInterval(interval);
+  }, [fetchUnreadCount]);
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userDetails");
-
     window.location.href = "/login";
   };
+
+  // const markMessagesAsRead = async (conversationId) => {
+  //   try {
+  //     await postAPI("/messages/mark-as-read", {
+  //       conversationId,
+  //       userId: user?.id,
+  //     });
+  //     setUnreadCount((prev) => prev - 1);
+  //   } catch (error) {
+  //     console.error("Failed to mark messages as read", error);
+  //   }
+  // };
+
+  // const markMessagesAsRead = async (conversationId) => {
+  //   try {
+  //     const response = await postAPI("/messages/mark-as-read", {
+  //       conversationId,
+  //       userId: user?.id,
+  //     });
+      
+  //     // Update count immediately from API response if available
+  //     if (response.data?.count !== undefined) {
+  //       setUnreadCount(response.data.count);
+  //     } else {
+  //       // Fallback to decrementing if count isn't returned
+  //       setUnreadCount(prev => Math.max(0, prev - 1));
+  //     }
+      
+  //     // Emit socket event to notify other clients
+  //     if (socket) {
+  //       socket.emit("messagesRead", {
+  //         userId: user?.id,
+  //         conversationId
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to mark messages as read", error);
+  //   }
+  // };
 
   return (
     <header className="dash-header transprent-bg">
@@ -96,15 +244,25 @@ const Header = ({ toggleSidebar, name, imagePreview, profileImage }) => {
                   toggleDarkLayout();
                 }}
               >
-                <i className={isDarkLayout ? "ti ti-sun text-dark" : "ti ti-moon text-dark"}></i>
+                <i
+                  className={
+                    isDarkLayout
+                      ? "ti ti-sun text-dark"
+                      : "ti ti-moon text-dark"
+                  }
+                ></i>
               </Link>
             </li>
+
             <li className="dash-h-item">
               <Link className="dash-head-link me-0" to="/dashboard/messenger">
                 <i className="ti ti-message-circle text-dark"> </i>
-                <span className="bg-danger dash-h-badge message-counter custom_messanger_counter">
-                  0<span className="sr-only"></span>
-                </span>
+                {unreadCount > 0 && (
+                  <span className="bg-danger dash-h-badge message-counter custom_messanger_counter">
+                    {unreadCount}
+                    <span className="sr-only"></span>
+                  </span>
+                )}
               </Link>
             </li>
 
@@ -117,7 +275,7 @@ const Header = ({ toggleSidebar, name, imagePreview, profileImage }) => {
                 aria-haspopup="false"
                 aria-expanded="false"
               >
-                <i className="ti ti-message-2 text-dark"> </i>
+                <i className="ti ti-bell text-dark"> </i>
                 <span className="bg-danger dash-h-badge message-counter custom_messanger_counter">
                   0<span className="sr-only"></span>
                 </span>
