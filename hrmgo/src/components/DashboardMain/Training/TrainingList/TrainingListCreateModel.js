@@ -3,7 +3,7 @@ import postAPI from "../../../../api/postAPI";
 import getAPI from "../../../../api/getAPI";
 import { toast } from "react-toastify";
 
-const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
+const TrainingListCreateModel = ({ onClose, fetchTrainings }) => {
   const [formData, setFormData] = useState({
     branch: "",
     trainerOption: "0",
@@ -20,12 +20,11 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
   const [trainers, setTrainers] = useState([]);
   const [employeeData, setEmployeeData] = useState([]);
   const [trainingTypes, setTrainingTypes] = useState([]);
-  
 
   useEffect(() => {
     const fetchBranches = async () => {
       try {
-        const response = await getAPI(`/branch-get-all`, {}, true); 
+        const response = await getAPI(`/branch-get-all`, {}, true);
         if (response.data && response.data.data) {
           setBranches(response.data.data);
         } else {
@@ -38,62 +37,58 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
     };
 
     const fetchEmployeeData = async () => {
-        try {
-          const response = await getAPI(`/employee-get-all`, {}, true);
-          if (
-            !response.hasError &&
-            response.data &&
-            Array.isArray(response.data.data)
-          ) {
-            setEmployeeData(response.data.data);
-            console.log("Employee Data fetched successfully", response.data.data);
-          } else {
-            console.error("Invalid response format or error in response");
-          }
-        } catch (err) {
-          console.error("Error fetching Employee Data:", err);
+      try {
+        const response = await getAPI(`/employee-get-all`, {}, true);
+        if (
+          !response.hasError &&
+          response.data &&
+          Array.isArray(response.data.data)
+        ) {
+          setEmployeeData(response.data.data);
+          console.log("Employee Data fetched successfully", response.data.data);
+        } else {
+          console.error("Invalid response format or error in response");
         }
-      };
+      } catch (err) {
+        console.error("Error fetching Employee Data:", err);
+      }
+    };
 
-      const fetchTrainers = async () => {
-        try {
-          const response = await getAPI("/trainee-get-all", {}, true);
-          if (response.data && response.data.data) {
-            setTrainers(response.data.data);
-          } else {
-            toast.error("Failed to fetch trainers.");
-          }
-        } catch (error) {
-          console.error("Error fetching trainers:", error);
-          toast.error("An error occurred while fetching trainers.");
+    const fetchTrainers = async () => {
+      try {
+        const response = await getAPI("/trainee-get-all", {}, true);
+        if (response.data && response.data.data) {
+          setTrainers(response.data.data);
+        } else {
+          toast.error("Failed to fetch trainers.");
         }
-      };
+      } catch (error) {
+        console.error("Error fetching trainers:", error);
+        toast.error("An error occurred while fetching trainers.");
+      }
+    };
 
-   
-      const fetchTrainingTypes = async () => {
-        try {
-          const response = await getAPI("/training-type-get-all", true);
-          if (!response.hasError) {
-            setTrainingTypes(response.data.data);
-          } else {
-            toast.error(`Failed to fetch training types: ${response.message}`);
-          }
-        } catch (error) {
-          toast.error("An error occurred while fetching training types.");
+    const fetchTrainingTypes = async () => {
+      try {
+        const response = await getAPI("/training-type-get-all", true);
+        if (!response.hasError) {
+          setTrainingTypes(response.data.data);
+        } else {
+          toast.error(`Failed to fetch training types: ${response.message}`);
         }
-      };
-  
-      
-      fetchTrainingTypes();
+      } catch (error) {
+        toast.error("An error occurred while fetching training types.");
+      }
+    };
 
-  
-      fetchTrainers();
-  
-      fetchEmployeeData();
+    fetchTrainingTypes();
+
+    fetchTrainers();
+
+    fetchEmployeeData();
 
     fetchBranches();
   }, []);
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -102,16 +97,13 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      const response = await postAPI(
-        'training-list', 
-        formData
-      );
+      const response = await postAPI("training-list", formData);
       console.log("Form Submitted", response.data);
       onClose();
       fetchTrainings();
-      toast("Training created successfully!")
+      toast("Training created successfully!");
     } catch (error) {
       console.error("Error submitting form", error);
     }
@@ -124,7 +116,7 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
         id="commonModal"
         tabIndex={-1}
         aria-labelledby="exampleModalLabel"
-        style={{ display: 'block', paddingLeft: 0 }}
+        style={{ display: "block", paddingLeft: 0 }}
         aria-modal="true"
         role="dialog"
       >
@@ -149,7 +141,10 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* Branch Field */}
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="branch" className="col-form-label text-dark">
+                      <label
+                        htmlFor="branch"
+                        className="col-form-label text-dark"
+                      >
                         Branch
                       </label>
                       <span className="text-danger">*</span>
@@ -174,7 +169,10 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* Trainer Option */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="trainer_option" className="col-form-label text-dark">
+                      <label
+                        htmlFor="trainer_option"
+                        className="col-form-label text-dark"
+                      >
                         Trainer Option
                       </label>
                       <span className="text-danger">*</span>
@@ -187,12 +185,8 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                         onChange={handleChange}
                       >
                         <option value="">Select Trainer Option</option>
-                        {trainingTypes.map((trainingType) => (
-                          <option key={trainingType.value} value={trainingType.branchName}>
-                            {trainingType.trainingName
-                            }
-                          </option>
-                        ))}
+                        <option value="Internal">Internal</option>
+                        <option value="External">External</option>
                       </select>
                     </div>
                   </div>
@@ -200,7 +194,10 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* Training Type */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="training_type" className="col-form-label text-dark">
+                      <label
+                        htmlFor="training_type"
+                        className="col-form-label text-dark"
+                      >
                         Training Type
                       </label>
                       <span className="text-danger">*</span>
@@ -212,9 +209,19 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                         value={formData.trainingType}
                         onChange={handleChange}
                       >
-                        <option value="">Select Training Type</option>
+                        {/* <option value="">Select Training Type</option>
                         <option value="Job Training">Job Training</option>
-                        <option value="Management Training">Management Training</option>
+                        <option value="Management Training">Management Training</option> */}
+
+                        <option value="">Select Training Type</option>
+                        {trainingTypes.map((trainingType) => (
+                          <option
+                            key={trainingType.value}
+                            value={trainingType.branchName}
+                          >
+                            {trainingType.trainingName}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -222,7 +229,10 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* Trainer */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="trainer" className="col-form-label text-dark">
+                      <label
+                        htmlFor="trainer"
+                        className="col-form-label text-dark"
+                      >
                         Trainer
                       </label>
                       <span className="text-danger">*</span>
@@ -247,7 +257,10 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* Training Cost */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="training_cost" className="col-form-label text-dark">
+                      <label
+                        htmlFor="training_cost"
+                        className="col-form-label text-dark"
+                      >
                         Training Cost
                       </label>
                       <span className="text-danger">*</span>
@@ -268,7 +281,10 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* Employee */}
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label htmlFor="employee" className="form-label text-dark">
+                      <label
+                        htmlFor="employee"
+                        className="form-label text-dark"
+                      >
                         Employee
                       </label>
                       <span className="text-danger">*</span>
@@ -294,7 +310,10 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* Start Date */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="start_date" className="col-form-label text-dark">
+                      <label
+                        htmlFor="start_date"
+                        className="col-form-label text-dark"
+                      >
                         Start Date
                       </label>
                       <span className="text-danger">*</span>
@@ -314,7 +333,10 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
                   {/* End Date */}
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="end_date" className="col-form-label text-dark">
+                      <label
+                        htmlFor="end_date"
+                        className="col-form-label text-dark"
+                      >
                         End Date
                       </label>
                       <span className="text-danger">*</span>
@@ -333,7 +355,10 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
 
                   {/* Description */}
                   <div className="form-group col-lg-12">
-                    <label htmlFor="description" className="col-form-label text-dark">
+                    <label
+                      htmlFor="description"
+                      className="col-form-label text-dark"
+                    >
                       Description
                     </label>
                     <textarea
@@ -370,4 +395,3 @@ const TrainingListCreateModel = ({onClose, fetchTrainings }) => {
 };
 
 export default TrainingListCreateModel;
-
